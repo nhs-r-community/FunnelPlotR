@@ -1,0 +1,125 @@
+#+Title: The switchr package
+#+Author: Gabriel Becker (@groudnwalkergmb)
+#+Email: Genentech, Inc <becker.gabe@gene.com>
+
+
+#+options: h:2 toc:nil
+#+options: tex:t
+#+OPTIONS: reveal_mathjax:t
+
+#+REVEAL_PREAMBLE: <style type="text/css">p { text-align: left; }</style>
+
+#+PROPERTY: tangle no
+#+PROPERTY: session *R-org-session*
+#+PROPERTY: results output 
+#+PROPERTY: exports both
+
+
+
+* Package versions matter
+
+#+BEGIN_SRC R :exports none
+options(width=40)
+library(switchr)
+library(RJSONIO)
+removeLib("mynewlib")
+#+END_SRC
+
+#+RESULTS:
+
+** Reproducing results
+   - Use same version as original author(s)
+** Developing packages
+   - Program against latest/devel versions of dependencies
+** Collaboration
+   - Have single set of versions used by all participants
+
+* Packages live in different places
+** Github
+** Package repositories
+** CRAN Archive
+** SCM commit history
+
+* What do we need?
+** Install the versions we need
+   - on command
+   - directly from where they live
+** Distinct, side-by-side package libraries
+   - Don't want to clobber our main install to reproduce old result
+   - Development and analysis
+** Recreate others' environments
+** Publish our environments
+   - So that others can recreate them
+
+* switchr does that
+
+* Package manifests
+** Generalized Package repository
+  - List of packages
+    - where their source lives
+    - info necessary to retrieve them
+  - Optional version restrictions
+* And now the 'main' event
+** Creating a new library
+#+BEGIN_SRC R
+switchTo("mynewlib")
+#+END_SRC
+
+#+RESULTS:
+
+   
+** Switching between libraries
+#+BEGIN_SRC R
+switchBack()
+#+END_SRC
+
+#+RESULTS:
+
+   
+#+BEGIN_SRC R
+switchTo("mynewlib")
+
+#+END_SRC
+
+** Creating a manifest
+#+BEGIN_SRC R
+  man = GithubManifest("gmbecker/fastdigest", "gmbecker/RCacheSuite",
+      "duncantl/CodeDepends")
+  man
+#+END_SRC
+
+** Installing from a manifest
+#+BEGIN_SRC R :exports code
+install_packages("RCacheSuite", man)
+#+END_SRC
+#+BEGIN_SRC R
+head(installed.packages()[,c("Package", "Version")], 4)
+#+END_SRC
+
+** Generating a manifest from a library
+#+BEGIN_SRC R
+man2 = libManifest()
+man2
+#+END_SRC
+
+** Generating a library from a manifest
+#+BEGIN_SRC R :eval never
+switchTo("recreate", seed = man2)
+#+END_SRC
+
+** Publishing a manifest to a Gist
+#+BEGIN_SRC R :eval never
+library(switchrGist)
+publishManifest(man, Gist())
+#+END_SRC
+
+** Traveling back in time
+#+BEGIN_SRC R
+man3.0 = rVersionManifest("3.0.0")
+man3.0
+
+#+END_SRC
+
+* The code
+[[http://github.com/gmbecker/switchr]]
+[[http://github.com/gmbecker/switchrGist]]

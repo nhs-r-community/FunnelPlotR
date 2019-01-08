@@ -1,0 +1,290 @@
+% \VignetteIndexEntry{switchr basics2}
+% \VignetteDepends{}
+% \VignetteKeywords{reprise}
+% \VignettePackage{switchr}
+\documentclass[10pt]{article}
+
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{Sweave}
+
+\textwidth=6.5in
+\textheight=8.5in
+\oddsidemargin=-.1in
+\evensidemargin=-.1in
+\headheight=-.3in
+
+\title{The switchr Package}
+\author{Gabriel Becker}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Managing and populating package libraries}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Creating and switching between package libraries}
+
+Different versions of R packages are appropriate for different applications,
+including package development, solo analysis, and
+collaboration. \verb@switchr@ provides a framework for creating, populating,
+managing, and switching between multiple package libraries from within
+an R session.
+
+
+For safety within this vignette, we set the base \verb@switchr@
+directory (the directory under which \verb@switchr@ libraries will be
+used) to a temporary directory.
+
+<<results=hide,eval=TRUE >>=
+library(switchr)
+switchrBaseDir(file.path(tempdir(), ".switchr"))
+options(width=40, repos = c(CRAN="http://cran.rstudio.com"))
+@
+
+
+We create and use switchr package libraries by referring to them by
+name using the \texttt{switchTo()} function as seen below.
+
+<<>>=
+switchTo("vign1")
+@
+
+When switching to a different package library, \verb@switchr@ displays messages indicating the (newly) active library and some basic
+information about it\footnote{The reason these messages are not
+  displayed as output for other code-blocks in this document is that
+  the information is conveyed via \textit{messages}, which are not
+  captured by the Sweave engine. We have chosen to use Sweave
+  regardless due to its smaller dependency footprint.}, which is of the form
+
+<<echo=FALSE>>=
+switchBack()
+txtcon = textConnection("txt", "w", local=TRUE)
+sink(txtcon, type="message")
+switchTo("vign1")
+sink(NULL, type="message")
+print(txt,width=30)
+@
+
+
+
+The first time this code is run a "vign1" library is created and activated. By
+activate we mean that it replaces the current User- and (by default) Site-
+library locations which R uses to find packages during the loading process.
+
+To stop using "vign1" we simply call \texttt{switchBack()}:
+
+<<>>=
+switchBack()
+@
+
+When switching to a different library, \verb@switchr@ attempts to
+unload all packages (other than switchr itself and its dependencies)
+in the currently loaded session. This generally works, but can
+occasionally lead to problems when R has trouble fully unloading a
+package. We also note here that R's design does not support the full
+unloading of S3 methods. This can lead to packages being spontaneously
+reloaded when the S3 generic is called with particular classes.
+
+Users can indicate that packages should NOT be unloaded when switching
+libraries via the \texttt{switchrDontUnload} function which sets a
+package specific option for the remainder of the R session.
+
+\subsection{Removing package libraries}
+
+\verb@switchr@ package libraries can be removed via the
+\texttt{removeLib} function, like so
+
+<<eval=FALSE>>=
+### Not Run
+removeLib("mylibrary")
+@
+
+This removes the switchr library and all the packages installed therein.
+
+\subsection{Representing package cohorts}
+
+Empty package libraries are, of course, of limited use. The other main
+functionality \verb@switchr@ offers is installation of packages from a wide
+variety of sources (git, svn, package repositories, and the CRAN Archive
+among them), both individually and as cohorts.
+
+We do this via a generalized form of a package repository called a
+\textit{package manifest}, which includes a listing of packages and the information
+switchr needs to install them (primarily location of their source code).
+
+We can create a package manifest from scratch via the \texttt{PkgManifest} function, though there are
+convenience functions for common use-cases such as Github packages
+
+<<>>=
+man = PkgManifest(name = "fastdigest",
+    url = "https://github.com/gmbecker/fastdigest",
+    type = "git")
+man
+@
+
+The `GithubManifest` convenience function builds manifests from GitHub username/repository
+pairs for package sources residing in the root directory of the master branch for the
+specified repository.
+
+<<>>=
+man2 = GithubManifest("gmbecker/fastdigest",
+     "gmbecker/RCacheSuite")
+man2
+@
+
+The `GithubManifest` function accepts (a subset of) the same shorthand
+for locations within Github repositories as Wickham's
+\verb@install_github@ function from the \verb@devtools@
+package. ``/''s after the first indicate a subdirectories within the repository, and a
+``@@'' indicates the (non-master) branch the manifest should point
+to. Package names that differ from the name of the repository are
+indicated via the argument names associated with the shorthand strings.
+
+<<>>=
+man3 = GithubManifest(redland = "ropensci/redland-bindings/R/redland")
+man3
+
+@
+
+\subsection{Representing and (re-)installing package cohorts/libraries}
+
+Beyond package manifests, \verb@switchr@ also supports \textit{seeding manifests}, which
+extend package manifests by indicating a subset of the packages listed in
+the manifest, specific package-version information, or both.
+
+<<eval=FALSE>>=
+## NOT RUN due to peculiarities of CRAN build system wrt installed.packages()
+lman = libManifest()
+@
+
+Package or seeding manifests can then be used to \textit{seed} switchr libraries.
+During the new-library creation process, all packages listed in the seed
+- typically a \textit{seeding manifest}, \textit{package manifest}, or specially-purposed
+package repository - are installed. In the case that a \textit{seeding manifest} is
+used, the exact, specified versions of the indicated packages are
+retrieved and installed, while for a package manifest the latest versions
+available are used.
+
+We specify a seed via the \textit{seed} argument to the \texttt{switchTo} function, like so:
+
+
+<<eval=FALSE>>=
+## NOT RUN
+switchTo("vign2", seed = lman)
+@
+The above code will create a new switchr library called vign2 and populate it with
+the package versions listed in lman - i.e., the packages installed in the library
+used to build this vignette.
+
+
+\section{Installing specific packages and package versions}
+
+
+\verb@switchr@ also provides the \texttt{install\_packages} function for installing specific packages
+or sets of packages from a variety of sources, including traditional repositories
+and package manifests. This function supports package dependencies, including
+non-repository to non-repository dependecies (e.g. between two or more packages
+on GitHub) on systems able to build packages from source.
+
+
+
+<<eval=FALSE>>=
+## NOT RUN
+install_packages("RCacheSuite", man2)
+@
+
+We can also use \texttt{install\_packages} to install specific
+versions of the desired packages.
+
+<<eval=FALSE>>=
+## NOT RUN
+install_packages("fastdigest",
+                 versions = c(fastdigest= "0.5-0"),
+                 man = man2)
+
+@
+
+Note, however, that installing individual, non-current package versions
+without specifying versions for those packages' dependencies is likely
+to result in undefined package behavior, as the most current
+versions of the dependencies will be used. Packages will often fail
+to install entirely, though ``successful'' installation via this
+mechanism should not be taken as a guarantee that the packages will
+behave as expected.
+
+\subsection{Building consistent, historical package manifests}
+
+\verb@switchr@ does include experimental support for building a
+consistent manifest based on a specific version of a single
+package. This uses Csardi's database of R package metadata
+developed for his
+\href{https://github.com/metacran/crandb}{\texttt{crandb}} package.
+
+The \texttt{cranPkgVersManifest} function accepts a (CRAN) package and
+a specific version. It then queries Csardi's database to determine
+versions of the pacakge's dependencies which were concurrent with the
+first or last day that the specified version was the current release
+on CRAN.
+
+<<>>=
+oldman = cranPkgVersManifest(pkg = "randomForest", vers = "4.6-5")
+oldman
+@
+
+The resulting \textit{package manifest}, while not a \textit{seeding
+  manifest}, points to source tarballs within the CRAN Web Archive
+corresponding to exact contemporary versions of the package and its
+depencies. Currently only packages published on CRAN are supported.
+
+
+<<>>=
+manifest_df(oldman)$url
+@
+
+Users can also leverage Csardi's database to retreive a manifest
+representing the state of CRAN corresponding to the release of a
+particular R version, retroactively
+creating something similar to the repositories created by  de Vries'
+\verb@miniCRAN@ and its successor, Revolution Analytic's \verb@checkpoint@.
+
+<<>>=
+oldman2 = rVersionManifest("3.1.1")
+oldman2
+@
+
+This results a manifest of tarball locations, as above. It will
+contain locations in the currently-selected CRAN mirror and the CRAN
+Web Archive, depending on whether a particular package has been
+updated since the specified R version.
+<<>>=
+head(manifest_df(oldman2)$url)
+@
+
+\section{Using switchr in dynamic documents}
+
+While we chose not to depend on Xie's \verb@knitr@ package,
+\verb@switchr@ can be used to enhance reproducibility of analyses
+residing in dynamic documents which are processed with that system,
+e.g. .Rmd files. To do this, users need simply ensure that knitr and
+its dependencies are not unloaded during the library switching
+process. This is most safely achieved via the \texttt{switchrNoUnload}
+which disables the unloading of packages when switching libraries.
+
+<<eval=FALSE>>=
+## NOT RUN
+switchrNoUnload(TRUE)
+@
+
+In the knitr case, for example, this function can be called from the
+outer R session or --- preferably --- from an early, intialization
+code chunk within the dynamic document itself.
+
+
+\end{document}

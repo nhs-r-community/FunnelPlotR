@@ -1,0 +1,288 @@
+
+#+Title: Package Versions Matter
+#+Author: Gabriel Becker (@groundwalkergmb), Michael Lawrence (@lawremi)
+#+email: @groundwalkergmb, @michafla
+#+options: h:2 toc:nil
+#+options: tex:t
+#+OPTIONS: reveal_mathjax:t
+#+OPTIONS: reveal_width:1200 reveal_height:800
+# #+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_THEME: solarized
+# #+BEAMER_THEME: Malmoe
+
+#+REVEAL_PREAMBLE: <style type="text/css">p { text-align: left; }</style>
+#+REVEAL_PREAMBLE: <style type="text/css">pre.src { font-size: 1em; }</style>
+
+#+BEAMER_HEADER: \subtitle{The switchr framework}
+#+BEAMER_HEADER: \institute{Genentech Research and Early Development}
+#+LATEX_HEADER: \usepackage{fancyvrb}
+#+LATEX_HEADER: \fvset{fontsize=\small}
+#+LATEX_HEADER: \RecustomVerbatimEnvironment{verbatim}{Verbatim}{}
+#+LATEX_HEADER: \logo{\makebox[.95\paperwidth]{\includegraphics[height=.45cm]{GeneLogo_FullColor_RGB} \hfill \includegraphics[height=1.25cm]{B_CB_logo2}}}
+
+* Reproducible Data Analyses
+** Portable scripts
+#+BEGIN_SRC R :eval false
+  gisturi <- "https://gist.github.com/gmbecker/...")
+  switchTo("project", seed = gisturi)
+  ## Analysis code here
+#+END_SRC
+
+- Script will run identically\footnote{Assuming same version of R and data availability} everywhere
+  - Use same versions of packages
+
+** Four pillars of Data Analysis
+   - Data
+   - Code
+   - Statistical Methods
+   - Software Used
+
+** Our Focus
+- Data
+- Code
+- Statistical Methods
+- *Software Used*
+  - /including specific versions/
+    
+* Packages don't live in isolation
+** Definitions
+ - *Package cohort* - /A set of packages which are to be operated on
+   as a single unit/
+   - E.g., for testing, installation, loading, or publication.
+ - *Versioned package cohort* - /A package cohort in which some or all
+   packages are associated with an exact release version/
+
+** Package Cohorts are crucial
+- Reproducibility
+  - Restore an environment in order to reproduce a result
+- Collaborations
+  - Working with the same versioned package cohort helps ensure comparability of results
+- Package development
+  - Differentiating and switching between development and production
+    cohorts
+- Large organizations/depts
+  - Specify/provide canonical, versioned package cohorts for use by all members
+
+** Users need tools
+To allow effective management of pkgs at the cohort level
+- Package libraries
+  - Create, populate, and switch between
+- Generalized installation
+  - Version specific
+    - Past releases and devel versions
+  - CRAN-style repositories and other sources (version control)
+- Describing cohorts
+  - Define versioned or non-versioned cohorts
+  - Publish cohorts as manifests or repositories
+
+* Package manifests
+** Formal representation of a package cohort
+   - *Package manifests* define package cohort and contain info about each package
+     - Name of the package
+     - Location of the source code
+     - Type of location
+       - git, svn, CRAN, bioc, etc
+   - *Seeding manifests* define a versioned cohort on top of a package
+     manifest
+     - Specific versions for a subset of the packages
+   - Manifests act as a de-centralized, virtual CRAN-style repository
+     - Can install packages "directly" using manifests
+
+** A package manifest
+#+BEGIN_SRC R :session *R* :results output :exports both
+  library(switchr)
+  ghman <- GithubManifest("gmbecker/fastdigest",
+      "duncantl/CodeDepends")
+  ghman
+#+END_SRC
+
+#+RESULTS:
+: A package manifest (PkgManifest object)
+: 
+: Contains 2 packages and 5 dependency repositories
+: 
+: Packages:
+:          name type
+: 1  fastdigest  git
+: 2 CodeDepends  git
+
+** A seeding manifest
+#+BEGIN_SRC R :session *R* :results output :hlines yes :exports both
+libman <- libManifest()
+head(libman)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+A seeding manifest (SessionManifest object)
+
+Describes a cohort of 5 package versions. 
+145 packages are listed in the underlying package manifest
+
+Package versions:
+           name version
+1 AnnotationDbi  1.30.1
+2    assertthat     0.1
+3        base64     1.1
+4     base64enc   0.1-2
+5     BatchJobs     1.7
+#+end_example
+
+* switchr
+** A unified framework
+   #+LATEX: \begin{center} \includegraphics[width=7cm]{switchrGRAN2cREV2} \end{center}
+   
+** Switching package libraries
+#+BEGIN_SRC R :session *R* :results output :exports both
+  switchTo("example")
+#+END_SRC
+
+#+RESULTS:
+: Switched to the 'example' computing environment.
+: 29 packages are currently available.
+: Packages installed in your site library ARE suppressed.
+: To switch back to your previous environment
+: type switchBack()
+
+#+BEGIN_SRC R :session *R* :results output :exports both
+  switchBack()
+#+END_SRC
+
+#+RESULTS:
+: Reverted to the 'original' computing environment.
+: 159 packages are currently available.
+: Packages installed in your site library ARE NOT suppressed.
+: To switch back to your previous environment
+: type switchBack()
+
+** Seeding libraries with manifests
+#+BEGIN_SRC R :eval false
+switchTo("example2", seed = ghman)
+#+END_SRC
+
+- New library
+  - Packages listed in seed are installed automatically 
+    - Exact versions if specified
+- Existing library
+  - Library is loaded without modification
+
+You can safely have a =switchTo= call with a seed in your script
+
+
+* Publishing manifests
+** Publishing manifests as gists
+- *switchrGist* publishes manifests as Gists
+#+BEGIN_SRC R :eval false
+library(switchrGist)
+publishManifest(ghman, Gist())
+#+END_SRC
+
+** Publishing manifests as package repositories
+- *GRANBase* creates CRAN/Bioc-like repositories from manifests
+  - Permanent
+  - Formally tested (as a cohort)
+#+BEGIN_SRC R :eval false
+library(GRANBase)
+makeRepo(ghman)
+#+END_SRC
+
+** Installing from manifests
+- Can install packages 'directly' from manifest
+  - dependencies located and downloaded
+    - including those living in Github, SVN, etc
+  - temporary /just-in-time/ repository built with package and its
+    deps
+    - R's standard installation machinery used
+#+BEGIN_SRC R :eval false
+install_packages("devtools", man)
+
+#+END_SRC
+
+* switchr in action
+
+** Previous CRAN state via metacran(db)
+- Packages on CRAN for a particular R release
+#+BEGIN_SRC R :session *R* :results output :exports both
+  man <- rVersionManifest("2.14.1")
+  head(man)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+A seeding manifest (SessionManifest object)
+
+Describes a cohort of 5 package versions. 
+3410 packages are listed in the underlying package manifest
+
+Package versions:
+   name version
+1  aaMI   1.0-1
+2   abc     1.4
+3   abd  0.1-22
+4 abind   1.4-0
+5   abn   0.5-1
+#+end_example
+
+** Historically appropriate dependencies
+- Manifest of dependencies given single package version
+#+BEGIN_SRC R :session *R* :results output :exports both
+  dtman <- cranPkgVersManifest("devtools", "1.4.1",
+                               suggests="none")
+  head(dtman)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+A seeding manifest (SessionManifest object)
+
+Describes a cohort of 5 package versions. 
+9 packages are listed in the underlying package manifest
+
+Package versions:
+      name  version
+1 devtools    1.4.1
+2     httr      0.2
+3    RCurl 1.95-4.1
+4  memoise      0.1
+5  whisker    0.3-2
+#+end_example
+
+** Frozen repositories from previous CRAN states
+- We can convert, e.g., the devtools manifest into a repository
+#+BEGIN_SRC R :eval false
+  repo <- makeRepo(dtman, basedir="~/devtools1.4.1repo")
+#+END_SRC
+
+** Installing from SVN checkouts of related Bioc pkgs
+- Bioc packages are highly interdependent
+  - Working off SVN for one means working off SVN for all
+- switchr supports /lazy repositories/
+  - Details are out of scope here
+  - Will use existing checkouts or create new ones as necessary
+  - Local changes *will* be reflected in repo
+#+BEGIN_SRC R :eval false
+  bman <- BiocSVNManifest("devel")
+  lrepo <- lazyRepo("rtracklayer",
+                    pkg_manifest = bman,
+                    dir = "~/mylocalcheckout")
+  install_packages("rtracklayer", lrepo)
+#+END_SRC
+
+* Availability
+** Availability
+- Release versions on CRAN
+- Development versions on Github
+  - https://github.com/gmbecker
+- Paper preprint on ArXiv
+  - http://arxiv.org/abs/1501.02284
+  - Under review at JSS
+
+* Acknowledgements
+** Acknowledgements
+- Michael Lawrence
+- Robert Gentleman
+- Cory Barr
+- B&CB dept of Genentech Research
+- You

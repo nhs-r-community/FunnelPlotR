@@ -1,0 +1,250 @@
+Changes in version 0.11.4.2 (2017-05-24)
+-------------------------
+
+Bugfixes
+  * Fix bug that doesn't look for the DESCRIPTION file in a complex git repo
+
+Miscellaneous
+  * Corrected typos in vignette
+
+Changes in version 0.10.7 (2016-05-10)
+-------------------------
+
+Minor API changes
+  * Rename Rcmd function to Rcmd2 to avoid conflict in R 3.3.*
+
+Miscellaneous
+	* Gracefully handle expected failures of BiocSVNManifest test,
+	  on systems which choke on https svn urls.
+	* No longer evaluate libManifest chunk in vignette due to problems on
+	  CRAN build system.
+
+
+Changes in version 0.10.0 (2016-05-04)
+-------------------------
+
+API changes
+	* addPkgs generic now has replace argument controlling behavior in case
+	  that the package already appears in the manifest.
+	* New nrow generic and methods for PkgManifest and SessionManifest.
+	* makeBiocSVNUrl now takes pkgtype argument and supports both software
+	  and experimental data packages.
+
+Bugfixes
+	* Fix major bug which broke versioned package installation from CRAN
+	  archive.
+	* download.packages2 utility function now has necessary type argument.
+	* BiocSVNManifest now grabs the correct branch of the data repository
+	  when software_only is FALSE.
+	* Reordered NEWS to be most-recent-first
+
+
+Changes to version 0.9.27 (2016-02-09)
+-------------------------
+
+Minor API changes
+        * export .libPaths2
+
+
+Changes to version 0.9.26 (2016-02-09)
+-------------------------
+
+Bugfixes
+	* fix bug in updateSVN when user/password are not specified
+
+
+Changes to version 0.9.25 (2015-11-17)
+-------------------------
+
+Bugfixes
+	* Switch R system call to Rcmd in findPkgVersionInBioc
+	* Fix code which determines bioconductor branch to search for exact bioc
+	  version.
+	* Make download method defaults more robust (on systems without wget)
+
+
+Changes to version 0.9.23 (2015-11-17)
+-------------------------
+
+Bugfixes
+	* Fix svn update code by initializing args variable so function is not
+	  hit
+	* Fix code in findSVNRev to use new system_w_init api
+
+
+Changes to version 0.9.21 (2015-10-20)
+-------------------------
+
+API Changes
+        * system_w_init not accepts args and env arguments a la system2, though
+	  ... still accepts system() based arguments, as that is called
+	  underneath
+	* BiocSVNManifest now uses 'svn ls' rather than available.packages to
+	  populate the manifest. not_in_repo argument removed.
+
+Bugfixes
+	* Updated Bioc devel and Bioc release version numbers
+	* Fixed system calls which were failing on Windows
+	* annotateDESC now protects against packages appearing in more than one
+	  place in the provided manifest
+
+Miscellaneous
+	* Added basic testing for svn-based ops, including makePkgSource and
+	  BiocSVNManifest
+
+
+Changes to version 0.9.19 (2015-08-16)
+-------------------------
+
+Minor API changes
+        * makeManifest() constructor now normalizes path for local packages in
+	  manifest
+
+Miscellaneous
+	* disable git-based tests on build systems that don't have git installed
+
+
+Changes to version 0.9.18 (2015-04-08)
+-------------------------
+
+Bugfixes
+	* fix dependencies test.
+	* fix documentation
+
+
+Changes to version 0.9.17 (2015-07-29)
+-------------------------
+
+Bugfixes
+	* fix problems related to git checkouts that were breaking tests (and
+	  functionality) in Windows
+
+Minor API Changes
+        * Add mustWork argument to normalizePath2, passthrough on Windows
+
+
+Changes to version 0.9.16 (2015-07-28)
+-------------------------
+
+API Changes
+	* Add shell_timing slot to SwitchrParam, and add accessor
+	* Use shell_timing to split git commands
+	* add experimental makePkgCheckout function
+
+Bugfixes
+	* fix typo in git command
+	* findPkgDir no longer takes a repo argument, which was unused.
+
+Changes to version 0.9.14 (2015-07-16)
+-------------------------
+
+Bugfixes
+	* further iteration on how git checkouts are updated.
+
+
+Changes in version 0.9.13 (2015-07-15)
+-------------------------
+
+Bugfixes
+	* refine how git existing git checkouts are updated.
+	* Add testing of git-based makePkgDir and updateGit functions
+
+
+Changes in version 0.9.12 (2015-07-06)
+-------------------------
+
+Bugfixes
+	* Fix regression in publishManifest resulting in files which contain
+	  only the header comments
+
+Miscellaneous
+	* Remove unnecessary usage of globalVariable to increase compatability
+	  with old R versions
+	* Add requireNamespace2 for backwards compatability with old Rs, switch
+	  to using that throughout package
+	* Add alternative definition of paste0 for backwards compatability with
+	  Rs old enough not to have it.
+
+
+Changes in version 0.9.11 (2015-07-06)
+-------------------------
+
+Miscellaneous
+	* We no longer use tools::package_dependencies to determine depedencies
+	  because it is relatively new and prevents switchr from installing in
+	  older Rs.
+
+Changes in version 0.9.10 (2015-07-01)
+-------------------------
+
+Bugfixes
+	* Fix regression(?) where specifying a SessionManifest seed for an
+	  existing library would force it to rebuild and reinstall everything in
+	  the seed.
+	* Calling switchTo with a seed for  library that already exists now
+	  invokes a message rather than a warning
+	* We now import symbols from base packages (other than base) as per new
+	  R CMD check requirements.
+
+
+Changes in version 0.9.8
+------------------
+
+Minor API changes
+  * SessionManifest now defaults to defining a cohort of 0 specified package
+    versions on top of the specified package manifest
+  * Added head and tail methods for PkgManifest and SessionManifest objects
+  * makeBiocSVNURL and related functions will now accept "devel" or "trunk" to
+    indicate the current devel version. Default is now "devel"
+
+New features
+    * Added BiocSVNManifest function which creates a manifest of all svn
+      locations for Bioc packages for a specific release (or the current devel
+      trunk).
+
+Bugfixes
+  * Fix extraneous warning from dir.create call within lazyRepo when dir already
+    exists
+  * When specifying a package in switchrDontUnload, its (recursive) dependencies
+    are now included also.
+  * libManifest will no longer list base packages, as they are not installable
+    in the normal sense.
+  * lazyRepo ignores base packages
+  * install_packages no longer builds a lazy repo when passed urls for existing
+    repositories
+  * empty calls to ManifestRow now correctly return an empty (0 row) manifest
+    df, rather than a df with 1 row filled with NAs
+  * crandb related methods (rVersionManifest and cranPkgVersManifest) now return
+    SessionManifests rather than PkgManifests with tarball sources.
+  * install_packages no longer prompts the user to select a CRAN mirror
+    unnecessarily (bypass bug when avail is specified in install.packages)
+  * Switched to dynamic determination of Bioc devel version using yaml across
+    the whole package
+
+
+Changes in version 0.9.6 (2015-06-16)
+------------------------
+
+API changes
+  * Installation will no longer fail if bioconductor.com/config.yaml is
+    unreachable. In this case the package will attempt to read it when the
+    package is loaded, and throw a warning if this fails as well.
+  * makeFileURL and fileFromFileURL are now exported.
+
+Bugfixes
+  * Fix transformation to and from file URLs in Windows (added regression test)
+
+
+Changes in version 0.9.4 (2015-06-05)
+------------------------
+
+Minor new features
+   * Add a lazyRepo,PkgManifest,ANY convenience method for building a lazy
+     repo of an entire manifest
+
+Bugfixes
+   * Fix test for whether a url points to a repository to handle gist urls
+     correctly
+   * Fix handling of package checkout directories for Git branches
+   * Fix typo strSplit -> strsplit
+   * Fix gist-based manifest (url) support

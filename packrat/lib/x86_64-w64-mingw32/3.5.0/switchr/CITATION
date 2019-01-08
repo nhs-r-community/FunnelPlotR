@@ -1,0 +1,21 @@
+bibentry(bibtype = "Article",
+  title        = "Enhancing Reproducibility and Collaboration via Management of {R} Package Cohorts",
+  author       = c(person(given = "Gabriel",
+                          family = "Becker",
+                          email = "becker.gabriel@gene.com"),
+                   person(given = "Cory",
+                          family = "Barr"),
+                   person(given = "Robert",
+                          family = "Gentleman"),
+                   person(given = "Michael",
+                          family = "Lawrence")),
+  journal      = "Journal of Statistical Software",
+  year         = "2017",
+  volume       = "82",
+  number       = "1",
+  pages        = "1--17",
+  doi          = "10.18637/jss.v082.i01",
+
+  header       = "To cite switchr/switchrGist/GRANBase in publications use:"
+)
+
