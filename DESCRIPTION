@@ -5,7 +5,9 @@ Version: 0.1.0
 Author: Chris Mainey
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
 Description: This is an Implementation of the Speigelhalter Funnel plots for incident reporting.
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Imports: ggplot2,
+         dplyr
 RoxygenNote: 6.1.1
