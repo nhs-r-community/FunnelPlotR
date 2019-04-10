@@ -6,7 +6,7 @@
 \alias{CMFunnels-package}
 \title{Funnel Plots of Incident reports}
 \description{
-This is a basic implementation of Speigelhalter's funnel plots for using wiht Chris Mainey's
+This is a basic implementation of Speigelhalter's funnel plots for using with Chris Mainey's
 PhD work, using aggregated incident reporting data from NRLS.  It expects a specific structure
 of table and column names.
 }
