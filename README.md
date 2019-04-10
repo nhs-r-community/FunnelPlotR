@@ -76,9 +76,7 @@ Now we have a regression that we can use to get a predicted `los` that we will c
 medpar$prds<- predict(mod, type="response")
 ```
 
-<br><br>
-
-Now we can buyild a funnel plot object with standard Poisson limits, and outliers labelled. The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
+<br><br> Now we can build a funnel plot object with standard Poisson limits, and outliers labelled. The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
 
 ``` r
 
@@ -94,7 +92,7 @@ my_plot[3]
 
 <br><br>
 
-Now that looks like too many outliers: or **overdispersion**. So lets check: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:
+That looks like too many outliers! There is more variation in our data than we would expect, and this is referrred to as: **overdispersion**. So lets check for it: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:
 
 ``` r
 sum(mod$weights * mod$residuals^2)/mod$df.residual
