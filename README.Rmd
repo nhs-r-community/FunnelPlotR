@@ -64,10 +64,11 @@ Now we have a regression that we can use to get a predicted `los` that we will c
 medpar$prds<- predict(mod, type="response")
 
 ```
+<br><br>
 
-Make a funnel plot object with normal Poisson limits, and outliers labelled
+Now we can buyild a funnel plot object with standard Poisson limits, and outliers labelled.  The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
 
-```{r, funnel1, message=FALSE, fig.align='center', fig.retina=5, collpse=TRUE}
+```{r, funnel1, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 
 my_plot<-funnel_plot(predictions=medpar$prds,observed=medpar$los, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', 
