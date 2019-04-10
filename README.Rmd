@@ -91,7 +91,7 @@ sum(mod$weights * mod$residuals^2)/mod$df.residual
 
 
 This suggest the variance is 6.24 times the condition mean, and definitely overdispersed.
-This is a huge topic, but applying overdispersed limits using SHMI or Spieglehalter methods adjust for this:
+This is a huge topic, but applying overdispersed limits using either SHMI or Spieglehalter methods adjust for this by inflating the limits:
 
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 
