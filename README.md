@@ -19,8 +19,12 @@ This package was originally developed for use in CM's PhD project, but published
 Installation
 ------------
 
-    ## Skipping install of 'CMFunnels' from a github remote, the SHA1 (2b0058d6) has not changed since last install.
-    ##   Use `force = TRUE` to force installation
+``` r
+devtools::install_github("https://github.com/chrismainey/CMFunnels")
+```
+
+Summary of Use
+--------------
 
 We will load the `medpar` dataset from Hilbe's `COUNT` package. This is based on 1991 Medicare files for the state of Arizona *(Hilbe, Joseph M (2014), Modeling Count Data, Cambridge University Press Hilbe)* We will first load the data and build a simple predicitive model using a Poisson GLM.
 
