@@ -3,30 +3,47 @@ Funnel plots for risk-adjusted indicators
 Chris Mainey
 10 April 2019
 
-Funnel plots
-------------
+## Funnel plots
 
-This is an implementation of the funnel plot processes, and overdispersion methods described in:<br> [Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x)<br> [Funnel plots for comparing institutional performance. Spiegelhalter (2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br> [Handeling over-dispersion of performance indicators. Spiegelhalter (2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
+This is an implementation of the funnel plot processes, and
+overdispersion methods described in:<br> [Statistical methods for
+healthcare regulation: rating, screening and surveillance. Spiegelhalter
+et al
+(2012)](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x)<br>
+[Funnel plots for comparing institutional performance. Spiegelhalter
+(2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
+[Handeling over-dispersion of performance indicators. Spiegelhalter
+(2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
 
-It draws funnel plots using `ggplot2` and allows users to specify whether they want 'overdispersed' limits, setting a Winsorisation percentage (default 10%)
+It draws funnel plots using `ggplot2` and allows users to specify
+whether they want ‘overdispersed’ limits, setting a Winsorisation
+percentage (default 10%)
 
-There is a variant method for this, used in the NHS' Summary Hospital Mortality Indicator'<br> [Summary Hospital-level Mortality Indicator, NHS Digital, SHMI specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi) <br>
+There is a variant method for this, used in the NHS’ Summary Hospital
+Mortality Indicator’<br> [Summary Hospital-level Mortality Indicator,
+NHS Digital, SHMI
+specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi)
+<br>
 
-This uses a log-transformation and truncation of the distribution for calculating overdispersion, whereas Spieglehalter's methods use a square-root and Winsorisation.
+This uses a log-transformation and truncation of the distribution for
+calculating overdispersion, whereas Spieglehalter’s methods use a
+square-root and Winsorisation.
 
-This package was originally developed for use in CM's PhD project, but published on github in case it's of use for others.
+This package was originally developed for use in CM’s PhD project, but
+published on github in case it’s of use for others.
 
-Installation
-------------
+## Installation
 
 ``` r
 devtools::install_github("https://github.com/chrismainey/CMFunnels")
 ```
 
-Summary of Use
---------------
+## Summary of Use
 
-We will load the `medpar` dataset from Hilbe's `COUNT` package. This is based on 1991 Medicare files for the state of Arizona *(Hilbe, Joseph M (2014), Modeling Count Data, Cambridge University Press Hilbe)* We will first load the data and build a simple predicitive model using a Poisson GLM.
+We will load the `medpar` dataset from Hilbe’s `COUNT` package. This is
+based on 1991 Medicare files for the state of Arizona *(Hilbe, Joseph M
+(2014), Modeling Count Data, Cambridge University Press)*. We will first
+load the data and build a simple predicitive model using a Poisson GLM.
 
 ``` r
 library(CMFunnels)
@@ -70,13 +87,17 @@ summary(mod)
     ## 
     ## Number of Fisher Scoring iterations: 5
 
-Now we have a regression that we can use to get a predicted `los` that we will compare to observed `los`:
+Now we have a regression that we can use to get a predicted `los` that
+we will compare to observed `los`:
 
 ``` r
 medpar$prds<- predict(mod, type="response")
 ```
 
-<br><br> Now we can build a funnel plot object with standard Poisson limits, and outliers labelled. The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
+<br><br> Now we can build a funnel plot object with standard Poisson
+limits, and outliers labelled. The function returns a list of the
+plotted data, the plotted control limit range, and the ggplot object,
+hence `object[3]` to call it.
 
 ``` r
 
@@ -88,11 +109,15 @@ my_plot[3]
 ## [[1]]
 ```
 
-<img src="README_files/figure-markdown_github/funnel1-1.png" width="672" style="display: block; margin: auto;" />
+<img src="README_files/figure-gfm/funnel1-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br>
 
-That looks like too many outliers! There is more variation in our data than we would expect, and this is referrred to as: **overdispersion**. So lets check for it: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:
+That looks like too many outliers\! There is more variation in our data
+than we would expect, and this is referrred to as: **overdispersion**.
+So lets check for it: <br> The following ratio should be 1 if our data
+are conforming to Poisson distribution assumption (conditional mean =
+variance). If it is greater than 1, we have overdispersion:
 
 ``` r
 sum(mod$weights * mod$residuals^2)/mod$df.residual
@@ -100,7 +125,10 @@ sum(mod$weights * mod$residuals^2)/mod$df.residual
 
     ## [1] 6.240519
 
-This suggest the variance is 6.24 times the condition mean, and definitely overdispersed. This is a huge topic, but applying overdispersed limits using either SHMI or Spieglehalter methods adjust for this by inflating the limits:
+This suggest the variance is 6.24 times the condition mean, and
+definitely overdispersed. This is a huge topic, but applying
+overdispersed limits using either SHMI or Spieglehalter methods adjust
+for this by inflating the limits:
 
 ``` r
 
@@ -112,8 +140,9 @@ my_plot2[3]
 ## [[1]]
 ```
 
-<img src="README_files/figure-markdown_github/funnel2-1.png" width="672" style="display: block; margin: auto;" />
+<img src="README_files/figure-gfm/funnel2-1.png" width="672" style="display: block; margin: auto;" />
 
-<br><br> These methods can be used for any similar indicators, e.g. standardised mortality ratios, readmissions etc.
+<br><br> These methods can be used for any similar indicators,
+e.g. standardised mortality ratios, readmissions etc.
 
 **Please read the package documentation for more info**
