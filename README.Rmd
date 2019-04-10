@@ -1,5 +1,10 @@
 ---
 title: "Funnel plots for risk adjusted indicators"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 author: "Chris Mainey"
 date: "10 April 2019"
 output: html_document
