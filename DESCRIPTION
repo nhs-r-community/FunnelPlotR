@@ -4,7 +4,7 @@ Title: Funnel Plots for Incident reporting
 Version: 0.1.0
 Author: Chris Mainey
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
-Description: This is an Implementation of the Speigelhalter Funnel plots for incident reporting.
+Description: This is an implementation of the Speigelhalter Funnel plots originally for incident reporting data
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
