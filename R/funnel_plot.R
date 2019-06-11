@@ -247,7 +247,7 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=TRUE,
     stop("Invalid method supplied")
   }
 
-qnorm(0.025)
+
 
 #base funnel plot
 funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predicted))+
