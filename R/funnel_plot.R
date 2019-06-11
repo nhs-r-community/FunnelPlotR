@@ -8,7 +8,7 @@
 #' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
 #' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
 #' @param title Plot title
-#' @param label_outliers Add group labels to outliers on plot. (default=TRUE)
+#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 2 for 2\eqn{\sigma} (95%), and 3 for 3\eqn{\sigma} (99.8%). Default=2
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param OD_Tau2 Draw overdispersed limits? Using Speigelhalter's (2012) Tau2 (default=TRUE)
 #' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
@@ -49,7 +49,7 @@
 
 
 funnel_plot<-function(predictions, observed, group, title, label_outliers=TRUE,
-                      Poisson_limits=FALSE, OD_Tau2=TRUE, method="SHMI", Winsorize_by = 0.1,
+                      Poisson_limits=FALSE, OD_Tau2=2, method="SHMI", Winsorize_by = 0.1,
                       multiplier = 1, x_label="Expected", y_label="Standardised Ratio"){
 
 
@@ -321,7 +321,17 @@ funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predi
 
   }
 
-    if (label_outliers==TRUE){
+    if (label_outliers==2){
+      if(OD_Tau2==FALSE){
+        funnel_p<-funnel_p +
+          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI2,as.character(grp),'')), size=2.7, direction="y")+
+          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<LCI2,as.character(grp),'')), size=2.7, direction="y")
+      } else {
+        funnel_p<-funnel_p +
+          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>OD2UCI,as.character(grp),'')), size=2.7, direction="y" )+
+          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<OD2LCI,as.character(grp),'')), size=2.7, direction="y" )
+      }
+    if (label_outliers==3){
       if(OD_Tau2==FALSE){
         funnel_p<-funnel_p +
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI3,as.character(grp),'')), size=2.7, direction="y")+
@@ -330,9 +340,11 @@ funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predi
         funnel_p<-funnel_p +
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>OD3UCI,as.character(grp),'')), size=2.7, direction="y" )+
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<OD3LCI,as.character(grp),'')), size=2.7, direction="y" )
-        }
+      }
+        
 
     }
+  }
 
 #ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI3,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = 0.01)+
  # ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<LCI3,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = -0.05)
