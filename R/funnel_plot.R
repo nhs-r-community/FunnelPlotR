@@ -130,8 +130,8 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=TRUE,
         phi=phi,
         Tau2=Tau2,
         Wazscore = (y-1)/ sqrt(((1/(2*sqrt(predicted)))^2)+Tau2),
-        ODLCI=  multiplier*((1-(1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
-        ODUCI=  multiplier*((1+(1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
+        OD2LCI=  multiplier*((1-(1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
+        OD2UCI=  multiplier*((1+(1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
         OD3LCI= multiplier*((1-(3.090232 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
         OD3UCI= multiplier*((1+(3.090232 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2)
       )
@@ -179,8 +179,8 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=TRUE,
       Tau2=Tau2,
       Wazscore = log(rr) / sqrt((1/predicted)+Tau2),
       var= sqrt(rrS2 + Tau2),
-      ODLCI=  multiplier*(exp(-1.959964 * sqrt((1/predicted)+Tau2))),
-      ODUCI=  multiplier*(exp(1.959964 * sqrt((1/predicted)+Tau2))),
+      OD2LCI=  multiplier*(exp(-1.959964 * sqrt((1/predicted)+Tau2))),
+      OD2UCI=  multiplier*(exp(1.959964 * sqrt((1/predicted)+Tau2))),
       OD3LCI= multiplier*(exp(-3.090232 * sqrt((1/predicted)+Tau2))),
       OD3UCI= multiplier*(exp(3.090232 * sqrt((1/predicted)+Tau2)))
    )
