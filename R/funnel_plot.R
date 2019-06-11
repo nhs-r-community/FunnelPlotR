@@ -48,8 +48,8 @@
 #' @import ggplot2
 
 
-funnel_plot<-function(predictions, observed, group, title, label_outliers=TRUE,
-                      Poisson_limits=FALSE, OD_Tau2=2, method="SHMI", Winsorize_by = 0.1,
+funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
+                      Poisson_limits=FALSE, OD_Tau2=TRUE, method="SHMI", Winsorize_by = 0.1,
                       multiplier = 1, x_label="Expected", y_label="Standardised Ratio"){
 
 
@@ -317,21 +317,21 @@ funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predi
         scale_color_manual(values=c("3σ Overdispersed"= "#DEC400", #"#F7EF0A", #"#2CA02CFF",
                                     "2σ Overdispersed"= "#9467BDFF"
                                     ),name="Control limits")
-  }
+    }
 
   }
 
-    if (label_outliers==2){
-      if(OD_Tau2==FALSE){
-        funnel_p<-funnel_p +
-          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI2,as.character(grp),'')), size=2.7, direction="y")+
-          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<LCI2,as.character(grp),'')), size=2.7, direction="y")
+   if(label_outliers==2){
+     if(OD_Tau2==FALSE){
+       funnel_p<-funnel_p +
+         ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI2,as.character(grp),'')), size=2.7, direction="y")+
+         ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<LCI2,as.character(grp),'')), size=2.7, direction="y")
       } else {
-        funnel_p<-funnel_p +
+       funnel_p<-funnel_p +
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>OD2UCI,as.character(grp),'')), size=2.7, direction="y" )+
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<OD2LCI,as.character(grp),'')), size=2.7, direction="y" )
       }
-    if (label_outliers==3){
+    if(label_outliers==3){
       if(OD_Tau2==FALSE){
         funnel_p<-funnel_p +
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI3,as.character(grp),'')), size=2.7, direction="y")+
