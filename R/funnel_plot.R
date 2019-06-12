@@ -8,7 +8,7 @@
 #' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
 #' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
 #' @param title Plot title
-#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 2 for 2\eqn{\sigma} (95%), and 3 for 3\eqn{\sigma} (99.8%). Default=2
+#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95% or 99.8% quantiles of the distribution. Default=99
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param OD_Tau2 Draw overdispersed limits? Using Speigelhalter's (2012) Tau2 (default=TRUE)
 #' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
@@ -48,7 +48,7 @@
 #' @import ggplot2
 
 
-funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
+funnel_plot<-function(predictions, observed, group, title, label_outliers=99,
                       Poisson_limits=FALSE, OD_Tau2=TRUE, method="SHMI", Winsorize_by = 0.1,
                       multiplier = 1, x_label="Expected", y_label="Standardised Ratio"){
 
@@ -96,9 +96,9 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
              S= 1/(2*sqrt(predicted)),
              rrS2= S^2,
              Uzscore_CQC=2*(sqrt(observed) - sqrt(predicted)),
-             LCI2= multiplier*(1-(1.959964 * sqrt(1/rrS2))^2),
+             LCI2= multiplier*(1-(-1.959964 * sqrt(1/rrS2))^2),
              UCI2= multiplier*(1+(1.959964 * sqrt(1/rrS2)) ^2),
-             LCI3= multiplier*(1-(3.090232 * sqrt(1/rrS2))^2),
+             LCI3= multiplier*(1-(-3.090232 * sqrt(1/rrS2))^2),
              UCI3= multiplier*(1+(3.090232 * sqrt(1/rrS2)) ^2)
 
       )
@@ -108,7 +108,7 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
     uz=quantile(x = mod_plot_agg$Uzscore_CQC, (1- Winsorize_by))
 
     mod_plot_agg<-mod_plot_agg %>%
-      dplyr::mutate( Winsorised = ifelse(Uzscore_CQC>=lz & Uzscore_CQC<=uz, 0, 1),
+      dplyr::mutate( Winsorised = ifelse(Uzscore_CQC>lz & Uzscore_CQC<uz, 0, 1),
                      Wuzscore= ifelse(Uzscore_CQC<lz, lz, ifelse(Uzscore_CQC>uz,lz,Uzscore_CQC)),
                      Wuzscore2= Wuzscore^2)
 
@@ -130,9 +130,9 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
         phi=phi,
         Tau2=Tau2,
         Wazscore = (y-1)/ sqrt(((1/(2*sqrt(predicted)))^2)+Tau2),
-        OD2LCI=  multiplier*((1-(1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
+        OD2LCI=  multiplier*((1-(-1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
         OD2UCI=  multiplier*((1+(1.959964 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
-        OD3LCI= multiplier*((1-(3.090232 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
+        OD3LCI= multiplier*((1-(-3.090232 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2),
         OD3UCI= multiplier*((1+(3.090232 * sqrt(((1/(2*sqrt(predicted)))^2)+Tau2)))^2)
       )
 
@@ -154,7 +154,7 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
   uz=quantile(x = mod_plot_agg$Uzscore_SHMI, (1- Winsorize_by))
 
   mod_plot_agg<-mod_plot_agg %>%
-    dplyr::mutate(Winsorised = ifelse(Uzscore_SHMI>=lz & Uzscore_SHMI<=uz, 0, 1))
+    dplyr::mutate(Winsorised = ifelse(Uzscore_SHMI>lz & Uzscore_SHMI<uz, 0, 1))
 
   mod_plot_agg_sub<-mod_plot_agg %>%
     dplyr::filter(Winsorised==0) %>%
@@ -208,8 +208,8 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
       number.seq,
       ll95 = multiplier*((qchisq(0.975,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
       ul95 =  multiplier*((qchisq(0.025,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
-      ll999 = multiplier*((qchisq(0.999,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
-      ul999 = multiplier*((qchisq(0.001,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq)
+      ll998 = multiplier*((qchisq(0.998,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
+      ul998 = multiplier*((qchisq(0.001,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq)
     )
 
   } else if(method=="SHMI"){
@@ -220,12 +220,12 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
     number.seq,
     ll95 = multiplier*((qchisq(0.975,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
     ul95 =  multiplier*((qchisq(0.025,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
-    ll999 = multiplier*((qchisq(0.999,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
-    ul999 = multiplier*((qchisq(0.001,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
+    ll998 = multiplier*((qchisq(0.998,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
+    ul998 = multiplier*((qchisq(0.001,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
     odll95 = multiplier*(exp(-1.959964 * sqrt((1/number.seq) +Tau2))),
     odul95 = multiplier*(exp(1.959964 * sqrt((1/number.seq) +Tau2))),
-    odll999 = multiplier*(exp(-3.090232 * sqrt((1/number.seq) +Tau2))),
-    odul999 = multiplier*(exp(3.090232 * sqrt((1/number.seq) +Tau2)))
+    odll998 = multiplier*(exp(-3.090232 * sqrt((1/number.seq) +Tau2))),
+    odul998 = multiplier*(exp(3.090232 * sqrt((1/number.seq) +Tau2)))
     )
 
   } else if(method=="CQC"){
@@ -235,12 +235,12 @@ funnel_plot<-function(predictions, observed, group, title, label_outliers=2,
       number.seq,
       ll95 = multiplier*((qchisq(0.975,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
       ul95 =  multiplier*((qchisq(0.025,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
-      ll999 = multiplier*((qchisq(0.999,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
-      ul999 = multiplier*((qchisq(0.001,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
+      ll998 = multiplier*((qchisq(0.998,2 * number.seq, lower.tail = FALSE) /2)/number.seq),
+      ul998 = multiplier*((qchisq(0.001,2 * (number.seq+1), lower.tail = FALSE) /2)/number.seq),
       odll95 = multiplier*((1-(1.959964 *  (sqrt(((1/(2*sqrt(number.seq)))^2) +Tau2))))^2),
       odul95 = multiplier*((1+(1.959964 *  (sqrt(((1/(2*sqrt(number.seq)))^2) +Tau2))))^2),
-      odll999 = multiplier*((1+(-3.090232 *  (sqrt(((1/(2*sqrt(number.seq)))^2) +Tau2))))^2),
-      odul999 = multiplier*((1+(3.090232 *  (sqrt(((1/(2*sqrt(number.seq)))^2) +Tau2))))^2)
+      odll998 = multiplier*((1+(-3.090232 *  (sqrt(((1/(2*sqrt(number.seq)))^2) +Tau2))))^2),
+      odul998 = multiplier*((1+(3.090232 *  (sqrt(((1/(2*sqrt(number.seq)))^2) +Tau2))))^2)
     )
 
   } else {
@@ -267,7 +267,8 @@ funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predi
     size = 10,
     face = "bold",
     colour = "black",
-    angle = 0)))
+    angle = 0))
+  )
 
  if(OD_Tau2==TRUE){
     funnel_p<- funnel_p +
@@ -282,46 +283,46 @@ funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predi
 
   if(Poisson_limits==TRUE & OD_Tau2==TRUE){
     funnel_p<-funnel_p +
-      geom_line(aes(x = number.seq, y = ll95, col="2σ Poisson"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = ul95, col="2σ Poisson"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = ll999, col="3σ Poisson"), size = 1, data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = ul999, col="3σ Poisson"),  size = 1,data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = odll95, col="2σ Overdispersed"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = odul95, col="2σ Overdispersed"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = odll999, col="3σ Overdispersed"), size = 1, data = dfCI, na.rm=TRUE) +
-      geom_line(aes(x = number.seq, y = odul999, col="3σ Overdispersed"),  size = 1,data = dfCI, na.rm=TRUE) +
-      scale_color_manual(values=c("3σ Poisson"="#1F77B4FF",
-                                  "2σ Poisson"= "#FF7F0EFF",
-                                  "3σ Overdispersed"= "#2CA02CFF",
-                                  "2σ Overdispersed"= "#9467BDFF"
+      geom_line(aes(x = number.seq, y = ll95, col="95% Poisson"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = ul95, col="95% Poisson"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = ll998, col="99.8% Poisson"), size = 1, data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = ul998, col="99.8% Poisson"),  size = 1,data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = odll95, col="95% Overdispersed"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = odul95, col="95% Overdispersed"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = odll998, col="99.8% Overdispersed"), size = 1, data = dfCI, na.rm=TRUE) +
+      geom_line(aes(x = number.seq, y = odul998, col="99.8% Overdispersed"),  size = 1,data = dfCI, na.rm=TRUE) +
+      scale_color_manual(values=c("99.8% Poisson"="#1F77B4FF",
+                                  "95% Poisson"= "#FF7F0EFF",
+                                  "99.8% Overdispersed"= "#2CA02CFF",
+                                  "95% Overdispersed"= "#9467BDFF"
       ),name="Control limits")
   } else {
 
     if(Poisson_limits==TRUE){
       funnel_p<-funnel_p +
-        geom_line(aes(x = number.seq, y = ll95, col="2σ Poisson"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-        geom_line(aes(x = number.seq, y = ul95, col="2σ Poisson"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-        geom_line(aes(x = number.seq, y = ll999, col="3σ Poisson"), size = 1, data = dfCI, na.rm=TRUE) +
-        geom_line(aes(x = number.seq, y = ul999, col="3σ Poisson"),  size = 1,data = dfCI, na.rm=TRUE) +
-        scale_color_manual(values=c("3σ Poisson"= "#7E9C06", #"#1F77B4FF"
-                                    "2σ Poisson"= "#FF7F0EFF"
+        geom_line(aes(x = number.seq, y = ll95, col="95% Poisson"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+        geom_line(aes(x = number.seq, y = ul95, col="95% Poisson"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+        geom_line(aes(x = number.seq, y = ll998, col="99.8% Poisson"), size = 1, data = dfCI, na.rm=TRUE) +
+        geom_line(aes(x = number.seq, y = ul998, col="99.8% Poisson"),  size = 1,data = dfCI, na.rm=TRUE) +
+        scale_color_manual(values=c("99.8% Poisson"= "#7E9C06", #"#1F77B4FF"
+                                    "95% Poisson"= "#FF7F0EFF"
                             ),name="Control limits")
     }
 
    if(OD_Tau2==TRUE){
     funnel_p<-funnel_p +
-        geom_line(aes(x = number.seq, y = odll95, col="2σ Overdispersed"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-        geom_line(aes(x = number.seq, y = odul95, col="2σ Overdispersed"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
-        geom_line(aes(x = number.seq, y = odll999, col="3σ Overdispersed"), size = 1, data = dfCI, na.rm=TRUE) +
-        geom_line(aes(x = number.seq, y = odul999, col="3σ Overdispersed"),  size = 1,data = dfCI, na.rm=TRUE) +
-        scale_color_manual(values=c("3σ Overdispersed"= "#DEC400", #"#F7EF0A", #"#2CA02CFF",
-                                    "2σ Overdispersed"= "#9467BDFF"
+        geom_line(aes(x = number.seq, y = odll95, col="95% Overdispersed"), size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+        geom_line(aes(x = number.seq, y = odul95, col="95% Overdispersed"),  size = 1, linetype=2, data = dfCI, na.rm=TRUE) +
+        geom_line(aes(x = number.seq, y = odll998, col="99.8% Overdispersed"), size = 1, data = dfCI, na.rm=TRUE) +
+        geom_line(aes(x = number.seq, y = odul998, col="99.8% Overdispersed"),  size = 1,data = dfCI, na.rm=TRUE) +
+        scale_color_manual(values=c("99.8% Overdispersed"= "#DEC400", #"#F7EF0A", #"#2CA02CFF",
+                                    "95% Overdispersed"= "#9467BDFF"
                                     ),name="Control limits")
     }
 
   }
 
-   if(label_outliers==2){
+   if(label_outliers==95){
      if(OD_Tau2==FALSE){
        funnel_p<-funnel_p +
          ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI2,as.character(grp),'')), size=2.7, direction="y")+
@@ -331,7 +332,7 @@ funnel_p<- ggplot(mod_plot_agg, aes(y=multiplier*((observed/predicted)), x=predi
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>OD2UCI,as.character(grp),'')), size=2.7, direction="y" )+
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<OD2LCI,as.character(grp),'')), size=2.7, direction="y" )
       }
-    if(label_outliers==3){
+    if(label_outliers==99){
       if(OD_Tau2==FALSE){
         funnel_p<-funnel_p +
           ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI3,as.character(grp),'')), size=2.7, direction="y")+

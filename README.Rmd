@@ -39,7 +39,7 @@ devtools::install_github("https://github.com/chrismainey/CMFunnels")
 ## Summary of Use
 
 We will load the `medpar` dataset from Hilbe's `COUNT` package.  This is based on 1991 Medicare files for the state of Arizona _(Hilbe, Joseph M (2014), Modeling Count Data, Cambridge University Press)_.
-We will first load the data and build a simple predicitive model using a Poisson GLM.
+We will first load the data and build a simple predictive model using a Poisson GLM.
 
 
 ```{r data, warning=FALSE, message=FALSE}
@@ -78,7 +78,7 @@ my_plot[3]
 
 <br><br>
 
-That looks like too many outliers!  There is more variation in our data than we would expect, and this is referrred to as: __overdispersion__.
+That looks like too many outliers!  There is more variation in our data than we would expect, and this is referred to as: __overdispersion__.
 So lets check for it: <br>
 The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance).  If it is greater than 1, we have overdispersion:
 
@@ -90,7 +90,7 @@ sum(mod$weights * mod$residuals^2)/mod$df.residual
 
 
 This suggest the variance is 6.24 times the condition mean, and definitely overdispersed.
-This is a huge topic, but applying overdispersed limits using either SHMI or Spieglehalter methods adjust for this by inflating the limits:
+This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:
 
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 
