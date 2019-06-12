@@ -100,10 +100,10 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         S = 1 / (2 * sqrt(predicted)),
         rrS2 = S^2,
         Uzscore_CQC = 2 * (sqrt(observed) - sqrt(predicted)),
-        LCI2 = multiplier * (1 - (-1.959964 * sqrt(1 / rrS2))^2),
-        UCI2 = multiplier * (1 + (1.959964 * sqrt(1 / rrS2))^2),
-        LCI3 = multiplier * (1 - (-3.090232 * sqrt(1 / rrS2))^2),
-        UCI3 = multiplier * (1 + (3.090232 * sqrt(1 / rrS2))^2)
+        LCL95 = multiplier * (1 - (-1.959964 * sqrt(1 / rrS2))^2),
+        UCL95 = multiplier * (1 + (1.959964 * sqrt(1 / rrS2))^2),
+        LCL99 = multiplier * (1 - (-3.090232 * sqrt(1 / rrS2))^2),
+        UCL99 = multiplier * (1 + (3.090232 * sqrt(1 / rrS2))^2)
       )
 
 
@@ -135,10 +135,10 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         phi = phi,
         Tau2 = Tau2,
         Wazscore = (y - 1) / sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2),
-        OD2LCI = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
-        OD2UCI = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
-        OD3LCI = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
-        OD3UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2)
+        OD95LCI = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
+        OD95UCI = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
+        OD99LCI = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
+        OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2)
       )
   } else if (method == "SHMI") {
     mod_plot_agg <- mod_plot_agg %>%
@@ -146,10 +146,10 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         s = 1 / (sqrt(predicted)),
         rrS2 = s^2,
         Uzscore_SHMI = sqrt(predicted) * log(observed / predicted),
-        LCI2 = multiplier * (exp(-1.959964 * sqrt(rrS2))),
-        UCI2 = multiplier * (exp(1.959964 * sqrt(rrS2))),
-        LCI3 = multiplier * (exp(-3.090232 * sqrt(rrS2))),
-        UCI3 = multiplier * (exp(3.090232 * sqrt(rrS2)))
+        LCL95 = multiplier * (exp(-1.959964 * sqrt(rrS2))),
+        UCL95 = multiplier * (exp(1.959964 * sqrt(rrS2))),
+        LCL99 = multiplier * (exp(-3.090232 * sqrt(rrS2))),
+        UCL99 = multiplier * (exp(3.090232 * sqrt(rrS2)))
       )
 
     lz <- quantile(x = mod_plot_agg$Uzscore_SHMI, Winsorize_by)
@@ -183,10 +183,10 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         Tau2 = Tau2,
         Wazscore = log(rr) / sqrt((1 / predicted) + Tau2),
         var = sqrt(rrS2 + Tau2),
-        OD2LCI = multiplier * (exp(-1.959964 * sqrt((1 / predicted) + Tau2))),
-        OD2UCI = multiplier * (exp(1.959964 * sqrt((1 / predicted) + Tau2))),
-        OD3LCI = multiplier * (exp(-3.090232 * sqrt((1 / predicted) + Tau2))),
-        OD3UCI = multiplier * (exp(3.090232 * sqrt((1 / predicted) + Tau2)))
+        OD95LCI = multiplier * (exp(-1.959964 * sqrt((1 / predicted) + Tau2))),
+        OD95UCI = multiplier * (exp(1.959964 * sqrt((1 / predicted) + Tau2))),
+        OD99LCI = multiplier * (exp(-3.090232 * sqrt((1 / predicted) + Tau2))),
+        OD99UCI = multiplier * (exp(3.090232 * sqrt((1 / predicted) + Tau2)))
       )
   } else {
     stop("Please specify a valid method")
@@ -327,32 +327,32 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
   if (label_outliers == 95) {
     if (OD_Tau2 == FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCI2, as.character(grp), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCI2, as.character(grp), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCL95, as.character(grp), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCL95, as.character(grp), "")), size = 2.7, direction = "y")
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD2UCI, as.character(grp), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD2LCI, as.character(grp), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD95UCI, as.character(grp), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD95LCI, as.character(grp), "")), size = 2.7, direction = "y")
     }
     if (label_outliers == 99) {
       if (OD_Tau2 == FALSE) {
         funnel_p <- funnel_p +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCI3, as.character(grp), "")), size = 2.7, direction = "y") +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCI3, as.character(grp), "")), size = 2.7, direction = "y")
+          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCL99, as.character(grp), "")), size = 2.7, direction = "y") +
+          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCL99, as.character(grp), "")), size = 2.7, direction = "y")
       } else {
         funnel_p <- funnel_p +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD3UCI, as.character(grp), "")), size = 2.7, direction = "y") +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD3LCI, as.character(grp), "")), size = 2.7, direction = "y")
+          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD99UCI, as.character(grp), "")), size = 2.7, direction = "y") +
+          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD99LCI, as.character(grp), "")), size = 2.7, direction = "y")
       }
     }
   }
 
-  # ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCI3,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = 0.01)+
-  # ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<LCI3,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = -0.05)
+  # ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>UCL99,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = 0.01)+
+  # ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<LCL99,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = -0.05)
   # } else {
   #  funnel_p<-funnel_p +
-  #    ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>OD3UCI,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = 0.01)+
-  #    ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<OD3LCI,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = -0.05)
+  #    ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted>OD99UCI,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = 0.01)+
+  #    ggrepel::geom_label_repel(aes(label=ifelse(observed/predicted<OD99LCI,as.character(grp),'')),hjust=0,vjust=0, size=2.7, nudge_y = -0.05)
 
 
   return(list(mod_plot_agg, dfCI, funnel_p))
