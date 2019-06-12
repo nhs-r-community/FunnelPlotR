@@ -2,7 +2,6 @@
 
 export(funnel_plot)
 import(ggplot2)
-importFrom(arm,rescale)
 importFrom(dplyr,"%>%")
 importFrom(dplyr,arrange)
 importFrom(dplyr,filter)

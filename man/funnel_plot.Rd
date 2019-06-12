@@ -4,7 +4,7 @@
 \alias{funnel_plot}
 \title{Funnel Plots for Incident Reporting}
 \usage{
-funnel_plot(predictions, observed, group, title, label_outliers = TRUE,
+funnel_plot(predictions, observed, group, title, label_outliers = 99,
   Poisson_limits = FALSE, OD_Tau2 = TRUE, method = "SHMI",
   Winsorize_by = 0.1, multiplier = 1, x_label = "Expected",
   y_label = "Standardised Ratio")
@@ -18,7 +18,7 @@ funnel_plot(predictions, observed, group, title, label_outliers = TRUE,
 
 \item{title}{Plot title}
 
-\item{label_outliers}{Add group labels to outliers on plot. (default=TRUE)}
+\item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99}
 
 \item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
@@ -53,13 +53,12 @@ Outliers are marked based on the grouping, controlled by `label_outliers` .
 }
 \examples{
 \dontrun{
-    a<-funnel_plot(my_preds, my_observed, "organisation", '2015/16', 'Poisson model')
-    #Access the plot
-    a[[3]]
+a <- funnel_plot(my_preds, my_observed, "organisation", "2015/16", "Poisson model")
+# Access the plot
+a[[3]]
 
-    #Access the
-    }
-
+# Access the
+}
 
 }
 \seealso{
