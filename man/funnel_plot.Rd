@@ -22,11 +22,11 @@ funnel_plot(predictions, observed, group, title, label_outliers = 99,
 
 \item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
-\item{OD_Tau2}{Draw overdispersed limits? Using Speigelhalter's (2012) Tau2 (default=TRUE)}
+\item{OD_Tau2}{Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)}
 
 \item{method}{Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
 uses a square root transformation and winsorizes by replaceing values, SHMI uses log transformation and winsorizes
-by truncation. CQC method is default.}
+by truncation. SHMI method is default.}
 
 \item{Winsorize_by}{Proportion of the distribution for winsorization. Default is 10 \% (0.1)}
 
@@ -37,11 +37,11 @@ by truncation. CQC method is default.}
 \item{y_label}{Title for the funnel plot y-axis.  Usually a standardised ratio.}
 }
 \value{
-a list of the funnel plot as ggplot2 object, the limits table and the base table for plot.
+A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
 }
 \description{
 This is an implementation of funnel plots described Spiegelhalter (2005).
-There are several of parameters for the input, with the assumption that  you will want smooth,
+There are several parameters for the input, with the assumption that you will want smooth,
  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
 effects models.
 }
