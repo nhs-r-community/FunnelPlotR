@@ -1,6 +1,6 @@
 #' @title Funnel Plots for Incident Reporting
 #' @description This is an implementation of funnel plots described Spiegelhalter (2005).
-#' There are several of parameters for the input, with the assumption that  you will want smooth,
+#' There are several parameters for the input, with the assumption that you will want smooth,
 #'  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
 #' effects models.
 #'
@@ -10,7 +10,7 @@
 #' @param title Plot title
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
-#' @param OD_Tau2 Draw overdispersed limits? Using Speigelhalter's (2012) Tau2 (default=TRUE)
+#' @param OD_Tau2 Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
 #' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
 #' uses a square root transformation and winsorizes by replaceing values, SHMI uses log transformation and winsorizes
 #' by truncation. SHMI method is default.
@@ -19,7 +19,8 @@
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
 #'
-#' @return a list of the funnel plot as ggplot2 object, the limits table and the base table for plot.
+#' @return A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
+#' 
 #' @export
 #' @details
 #'    Outliers are marked based on the grouping, controlled by `label_outliers` .
@@ -53,7 +54,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
 
 
 
-  # build inital dataframe of obs/prdicted, with error message caught here in 'try'
+  # build inital dataframe of obs/predicted, with error message caught here in 'try'
 
   if (missing(predictions)) {
     stop("Need to specify model predictions")
@@ -334,16 +335,16 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD95UCI, as.character(grp), "")), size = 2.7, direction = "y") +
         ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD95LCI, as.character(grp), "")), size = 2.7, direction = "y")
     }
-    if (label_outliers == 99) {
-      if (OD_Tau2 == FALSE) {
-        funnel_p <- funnel_p +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCL99, as.character(grp), "")), size = 2.7, direction = "y") +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCL99, as.character(grp), "")), size = 2.7, direction = "y")
-      } else {
-        funnel_p <- funnel_p +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD99UCI, as.character(grp), "")), size = 2.7, direction = "y") +
-          ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD99LCI, as.character(grp), "")), size = 2.7, direction = "y")
-      }
+  }
+  if (label_outliers == 99) {
+    if (OD_Tau2 == FALSE) {
+      funnel_p <- funnel_p +
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCL99, as.character(grp), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCL99, as.character(grp), "")), size = 2.7, direction = "y")
+    } else {
+      funnel_p <- funnel_p +
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD99UCI, as.character(grp), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD99LCI, as.character(grp), "")), size = 2.7, direction = "y")
     }
   }
 
