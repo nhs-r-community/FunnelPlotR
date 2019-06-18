@@ -2,7 +2,7 @@
 % Please edit documentation in R/funnel_plot.R
 \name{funnel_plot}
 \alias{funnel_plot}
-\title{Funnel Plots for Incident Reporting}
+\title{Funnel Plots for Indirectly-Standardised Ratios}
 \usage{
 funnel_plot(predictions, observed, group, title, label_outliers = 99,
   Poisson_limits = FALSE, OD_Tau2 = TRUE, method = "SHMI",

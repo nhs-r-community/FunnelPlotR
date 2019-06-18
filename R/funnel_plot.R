@@ -1,4 +1,4 @@
-#' @title Funnel Plots for Incident Reporting
+#' @title Funnel Plots for Indirectly-Standardised Ratios
 #' @description This is an implementation of funnel plots described Spiegelhalter (2005).
 #' There are several parameters for the input, with the assumption that you will want smooth,
 #'  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
