@@ -2,7 +2,9 @@ Package: CMFunnels
 Type: Package
 Title: Funnel Plots for Incident reporting
 Version: 0.1.3
-Author: Chris Mainey
+Author@R: c(
+        person("Chris", "Mainey", ,"chris.mainey@uhb.nhs.uk", c("aut", "cre"), comment = c(ORCID ="0000-0002-3018-6171"")),
+        person("Matthew", "Bass", ,"matthew.bass@uhb.nhs.uk", c("ctb") )
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
 Description: This is an implementation of the Speigelhalter Funnel plots originally for incident reporting data.
 License: GPL-3
