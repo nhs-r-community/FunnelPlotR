@@ -88,8 +88,8 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
 
   # Determine the range of plots
   max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(predicted))) %>% as.numeric()
-  min_ratio <- dplyr::summarise(mod_plot_agg, multiplier * min(observed / predicted)) %>% as.numeric()
-  max_ratio <- dplyr::summarise(mod_plot_agg, multiplier * max(observed / predicted)) %>% as.numeric()
+  min_ratio <- min(0.7 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * min(observed / predicted)) %>% as.numeric())
+  max_ratio <- max(1.3 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * max(observed / predicted)) %>% as.numeric())
 
 
   ## Winsorisation
@@ -121,6 +121,10 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
     phi <- mod_plot_agg %>%
       dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
       as.numeric()
+    
+    if(is.na(phi)){
+      phi<-0
+    }
 
     Tau2 <- mod_plot_agg %>%
       dplyr::summarise(Tau2 = max(
@@ -130,7 +134,11 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
           (sum(1 / rrS2) - (sum(1 / (S)) / sum(1 / rrS2)))
       )) %>%
       as.numeric()
-
+    
+    if(is.na(Tau2)){
+      Tau2<-0
+    }
+    
     mod_plot_agg <- mod_plot_agg %>%
       dplyr::mutate(
         phi = phi,
@@ -169,12 +177,19 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
     phi <- mod_plot_agg_sub %>%
       dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
       as.numeric()
-
+    
+    if(is.na(phi)){
+      phi<-0
+    }
+    
     Tau2 <- mod_plot_agg_sub %>%
       dplyr::summarise(Tau2 = max(0, ((n() * phi) - (n() - 1)) /
         (sum(predicted) - (sum(predicted^2) / sum(predicted))))) %>%
       as.numeric()
-
+    
+    if(is.na(Tau2)){
+      Tau2<-0
+    }
 
     mod_plot_agg <- mod_plot_agg %>%
       dplyr::mutate(
@@ -197,7 +212,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
   ### Calculate funnel limits ####
   if (OD_Tau2 == FALSE) {
     Poisson_limits <- TRUE
-    Tau2 <- 0
+    message("OD_Tau2 set to FALSE, plotting using Poisson limits")
   }
 
   if (OD_Tau2 == TRUE & Tau2 == 0) {
@@ -301,7 +316,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         "95% Overdispersed" = "#9467BDFF"
       ), name = "Control limits")
   } else {
-    if (Poisson_limits == TRUE) {
+    if (Poisson_limits == TRUE & OD_Tau2 == FALSE) {
       funnel_p <- funnel_p +
         geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -313,7 +328,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         ), name = "Control limits")
     }
 
-    if (OD_Tau2 == TRUE) {
+    if (Poisson_limits == FALSE &  OD_Tau2 == TRUE) {
       funnel_p <- funnel_p +
         geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -359,3 +374,5 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
 
   return(list(mod_plot_agg, dfCI, funnel_p))
 }
+
+
