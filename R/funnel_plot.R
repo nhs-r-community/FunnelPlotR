@@ -204,7 +204,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
     OD_Tau2 <- FALSE
     Poisson_limits <- TRUE
 
-    message("No overdispersion detected, using Poisson limits")
+    message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
 
     # general limits + Tau2 limits table
     set.seed(1)
