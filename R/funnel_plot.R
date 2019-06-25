@@ -197,6 +197,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
   ### Calculate funnel limits ####
   if (OD_Tau2 == FALSE) {
     Poisson_limits <- TRUE
+    Tau2 <- 0
   }
 
   if (OD_Tau2 == TRUE & Tau2 == 0) {
