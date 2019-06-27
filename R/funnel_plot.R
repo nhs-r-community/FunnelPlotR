@@ -114,7 +114,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
     mod_plot_agg <- mod_plot_agg %>%
       dplyr::mutate(
         Winsorised = ifelse(Uzscore_CQC > lz & Uzscore_CQC < uz, 0, 1),
-        Wuzscore = ifelse(Uzscore_CQC < lz, lz, ifelse(Uzscore_CQC > uz, lz, Uzscore_CQC)),
+        Wuzscore = ifelse(Uzscore_CQC < lz, lz, ifelse(Uzscore_CQC > uz, uz, Uzscore_CQC)),
         Wuzscore2 = Wuzscore^2
       )
 
@@ -150,6 +150,8 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2)
       )
   } else if (method == "SHMI") {
+    
+    
     mod_plot_agg <- mod_plot_agg %>%
       mutate(
         s = 1 / (sqrt(predicted)),
