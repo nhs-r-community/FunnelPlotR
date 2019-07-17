@@ -14,6 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Funnel plots
 
+__This package is the newer version of the older `CMFunnels` package. Development work will focuss on this package from now on __
+
 This is an implementation of the funnel plot processes, and overdispersion methods described in:<br>
 [Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x)<br>
 [Funnel plots for comparing institutional performance. Spiegelhalter (2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
@@ -33,7 +35,7 @@ This package was originally developed for use in CM's PhD project, but published
 ## Installation ##
 
 ```{r install, eval=FALSE}
-devtools::install_github("https://github.com/chrismainey/CMFunnels")
+remotes::install_github("https://github.com/chrismainey/FunnelPlotR")
 ```
 
 
@@ -44,7 +46,7 @@ We will first load the data and build a simple predictive model using a Poisson 
 
 
 ```{r data, warning=FALSE, message=FALSE}
-library(CMFunnels)
+library(FunnelPlotR)
 library(COUNT)
 library(ggplot2)
 
