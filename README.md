@@ -1,9 +1,12 @@
 Funnel plots for risk-adjusted indicators
 ================
 Chris Mainey
-10 April 2019
+17 July 2019
 
 ## Funnel plots
+
+**This package is the newer version of the older `CMFunnels` package.
+Development work will focuss on this package from now on **
 
 This is an implementation of the funnel plot processes, and
 overdispersion methods described in:<br> [Statistical methods for
@@ -35,7 +38,7 @@ published on github in case it’s of use for others.
 ## Installation
 
 ``` r
-devtools::install_github("https://github.com/chrismainey/CMFunnels")
+remotes::install_github("https://github.com/chrismainey/FunnelPlotR")
 ```
 
 ## Summary of Use
@@ -46,7 +49,7 @@ based on 1991 Medicare files for the state of Arizona *(Hilbe, Joseph M
 load the data and build a simple predictive model using a Poisson GLM.
 
 ``` r
-library(CMFunnels)
+library(FunnelPlotR)
 library(COUNT)
 library(ggplot2)
 
