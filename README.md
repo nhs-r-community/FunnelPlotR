@@ -1,3 +1,7 @@
+ <!-- badges: start -->
+  [![Travis build status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
+  <!-- badges: end -->
+
 Funnel plots for risk-adjusted indicators
 ================
 Chris Mainey

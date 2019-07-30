@@ -552,7 +552,7 @@ to the start of each source file to most effectively state the exclusion of warr
 and each file should have at least the “copyright” line and a pointer to
 where the full notice is found.
 
-    <one line to give the program's name and a brief idea of what it does.>
+    <FunnelPlotR: an R package for drawing funnel plots>
     Copyright (C) 2019 Chris Mainey
 
     This program is free software: you can redistribute it and/or modify
@@ -573,7 +573,7 @@ Also add information on how to contact you by electronic and paper mail.
 If the program does terminal interaction, make it output a short notice like this
 when it starts in an interactive mode:
 
-    CMFunnels Copyright (C) 2019 Chris Mainey
+    FunelPlotR Copyright (C) 2019 Chris Mainey
     This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type 'show c' for details.

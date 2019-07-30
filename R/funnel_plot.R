@@ -20,7 +20,7 @@
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
 #'
 #' @return A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
-#' 
+#'
 #' @export
 #' @details
 #'    Outliers are marked based on the grouping, controlled by `label_outliers` .
@@ -33,10 +33,10 @@
 #' a <- funnel_plot(my_preds, my_observed, "organisation", "2015/16", "Poisson model")
 #' # Access the plot
 #' a[[3]]
-#' 
+#'
 #' # Access the
 #' }
-#' 
+#'
 #' @seealso \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}
 #'    \href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}
 #'    \href{https://qualitysafety.bmj.com/content/14/5/347}{Handeling over-dispersion of performance indicators. Spiegelhalter (2005)}
@@ -88,6 +88,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
 
   # Determine the range of plots
   max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(predicted))) %>% as.numeric()
+  min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(predicted))) %>% as.numeric()
   min_ratio <- min(0.7 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * min(observed / predicted)) %>% as.numeric())
   max_ratio <- max(1.3 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * max(observed / predicted)) %>% as.numeric())
 
@@ -121,7 +122,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
     phi <- mod_plot_agg %>%
       dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
       as.numeric()
-    
+
     if(is.na(phi)){
       phi<-0
     }
@@ -134,11 +135,11 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
           (sum(1 / rrS2) - (sum(1 / (S)) / sum(1 / rrS2)))
       )) %>%
       as.numeric()
-    
+
     if(is.na(Tau2)){
       Tau2<-0
     }
-    
+
     mod_plot_agg <- mod_plot_agg %>%
       dplyr::mutate(
         phi = phi,
@@ -150,8 +151,8 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2)
       )
   } else if (method == "SHMI") {
-    
-    
+
+
     mod_plot_agg <- mod_plot_agg %>%
       mutate(
         s = 1 / (sqrt(predicted)),
@@ -179,16 +180,16 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
     phi <- mod_plot_agg_sub %>%
       dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
       as.numeric()
-    
+
     if(is.na(phi)){
       phi<-0
     }
-    
+
     Tau2 <- mod_plot_agg_sub %>%
       dplyr::summarise(Tau2 = max(0, ((n() * phi) - (n() - 1)) /
         (sum(predicted) - (sum(predicted^2) / sum(predicted))))) %>%
       as.numeric()
-    
+
     if(is.na(Tau2)){
       Tau2<-0
     }
@@ -290,15 +291,7 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
       angle = 0
     )))
 
-  if (OD_Tau2 == TRUE) {
-    funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c((multiplier * (min_ratio - 0.05)), (multiplier * (max_ratio + 0.05)))) +
-      scale_x_continuous(name = x_label, labels = scales::comma, limits = c(0, max_preds + 1))
-  } else {
-    funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c((multiplier * (min_ratio - 0.05)), (multiplier * (max_ratio + 0.05)))) +
-      scale_x_continuous(name = x_label, labels = scales::comma, limits = c(0, max_preds + 1))
-  }
+
 
 
   if (Poisson_limits == TRUE & OD_Tau2 == TRUE) {
@@ -342,6 +335,18 @@ funnel_plot <- function(predictions, observed, group, title, label_outliers = 99
         ), name = "Control limits")
     }
   }
+
+
+  if (OD_Tau2 == TRUE) {
+    funnel_p <- funnel_p +
+      scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, observed>4)$OD99LCI) -0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, observed>4)$OD99UCI) - 0.1))))) +
+      scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
+  } else {
+    funnel_p <- funnel_p +
+      scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, observed>4)$LCL99) - 0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, observed >4)$UCL99) + 0.1))))) +
+      scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
+  }
+
 
   if (label_outliers == 95) {
     if (OD_Tau2 == FALSE) {
