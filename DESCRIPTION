@@ -2,7 +2,7 @@ Package: FunnelPlotR
 Type: Package
 Title: Funnel Plots for Indirectly-Standardised Ratios
 Version: 0.1.0
-Author@R: c(
+Authors@R: c(
         person("Chris", "Mainey", ,"chris.mainey@uhb.nhs.uk", c("aut", "cre"), comment = c(ORCID ="0000-0002-3018-6171"")),
         person("Matthew", "Bass", ,"matthew.bass@uhb.nhs.uk", c("ctb") )
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
