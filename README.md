@@ -6,7 +6,7 @@ Chris Mainey
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/chrismainey/FunelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunelPlotR)
+status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
 ![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)
