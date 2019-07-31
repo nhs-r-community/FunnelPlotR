@@ -3,6 +3,8 @@ Funnel plots for risk-adjusted indicators
 Chris Mainey
 17 July 2019
 
+<img src="man/figures/logo.png" width="160px" align="right" />
+
 <!-- badges: start -->
 
 [![Travis build
@@ -11,10 +13,9 @@ status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https:
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)
 [![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR)
-<br><br>
-<!-- badges: end -->
+<br><br> <!-- badges: end -->
 
-## Funnel plots <img src="man/figures/logo.png" width="160px" align="right" />
+## Funnel plots
 
 **This package is the newer version of the older `CMFunnels` package.
 Development work will focuss on this package from now on **
