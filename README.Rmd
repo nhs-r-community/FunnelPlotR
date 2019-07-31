@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
   <!-- badges: end -->
   
 
-## Funnel plots
+## Funnel plots  <img src="man/figures/logo.png" width="160px" align="right" />
 
 __This package is the newer version of the older `CMFunnels` package. Development work will focuss on this package from now on __
 
