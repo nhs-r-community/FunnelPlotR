@@ -1,11 +1,17 @@
- <!-- badges: start -->
-  [![Travis build status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
-  <!-- badges: end -->
-
 Funnel plots for risk-adjusted indicators
 ================
 Chris Mainey
 17 July 2019
+
+<!-- badges: start -->
+
+[![Travis build
+status](https://travis-ci.org/chrismainey/FunelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunelPlotR)
+![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)
+[![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR)
+<br><br> <!-- badges: end -->
 
 ## Funnel plots
 

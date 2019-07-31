@@ -12,6 +12,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+<!-- badges: start -->
+  [![Travis build status](https://travis-ci.org/chrismainey/FunelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunelPlotR)
+![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)
+[![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR) 
+<br><br>
+  <!-- badges: end -->
+  
+
 ## Funnel plots
 
 __This package is the newer version of the older `CMFunnels` package. Development work will focuss on this package from now on __
