@@ -1,7 +1,4 @@
 ---
-title: "Funnel plots for risk-adjusted indicators"
-author: "Chris Mainey"
-date: "17 July 2019"
 output:
   github_document:
     html_preview: false

@@ -1,7 +1,3 @@
-Funnel plots for risk-adjusted indicators
-================
-Chris Mainey
-17 July 2019
 
 # Funnel plots for risk-adjusted indicators <img src="man/figures/logo.png" width="160px" align="right" />
 
