@@ -4,3 +4,4 @@
 ^packrat/
 ^\.Rprofile$
 ^\.travis\.yml$
+/Sticker
