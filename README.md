@@ -43,6 +43,10 @@ square-root and Winsorisation.
 This package was originally developed for use in CM’s PhD project, but
 published on github in case it’s of use for others.
 
+Please note that the ‘FunnelPlotR’ project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
+this project, you agree to abide by its terms.
+
 ## Installation
 
 ``` r
