@@ -5,3 +5,4 @@
 ^\.Rprofile$
 ^\.travis\.yml$
 /Sticker
+^CODE_OF_CONDUCT\.md$
