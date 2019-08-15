@@ -18,4 +18,6 @@ aggreagate_func<- function(predictions, observed, group) {
       rr = observed / predicted
     )
 
+return(mod_plot_agg)
+
 }

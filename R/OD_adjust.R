@@ -5,13 +5,14 @@
 #' effects models.
 #'
 #' @param input_frame A data.frame input of the plot data including numerator, denominator and rate/ratio
-#' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
-#' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
+#' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
+#' uses a square root transformation and winsorizes by replaceing values, SHMI uses log transformation and winsorizes
+#' by truncation. SHMI method is default.
+#' @param Winsorize_by Proportion of the distribution for winsorization. Default is 10 \% (0.1)
+#
 
 
-## Winsorisation
-
-winz_z<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1){
+OD_adjust<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1){
 
 if (method == "CQC") {
   mod_plot_agg <- mod_plot_agg %>%
@@ -128,4 +129,5 @@ if (method == "CQC") {
 } else {
   stop("Please specify a valid method")
 }
+  return(list(mod_plot_agg, phi, Tau2))
 }
