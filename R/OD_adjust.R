@@ -4,14 +4,14 @@
 #'  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
 #' effects models.
 #'
-#' @param predictions A vector of model predictions.  Used as denominator of the Y-axis and the scale of the x-axis
+#' @param input_frame A data.frame input of the plot data including numerator, denominator and rate/ratio
 #' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
 #' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
 
 
 ## Winsorisation
 
-winz_z<-function(){
+winz_z<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1){
 
 if (method == "CQC") {
   mod_plot_agg <- mod_plot_agg %>%

@@ -10,8 +10,6 @@
 
 aggreagate_func<- function(predictions, observed, group) {
   
-  mod_plot <- data.frame(preds = predictions, obs = observed, grp = group)
-  
   mod_plot_agg <- mod_plot %>%
     dplyr::group_by(grp) %>%
     dplyr::summarise(
