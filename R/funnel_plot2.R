@@ -86,8 +86,10 @@ funnel_plot_dev <- function(predictions, observed, group, title, aggregate_input
     mod_plot_agg$rr <- observed / predicted
   }
   
-  if (OD_Tau2 = TRUE){
-    winsorisation
-  }
+
+  OD_adjust(mod_plot_agg, method=method, Winsorize_by= Winsorize_by)
+
+   
+  
   
 }

@@ -12,7 +12,7 @@
 #
 
 
-OD_adjust<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1){
+OD_adjust<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1, bypass=TRUE){
 
 if (method == "CQC") {
   mod_plot_agg <- mod_plot_agg %>%
@@ -42,7 +42,7 @@ if (method == "CQC") {
     dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
     as.numeric()
   
-  if(is.na(phi)){
+  if(is.na(phi) || bypass=TRUE){
     phi<-0
   }
   
@@ -55,7 +55,7 @@ if (method == "CQC") {
     )) %>%
     as.numeric()
   
-  if(is.na(Tau2)){
+  if(is.na(Tau2) || bypass=TRUE){
     Tau2<-0
   }
   
@@ -100,7 +100,7 @@ if (method == "CQC") {
     dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
     as.numeric()
   
-  if(is.na(phi)){
+  if(is.na(phi) || bypass=TRUE){
     phi<-0
   }
   
@@ -109,7 +109,7 @@ if (method == "CQC") {
                                   (sum(predicted) - (sum(predicted^2) / sum(predicted))))) %>%
     as.numeric()
   
-  if(is.na(Tau2)){
+  if(is.na(Tau2) || bypass=TRUE){
     Tau2<-0
   }
   
