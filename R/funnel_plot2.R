@@ -4,13 +4,13 @@
 #'  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
 #' effects models.
 #'
-#' @param predictions A vector of model predictions.  Used as denominator of the Y-axis and the scale of the x-axis
-#' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
+#' @param numerator  A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis
+#' @param denominator A vector of denominator (predicted/population etc).  Used as denominator of the Y-axis and the scale of the x-axis
 #' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
 #' @param title Plot title
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
-#' @param OD_Tau2 Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
+#' @param OD_adjust Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
 #' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
 #' uses a square root transformation and winsorizes by replaceing values, SHMI uses log transformation and winsorizes
 #' by truncation. SHMI method is default.
@@ -48,8 +48,8 @@
 #' @import ggplot2
 
 
-funnel_plot_dev <- function(predictions, observed, group, title, aggregate_input=TRUE, label_outliers = 99,
-                            Poisson_limits = FALSE, OD_Tau2 = TRUE, method = "SHMI", Winsorize_by = 0.1,
+funnel_plot_dev <- function(numerator, denominator, group, title, aggregate_input=TRUE, label_outliers = 99,
+                            Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorize_by = 0.1,
                             multiplier = 1, x_label = "Expected", y_label = "Standardised Ratio"){
   
 
@@ -57,25 +57,25 @@ funnel_plot_dev <- function(predictions, observed, group, title, aggregate_input
   
   # build inital dataframe of obs/predicted, with error message caught here in 'try'
   
-  if (missing(predictions)) {
-    stop("Need to specify model predictions")
+  if (missing(denominator)) {
+    stop("Need to specify model denominator")
   }
-  if (missing(observed)) {
-    stop("Need to supply observed")
+  if (missing(numerator)) {
+    stop("Need to supply numerator")
   }
   if (missing(title)) {
     title <- ("Untitled Funnel Plot")
   }
-  if (missing(observed)) {
-    stop("Need to supply the column name for observed events")
+  if (missing(numerator)) {
+    stop("Need to supply the column name for numerator")
   }
   
-  if (class(predictions)[1] == "array") {
-    predictions <- as.numeric(predictions)
+  if (class(denominator)[1] == "array") {
+    denominator <- as.numeric(denominator)
   }
   
   
-  mod_plot <- data.frame(preds = predictions, obs = observed, grp = group)
+  mod_plot <- data.frame(numerator, denominator, group)
   
   if (aggregate_input==TRUE){
     
@@ -83,11 +83,11 @@ funnel_plot_dev <- function(predictions, observed, group, title, aggregate_input
     
   } else {
     mod_plot_agg <- mod_plot
-    mod_plot_agg$rr <- observed / predicted
+    mod_plot_agg$rr <- numerator / denominator
   }
   
 
-  OD_adjust(mod_plot_agg, method=method, Winsorize_by= Winsorize_by)
+  OD_adjust(mod_plot_agg, method=method, Winsorize_by= Winsorize_by, bypass=!OD_adjust)
 
    
   

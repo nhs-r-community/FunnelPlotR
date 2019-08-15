@@ -12,15 +12,15 @@
 #
 
 
-OD_adjust<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1, bypass=TRUE){
+OD_adjust<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1, multiplier=1, bypass=TRUE){
 
 if (method == "CQC") {
   mod_plot_agg <- mod_plot_agg %>%
     mutate(
-      y = sqrt(observed / predicted),
-      S = 1 / (2 * sqrt(predicted)),
+      y = sqrt(numerator / denominator),
+      S = 1 / (2 * sqrt(denominator)),
       rrS2 = S^2,
-      Uzscore_CQC = 2 * (sqrt(observed) - sqrt(predicted)),
+      Uzscore_CQC = 2 * (sqrt(numerator) - sqrt(denominator)),
       LCL95 = multiplier * (1 - (-1.959964 * sqrt(1 / rrS2))^2),
       UCL95 = multiplier * (1 + (1.959964 * sqrt(1 / rrS2))^2),
       LCL99 = multiplier * (1 - (-3.090232 * sqrt(1 / rrS2))^2),
@@ -63,20 +63,20 @@ if (method == "CQC") {
     dplyr::mutate(
       phi = phi,
       Tau2 = Tau2,
-      Wazscore = (y - 1) / sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2),
-      OD95LCI = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
-      OD95UCI = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
-      OD99LCI = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2),
-      OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(predicted)))^2) + Tau2)))^2)
+      Wazscore = (y - 1) / sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2),
+      OD95LCI = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
+      OD95UCI = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
+      OD99LCI = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
+      OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2)
     )
 } else if (method == "SHMI") {
   
   
   mod_plot_agg <- mod_plot_agg %>%
     mutate(
-      s = 1 / (sqrt(predicted)),
+      s = 1 / (sqrt(denominator)),
       rrS2 = s^2,
-      Uzscore_SHMI = sqrt(predicted) * log(observed / predicted),
+      Uzscore_SHMI = sqrt(denominator) * log(numerator / denominator),
       LCL95 = multiplier * (exp(-1.959964 * sqrt(rrS2))),
       UCL95 = multiplier * (exp(1.959964 * sqrt(rrS2))),
       LCL99 = multiplier * (exp(-3.090232 * sqrt(rrS2))),
@@ -106,7 +106,7 @@ if (method == "CQC") {
   
   Tau2 <- mod_plot_agg_sub %>%
     dplyr::summarise(Tau2 = max(0, ((n() * phi) - (n() - 1)) /
-                                  (sum(predicted) - (sum(predicted^2) / sum(predicted))))) %>%
+                                  (sum(denominator) - (sum(denominator^2) / sum(denominator))))) %>%
     as.numeric()
   
   if(is.na(Tau2) || bypass=TRUE){
@@ -119,12 +119,12 @@ if (method == "CQC") {
       Wuzscore2 = ifelse(Winsorised == 1, NA, Uzscore_SHMI^2),
       phi = phi,
       Tau2 = Tau2,
-      Wazscore = log(rr) / sqrt((1 / predicted) + Tau2),
+      Wazscore = log(rr) / sqrt((1 / denominator) + Tau2),
       var = sqrt(rrS2 + Tau2),
-      OD95LCI = multiplier * (exp(-1.959964 * sqrt((1 / predicted) + Tau2))),
-      OD95UCI = multiplier * (exp(1.959964 * sqrt((1 / predicted) + Tau2))),
-      OD99LCI = multiplier * (exp(-3.090232 * sqrt((1 / predicted) + Tau2))),
-      OD99UCI = multiplier * (exp(3.090232 * sqrt((1 / predicted) + Tau2)))
+      OD95LCI = multiplier * (exp(-1.959964 * sqrt((1 / denominator) + Tau2))),
+      OD95UCI = multiplier * (exp(1.959964 * sqrt((1 / denominator) + Tau2))),
+      OD99LCI = multiplier * (exp(-3.090232 * sqrt((1 / denominator) + Tau2))),
+      OD99UCI = multiplier * (exp(3.090232 * sqrt((1 / denominator) + Tau2)))
     )
 } else {
   stop("Please specify a valid method")

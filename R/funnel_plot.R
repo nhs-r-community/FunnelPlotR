@@ -48,7 +48,7 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(predictions, observed, group, title, label_outliers = 99,
+funnel_plot <- function(observed,predictions,  group, title, label_outliers = 99,
                         Poisson_limits = FALSE, OD_Tau2 = TRUE, method = "SHMI", Winsorize_by = 0.1,
                         multiplier = 1, x_label = "Expected", y_label = "Standardised Ratio") {
 

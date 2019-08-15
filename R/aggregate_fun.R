@@ -13,9 +13,9 @@ aggreagate_func<- function(predictions, observed, group) {
   mod_plot_agg <- mod_plot %>%
     dplyr::group_by(grp) %>%
     dplyr::summarise(
-      observed = as.numeric(sum(obs)),
-      predicted = as.numeric(sum(preds)),
-      rr = observed / predicted
+      numerator = as.numeric(sum(numerator)),
+      denominator = as.numeric(sum(denominator)),
+      rr = numerator / denominator
     )
 
 return(mod_plot_agg)
