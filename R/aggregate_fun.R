@@ -8,10 +8,10 @@
 #' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
 #' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
 
-aggreagate_func<- function(predictions, observed, group) {
+aggregate_func<- function(mod_plot) {
   
   mod_plot_agg <- mod_plot %>%
-    dplyr::group_by(grp) %>%
+    dplyr::group_by(group) %>%
     dplyr::summarise(
       numerator = as.numeric(sum(numerator)),
       denominator = as.numeric(sum(denominator)),

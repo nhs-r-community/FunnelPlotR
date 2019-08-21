@@ -12,7 +12,7 @@
 #
 
 
-OD_adjust<-function(input_frame=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1, multiplier=1, bypass=TRUE){
+OD_adjust_func<-function(mod_plot_agg=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1, multiplier=1, bypass=TRUE){
 
 if (method == "CQC") {
   mod_plot_agg <- mod_plot_agg %>%
@@ -42,7 +42,7 @@ if (method == "CQC") {
     dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
     as.numeric()
   
-  if(is.na(phi) || bypass=TRUE){
+  if(is.na(phi) || bypass==TRUE){
     phi<-0
   }
   
@@ -55,7 +55,7 @@ if (method == "CQC") {
     )) %>%
     as.numeric()
   
-  if(is.na(Tau2) || bypass=TRUE){
+  if(is.na(Tau2) || bypass==TRUE){
     Tau2<-0
   }
   
@@ -70,7 +70,6 @@ if (method == "CQC") {
       OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2)
     )
 } else if (method == "SHMI") {
-  
   
   mod_plot_agg <- mod_plot_agg %>%
     mutate(
@@ -100,7 +99,7 @@ if (method == "CQC") {
     dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
     as.numeric()
   
-  if(is.na(phi) || bypass=TRUE){
+  if(is.na(phi) || bypass==TRUE){
     phi<-0
   }
   
@@ -109,7 +108,7 @@ if (method == "CQC") {
                                   (sum(denominator) - (sum(denominator^2) / sum(denominator))))) %>%
     as.numeric()
   
-  if(is.na(Tau2) || bypass=TRUE){
+  if(is.na(Tau2) || bypass==TRUE){
     Tau2<-0
   }
   
@@ -126,8 +125,8 @@ if (method == "CQC") {
       OD99LCI = multiplier * (exp(-3.090232 * sqrt((1 / denominator) + Tau2))),
       OD99UCI = multiplier * (exp(3.090232 * sqrt((1 / denominator) + Tau2)))
     )
-} else {
+  } else {
   stop("Please specify a valid method")
-}
+  }
   return(list(mod_plot_agg, phi, Tau2))
 }

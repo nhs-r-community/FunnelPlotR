@@ -18,6 +18,9 @@
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
+#' @param aggregate_input_data Should the function aggreagate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.
+#' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, NULL, allows function to estimate range.
+#' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, NULL, allows function to estimate range.
 #'
 #' @return A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
 #'
@@ -44,18 +47,18 @@
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom dplyr select filter arrange mutate summarise group_by %>% n
-#' @importFrom stats predict qchisq quantile sd
 #' @import ggplot2
 
 
-funnel_plot_dev <- function(numerator, denominator, group, title, aggregate_input=TRUE, label_outliers = 99,
+funnel_plot_dev <- function(numerator, denominator, group, aggregate_input_data=TRUE, label_outliers = 99,
                             Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorize_by = 0.1,
-                            multiplier = 1, x_label = "Expected", y_label = "Standardised Ratio"){
+                            title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected", 
+                            y_label = "Standardised Ratio", yrange, xrange){
   
 
   
   
-  # build inital dataframe of obs/predicted, with error message caught here in 'try'
+  # build initial dataframe of obs/predicted, with error message caught here in 'try'
   
   if (missing(denominator)) {
     stop("Need to specify model denominator")
@@ -77,19 +80,31 @@ funnel_plot_dev <- function(numerator, denominator, group, title, aggregate_inpu
   
   mod_plot <- data.frame(numerator, denominator, group)
   
-  if (aggregate_input==TRUE){
+  if (aggregate_input_data==TRUE){
     
-    aggregate_fun(mod_plot)
+    mod_plot_agg<-aggregate_func(mod_plot)
+    
+    
     
   } else {
     mod_plot_agg <- mod_plot
     mod_plot_agg$rr <- numerator / denominator
+    
+    phi<-0
+    tau2<-0
+    
   }
   
-
-  OD_adjust(mod_plot_agg, method=method, Winsorize_by= Winsorize_by, bypass=!OD_adjust)
-
-   
   
+  adj<-OD_adjust_func(mod_plot_agg, method=method, Winsorize_by= Winsorize_by, bypass=!OD_adjust)
+
+  mod_plot_agg<-as.data.frame(adj[1])
+  phi<-as.numeric(adj[2])
+  tau2<-as.numeric(adj[3])
   
+  fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2=OD_adjust)
+  
+  rtn<-list(mod_plot_agg, dfCI, fun_plot)
+  
+  return(rtn)
 }

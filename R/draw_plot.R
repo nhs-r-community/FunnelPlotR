@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' a <- funnel_plot(my_preds, my_observed, "organisation", "2015/16", "Poisson model")
+#' a <- funnel_plot(my_preds, my_numerator, "organisation", "2015/16", "Poisson model")
 #' # Access the plot
 #' a[[3]]
 #'
@@ -34,170 +34,139 @@
 #'
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
-#' @importFrom dplyr select filter arrange mutate summarise group_by %>% n
-#' @importFrom stats predict qchisq quantile sd
 #' @import ggplot2
 
-draw_plot<-function(){
+draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2){
+
+#plot ranges
+  # Determine the range of plots
+  max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(denominator))) %>% as.numeric()
+  min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(denominator))) %>% as.numeric()
+  min_ratio <- min(0.7 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * min(numerator / denominator)) %>% as.numeric())
+  max_ratio <- max(1.3 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * max(numerator / denominator)) %>% as.numeric())
   
-### Calculate funnel limits ####
-if (OD_Tau2 == FALSE) {
-  Poisson_limits <- TRUE
-  message("OD_Tau2 set to FALSE, plotting using Poisson limits")
-}
-
-if (OD_Tau2 == TRUE & Tau2 == 0) {
-  OD_Tau2 <- FALSE
-  Poisson_limits <- TRUE
   
-  message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
+  ### Calculate funnel limits ####
+  if (OD_Tau2 == FALSE) {
+    Poisson_limits <- TRUE
+    message("OD_Tau2 set to FALSE, plotting using Poisson limits")
+  }
   
-  # general limits + Tau2 limits table
-  set.seed(1)
-  number.seq <- c(seq(0.1, 10, 0.1), seq(1, ceiling(max_preds), 1))
-  dfCI <- data.frame(
-    number.seq,
-    ll95 = multiplier * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
-    ul95 = multiplier * ((qchisq(0.025, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-    ll998 = multiplier * ((qchisq(0.998, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
-    ul998 = multiplier * ((qchisq(0.001, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq)
-  )
-} else if (method == "SHMI") {
-  # general limits + Tau2 limits table
-  set.seed(1)
-  number.seq <- c(seq(0.1, 10, 0.1), seq(1, ceiling(max_preds), 1))
-  dfCI <- data.frame(
-    number.seq,
-    ll95 = multiplier * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
-    ul95 = multiplier * ((qchisq(0.025, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-    ll998 = multiplier * ((qchisq(0.998, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
-    ul998 = multiplier * ((qchisq(0.001, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-    odll95 = multiplier * (exp(-1.959964 * sqrt((1 / number.seq) + Tau2))),
-    odul95 = multiplier * (exp(1.959964 * sqrt((1 / number.seq) + Tau2))),
-    odll998 = multiplier * (exp(-3.090232 * sqrt((1 / number.seq) + Tau2))),
-    odul998 = multiplier * (exp(3.090232 * sqrt((1 / number.seq) + Tau2)))
-  )
-} else if (method == "CQC") {
-  set.seed(1)
-  number.seq <- seq(1, ceiling(max_preds), 1)
-  dfCI <- data.frame(
-    number.seq,
-    ll95 = multiplier * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
-    ul95 = multiplier * ((qchisq(0.025, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-    ll998 = multiplier * ((qchisq(0.998, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
-    ul998 = multiplier * ((qchisq(0.001, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-    odll95 = multiplier * ((1 - (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
-    odul95 = multiplier * ((1 + (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
-    odll998 = multiplier * ((1 + (-3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
-    odul998 = multiplier * ((1 + (3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
-  )
-} else {
-  stop("Invalid method supplied")
-}
-
-
-
-# base funnel plot
-funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((observed / predicted)), x = predicted)) +
-  geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue2") +
-  # scale_y_continuous(limits = c((min_ratio-0.1), (max_ratio+0.1)))+
-  # scale_x_continuous(labels = scales::comma, limits = c(0,max_preds+1)) +
-  geom_hline(aes(yintercept = multiplier), linetype = 2) +
-  xlab(x_label) +
-  ylab(y_label) +
-  ggtitle(title) +
-  # theme_bw()+
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5, face = "italic")
-    # plot.background =  element_rect(fill='white', colour='white'),
-  ) +
-  guides(colour = guide_legend(title.theme = element_text(
-    size = 10,
-    face = "bold",
-    colour = "black",
-    angle = 0
-  )))
-
-
-
-
-if (Poisson_limits == TRUE & OD_Tau2 == TRUE) {
-  funnel_p <- funnel_p +
-    geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-    geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-    scale_color_manual(values = c(
-      "99.8% Poisson" = "#1F77B4FF",
-      "95% Poisson" = "#FF7F0EFF",
-      "99.8% Overdispersed" = "#2CA02CFF",
-      "95% Overdispersed" = "#9467BDFF"
-    ), name = "Control limits")
-} else {
-  if (Poisson_limits == TRUE & OD_Tau2 == FALSE) {
+  if (OD_Tau2 == TRUE & Tau2 == 0) {
+    OD_Tau2 <- FALSE
+    Poisson_limits <- TRUE
+    
+    message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
+    
+  } else {
+    stop("Invalid method supplied")
+  }
+  
+  dfCI<-build_limits_lookup(max_ratio, min_ratio, max_preds, min_preds, OD_Tau2, Poisson_limits)
+  
+  
+  # base funnel plot
+  funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
+    geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue2") +
+    # scale_y_continuous(limits = c((min_ratio-0.1), (max_ratio+0.1)))+
+    # scale_x_continuous(labels = scales::comma, limits = c(0,max_preds+1)) +
+    geom_hline(aes(yintercept = multiplier), linetype = 2) +
+    xlab(x_label) +
+    ylab(y_label) +
+    ggtitle(title) +
+    # theme_bw()+
+    theme(
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+      plot.subtitle = element_text(hjust = 0.5, face = "italic")
+      # plot.background =  element_rect(fill='white', colour='white'),
+    ) +
+    guides(colour = guide_legend(title.theme = element_text(
+      size = 10,
+      face = "bold",
+      colour = "black",
+      angle = 0
+    )))
+  
+  
+  
+  
+  if (Poisson_limits == TRUE & OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
       geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-      scale_color_manual(values = c(
-        "99.8% Poisson" = "#7E9C06", # "#1F77B4FF"
-        "95% Poisson" = "#FF7F0EFF"
-      ), name = "Control limits")
-  }
-  
-  if (Poisson_limits == FALSE &  OD_Tau2 == TRUE) {
-    funnel_p <- funnel_p +
       geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
       scale_color_manual(values = c(
-        "99.8% Overdispersed" = "#DEC400", # "#F7EF0A", #"#2CA02CFF",
+        "99.8% Poisson" = "#1F77B4FF",
+        "95% Poisson" = "#FF7F0EFF",
+        "99.8% Overdispersed" = "#2CA02CFF",
         "95% Overdispersed" = "#9467BDFF"
       ), name = "Control limits")
+  } else {
+    if (Poisson_limits == TRUE & OD_Tau2 == FALSE) {
+      funnel_p <- funnel_p +
+        geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+        scale_color_manual(values = c(
+          "99.8% Poisson" = "#7E9C06", # "#1F77B4FF"
+          "95% Poisson" = "#FF7F0EFF"
+        ), name = "Control limits")
+    }
+    
+    if (Poisson_limits == FALSE &  OD_Tau2 == TRUE) {
+      funnel_p <- funnel_p +
+        geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+        scale_color_manual(values = c(
+          "99.8% Overdispersed" = "#DEC400", # "#F7EF0A", #"#2CA02CFF",
+          "95% Overdispersed" = "#9467BDFF"
+        ), name = "Control limits")
+    }
   }
-}
-
-
-if (OD_Tau2 == TRUE) {
-  funnel_p <- funnel_p +
-    scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, observed>4)$OD99LCI) -0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, observed>4)$OD99UCI) - 0.1))))) +
-    scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
-} else {
-  funnel_p <- funnel_p +
-    scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, observed>4)$LCL99) - 0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, observed >4)$UCL99) + 0.1))))) +
-    scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
-}
-
-
-if (label_outliers == 95) {
-  if (OD_Tau2 == FALSE) {
+  
+  
+  if (OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCL95, as.character(grp), "")), size = 2.7, direction = "y") +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCL95, as.character(grp), "")), size = 2.7, direction = "y")
+      scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, numerator>4)$OD99LCI) -0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, numerator>4)$OD99UCI) - 0.1))))) +
+      scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   } else {
     funnel_p <- funnel_p +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD95UCI, as.character(grp), "")), size = 2.7, direction = "y") +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD95LCI, as.character(grp), "")), size = 2.7, direction = "y")
+      scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, numerator>4)$LCL99) - 0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, numerator >4)$UCL99) + 0.1))))) +
+      scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   }
-}
-if (label_outliers == 99) {
-  if (OD_Tau2 == FALSE) {
-    funnel_p <- funnel_p +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > UCL99, as.character(grp), "")), size = 2.7, direction = "y") +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < LCL99, as.character(grp), "")), size = 2.7, direction = "y")
-  } else {
-    funnel_p <- funnel_p +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted > OD99UCI, as.character(grp), "")), size = 2.7, direction = "y") +
-      ggrepel::geom_label_repel(aes(label = ifelse(observed / predicted < OD99LCI, as.character(grp), "")), size = 2.7, direction = "y")
+  
+  
+  if (label_outliers == 95) {
+    if (OD_Tau2 == FALSE) {
+      funnel_p <- funnel_p +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > UCL95, as.character(group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < LCL95, as.character(group), "")), size = 2.7, direction = "y")
+    } else {
+      funnel_p <- funnel_p +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD95UCI, as.character(group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD95LCI, as.character(group), "")), size = 2.7, direction = "y")
+    }
   }
-}
-
+  if (label_outliers == 99) {
+    if (OD_Tau2 == FALSE) {
+      funnel_p <- funnel_p +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > UCL99, as.character(group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < LCL99, as.character(group), "")), size = 2.7, direction = "y")
+    } else {
+      funnel_p <- funnel_p +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD99UCI, as.character(group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD99LCI, as.character(group), "")), size = 2.7, direction = "y")
+    }
+  }
+  
+ return(funnel_p)
 
 }
