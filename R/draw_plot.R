@@ -62,7 +62,7 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
     stop("Invalid method supplied")
   }
   
-  dfCI<-build_limits_lookup(max_ratio, min_ratio, max_preds, min_preds, OD_Tau2, Poisson_limits)
+  dfCI<-build_limits_lookup(max_preds, min_preds, min_ratio, max_ratio, OD_Tau2, Poisson_limits)
   
   
   # base funnel plot

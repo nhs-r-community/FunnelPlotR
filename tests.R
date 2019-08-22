@@ -21,5 +21,7 @@ Winsorize_by = 0.1
 multiplier = 1
 x_label = "Expected"
 y_label = "Standardised Ratio"
+title="Untitle Funnel Plot"
+rm(return_elements)
 
-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los, group = medpar$provnum)
+funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los, group = medpar$provnum, return_elements=c("plot"))
