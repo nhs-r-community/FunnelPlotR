@@ -7,3 +7,5 @@
 /Sticker
 ^CODE_OF_CONDUCT\.md$
 tests.R
+README.Rmd
+/README.files

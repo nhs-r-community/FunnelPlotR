@@ -1,36 +1,21 @@
 #' @title Funnel Plots drawing function
 #' @description This function sets up the plots, and draws them with ggplot2.
 #'
-#' @param input_frame data frame containing numerator, denominator, ratio/proportion, SEs and limits
-#' @param title Plot title
-#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
-#' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
-#' @param OD_Tau2 Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
-#' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
+#' @param mod_plot_agg data frame ofcontaining numerator, denominator, ratio/proportion, SEs and limits
+#' @param yrange Specify the plot range.  Not yet implemented
+#' @param xrange Specify the plot range.  Not yet implemented
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
+#' @param title Plot title
+#' @param label_outliers Add group labels to outliers on plot. Accepted values are\: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
+#' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
+#' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
+#' @param OD_Tau2 Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
+#' @param Tau2 The Tau2 value to use for plotting limits
+#' @param method to pass to limit calculation (\"SHMI\" or \"CQC\")
 #'
 #' @return A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
 #'
-#' @export
-#' @details
-#'    Outliers are marked based on the grouping, controlled by `label_outliers` .
-#'    Overdispersion can be factored in based on the methods in \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Spiegelhalter et al (2012)}, set `OD_Tau2` to FALSE to suppress this.
-#'    To use Poisson limits set `Poisson_limits=TRUE`. This uses 2 & 3 \eqn{\sigma} limits.
-#'    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
-#'
-#' @examples
-#' \dontrun{
-#' a <- funnel_plot(my_preds, my_numerator, "organisation", "2015/16", "Poisson model")
-#' # Access the plot
-#' a[[3]]
-#'
-#' # Access the
-#' }
-#'
-#' @seealso \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}
-#'    \href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}
-#'    \href{https://qualitysafety.bmj.com/content/14/5/347}{Handeling over-dispersion of performance indicators. Spiegelhalter (2005)}
 #'
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
@@ -70,7 +55,7 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
   #   stop("Invalid method supplied")
   # }
 
-  dfCI<-build_limits_lookup(max_preds, min_preds, min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier)
+  dfCI<-build_limits_lookup(min_preds, max_preds,min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier)
 
 
   # base funnel plot
@@ -175,6 +160,6 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
     }
   }
 
- return(funnel_p)
+ return(list(funnel_p, dfCI))
 
 }

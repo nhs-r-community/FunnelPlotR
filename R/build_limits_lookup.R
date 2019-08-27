@@ -1,29 +1,30 @@
 #' Function to build funnel limits
+#' @description Internal function for funnel plot to build the control limits prior to plotting.
+#' @param min_preds Minimum predicted value for range of x-axis
+#' @param max_preds Maximum predicted value for range of x-axis
+#' @param min_ratio Minimum ratio value for range of y-axis
+#' @param max_ratio Maximum ratio value for range of y-axis
+#' @param Poisson_limits TRUE/FALSE Draw Poisson distribution limits?
+#' @param OD_adjust TRUE/FALSE USe over dispersion adjustment
+#' @param Tau2 If using OD_adjustment, what is the Tau2 ("between" standard error) to use?
+#' @param method Which adjustment method is being used, SHMI or CQC?
+#' @param multiplier Multiply ratio vaue by and amount.  Default is 1, but some mortality ratios use 100, for example.
 #'
-#' @param max_preds
-#' @param min_preds
-#' @param min_ratio
-#' @param max_ratio
-#' @param OD_Tau2
-#' @param Poisson_limits
-#'
-#' @return
+#' @return A data.frame with an index column and various control limits based on the index as an x-axis value.
 #' @export
-#'
-#' @examples
-build_limits_lookup<-function(max_preds, min_preds, min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier){
+build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisson_limits, OD_adjust, Tau2, method, multiplier){
 
   ### Calculate funnel limits ####
-  if (OD_Tau2 == FALSE) {
+  if (OD_adjust == FALSE) {
     Poisson_limits <- TRUE
-    message("OD_adjust set to FALSE, plotting using Poisson limits")
+   # message("OD_adjust set to FALSE, plotting using Poisson limits")
   }
 
-  if (OD_Tau2 == TRUE & Tau2 == 0) {
-    OD_Tau2 <- FALSE
+  if (OD_adjust == TRUE & Tau2 == 0) {
+    OD_adjust <- FALSE
     Poisson_limits <- TRUE
 
-    message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
+    #message("No overdispersion detected, or OD_adjust set to FALSE, plotting using Poisson limits")
 
     # general limits + Tau2 limits table
     set.seed(1)

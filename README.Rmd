@@ -81,15 +81,13 @@ medpar$prds<- predict(mod, type="response")
 
 ```
 <br><br>
-Now we can build a funnel plot object with standard Poisson limits, and outliers labelled.  The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
+We can build a funnel plot object with standard Poisson limits, and outliers labelled.  The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
 
 ```{r, funnel1, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 
-my_plot<-funnel_plot(predictions=medpar$prds,observed=medpar$los, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', 
-            Poisson_limits = TRUE, OD_Tau2 = FALSE,label_outliers = TRUE)
-
-my_plot[3]
+funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
+            OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
 ```
 
 <br><br>
@@ -110,11 +108,9 @@ This is a huge topic, but applying overdispersed limits using either SHMI or Spi
 
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 
-my_plot2<-funnel_plot(predictions=medpar$prds,observed=medpar$los, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', 
-            Poisson_limits = FALSE, OD_Tau2 = TRUE, method = "SHMI",label_outliers = TRUE)
-
-my_plot2[3]
+funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
+            OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
 ```
 
 <br><br>

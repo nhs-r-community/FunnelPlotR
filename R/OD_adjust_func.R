@@ -1,20 +1,23 @@
-#' @title Winsorisation and adjusted z-score function
-#' @description This is an implementation of funnel plots described Spiegelhalter (2005).
-#' There are several parameters for the input, with the assumption that you will want smooth,
-#'  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
-#' effects models.
+#' Winsorisation and adjusted z-score function
 #'
-#' @param input_frame A data.frame input of the plot data including numerator, denominator and rate/ratio
-#' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
-#' uses a square root transformation and winsorizes by replaceing values, SHMI uses log transformation and winsorizes
-#' by truncation. SHMI method is default.
-#' @param Winsorize_by Proportion of the distribution for winsorization. Default is 10 \% (0.1)
-#
+#' @description Internal funciton to perform the winsorisation and adjustment of z-scores prior to funnel plots.
+#'
+#' @param mod_plot_agg Aggregated model input data
+#' @param method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.
+#' @param Winsorise_by The amount to winsorise\/truncate the distribution by, prior to transformation. 0.1 means 10\% (at each end).
+#' @param multiplier The amount to multiply the standardised ratio by, default is 1.
+#' @param bypass TRUE\/FALSE, whether to bypass adjustment (not yet in use in main function)
+#'
+#' @return A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)' @importFrom dplyr mutate summarise %>%
+#' @importFrom dplyr group_by summarise mutate %>%
+#'
+OD_adjust_func<-function(mod_plot_agg=mod_plot_agg, method = "SHMI", Winsorise_by = 0.1, multiplier=1, bypass=FALSE){
 
+if(bypass==TRUE){
+  return(list(mod_plot_agg, phi=as.numeric(0), Tau2=as.numeric(0)))
+}
 
-OD_adjust_func<-function(mod_plot_agg=mod_plot_agg, method = "SHMI", Winsorize_by = 0.1, multiplier=1, bypass=TRUE){
-
-if (method == "CQC") {
+if(method == "CQC"){
   mod_plot_agg <- mod_plot_agg %>%
     mutate(
       y = sqrt(numerator / denominator),
@@ -26,39 +29,39 @@ if (method == "CQC") {
       LCL99 = multiplier * (1 - (-3.090232 * sqrt(1 / rrS2))^2),
       UCL99 = multiplier * (1 + (3.090232 * sqrt(1 / rrS2))^2)
     )
-  
-  
-  lz <- quantile(x = mod_plot_agg$Uzscore_CQC, Winsorize_by)
-  uz <- quantile(x = mod_plot_agg$Uzscore_CQC, (1 - Winsorize_by))
-  
+
+
+  lz <- quantile(x = mod_plot_agg$Uzscore_CQC, Winsorise_by)
+  uz <- quantile(x = mod_plot_agg$Uzscore_CQC, (1 - Winsorise_by))
+
   mod_plot_agg <- mod_plot_agg %>%
     dplyr::mutate(
       Winsorised = ifelse(Uzscore_CQC > lz & Uzscore_CQC < uz, 0, 1),
       Wuzscore = ifelse(Uzscore_CQC < lz, lz, ifelse(Uzscore_CQC > uz, uz, Uzscore_CQC)),
       Wuzscore2 = Wuzscore^2
     )
-  
+
   phi <- mod_plot_agg %>%
     dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
     as.numeric()
-  
+
   if(is.na(phi) || bypass==TRUE){
     phi<-0
   }
-  
+
   Tau2 <- mod_plot_agg %>%
     dplyr::summarise(Tau2 = max(
       0,
       ((n() * phi) - (n() - 1)) /
-        
+
         (sum(1 / rrS2) - (sum(1 / (S)) / sum(1 / rrS2)))
     )) %>%
     as.numeric()
-  
+
   if(is.na(Tau2) || bypass==TRUE){
     Tau2<-0
   }
-  
+
   mod_plot_agg <- mod_plot_agg %>%
     dplyr::mutate(
       phi = phi,
@@ -70,7 +73,7 @@ if (method == "CQC") {
       OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2)
     )
 } else if (method == "SHMI") {
-  
+
   mod_plot_agg <- mod_plot_agg %>%
     mutate(
       s = 1 / (sqrt(denominator)),
@@ -81,37 +84,37 @@ if (method == "CQC") {
       LCL99 = multiplier * (exp(-3.090232 * sqrt(rrS2))),
       UCL99 = multiplier * (exp(3.090232 * sqrt(rrS2)))
     )
-  
-  lz <- quantile(x = mod_plot_agg$Uzscore_SHMI, Winsorize_by)
-  uz <- quantile(x = mod_plot_agg$Uzscore_SHMI, (1 - Winsorize_by))
-  
+
+  lz <- quantile(x = mod_plot_agg$Uzscore_SHMI, Winsorise_by)
+  uz <- quantile(x = mod_plot_agg$Uzscore_SHMI, (1 - Winsorise_by))
+
   mod_plot_agg <- mod_plot_agg %>%
     dplyr::mutate(Winsorised = ifelse(Uzscore_SHMI > lz & Uzscore_SHMI < uz, 0, 1))
-  
+
   mod_plot_agg_sub <- mod_plot_agg %>%
     dplyr::filter(Winsorised == 0) %>%
     mutate(
       Wuzscore = Uzscore_SHMI,
       Wuzscore2 = Uzscore_SHMI^2
     )
-  
+
   phi <- mod_plot_agg_sub %>%
     dplyr::summarise(phi = (1 / as.numeric(n())) * sum(Wuzscore2)) %>%
     as.numeric()
-  
+
   if(is.na(phi) || bypass==TRUE){
     phi<-0
   }
-  
+
   Tau2 <- mod_plot_agg_sub %>%
     dplyr::summarise(Tau2 = max(0, ((n() * phi) - (n() - 1)) /
                                   (sum(denominator) - (sum(denominator^2) / sum(denominator))))) %>%
     as.numeric()
-  
+
   if(is.na(Tau2) || bypass==TRUE){
     Tau2<-0
   }
-  
+
   mod_plot_agg <- mod_plot_agg %>%
     dplyr::mutate(
       Wuzscore = ifelse(Winsorised == 1, NA, Uzscore_SHMI),

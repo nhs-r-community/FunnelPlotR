@@ -1,15 +1,12 @@
-#' @title Funnel Plots for Indirectly-Standardised Ratios
-#' @description This is an implementation of funnel plots described Spiegelhalter (2005).
-#' There are several parameters for the input, with the assumption that you will want smooth,
-#'  overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
-#' effects models.
+#' @title Aggregation function for record-level data, prior to plot.
+#' @description Internal funciton to aggreagate record-level data for plotting as a funnel
+#' @param mod_plot A data frame of values to be aggreagated.  Expected columns, 'group', 'numerator' and 'denominator'
 #'
-#' @param predictions A vector of model predictions.  Used as denominator of the Y-axis and the scale of the x-axis
-#' @param observed  A vector of the observed value.  Used as numerator of the Y-axis
-#' @param group A vector of group names or a factor.  Used to aggreagate and group points on plots
+#' @return Returns an aggreagated data.frame of the same columns, summer by but 'group', with a relative risk 'rr' column added.
+#' @importFrom dplyr group_by summarise %>%
 
 aggregate_func<- function(mod_plot) {
-  
+
   mod_plot_agg <- mod_plot %>%
     dplyr::group_by(group) %>%
     dplyr::summarise(
