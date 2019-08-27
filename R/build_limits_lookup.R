@@ -15,8 +15,7 @@
 #' @importFrom stats qchisq quantile
 build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisson_limits, OD_adjust, Tau2, method, multiplier){
 
-  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."), add=F)
+
 
   ### Calculate funnel limits ####
   if (OD_adjust == FALSE) {
