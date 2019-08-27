@@ -16,6 +16,7 @@ aggregate_input_data=TRUE
 label_outliers = 99
 Poisson_limits = FALSE
 OD_adjust = TRUE
+#Tau2 == 0
 method = "SHMI"
 Winsorize_by = 0.1
 multiplier = 1
@@ -24,4 +25,8 @@ y_label = "Standardised Ratio"
 title="Untitle Funnel Plot"
 rm(return_elements)
 
-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los, group = medpar$provnum, return_elements=c("plot"))
+fp<-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los, group = medpar$provnum, return_elements=c("plot"))
+
+fp
+
+

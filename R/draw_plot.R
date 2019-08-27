@@ -36,7 +36,7 @@
 #' @importFrom ggrepel geom_text_repel
 #' @import ggplot2
 
-draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2){
+draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2, Tau2 = 0){
 
 #plot ranges
   # Determine the range of plots
@@ -56,11 +56,16 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
     OD_Tau2 <- FALSE
     Poisson_limits <- TRUE
     
-    message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
-    
-  } else {
-    stop("Invalid method supplied")
   }
+  # if (OD_Tau2 == TRUE & Tau2 == 0) {
+  #   OD_Tau2 <- FALSE
+  #   Poisson_limits <- TRUE
+  #   
+  #   message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
+  #   
+  # } else {
+  #   stop("Invalid method supplied")
+  # }
   
   dfCI<-build_limits_lookup(max_preds, min_preds, min_ratio, max_ratio, OD_Tau2, Poisson_limits)
   

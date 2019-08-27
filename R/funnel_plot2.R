@@ -56,7 +56,7 @@ funnel_plot_dev <- function(numerator, denominator, group, aggregate_input_data=
                             y_label = "Standardised Ratio", yrange, xrange, return_elements=c("plot", "data", "limits")){
   
 
-  
+funnel_plot(medpar$los, medpar$prds, medpar$provnum)  
   
   # build initial dataframe of obs/predicted, with error message caught here in 'try'
   
@@ -102,17 +102,17 @@ funnel_plot_dev <- function(numerator, denominator, group, aggregate_input_data=
   phi<-as.numeric(adj[2])
   Tau2<-as.numeric(adj[3])
   
-  fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2=OD_adjust)
+  fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2=OD_adjust, Tau2=Tau2)
   
   #Build return
   rtn<-list()
-  if(length(grep("plot", return_elements))==0){
+  if(length(grep("plot", return_elements))>0){
   rtn[["plot"]]<-fun_plot
   } 
-  if(length(grep("data", return_elements))==0){
+  if(length(grep("data", return_elements))>0){
   rtn[["data"]]<-mod_plot_agg
   }
-  if(length(grep("limits", return_elements))==0){
+  if(length(grep("limits", return_elements))>0){
   rtn[["limits"]]<-dfCI
   }
   
