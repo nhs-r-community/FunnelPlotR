@@ -34,7 +34,6 @@
 #'    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 #'
 #' @examples
-#' \dontrun{
 #' # lets use the \'medpar\' dataset from the \'COUNT\' package.
 #' # Little reformatting needed
 #'
@@ -55,7 +54,6 @@
 #' group = medpar$provnum, return_elements=c("plot"))
 #'fp
 #'
-#' }
 #'
 #' @seealso \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}
 #'    \href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}
