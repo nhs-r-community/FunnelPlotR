@@ -99,7 +99,7 @@ Here we will apply this to some data by picking up the `medpar` dataset discusse
 ### Installation
 
 ```{r install, eval=FALSE}
-devtools::install_github("https://github.com/chrismainey/CMFunnels")
+devtools::install_github("https://github.com/chrismainey/FunnelPlotR")
 ```
 
 
@@ -141,7 +141,7 @@ Now we can build a funnel plot object with standard Poisson limits, and outliers
 
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
+            OD_adjust = FALSE,label_outliers = 99, return_elements = "plot")
 ```
 
 <br>
@@ -167,7 +167,7 @@ This is a huge topic, but applying overdispersed limits using either SHMI or Spi
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
+            OD_adjust = TRUE, method = "SHMI",label_outliers = 99, return_elements = "plot")
 ```
 
 <br><br>

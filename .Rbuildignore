@@ -8,5 +8,5 @@
 ^CODE_OF_CONDUCT\.md$
 tests.R
 README.Rmd
-/README.files
-cran-comment.md
+/README_files
+cran-comments.md

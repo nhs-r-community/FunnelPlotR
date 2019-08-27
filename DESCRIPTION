@@ -16,7 +16,8 @@ LazyData: true
 Imports: ggrepel,
          scales
 Depends: ggplot2,
-         dplyr
+         dplyr,
+         rlang
 RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0),

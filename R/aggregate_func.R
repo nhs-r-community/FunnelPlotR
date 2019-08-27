@@ -4,15 +4,16 @@
 #'
 #' @return Returns an aggreagated data.frame of the same columns, summer by but 'group', with a relative risk 'rr' column added.
 #' @importFrom dplyr group_by summarise %>%
+#' @importFrom rlang .data
 
 aggregate_func<- function(mod_plot) {
 
   mod_plot_agg <- mod_plot %>%
-    dplyr::group_by(group) %>%
+    dplyr::group_by(.data$group) %>%
     dplyr::summarise(
-      numerator = as.numeric(sum(numerator)),
-      denominator = as.numeric(sum(denominator)),
-      rr = numerator / denominator
+      numerator = as.numeric(sum(.data$numerator)),
+      denominator = as.numeric(sum(.data$denominator)),
+      rr = .data$numerator / .data$denominator
     )
 
 return(mod_plot_agg)

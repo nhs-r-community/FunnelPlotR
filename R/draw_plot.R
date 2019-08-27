@@ -22,15 +22,16 @@
 #' @importFrom rlang .data
 #' @import ggplot2
 
-draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title,
+draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
                     label_outliers, multiplier, Poisson_limits, OD_Tau2, Tau2 = 0, method){
 
 #plot ranges
   # Determine the range of plots
   max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(.data$denominator, na.rm = FALSE))) %>% as.numeric()
   min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(.data$denominator,na.rm = FALSE))) %>% as.numeric()
-  min_ratio <- min((0.7 * multiplier), dplyr::summarise(.data$mod_plot_agg, multiplier *
-                                                        min((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
+  min_ratio <- max((0.7 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
+                                                          max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
+  
   max_ratio <- max((1.3 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
                                                         max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
 
@@ -117,10 +118,10 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
     if (Poisson_limits == FALSE &  OD_Tau2 == TRUE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
         scale_color_manual(values = c(
           "99.8% Overdispersed" = "#DEC400", # "#F7EF0A", #"#2CA02CFF",
           "95% Overdispersed" = "#9467BDFF"
@@ -131,11 +132,11 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
   if (OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, .data$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, .data$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   } else {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, numerator>4)$LCL99)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, .data$numerator>4)$LCL99)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, .data$numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   }
 
@@ -143,23 +144,23 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
   if (label_outliers == 95) {
     if (OD_Tau2 == FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > UCL95, as.character(group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < LCL95, as.character(group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL95, as.character(.data$group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL95, as.character(.data$group), "")), size = 2.7, direction = "y")
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD95UCL, as.character(group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD95LCL, as.character(group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD95UCL, as.character(.data$group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD95LCL, as.character(.data$group), "")), size = 2.7, direction = "y")
     }
   }
   if (label_outliers == 99) {
     if (OD_Tau2 == FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > UCL99, as.character(group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < LCL99, as.character(group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL99, as.character(.data$group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL99, as.character(.data$group), "")), size = 2.7, direction = "y")
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD99UCL, as.character(group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD99LCL, as.character(group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD99UCL, as.character(.data$group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD99LCL, as.character(.data$group), "")), size = 2.7, direction = "y")
     }
   }
 
