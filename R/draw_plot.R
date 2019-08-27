@@ -19,6 +19,7 @@
 #'
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
+#' @importFrom rlang .data
 #' @import ggplot2
 
 draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title,
@@ -26,12 +27,12 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
 #plot ranges
   # Determine the range of plots
-  max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(denominator, na.rm = FALSE))) %>% as.numeric()
-  min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(denominator,na.rm = FALSE))) %>% as.numeric()
-  min_ratio <- min((0.7 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
-                                                        min((numerator / denominator))) %>% as.numeric(), na.rm = FALSE)
+  max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(.data$denominator, na.rm = FALSE))) %>% as.numeric()
+  min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(.data$denominator,na.rm = FALSE))) %>% as.numeric()
+  min_ratio <- min((0.7 * multiplier), dplyr::summarise(.data$mod_plot_agg, multiplier *
+                                                        min((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
   max_ratio <- max((1.3 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
-                                                        max((numerator / denominator))) %>% as.numeric(), na.rm = FALSE)
+                                                        max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
 
 
   ### Calculate funnel limits ####
@@ -61,7 +62,7 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
 
   # base funnel plot
-  funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
+  funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((.data$numerator / .data$denominator)), x = .data$denominator)) +
     geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue2") +
     # scale_y_continuous(limits = c((min_ratio-0.1), (max_ratio+0.1)))+
     # scale_x_continuous(labels = scales::comma, limits = c(0,max_preds+1)) +
@@ -87,14 +88,14 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
   if (Poisson_limits == TRUE & OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
-      geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
       scale_color_manual(values = c(
         "99.8% Poisson" = "#1F77B4FF",
         "95% Poisson" = "#FF7F0EFF",
@@ -104,10 +105,10 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
   } else {
     if (Poisson_limits == TRUE & OD_Tau2 == FALSE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = .data$number.seq, y = .data$ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
         scale_color_manual(values = c(
           "99.8% Poisson" = "#7E9C06", # "#1F77B4FF"
           "95% Poisson" = "#FF7F0EFF"
