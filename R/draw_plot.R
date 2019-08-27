@@ -36,7 +36,8 @@
 #' @importFrom ggrepel geom_text_repel
 #' @import ggplot2
 
-draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2, Tau2 = 0){
+draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title,
+                    label_outliers, multiplier, Poisson_limits, OD_Tau2, Tau2 = 0, method){
 
 #plot ranges
   # Determine the range of plots
@@ -44,32 +45,34 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
   min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(denominator))) %>% as.numeric()
   min_ratio <- min(0.7 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * min(numerator / denominator)) %>% as.numeric())
   max_ratio <- max(1.3 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * max(numerator / denominator)) %>% as.numeric())
-  
-  # 
-  # ### Calculate funnel limits ####
-  # if (OD_Tau2 == FALSE) {
-  #   Poisson_limits <- TRUE
-  #   message("OD_Tau2 set to FALSE, plotting using Poisson limits")
-  # }
-  # 
-  # if (OD_Tau2 == TRUE & Tau2 == 0) {
-  #   OD_Tau2 <- FALSE
-  #   Poisson_limits <- TRUE
-  #   
+
+
+  ### Calculate funnel limits ####
+  if (OD_Tau2 == FALSE) {
+    Poisson_limits <- TRUE
+    message("OD_adjust set to FALSE, plotting using Poisson limits")
+  }
+
+  if (OD_Tau2 == TRUE & Tau2 == 0) {
+    OD_Tau2 <- FALSE
+    Poisson_limits <- TRUE
+
+    message("No overdispersion detected, or OD_adjust to FALSE, plotting using Poisson limits")
+
   }
   # if (OD_Tau2 == TRUE & Tau2 == 0) {
   #   OD_Tau2 <- FALSE
   #   Poisson_limits <- TRUE
-  #   
-  #   message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
-  #   
+  #
+  #   )
+  #
   # } else {
   #   stop("Invalid method supplied")
   # }
-  
-  dfCI<-build_limits_lookup(max_preds, min_preds, min_ratio, max_ratio, OD_Tau2, Poisson_limits)
-  
-  
+
+  dfCI<-build_limits_lookup(max_preds, min_preds, min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier)
+
+
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
     geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue2") +
@@ -91,10 +94,10 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
       colour = "black",
       angle = 0
     )))
-  
-  
-  
-  
+
+
+
+
   if (Poisson_limits == TRUE & OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
       geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -123,7 +126,7 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
           "95% Poisson" = "#FF7F0EFF"
         ), name = "Control limits")
     }
-    
+
     if (Poisson_limits == FALSE &  OD_Tau2 == TRUE) {
       funnel_p <- funnel_p +
         geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -136,8 +139,8 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
         ), name = "Control limits")
     }
   }
-  
-  
+
+
   if (OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
       scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, numerator>4)$OD99LCI) -0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, numerator>4)$OD99UCI) - 0.1))))) +
@@ -147,8 +150,8 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
       scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, numerator>4)$LCL99) - 0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, numerator >4)$UCL99) + 0.1))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   }
-  
-  
+
+
   if (label_outliers == 95) {
     if (OD_Tau2 == FALSE) {
       funnel_p <- funnel_p +
@@ -171,7 +174,7 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
         ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD99LCI, as.character(group), "")), size = 2.7, direction = "y")
     }
   }
-  
+
  return(funnel_p)
 
 }

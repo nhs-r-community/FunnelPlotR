@@ -52,14 +52,14 @@
 
 funnel_plot_dev <- function(numerator, denominator, group, aggregate_input_data=TRUE, label_outliers = 99,
                             Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorize_by = 0.1,
-                            title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected", 
+                            title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label = "Standardised Ratio", yrange, xrange, return_elements=c("plot", "data", "limits")){
-  
 
-funnel_plot(medpar$los, medpar$prds, medpar$provnum)  
-  
+
+#funnel_plot(medpar$los, medpar$prds, medpar$provnum)
+
   # build initial dataframe of obs/predicted, with error message caught here in 'try'
-  
+
   if (missing(denominator)) {
     stop("Need to specify model denominator")
   }
@@ -72,49 +72,50 @@ funnel_plot(medpar$los, medpar$prds, medpar$provnum)
   if (missing(numerator)) {
     stop("Need to supply the column name for numerator")
   }
-  
+
   if (class(denominator)[1] == "array") {
     denominator <- as.numeric(denominator)
   }
-  
-  
+
+
   mod_plot <- data.frame(numerator, denominator, group)
-  
+
   if (aggregate_input_data==TRUE){
-    
+
     mod_plot_agg<-aggregate_func(mod_plot)
-    
-    
-    
+
+
+
   } else {
     mod_plot_agg <- mod_plot
     mod_plot_agg$rr <- numerator / denominator
-    
+
     phi<-0
     Tau2<-0
-    
+
   }
-  
-  
+
+
   adj<-OD_adjust_func(mod_plot_agg, method=method, Winsorize_by= Winsorize_by, bypass=!OD_adjust)
 
   mod_plot_agg<-as.data.frame(adj[1])
   phi<-as.numeric(adj[2])
   Tau2<-as.numeric(adj[3])
-  
-  fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers, Poisson_limits, OD_Tau2=OD_adjust, Tau2=Tau2)
-  
+
+  fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers,
+                      multiplier=multiplier, Poisson_limits, OD_Tau2=OD_adjust, Tau2=Tau2, method=method)
+
   #Build return
   rtn<-list()
   if(length(grep("plot", return_elements))>0){
   rtn[["plot"]]<-fun_plot
-  } 
+  }
   if(length(grep("data", return_elements))>0){
   rtn[["data"]]<-mod_plot_agg
   }
   if(length(grep("limits", return_elements))>0){
   rtn[["limits"]]<-dfCI
   }
-  
+
   return(rtn)
 }

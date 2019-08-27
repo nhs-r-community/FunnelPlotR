@@ -1,30 +1,30 @@
 #' Function to build funnel limits
 #'
-#' @param max_preds 
-#' @param min_preds 
-#' @param min_ratio 
-#' @param max_ratio 
-#' @param OD_Tau2 
-#' @param Poisson_limits 
+#' @param max_preds
+#' @param min_preds
+#' @param min_ratio
+#' @param max_ratio
+#' @param OD_Tau2
+#' @param Poisson_limits
 #'
 #' @return
 #' @export
 #'
 #' @examples
-build_limits_lookup<-function(max_preds, min_preds, min_ratio, max_ratio, OD_Tau2, Poisson_limits){
-  
+build_limits_lookup<-function(max_preds, min_preds, min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier){
+
   ### Calculate funnel limits ####
   if (OD_Tau2 == FALSE) {
     Poisson_limits <- TRUE
     message("OD_adjust set to FALSE, plotting using Poisson limits")
   }
-    
+
   if (OD_Tau2 == TRUE & Tau2 == 0) {
     OD_Tau2 <- FALSE
     Poisson_limits <- TRUE
-    
+
     message("No overdispersion detected, or OD_Tau2 set to FALSE, plotting using Poisson limits")
-    
+
     # general limits + Tau2 limits table
     set.seed(1)
     number.seq <- c(seq(0.1, 10, 0.1), seq(11.0, max_preds, 1))
@@ -67,6 +67,6 @@ build_limits_lookup<-function(max_preds, min_preds, min_ratio, max_ratio, OD_Tau
   } else {
     stop("Invalid method supplied")
   }
-  
+
   return(dfCI)
 }
