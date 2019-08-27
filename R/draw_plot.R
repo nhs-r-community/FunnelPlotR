@@ -26,10 +26,12 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
 #plot ranges
   # Determine the range of plots
-  max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(denominator))) %>% as.numeric()
-  min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(denominator))) %>% as.numeric()
-  min_ratio <- min(0.7 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * min(numerator / denominator)) %>% as.numeric())
-  max_ratio <- max(1.3 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * max(numerator / denominator)) %>% as.numeric())
+  max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(denominator, na.rm = FALSE))) %>% as.numeric()
+  min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(denominator,na.rm = FALSE))) %>% as.numeric()
+  min_ratio <- min((0.7 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
+                                                        min((numerator / denominator))) %>% as.numeric(), na.rm = FALSE)
+  max_ratio <- max((1.3 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
+                                                        max((numerator / denominator))) %>% as.numeric(), na.rm = FALSE)
 
 
   ### Calculate funnel limits ####
@@ -55,7 +57,7 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
   #   stop("Invalid method supplied")
   # }
 
-  dfCI<-build_limits_lookup(min_preds, max_preds,min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier)
+  dfCI<-build_limits_lookup(min_preds, max_preds, min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier)
 
 
   # base funnel plot
@@ -128,11 +130,11 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
 
   if (OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, numerator>4)$OD99LCI) -0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, numerator>4)$OD99UCI) - 0.1))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   } else {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c((multiplier * (min(min_ratio - 0.05, min(subset(mod_plot_agg, numerator>4)$LCL99) - 0.1))), (multiplier * (max(max_ratio + 0.05, max(subset(mod_plot_agg, numerator >4)$UCL99) + 0.1))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, numerator>4)$LCL99)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   }
 
@@ -144,8 +146,8 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
         ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < LCL95, as.character(group), "")), size = 2.7, direction = "y")
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD95UCI, as.character(group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD95LCI, as.character(group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD95UCL, as.character(group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD95LCL, as.character(group), "")), size = 2.7, direction = "y")
     }
   }
   if (label_outliers == 99) {
@@ -155,8 +157,8 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
         ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < LCL99, as.character(group), "")), size = 2.7, direction = "y")
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD99UCI, as.character(group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD99LCI, as.character(group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator > OD99UCL, as.character(group), "")), size = 2.7, direction = "y") +
+        ggrepel::geom_label_repel(aes(label = ifelse(numerator / denominator < OD99LCL, as.character(group), "")), size = 2.7, direction = "y")
     }
   }
 

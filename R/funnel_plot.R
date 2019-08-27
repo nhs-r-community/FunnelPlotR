@@ -34,6 +34,7 @@
 #'    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 #'
 #' @examples
+#' \donotrun{
 #' # lets use the \'medpar\' dataset from the \'COUNT\' package.
 #' # Little reformatting needed
 #'
@@ -53,7 +54,7 @@
 #' fp<-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los,
 #' group = medpar$provnum, return_elements=c("plot"))
 #'fp
-#'
+#'}
 #'
 #' @seealso \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}
 #'    \href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}
@@ -107,11 +108,12 @@ funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE
 
   }
 
- # Need to sort out bypass mechanism
-  if(OD_adjust == TRUE){
-  adj<-OD_adjust_func(mod_plot_agg, method=method, Winsorise_by= Winsorise_by, bypass=!OD_adjust)
-
+ #OD Adjust and return table
+  adj<-OD_adjust_func(mod_plot_agg, method=method, Winsorise_by= Winsorise_by, bypass=FALSE)
   mod_plot_agg<-as.data.frame(adj[1])
+
+ # Need to sort out bypass mechanism, but set phi and tau to zero as needed
+  if(OD_adjust == TRUE){
   phi<-as.numeric(adj[2])
   Tau2<-as.numeric(adj[3])
   } else {

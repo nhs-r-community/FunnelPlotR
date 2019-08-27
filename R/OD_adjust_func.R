@@ -67,10 +67,10 @@ if(method == "CQC"){
       phi = phi,
       Tau2 = Tau2,
       Wazscore = (y - 1) / sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2),
-      OD95LCI = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
-      OD95UCI = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
-      OD99LCI = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
-      OD99UCI = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2)
+      OD95LCL = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
+      OD95UCL = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
+      OD99LCL = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2),
+      OD99UCL = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(denominator)))^2) + Tau2)))^2)
     )
 } else if (method == "SHMI") {
 
@@ -123,10 +123,10 @@ if(method == "CQC"){
       Tau2 = Tau2,
       Wazscore = log(rr) / sqrt((1 / denominator) + Tau2),
       var = sqrt(rrS2 + Tau2),
-      OD95LCI = multiplier * (exp(-1.959964 * sqrt((1 / denominator) + Tau2))),
-      OD95UCI = multiplier * (exp(1.959964 * sqrt((1 / denominator) + Tau2))),
-      OD99LCI = multiplier * (exp(-3.090232 * sqrt((1 / denominator) + Tau2))),
-      OD99UCI = multiplier * (exp(3.090232 * sqrt((1 / denominator) + Tau2)))
+      OD95LCL = multiplier * (exp(-1.959964 * sqrt((1 / denominator) + Tau2))),
+      OD95UCL = multiplier * (exp(1.959964 * sqrt((1 / denominator) + Tau2))),
+      OD99LCL = multiplier * (exp(-3.090232 * sqrt((1 / denominator) + Tau2))),
+      OD99UCL = multiplier * (exp(3.090232 * sqrt((1 / denominator) + Tau2)))
     )
   } else {
   stop("Please specify a valid method")

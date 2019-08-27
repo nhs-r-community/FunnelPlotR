@@ -63,6 +63,7 @@ Outliers are marked based on the grouping, controlled by `label_outliers` .
    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 }
 \examples{
+\\donotrun{
 # lets use the \\'medpar\\' dataset from the \\'COUNT\\' package.
 # Little reformatting needed
 
@@ -82,7 +83,7 @@ medpar$prds<- predict(mod, type="response")
 fp<-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los,
 group = medpar$provnum, return_elements=c("plot"))
 fp
-
+}
 
 }
 \seealso{
