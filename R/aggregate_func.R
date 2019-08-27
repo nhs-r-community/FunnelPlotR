@@ -1,11 +1,14 @@
 #' @title Aggregation function for record-level data, prior to plot.
-#' @description Internal funciton to aggreagate record-level data for plotting as a funnel
+#' @description Internal funciton to aggreagate record-level data for plotting as a funnel.
 #' @param mod_plot A data frame of values to be aggreagated.  Expected columns, 'group', 'numerator' and 'denominator'
 #'
 #' @return Returns an aggreagated data.frame of the same columns, summer by but 'group', with a relative risk 'rr' column added.
 #' @importFrom dplyr group_by summarise %>%
 
 aggregate_func<- function(mod_plot) {
+
+  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
+  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
   mod_plot_agg <- mod_plot %>%
     dplyr::group_by(group) %>%

@@ -11,7 +11,12 @@
 #' @param multiplier Multiply ratio vaue by and amount.  Default is 1, but some mortality ratios use 100, for example.
 #'
 #' @return A data.frame with an index column and various control limits based on the index as an x-axis value.
+#'
+#' @importFrom stats qchisq quantile
 build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisson_limits, OD_adjust, Tau2, method, multiplier){
+
+  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
+  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
   ### Calculate funnel limits ####
   if (OD_adjust == FALSE) {

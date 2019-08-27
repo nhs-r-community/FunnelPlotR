@@ -9,6 +9,4 @@
 tests.R
 README.Rmd
 /README.files
-^_pkgdown\.yml$
-^docs$
-^pkgdown$
+cran-comment.md

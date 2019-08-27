@@ -34,7 +34,7 @@
 #'    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 #'
 #' @examples
-#' \donotrun{
+#' \dontrun{
 #' # lets use the \'medpar\' dataset from the \'COUNT\' package.
 #' # Little reformatting needed
 #'
@@ -71,6 +71,9 @@ funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label = "Standardised Ratio", yrange, xrange, return_elements=c("plot", "data", "limits")){
 
+
+  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
+  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 #funnel_plot(medpar$los, medpar$prds, medpar$provnum)
 

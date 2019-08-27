@@ -1,6 +1,6 @@
 #' Winsorisation and adjusted z-score function
 #'
-#' @description Internal funciton to perform the winsorisation and adjustment of z-scores prior to funnel plots.
+#' @description Internal function to perform the winsorisation and adjustment of z-scores prior to funnel plots.
 #'
 #' @param mod_plot_agg Aggregated model input data
 #' @param method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.
@@ -12,6 +12,9 @@
 #' @importFrom dplyr group_by summarise mutate %>%
 #'
 OD_adjust_func<-function(mod_plot_agg=mod_plot_agg, method = "SHMI", Winsorise_by = 0.1, multiplier=1, bypass=FALSE){
+
+  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
+  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 if(bypass==TRUE){
   return(list(mod_plot_agg, phi=as.numeric(0), Tau2=as.numeric(0)))

@@ -13,5 +13,5 @@ aggregate_func(mod_plot)
 Returns an aggreagated data.frame of the same columns, summer by but 'group', with a relative risk 'rr' column added.
 }
 \description{
-Internal funciton to aggreagate record-level data for plotting as a funnel
+Internal funciton to aggreagate record-level data for plotting as a funnel.
 }

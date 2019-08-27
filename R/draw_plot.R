@@ -24,6 +24,9 @@
 draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, title,
                     label_outliers, multiplier, Poisson_limits, OD_Tau2, Tau2 = 0, method){
 
+  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
+  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+
 #plot ranges
   # Determine the range of plots
   max_preds <- dplyr::summarise(mod_plot_agg, ceiling(max(denominator, na.rm = FALSE))) %>% as.numeric()
