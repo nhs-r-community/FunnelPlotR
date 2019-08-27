@@ -16,7 +16,7 @@ build_limits_lookup<-function(max_preds, min_preds, min_ratio, max_ratio, OD_Tau
   ### Calculate funnel limits ####
   if (OD_Tau2 == FALSE) {
     Poisson_limits <- TRUE
-    message("OD_Tau2 set to FALSE, plotting using Poisson limits")
+    message("OD_adjust set to FALSE, plotting using Poisson limits")
   }
     
   if (OD_Tau2 == TRUE & Tau2 == 0) {

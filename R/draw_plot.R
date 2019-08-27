@@ -45,17 +45,17 @@ draw_plot<-function(mod_plot_agg, yrange=NULL, xrange=NULL, x_label, y_label, ti
   min_ratio <- min(0.7 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * min(numerator / denominator)) %>% as.numeric())
   max_ratio <- max(1.3 * multiplier, dplyr::summarise(mod_plot_agg, multiplier * max(numerator / denominator)) %>% as.numeric())
   
-  
-  ### Calculate funnel limits ####
-  if (OD_Tau2 == FALSE) {
-    Poisson_limits <- TRUE
-    message("OD_Tau2 set to FALSE, plotting using Poisson limits")
-  }
-  
-  if (OD_Tau2 == TRUE & Tau2 == 0) {
-    OD_Tau2 <- FALSE
-    Poisson_limits <- TRUE
-    
+  # 
+  # ### Calculate funnel limits ####
+  # if (OD_Tau2 == FALSE) {
+  #   Poisson_limits <- TRUE
+  #   message("OD_Tau2 set to FALSE, plotting using Poisson limits")
+  # }
+  # 
+  # if (OD_Tau2 == TRUE & Tau2 == 0) {
+  #   OD_Tau2 <- FALSE
+  #   Poisson_limits <- TRUE
+  #   
   }
   # if (OD_Tau2 == TRUE & Tau2 == 0) {
   #   OD_Tau2 <- FALSE
