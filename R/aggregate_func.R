@@ -7,9 +7,6 @@
 
 aggregate_func<- function(mod_plot) {
 
-  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
-
   mod_plot_agg <- mod_plot %>%
     dplyr::group_by(group) %>%
     dplyr::summarise(

@@ -72,9 +72,6 @@ funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE
                             y_label = "Standardised Ratio", yrange, xrange, return_elements=c("plot", "data", "limits")){
 
 
-  ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
-
 #funnel_plot(medpar$los, medpar$prds, medpar$provnum)
 
   # build initial dataframe of obs/predicted, with error message caught here in 'try'
