@@ -31,7 +31,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
   min_preds <- dplyr::summarise(mod_plot_agg, ceiling(min(.data$denominator,na.rm = FALSE))) %>% as.numeric()
   min_ratio <- max((0.7 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
                                                           max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
-  
+
   max_ratio <- max((1.3 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
                                                         max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
 
@@ -132,11 +132,11 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
   if (OD_Tau2 == TRUE) {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, .data$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, .data$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   } else {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, .data$numerator>4)$LCL99)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, .data$numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$LCL99)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
   }
 

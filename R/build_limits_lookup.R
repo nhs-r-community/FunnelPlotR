@@ -63,10 +63,10 @@ build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisso
       ul95 = multiplier * ((qchisq(0.025, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
       ll998 = multiplier * ((qchisq(0.998, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
       ul998 = multiplier * ((qchisq(0.001, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-      odll95 = multiplier * ((1 - (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
-      odul95 = multiplier * ((1 + (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
-      odll998 = multiplier * ((1 + (-3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
-      odul998 = multiplier * ((1 + (3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
+      odll95 = multiplier * ((1 - (1.959964 * ((1 / (2 * sqrt(number.seq))) + Tau2)))),
+      odul95 = multiplier * ((1 + (1.959964 * ((1 / (2 * sqrt(number.seq))) + Tau2)))),
+      odll998 = multiplier * ((1 + (-3.090232 * ((1 / (2 * sqrt(number.seq))) + Tau2)))),
+      odul998 = multiplier * ((1 + (3.090232 * ((1 / (2 * sqrt(number.seq))) + Tau2))))
     )
   } else {
     stop("Invalid method supplied")

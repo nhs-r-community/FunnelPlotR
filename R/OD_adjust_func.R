@@ -25,10 +25,18 @@ if(method == "CQC"){
       S = 1 / (2 * sqrt(.data$denominator)),
       rrS2 = .data$S^2,
       Uzscore_CQC = 2 * (sqrt(.data$numerator) - sqrt(.data$denominator)),
-      LCL95 = multiplier * (1 - (-1.959964 * sqrt(1 / .data$rrS2))^2),
-      UCL95 = multiplier * (1 + (1.959964 * sqrt(1 / .data$rrS2))^2),
-      LCL99 = multiplier * (1 - (-3.090232 * sqrt(1 / .data$rrS2))^2),
-      UCL99 = multiplier * (1 + (3.090232 * sqrt(1 / .data$rrS2))^2)
+      #LCL95 = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2))))^2),
+      LCL95 = multiplier * 1 - (1.959964 * .data$S),  #                  (exp(-1.959964 * sqrt((1 / .data$denominator) + Tau2)))
+      UCL95 = multiplier * 1 + (1.959964 * .data$S),
+      LCL99 = multiplier * 1 - (3.090232 * .data$S),
+      UCL99 = multiplier * 1 + (3.090232 * .data$S),
+      #LCL95 = multiplier * ((-1.959964 * sqrt(1 / .data$rrS2))^2),
+      #UCL95 = multiplier * (1 + (1.959964 * sqrt(1 / .data$rrS2))^2),
+      #ULCL95 =  multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2))))^2),
+      #LCL99 = multiplier * (1 - (-3.090232 * sqrt(1 / .data$rrS2))^2),
+      #UCL99 = multiplier * (1 + (3.090232 * sqrt(1 / .data$rrS2))^2),
+    #  LCL99 = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2))))^2),
+     # UCL99 = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2))))^2)
     )
 
 
@@ -68,10 +76,14 @@ if(method == "CQC"){
       phi = phi,
       Tau2 = Tau2,
       Wazscore = (.data$y - 1) / sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2),
-      OD95LCL = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2),
-      OD95UCL = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2),
-      OD99LCL = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2),
-      OD99UCL = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2)
+      OD95LCL = multiplier * 1 - (1.959964 * (.data$S + Tau2)),
+      OD95UCL = multiplier * 1 + (1.959964 * (.data$S + Tau2)),
+      OD99LCL = multiplier * 1 - (3.090232 * (.data$S + Tau2)),
+      OD99UCL = multiplier * 1 + (3.090232 * (.data$S + Tau2))
+      # OD95LCL = multiplier * ((1 - (-1.959964 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2),
+      # OD95UCL = multiplier * ((1 + (1.959964 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2),
+      # OD99LCL = multiplier * ((1 - (-3.090232 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2),
+      # OD99UCL = multiplier * ((1 + (3.090232 * sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2)))^2)
     )
 } else if (method == "SHMI") {
 
