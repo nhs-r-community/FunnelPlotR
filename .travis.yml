@@ -4,10 +4,11 @@ language: R
 cache: packages
 r_packages:
   - covr
+latex: false
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
-  
+
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
   deploy:
     provider: script
