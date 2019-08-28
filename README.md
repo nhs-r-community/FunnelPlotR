@@ -109,19 +109,17 @@ we will compare to observed `los`:
 medpar$prds<- predict(mod, type="response")
 ```
 
-<br><br> Now we can build a funnel plot object with standard Poisson
-limits, and outliers labelled. The function returns a list of the
-plotted data, the plotted control limit range, and the ggplot object,
-hence `object[3]` to call it.
+<br><br> We can build a funnel plot object with standard Poisson limits,
+and outliers labelled. The function returns a list of the plotted data,
+the plotted control limit range, and the ggplot object, hence
+`object[3]` to call it.
 
 ``` r
 
-my_plot<-funnel_plot(predictions=medpar$prds,observed=medpar$los, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', 
-            Poisson_limits = TRUE, OD_Tau2 = FALSE,label_outliers = TRUE)
-
-my_plot[3]
-## [[1]]
+funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
+            OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
+## $plot
 ```
 
 <img src="README_files/figure-gfm/funnel1-1.png" width="672" style="display: block; margin: auto;" />
@@ -147,12 +145,10 @@ for this by inflating the limits:
 
 ``` r
 
-my_plot2<-funnel_plot(predictions=medpar$prds,observed=medpar$los, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', 
-            Poisson_limits = FALSE, OD_Tau2 = TRUE, method = "SHMI",label_outliers = TRUE)
-
-my_plot2[3]
-## [[1]]
+funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
+            OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
+## $plot
 ```
 
 <img src="README_files/figure-gfm/funnel2-1.png" width="672" style="display: block; margin: auto;" />

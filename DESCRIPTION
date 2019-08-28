@@ -9,7 +9,7 @@ Authors@R: c(
         person("Matthew", "Bass", ,"matthew.bass@uhb.nhs.uk", role="ctb")
         )
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
-Description: This is an implementation of the Speigelhalter Funnel plots for reporting standardised ratio, with overdispersion adjustment.
+Description: This is an implementation of the Spiegelhalter Funnel plots for reporting standardised ratio, with overdispersion adjustment.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
