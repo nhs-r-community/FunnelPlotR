@@ -20,7 +20,3 @@ fp<-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los, group = medpar
 fp
 
 
-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum)
-, 
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = FALSE,label_outliers = 99, return_elements = "plot")
