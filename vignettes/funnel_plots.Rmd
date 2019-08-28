@@ -20,11 +20,11 @@ knitr::opts_chunk$set(
 
 ## Funnel plots
 
-Funnel plots are a common tool for comparing organisations or units using proportions or standardised rates.  A common use of them is for monitoring mortality at hospitals.  This is an introductory post on the subject, that gives a little information about them and how they are constructed.  It is deliberately light on theory, focussing on use, some of the theory is referenced for interested readers.
+Funnel plots are a common tool for comparing organisations or units using proportions or standardised rates.  A common use of them is for monitoring mortality at hospitals.  This is an introductory post on the subject, that gives a little information about them and how they are constructed.  It is deliberately light on theory, focusing on use, some of the theory is referenced for interested readers.
 
 This post also uses a funnel plot function, for indirectly standardised ratios, that I built as part of my PhD work.  The function is based on `ggplot2` [@wickhamGgplot2ElegantGraphics2009], and is available at https://github.com/chrismainey/FunnelPlotR, although it's a work in progress.  
 
-There are different kinds of funnel plot, but this post focusses on the type used to compare standardised mortality and other similarly constructed indicators .
+There are different kinds of funnel plot, but this post focuses on the type used to compare standardised mortality and other similarly constructed indicators .
 
 ## Why do we use them?
 
@@ -88,7 +88,7 @@ It also allows users to specify whether they want 'overdispersed' limits.  I wil
 
 Part of this process involves 'Winsorisation' of the distribution [@spiegelhalterHandlingOverdispersionPerformance2005; @spiegelhalterStatisticalMethodsHealthcare2012], where we set the outer most values to a defined percentile to reduce the effects of outliers.  This is commonly set to 10% at each end of the distribution, but there is a variant method for this, used in the NHS' Summary Hospital Mortality Indicator', where the distribution is truncated instead of Winsorised [@clinicalindicatorsteamnhsdigitalSummaryHospitallevelMortality2018].
 
-I originally wrote this package to present plots for my PhD thesis, focussed on predicting NRLS incident reporting ratios after risk-adjustment.  The overdispersion was particularly high in this case, and differences between the two methods were noticeable, with the SHMI/truncation method appearing better suited.
+I originally wrote this package to present plots for my PhD thesis, focused on predicting NRLS incident reporting ratios after risk-adjustment.  The overdispersion was particularly high in this case, and differences between the two methods were noticeable, with the SHMI/truncation method appearing better suited.
 
 <br>
 
@@ -105,7 +105,7 @@ devtools::install_github("https://github.com/chrismainey/FunnelPlotR")
 
 ### Basic model build
 
-We will first load the data and build a simple predictive model, using a Poisson GLM, with a few of the predictors from the dataset.  This post is not focussed on modelling techniques, but a Poisson Generalised Linear Model (GLM) is more appropriate for count data than linear regression.  The key message, though, is that Poisson models make no adjustment for the variance within the data and are likely to be overdispersed.  A more sophisticated approach might use something like a negative binomial or multilevel model (discussed in a later post).
+We will first load the data and build a simple predictive model, using a Poisson GLM, with a few of the predictors from the dataset.  This post is not focused on modelling techniques, but a Poisson Generalised Linear Model (GLM) is more appropriate for count data than linear regression.  The key message, though, is that Poisson models make no adjustment for the variance within the data and are likely to be overdispersed.  A more sophisticated approach might use something like a negative binomial or multilevel model (discussed in a later post).
 
 A little reformatting is required before modelling:
 
