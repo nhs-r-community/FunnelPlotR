@@ -10,7 +10,7 @@ Authors@R: c(
         )
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
 Description: This is an implementation of the Spiegelhalter Funnel plots for reporting standardised ratio, with overdispersion adjustment.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: ggrepel,
