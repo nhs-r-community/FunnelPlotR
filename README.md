@@ -47,6 +47,9 @@ Please note that the ‘FunnelPlotR’ project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
 this project, you agree to abide by its terms.
 
+More information avaialbe at
+<https://chrismainey.github.io/FunnelPlotR/>
+
 ## Installation
 
 ``` r
@@ -168,4 +171,5 @@ funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnu
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.
 
-**Please read the package documentation for more info**
+\_\_Please read the package documentation for more info, at:
+<https://chrismainey.github.io/FunnelPlotR/__>
