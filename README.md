@@ -122,13 +122,8 @@ the plotted control limit range, and the ggplot object, hence
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
             OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
-## Warning in min(subset(mod_plot_agg, .data$numerator > 4)$LCL99): no non-
-## missing arguments to min; returning Inf
-## Warning in max(subset(mod_plot_agg, .data$numerator > 4)$UCL99): no non-
-## missing arguments to max; returning -Inf
 ## $plot
-## Warning: Removed 53 rows containing missing values (geom_point).
-## Warning: Removed 54 rows containing missing values (geom_hline).
+## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
 <img src="README_files/figure-gfm/funnel1-1.png" width="672" style="display: block; margin: auto;" />
@@ -157,13 +152,7 @@ for this by inflating the limits:
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
             OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
-## Warning in min(subset(mod_plot_agg, .data$numerator > 4)$OD99LCL): no non-
-## missing arguments to min; returning Inf
-## Warning in max(subset(mod_plot_agg, .data$numerator > 4)$OD99UCL): no non-
-## missing arguments to max; returning -Inf
 ## $plot
-## Warning: Removed 53 rows containing missing values (geom_point).
-## Warning: Removed 54 rows containing missing values (geom_hline).
 ```
 
 <img src="README_files/figure-gfm/funnel2-1.png" width="672" style="display: block; margin: auto;" />
