@@ -31,7 +31,7 @@ test_that("`funnel_plot()` works with input and returns expected list", {
   expect_s3_class(c[[3]], "data.frame")
   expect_length(c[[2]]$group,6)
   expect_length(c[[2]],22)
-  expect_gt(c[[2]]$OD95LCL[5], b[[2]]$OD95LCL[5])
+  expect_gt(b[[2]]$OD95LCL[5], c[[2]]$OD95LCL[5])
 
 })
 
