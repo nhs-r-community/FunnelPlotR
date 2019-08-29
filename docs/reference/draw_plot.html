@@ -41,7 +41,7 @@
 
 
 <meta property="og:title" content="Funnel Plots drawing function — draw_plot" />
-<meta property="og:description" content="This function sets up the plots, and draws them with ggplot2." />
+<meta property="og:description" content="Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` insead." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -122,18 +122,19 @@
     </div>
 
     <div class="ref-description">
-    <p>This function sets up the plots, and draws them with ggplot2.</p>
+    <p>Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` insead.</p>
     </div>
 
     <pre class="usage"><span class='fu'>draw_plot</span>(<span class='no'>mod_plot_agg</span>, <span class='no'>yrange</span>, <span class='no'>xrange</span>, <span class='no'>x_label</span>, <span class='no'>y_label</span>, <span class='no'>title</span>,
-  <span class='no'>label_outliers</span>, <span class='no'>multiplier</span>, <span class='no'>Poisson_limits</span>, <span class='no'>OD_Tau2</span>, <span class='kw'>Tau2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>method</span>)</pre>
+  <span class='no'>label_outliers</span>, <span class='no'>multiplier</span>, <span class='no'>Poisson_limits</span>, <span class='no'>OD_adjust</span>, <span class='kw'>Tau2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='no'>method</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mod_plot_agg</th>
-      <td><p>data frame ofcontaining numerator, denominator, ratio/proportion, SEs and limits</p></td>
+      <td><p>data frame of containing numerator, denominator, ratio/proportion, SEs and limits</p></td>
     </tr>
     <tr>
       <th>yrange</th>
@@ -168,7 +169,7 @@
       <td><p>Draw exact limits based only on data points with no iterpolation. (default=FALSE)</p></td>
     </tr>
     <tr>
-      <th>OD_Tau2</th>
+      <th>OD_adjust</th>
       <td><p>Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)</p></td>
     </tr>
     <tr>
@@ -183,7 +184,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.</p>
+    <p>A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
