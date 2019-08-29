@@ -1,6 +1,6 @@
 #' Winsorisation and adjusted z-score function
 #'
-#' @description Internal function to perform the winsorisation and adjustment of z-scores prior to funnel plots.
+#' @description Internal function to perform the winsorisation and adjustment of z-scores prior to plotting.
 #'
 #' @param mod_plot_agg Aggregated model input data
 #' @param method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.
@@ -8,7 +8,8 @@
 #' @param multiplier The amount to multiply the standardised ratio by, default is 1.
 #' @param bypass TRUE\/FALSE, whether to bypass adjustment (not yet in use in main function)
 #'
-#' @return A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)' @importFrom dplyr mutate summarise %>%
+#' @return A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)' 
+#' @importFrom dplyr mutate summarise %>%
 #' @importFrom dplyr group_by summarise mutate %>%
 #' @importFrom rlang .data
 #'

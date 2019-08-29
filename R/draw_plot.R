@@ -1,7 +1,7 @@
 #' @title Funnel Plots drawing function
-#' @description This function sets up the plots, and draws them with ggplot2.
+#' @description Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` insead.
 #'
-#' @param mod_plot_agg data frame ofcontaining numerator, denominator, ratio/proportion, SEs and limits
+#' @param mod_plot_agg data frame of containing numerator, denominator, ratio/proportion, SEs and limits
 #' @param yrange Specify the plot range.  Not yet implemented
 #' @param xrange Specify the plot range.  Not yet implemented
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
@@ -14,7 +14,7 @@
 #' @param Tau2 The Tau2 value to use for plotting limits
 #' @param method to pass to limit calculation (\"SHMI\" or \"CQC\")
 #'
-#' @return A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
+#' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 #'
 #'
 #' @importFrom scales comma

@@ -19,8 +19,8 @@ OD_adjust_func(mod_plot_agg = mod_plot_agg, method = "SHMI",
 \item{bypass}{TRUE\/FALSE, whether to bypass adjustment (not yet in use in main function)}
 }
 \value{
-A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)' @importFrom dplyr mutate summarise %>%
+A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)'
 }
 \description{
-Internal function to perform the winsorisation and adjustment of z-scores prior to funnel plots.
+Internal function to perform the winsorisation and adjustment of z-scores prior to plotting.
 }

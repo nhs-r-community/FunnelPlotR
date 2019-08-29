@@ -8,7 +8,7 @@ funnel_plot(numerator, denominator, group, aggregate_input_data = TRUE,
   label_outliers = 99, Poisson_limits = FALSE, OD_adjust = TRUE,
   method = "SHMI", Winsorise_by = 0.1,
   title = "Untitled Funnel Plot", multiplier = 1,
-  x_label = "Expected", y_label = "Standardised Ratio", yrange, xrange,
+  x_label = "Expected", y_label = "Standardised Ratio", xrange, yrange,
   return_elements = c("plot", "data", "limits"))
 }
 \arguments{
@@ -16,50 +16,54 @@ funnel_plot(numerator, denominator, group, aggregate_input_data = TRUE,
 
 \item{denominator}{A vector of denominator (predicted/population etc).  Used as denominator of the Y-axis and the scale of the x-axis}
 
-\item{group}{A vector of group names or a factor.  Used to aggreagate and group points on plots}
+\item{group}{A vector of group names as character or factor.  Used to aggreagate and group points on plots}
 
 \item{aggregate_input_data}{Should the function aggreagate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.}
 
 \item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99}
 
-\item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
+\item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
-\item{OD_adjust}{Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)}
+\item{OD_adjust}{Draw overdispersed limits using heirarchical model, assuming at group level, as described in Speigelhalter's (2012).
+It calculates a second variance component #' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (σ) (default=TRUE)}
 
-\item{method}{Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  CQC/Spiegelhalter
-uses a square-root transformation and Winsorises by replacing values, SHMI uses log-transformation and doesn't Winsorise as such, but
-truncates the distribution instead.  Both methods as used before calcuating the dispersion ratio (phi), and plot is drawn for the full dataset, not the
-Winsorised/truncated one. SHMI method is default.}
+\item{method}{Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
+uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).  
+SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison.  
+Both methods then calculate a dispersion ratio (phi) on this altered dataset.  This ratio is then used to scale the full dataset, 
+and the plot is drawn for the full dataset.}
 
-\item{Winsorise_by}{Proportion of the distribution for winsorization. Default is 10 \% (0.1)}
+\item{Winsorise_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
+fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsorised/truncated)}
 
 \item{title}{Plot title}
 
-\item{multiplier}{Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR}
+\item{multiplier}{Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.}
 
 \item{x_label}{Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.}
 
 \item{y_label}{Title for the funnel plot y-axis.  Usually a standardised ratio.}
 
-\item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, NULL, allows function to estimate range.}
+\item{xrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, NULL, allows function to estimate range. NOT YET IN USE}
 
-\item{xrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, NULL, allows function to estimate range.}
+\item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, NULL, allows function to estimate range.  NOT YET IN USE}
 
-\item{return_elements}{a vector of elements ot return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control limit lookup table used in the plot. Default is all three objects}
+\item{return_elements}{a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control 
+limit lookup table used in the plot. Default is all three objects.}
 }
 \value{
-A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
+A list containing [1] the funnel plot as a ggplot2 object, [2] the base table for the plot, [3] the limits table.
 }
 \description{
-This is an implementation of funnel plots described Spiegelhalter (2005).
+This is an implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005).
 There are several parameters for the input, with the assumption that you will want smooth,
- overdispersed, funnel limits plotted based on the DerSimmonian Laird \eqn{\tau^2} additive random
-effects models.
+ overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \eqn{\tau^2} additive random
+effects models, originally described for metanalysis.
 }
 \details{
-Outliers are marked based on the grouping, controlled by `label_outliers` .
-   Overdispersion can be factored in based on the methods in \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Spiegelhalter et al (2012)}, set `OD_Tau2` to FALSE to suppress this.
-   To use Poisson limits set `Poisson_limits=TRUE`. This uses 2 & 3 \eqn{\sigma} limits.
+Outliers are marked based on the grouping, and controlled by `label_outliers` .
+   Overdispersion can be factored in based on the methods in \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Spiegelhalter et al (2012)}, set `OD_adjust` to FALSE to suppress this. \cr
+   To use Poisson limits set `Poisson_limits=TRUE`. This uses 95% & 99.8% limits limits. \cr
    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 }
 \examples{
@@ -76,7 +80,7 @@ mod<- glm(los ~ hmo + died + age80 + factor(type)
       , family="poisson", data=medpar)
 summary(mod)
 
-# Get predicted value for ratio
+# Get predicted values for building ratio
 medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
@@ -87,7 +91,7 @@ fp
 
 }
 \seealso{
-\href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}
-   \href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}
-   \href{https://qualitysafety.bmj.com/content/14/5/347}{Handeling over-dispersion of performance indicators. Spiegelhalter (2005)}
+\href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}, \cr
+\href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}, \cr
+\href{https://qualitysafety.bmj.com/content/14/5/347}{Handeling over-dispersion of performance indicators. Spiegelhalter (2005)}
 }

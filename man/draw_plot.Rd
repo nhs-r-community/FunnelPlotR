@@ -9,7 +9,7 @@ draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title,
   method)
 }
 \arguments{
-\item{mod_plot_agg}{data frame ofcontaining numerator, denominator, ratio/proportion, SEs and limits}
+\item{mod_plot_agg}{data frame of containing numerator, denominator, ratio/proportion, SEs and limits}
 
 \item{yrange}{Specify the plot range.  Not yet implemented}
 
@@ -34,8 +34,8 @@ draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 \item{method}{to pass to limit calculation (\"SHMI\" or \"CQC\")}
 }
 \value{
-A list containing [1]the base table for the plot, [2]the limits table and [3]the funnel plot as a ggplot2 object.
+A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 }
 \description{
-This function sets up the plots, and draws them with ggplot2.
+Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` insead.
 }

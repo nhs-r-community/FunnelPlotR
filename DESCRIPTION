@@ -24,5 +24,7 @@ Suggests:
     knitr,
     rmarkdown,
     COUNT,
-    tidyr
+    tidyr,
+    spelling
 VignetteBuilder: knitr
+Language: en-US

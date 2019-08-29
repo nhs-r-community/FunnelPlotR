@@ -5,10 +5,10 @@
 #' @param min_ratio Minimum ratio value for range of y-axis
 #' @param max_ratio Maximum ratio value for range of y-axis
 #' @param Poisson_limits TRUE/FALSE Draw Poisson distribution limits?
-#' @param OD_adjust TRUE/FALSE USe over dispersion adjustment
-#' @param Tau2 If using OD_adjustment, what is the Tau2 ("between" standard error) to use?
+#' @param OD_adjust TRUE/FALSE USe overdispersion adjustment
+#' @param Tau2 If using OD_adjust, what is the Tau2 ("between" standard error) to use?
 #' @param method Which adjustment method is being used, SHMI or CQC?
-#' @param multiplier Multiply ratio vaue by and amount.  Default is 1, but some mortality ratios use 100, for example.
+#' @param multiplier Multiply ratio vaue by an amount.  Default is 1, but some mortality ratios use 100, for example.
 #'
 #' @return A data.frame with an index column and various control limits based on the index as an x-axis value.
 #'

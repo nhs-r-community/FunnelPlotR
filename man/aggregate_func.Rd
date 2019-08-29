@@ -10,8 +10,8 @@ aggregate_func(mod_plot)
 \item{mod_plot}{A data frame of values to be aggreagated.  Expected columns, 'group', 'numerator' and 'denominator'}
 }
 \value{
-Returns an aggreagated data.frame of the same columns, summer by but 'group', with a relative risk 'rr' column added.
+Returns an aggreagated data.frame of the same columns, but summed by 'group', with a relative risk 'rr' column added.
 }
 \description{
-Internal funciton to aggreagate record-level data for plotting as a funnel.
+Internal function to aggreagate record-level data for plotting as a funnel.
 }
