@@ -122,7 +122,8 @@ funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE
   }
 
   fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers,
-                      multiplier=multiplier, Poisson_limits, OD_Tau2=OD_adjust, Tau2=Tau2, method=method)
+                      multiplier=multiplier, Poisson_limits, OD_adjust=OD_adjust, 
+                      Tau2=Tau2, method=method)
 
   #Build return
   rtn<-list()

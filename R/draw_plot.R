@@ -10,7 +10,7 @@
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are\: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
-#' @param OD_Tau2 Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
+#' @param OD_adjust Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
 #' @param Tau2 The Tau2 value to use for plotting limits
 #' @param method to pass to limit calculation (\"SHMI\" or \"CQC\")
 #'
@@ -23,7 +23,7 @@
 #' @import ggplot2
 
 draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
-                    label_outliers, multiplier, Poisson_limits, OD_Tau2, Tau2 = 0, method){
+                    label_outliers, multiplier, Poisson_limits, OD_adjust, Tau2 = 0, method){
 
 #plot ranges
   # Determine the range of plots
@@ -37,20 +37,20 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
 
   ### Calculate funnel limits ####
-  if (OD_Tau2 == FALSE) {
+  if (OD_adjust == FALSE) {
     Poisson_limits <- TRUE
     message("OD_adjust set to FALSE, plotting using Poisson limits")
   }
 
-  if (OD_Tau2 == TRUE & Tau2 == 0) {
-    OD_Tau2 <- FALSE
+  if (OD_adjust == TRUE & Tau2 == 0) {
+    OD_adjust <- FALSE
     Poisson_limits <- TRUE
 
     message("No overdispersion detected, or OD_adjust to FALSE, plotting using Poisson limits")
 
   }
-  # if (OD_Tau2 == TRUE & Tau2 == 0) {
-  #   OD_Tau2 <- FALSE
+  # if (OD_adjust == TRUE & Tau2 == 0) {
+  #   OD_adjust <- FALSE
   #   Poisson_limits <- TRUE
   #
   #   )
@@ -59,7 +59,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
   #   stop("Invalid method supplied")
   # }
 
-  dfCI<-build_limits_lookup(min_preds, max_preds, min_ratio, max_ratio, Poisson_limits, OD_Tau2, Tau2, method, multiplier)
+  dfCI<-build_limits_lookup(min_preds, max_preds, min_ratio, max_ratio, Poisson_limits, OD_adjust, Tau2, method, multiplier)
 
 
   # base funnel plot
@@ -87,7 +87,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
 
 
-  if (Poisson_limits == TRUE & OD_Tau2 == TRUE) {
+  if (Poisson_limits == TRUE & OD_adjust == TRUE) {
     funnel_p <- funnel_p +
       geom_line(aes(x = .data$number.seq, y = .data$ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -104,7 +104,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
         "95% Overdispersed" = "#9467BDFF"
       ), name = "Control limits")
   } else {
-    if (Poisson_limits == TRUE & OD_Tau2 == FALSE) {
+    if (Poisson_limits == TRUE & OD_adjust == FALSE) {
       funnel_p <- funnel_p +
         geom_line(aes(x = .data$number.seq, y = .data$ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -116,7 +116,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
         ), name = "Control limits")
     }
 
-    if (Poisson_limits == FALSE &  OD_Tau2 == TRUE) {
+    if (Poisson_limits == FALSE &  OD_adjust == TRUE) {
       funnel_p <- funnel_p +
         geom_line(aes(x = .data$number.seq, y = .data$odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
@@ -130,7 +130,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
   }
 
 
-  if (OD_Tau2 == TRUE) {
+  if (OD_adjust == TRUE) {
     funnel_p <- funnel_p +
       scale_y_continuous(name = y_label, limits = c(((min(min_ratio - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_ratio + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_preds -1, max_preds + 1))
@@ -142,7 +142,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
 
   if (label_outliers == 95) {
-    if (OD_Tau2 == FALSE) {
+    if (OD_adjust == FALSE) {
       funnel_p <- funnel_p +
         ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL95, as.character(.data$group), "")), size = 2.7, direction = "y") +
         ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL95, as.character(.data$group), "")), size = 2.7, direction = "y")
@@ -153,7 +153,7 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
     }
   }
   if (label_outliers == 99) {
-    if (OD_Tau2 == FALSE) {
+    if (OD_adjust == FALSE) {
       funnel_p <- funnel_p +
         ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL99, as.character(.data$group), "")), size = 2.7, direction = "y") +
         ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL99, as.character(.data$group), "")), size = 2.7, direction = "y")
