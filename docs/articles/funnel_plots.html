@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -90,9 +90,9 @@
 <div id="funnel-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#funnel-plots" class="anchor"></a>Funnel plots</h2>
-<p>Funnel plots are a common tool for comparing organisations or units using proportions or standardised rates. A common use of them is for monitoring mortality at hospitals. This is an introductory post on the subject, that gives a little information about them and how they are constructed. It is deliberately light on theory, focussing on use, some of the theory is referenced for interested readers.</p>
+<p>Funnel plots are a common tool for comparing organisations or units using proportions or standardised rates. A common use of them is for monitoring mortality at hospitals. This is an introductory post on the subject, that gives a little information about them and how they are constructed. It is deliberately light on theory, focusing on use, some of the theory is referenced for interested readers.</p>
 <p>This post also uses a funnel plot function, for indirectly standardised ratios, that I built as part of my PhD work. The function is based on <code>ggplot2</code> <span class="citation">(Wickham 2009)</span>, and is available at <a href="https://github.com/chrismainey/FunnelPlotR" class="uri">https://github.com/chrismainey/FunnelPlotR</a>, although it’s a work in progress.</p>
-<p>There are different kinds of funnel plot, but this post focusses on the type used to compare standardised mortality and other similarly constructed indicators .</p>
+<p>There are different kinds of funnel plot, but this post focuses on the type used to compare standardised mortality and other similarly constructed indicators .</p>
 </div>
 <div id="why-do-we-use-them" class="section level2">
 <h2 class="hasAnchor">
@@ -154,7 +154,7 @@
 <a href="#expanding-limits" class="anchor"></a>Expanding limits</h2>
 <p>The methods described above have been developed into a basic R package to draw these plots using <code>ggplot2</code>. It also allows users to specify whether they want ‘overdispersed’ limits. I will write another post about overdispersion in the coming weeks, but essentially, we have more variation than we would expect from theory alone. To account for this, we can estimate how much greater the variance in our data is, and expand the funnel limits by this amount.</p>
 <p>Part of this process involves ‘Winsorisation’ of the distribution <span class="citation">(Spiegelhalter 2005b; Spiegelhalter et al. 2012)</span>, where we set the outer most values to a defined percentile to reduce the effects of outliers. This is commonly set to 10% at each end of the distribution, but there is a variant method for this, used in the NHS’ Summary Hospital Mortality Indicator’, where the distribution is truncated instead of Winsorised <span class="citation">(Clinical Indicators Team 2018)</span>.</p>
-<p>I originally wrote this package to present plots for my PhD thesis, focussed on predicting NRLS incident reporting ratios after risk-adjustment. The overdispersion was particularly high in this case, and differences between the two methods were noticeable, with the SHMI/truncation method appearing better suited.</p>
+<p>I originally wrote this package to present plots for my PhD thesis, focused on predicting NRLS incident reporting ratios after risk-adjustment. The overdispersion was particularly high in this case, and differences between the two methods were noticeable, with the SHMI/truncation method appearing better suited.</p>
 <p><br></p>
 </div>
 <div id="application" class="section level2">
@@ -169,7 +169,7 @@
 <div id="basic-model-build" class="section level3">
 <h3 class="hasAnchor">
 <a href="#basic-model-build" class="anchor"></a>Basic model build</h3>
-<p>We will first load the data and build a simple predictive model, using a Poisson GLM, with a few of the predictors from the dataset. This post is not focussed on modelling techniques, but a Poisson Generalised Linear Model (GLM) is more appropriate for count data than linear regression. The key message, though, is that Poisson models make no adjustment for the variance within the data and are likely to be overdispersed. A more sophisticated approach might use something like a negative binomial or multilevel model (discussed in a later post).</p>
+<p>We will first load the data and build a simple predictive model, using a Poisson GLM, with a few of the predictors from the dataset. This post is not focused on modelling techniques, but a Poisson Generalised Linear Model (GLM) is more appropriate for count data than linear regression. The key message, though, is that Poisson models make no adjustment for the variance within the data and are likely to be overdispersed. A more sophisticated approach might use something like a negative binomial or multilevel model (discussed in a later post).</p>
 <p>A little reformatting is required before modelling:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(FunnelPlotR)</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(COUNT)</a>
@@ -221,16 +221,11 @@
 <a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="../reference/funnel_plot.html">funnel_plot</a></span>(<span class="dt">numerator=</span>medpar<span class="op">$</span>los, <span class="dt">denominator=</span>medpar<span class="op">$</span>prds, <span class="dt">group =</span> medpar<span class="op">$</span>provnum, </a>
 <a class="sourceLine" id="cb7-3" title="3">            <span class="dt">title =</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, <span class="dt">Poisson_limits =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb7-4" title="4">            <span class="dt">OD_adjust =</span> <span class="ot">FALSE</span>,<span class="dt">label_outliers =</span> <span class="dv">99</span>, <span class="dt">return_elements =</span> <span class="st">"plot"</span>)</a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; Warning in min(subset(mod_plot_agg, .data$numerator &gt; 4)$LCL99): no non-</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; missing arguments to min; returning Inf</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; Warning in max(subset(mod_plot_agg, .data$numerator &gt; 4)$UCL99): no non-</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; missing arguments to max; returning -Inf</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; $plot</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; Warning: Removed 53 rows containing missing values (geom_point).</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; Warning: Removed 54 rows containing missing values (geom_hline).</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; Warning: Removed 53 rows containing missing values (geom_label_repel).</span></a>
-<a class="sourceLine" id="cb7-13" title="13"></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; Warning: Removed 53 rows containing missing values (geom_label_repel).</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; $plot</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; Warning: Removed 1 rows containing missing values (geom_point).</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; Warning: Removed 1 rows containing missing values (geom_label_repel).</span></a>
+<a class="sourceLine" id="cb7-8" title="8"></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; Warning: Removed 1 rows containing missing values (geom_label_repel).</span></a></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel1-1.png" width="672" style="display: block; margin: auto;"></p>
 <p><br></p>
 </div>
@@ -246,16 +241,7 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/funnel_plot.html">funnel_plot</a></span>(<span class="dt">numerator=</span>medpar<span class="op">$</span>los, <span class="dt">denominator=</span>medpar<span class="op">$</span>prds, <span class="dt">group =</span> medpar<span class="op">$</span>provnum, </a>
 <a class="sourceLine" id="cb9-2" title="2">            <span class="dt">title =</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, <span class="dt">Poisson_limits =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb9-3" title="3">            <span class="dt">OD_adjust =</span> <span class="ot">TRUE</span>, <span class="dt">method =</span> <span class="st">"SHMI"</span>,<span class="dt">label_outliers =</span> <span class="dv">99</span>, <span class="dt">return_elements =</span> <span class="st">"plot"</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt; Warning in min(subset(mod_plot_agg, .data$numerator &gt; 4)$OD99LCL): no non-</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; missing arguments to min; returning Inf</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; Warning in max(subset(mod_plot_agg, .data$numerator &gt; 4)$OD99UCL): no non-</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; missing arguments to max; returning -Inf</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; $plot</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; Warning: Removed 53 rows containing missing values (geom_point).</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; Warning: Removed 54 rows containing missing values (geom_hline).</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; Warning: Removed 53 rows containing missing values (geom_label_repel).</span></a>
-<a class="sourceLine" id="cb9-12" title="12"></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; Warning: Removed 53 rows containing missing values (geom_label_repel).</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt; $plot</span></a></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel2-1.png" width="672" style="display: block; margin: auto;"></p>
 <p><br><br> Given these adjustments, we now only have nine organisations showing special-cause variation. To interpret this plot properly, we would first investigate these outlying organisations before making any changes to the system/indicator. We should check for possible data quality issues, such as errors, missing model predictors, environmental factors (e.g. one organisation changing computer systems and data standards etc. during the monitoring period), but once these are examined we might suspect issues with care at the hospitals in question. They can then be investigated by local audit and casenote review.</p>
 <p>These methods can be used for any similar indicators, e.g. standardised mortality ratios, readmissions etc.</p>
@@ -304,6 +290,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
