@@ -5,7 +5,8 @@
 \title{Funnel Plots drawing function}
 \usage{
 draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title,
-  label_outliers, multiplier, Poisson_limits, OD_Tau2, Tau2 = 0, method)
+  label_outliers, multiplier, Poisson_limits, OD_adjust, Tau2 = 0,
+  method)
 }
 \arguments{
 \item{mod_plot_agg}{data frame ofcontaining numerator, denominator, ratio/proportion, SEs and limits}
@@ -26,7 +27,7 @@ draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
 \item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
-\item{OD_Tau2}{Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)}
+\item{OD_adjust}{Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)}
 
 \item{Tau2}{The Tau2 value to use for plotting limits}
 

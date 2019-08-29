@@ -142,25 +142,41 @@ draw_plot<-function(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
 
   if (label_outliers == 95) {
-    if (OD_adjust == FALSE) {
+    if (Tau2 ==0) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL95, as.character(.data$group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL95, as.character(.data$group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL95, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0) +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL95, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0)
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD95UCL, as.character(.data$group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD95LCL, as.character(.data$group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD95UCL, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0) +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD95LCL, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0)
     }
   }
   if (label_outliers == 99) {
-    if (OD_adjust == FALSE) {
+    if (Tau2 == 0) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL99, as.character(.data$group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL99, as.character(.data$group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL99, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0) +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL99, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0)
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD99UCL, as.character(.data$group), "")), size = 2.7, direction = "y") +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD99LCL, as.character(.data$group), "")), size = 2.7, direction = "y")
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD99UCL, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0) +
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD99LCL, 
+                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+                                  force = 2, min.segment.length = 0)
     }
   }
 

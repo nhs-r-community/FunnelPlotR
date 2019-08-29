@@ -22,7 +22,9 @@ fp<-
 
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum
 ,
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = TRUE, label_outliers = 99, method="CQC")
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
+            OD_adjust = TRUE, label_outliers = 99, method="SHMI")
 
 fp[[2]]
+
+View(fp[[3]])
