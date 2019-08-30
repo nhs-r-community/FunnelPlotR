@@ -1,5 +1,5 @@
 #' @title Funnel Plots drawing function
-#' @description Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` insead.
+#' @description Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead.
 #'
 #' @param mod_plot_agg data frame of containing numerator, denominator, ratio/proportion, SEs and limits
 #' @param yrange Specify the plot range.  Not yet implemented

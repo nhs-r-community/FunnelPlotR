@@ -16,15 +16,15 @@ funnel_plot(numerator, denominator, group, aggregate_input_data = TRUE,
 
 \item{denominator}{A vector of denominator (predicted/population etc).  Used as denominator of the Y-axis and the scale of the x-axis}
 
-\item{group}{A vector of group names as character or factor.  Used to aggreagate and group points on plots}
+\item{group}{A vector of group names as character or factor.  Used to aggregate and group points on plots}
 
-\item{aggregate_input_data}{Should the function aggreagate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.}
+\item{aggregate_input_data}{Should the function aggregate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.}
 
 \item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
-\item{OD_adjust}{Draw overdispersed limits using heirarchical model, assuming at group level, as described in Speigelhalter's (2012).
+\item{OD_adjust}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter's (2012).
 It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
 
 \item{method}{Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
@@ -58,13 +58,13 @@ A list containing [1] the funnel plot as a ggplot2 object, [2] the base table fo
 This is an implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005).
 There are several parameters for the input, with the assumption that you will want smooth,
  overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \eqn{\tau^2} additive random
-effects models, originally described for metanalysis.
+effects models, originally described for meta-analysis.
 }
 \details{
 Outliers are marked based on the grouping, and controlled by `label_outliers` .
    Overdispersion can be factored in based on the methods in \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Spiegelhalter et al (2012)}, set `OD_adjust` to FALSE to suppress this. \cr
    To use Poisson limits set `Poisson_limits=TRUE`. This uses 95% & 99.8% limits limits. \cr
-   It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
+   It deliberately avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 }
 \examples{
 \dontrun{
@@ -93,5 +93,5 @@ fp
 \seealso{
 \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}, \cr
 \href{https://onlinelibrary.wiley.com/doi/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}, \cr
-\href{https://qualitysafety.bmj.com/content/14/5/347}{Handeling over-dispersion of performance indicators. Spiegelhalter (2005)}
+\href{https://qualitysafety.bmj.com/content/14/5/347}{Handling over-dispersion of performance indicators. Spiegelhalter (2005)}
 }

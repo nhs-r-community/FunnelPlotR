@@ -18,13 +18,13 @@ build_limits_lookup(min_preds, max_preds, min_ratio, max_ratio,
 
 \item{Poisson_limits}{TRUE/FALSE Draw Poisson distribution limits?}
 
-\item{OD_adjust}{TRUE/FALSE USe overdispersion adjustment}
+\item{OD_adjust}{TRUE/FALSE Use overdispersion adjustment}
 
 \item{Tau2}{If using OD_adjust, what is the Tau2 ("between" standard error) to use?}
 
 \item{method}{Which adjustment method is being used, SHMI or CQC?}
 
-\item{multiplier}{Multiply ratio vaue by an amount.  Default is 1, but some mortality ratios use 100, for example.}
+\item{multiplier}{Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.}
 }
 \value{
 A data.frame with an index column and various control limits based on the index as an x-axis value.

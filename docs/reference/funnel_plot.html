@@ -44,7 +44,7 @@
 <meta property="og:description" content="This is an implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005).
 There are several parameters for the input, with the assumption that you will want smooth,
  overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \(\tau^2\) additive random
-effects models, originally described for metanalysis." />
+effects models, originally described for meta-analysis." />
 <meta property="og:image" content="https://chrismainey.github.io/FunnelPlotR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -137,7 +137,7 @@ effects models, originally described for metanalysis." />
     <p>This is an implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005).
 There are several parameters for the input, with the assumption that you will want smooth,
  overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \(\tau^2\) additive random
-effects models, originally described for metanalysis.</p>
+effects models, originally described for meta-analysis.</p>
     </div>
 
     <pre class="usage"><span class='fu'>funnel_plot</span>(<span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='no'>group</span>, <span class='kw'>aggregate_input_data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -160,11 +160,11 @@ effects models, originally described for metanalysis.</p>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>A vector of group names as character or factor.  Used to aggreagate and group points on plots</p></td>
+      <td><p>A vector of group names as character or factor.  Used to aggregate and group points on plots</p></td>
     </tr>
     <tr>
       <th>aggregate_input_data</th>
-      <td><p>Should the function aggreagate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.</p></td>
+      <td><p>Should the function aggregate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.</p></td>
     </tr>
     <tr>
       <th>label_outliers</th>
@@ -176,7 +176,7 @@ effects models, originally described for metanalysis.</p>
     </tr>
     <tr>
       <th>OD_adjust</th>
-      <td><p>Draw overdispersed limits using heirarchical model, assuming at group level, as described in Speigelhalter's (2012).
+      <td><p>Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter's (2012).
 It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)</p></td>
     </tr>
     <tr>
@@ -231,12 +231,12 @@ limit lookup table used in the plot. Default is all three objects.</p></td>
     <p>Outliers are marked based on the grouping, and controlled by `label_outliers` .
    Overdispersion can be factored in based on the methods in <a href='https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x'>Spiegelhalter et al (2012)</a>, set `OD_adjust` to FALSE to suppress this. <br />
    To use Poisson limits set `Poisson_limits=TRUE`. This uses 95<!-- % &amp; 99.8% limits limits. \cr -->
-   It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.</p>
+   It deliberately avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x'>Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)</a>, <br />
 <a href='https://onlinelibrary.wiley.com/doi/10.1002/sim.1970'>Funnel plots for comparing institutional performance. Spiegelhalter (2004)</a>, <br />
-<a href='https://qualitysafety.bmj.com/content/14/5/347'>Handeling over-dispersion of performance indicators. Spiegelhalter (2005)</a></p></div>
+<a href='https://qualitysafety.bmj.com/content/14/5/347'>Handling over-dispersion of performance indicators. Spiegelhalter (2005)</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>

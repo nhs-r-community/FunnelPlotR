@@ -14,7 +14,7 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)
 ## Funnel Plots
 
 **This package is the newer version of the older `CMFunnels` package.
-Development work will focuss on this package from now on **
+Development work will focus on this package from now on **
 
 This is an implementation of the funnel plot processes, and
 overdispersion methods described in:<br> [Statistical methods for
@@ -23,7 +23,7 @@ et al
 (2012)](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x)<br>
 [Funnel plots for comparing institutional performance. Spiegelhalter
 (2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
-[Handeling over-dispersion of performance indicators. Spiegelhalter
+[Handling over-dispersion of performance indicators. Spiegelhalter
 (2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
 
 It draws funnel plots using `ggplot2` and allows users to specify
@@ -47,7 +47,7 @@ Please note that the ‘FunnelPlotR’ project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
 this project, you agree to abide by its terms.
 
-More information avaialbe at
+More information available at
 <https://chrismainey.github.io/FunnelPlotR/>
 
 ## Installation
