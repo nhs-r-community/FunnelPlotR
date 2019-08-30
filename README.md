@@ -68,7 +68,7 @@ library(FunnelPlotR)
 library(COUNT)
 library(ggplot2)
 
-# lets use the \'medpar\' dataset from the \'COUNT\' package. Little reformatting needed
+# lets use the 'medpar' dataset from the 'COUNT' package. Little reformatting needed
 data(medpar)
 medpar$provnum<-factor(medpar$provnum)
 medpar$los<-as.numeric(medpar$los)

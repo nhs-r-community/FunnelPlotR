@@ -4,11 +4,11 @@
 ^packrat/
 ^\.Rprofile$
 ^\.travis\.yml$
-/Sticker
+^Sticker$
 ^CODE_OF_CONDUCT\.md$
 tests.R
 README.Rmd
-/README_files
+^README_files$
 cran-comments.md
 ^_pkgdown\.yml$
 ^docs$

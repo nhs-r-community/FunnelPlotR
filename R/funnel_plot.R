@@ -36,10 +36,10 @@
 #'    Overdispersion can be factored in based on the methods in \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Spiegelhalter et al (2012)}, set `OD_adjust` to FALSE to suppress this. \cr
 #'    To use Poisson limits set `Poisson_limits=TRUE`. This uses 95% & 99.8% limits limits. \cr
 #'    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
-#'
+#' @encoding UTF-8
 #' @examples
 #' \dontrun{
-#' # lets use the \'medpar\' dataset from the \'COUNT\' package.
+#' # lets use the 'medpar' dataset from the 'COUNT' package.
 #' # Little reformatting needed
 #'
 #' library(COUNT)
