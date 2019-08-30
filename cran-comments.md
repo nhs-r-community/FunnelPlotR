@@ -5,7 +5,6 @@ This is the first release of a package wrapper for ggplot2 to draw funnel plots 
 * local windows 7, R 3.6.1
 * local windows 10, R 3.6.1
 * ubuntu 16.04.6 LTS (on travis-ci), R 3.6.1
-* win-builder(devel)
 * r-hub:
   * Ubuntu Linux 16.04 LTS, R-release, GCC, fedora-clang-devel
   * Fedora Linux, R-devel, clang, gfortran
