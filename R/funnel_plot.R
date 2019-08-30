@@ -11,7 +11,7 @@
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using heirarchical model, assuming at group level, as described in Speigelhalter's (2012).  
-#' It calculates a second variance component #' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (σ) (default=TRUE)
+#' It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)
 #' @param method Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 #' uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).  
 #' SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison.  
@@ -36,7 +36,6 @@
 #'    Overdispersion can be factored in based on the methods in \href{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x}{Spiegelhalter et al (2012)}, set `OD_adjust` to FALSE to suppress this. \cr
 #'    To use Poisson limits set `Poisson_limits=TRUE`. This uses 95% & 99.8% limits limits. \cr
 #'    It deliberatley avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
-#' @encoding UTF-8
 #' @examples
 #' \dontrun{
 #' # lets use the 'medpar' dataset from the 'COUNT' package.
