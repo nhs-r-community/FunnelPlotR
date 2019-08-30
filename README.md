@@ -126,7 +126,7 @@ funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnu
 ## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
-<img src="README_files/figure-gfm/funnel1-1.png" width="672" style="display: block; margin: auto;" />
+<img src="./man/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br>
 
@@ -155,7 +155,7 @@ funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnu
 ## $plot
 ```
 
-<img src="README_files/figure-gfm/funnel2-1.png" width="672" style="display: block; margin: auto;" />
+<img src="./man/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.
