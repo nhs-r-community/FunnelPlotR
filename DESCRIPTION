@@ -11,6 +11,8 @@ Authors@R: c(
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
 Description: This is an implementation of the Spiegelhalter Funnel plots for reporting standardised ratio, with overdispersion adjustment.
 License: MIT + file LICENSE
+URL:  https://chrismainey.github.io/FunnelPlotR, https://github.com/chrismainey/FunnelPlotR
+BugReports: https://github.com/tidyverse/dplyr/issues
 Encoding: UTF-8
 LazyData: true
 Imports: ggrepel,
