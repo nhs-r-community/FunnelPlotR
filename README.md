@@ -24,7 +24,7 @@ et al
 [Funnel plots for comparing institutional performance. Spiegelhalter
 (2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
 [Handling over-dispersion of performance indicators. Spiegelhalter
-(2005)](https://qualitysafety.bmj.com/lookup/doi/10.1136/qshc.2005.013755)<br>
+(2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
 
 It draws funnel plots using `ggplot2` and allows users to specify
 whether they want ‘overdispersed’ limits, setting a Winsorisation
@@ -44,8 +44,9 @@ This package was originally developed for use in CM’s PhD project, but
 published on github in case it’s of use for others.
 
 Please note that the ‘FunnelPlotR’ project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
-this project, you agree to abide by its terms.
+[Contributor Code of
+Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
 
 More information available at
 <https://chrismainey.github.io/FunnelPlotR/>
@@ -160,5 +161,5 @@ funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnu
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.
 
-\_\_Please read the package documentation for more info, at:
-<https://chrismainey.github.io/FunnelPlotR/__>
+Please read the package documentation for more info, at:
+<https://chrismainey.github.io/FunnelPlotR/>

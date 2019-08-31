@@ -19,5 +19,17 @@ There were no ERRORs or WARNINGs.
 
 All links checked and are valid.  
 
+Feedback from last CRAN sumbission was:
+   _"Found the following (possibly) invalid file URI:
+     URI: CODE_OF_CONDUCT.md
+       From: README.md
+  
+  Either point to a web lopcation of the file via a fully specified URL or 
+  include the file - or simply do not mention it at all.
+
+  Please fix and resubmit."_
+
+Link has now been changed to fully specified URL, as suggested.
+
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

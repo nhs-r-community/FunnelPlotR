@@ -61,7 +61,7 @@
 #'
 #' @seealso \href{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-985X.2011.01010.x}{Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)}, \cr
 #' \href{https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1970}{Funnel plots for comparing institutional performance. Spiegelhalter (2004)}, \cr
-#' \href{https://qualitysafety.bmj.com/lookup/doi/10.1136/qshc.2005.013755}{Handling over-dispersion of performance indicators. Spiegelhalter (2005)}
+#' \href{https://qualitysafety.bmj.com/content/14/5/347}{Handling over-dispersion of performance indicators. Spiegelhalter (2005)}
 #'
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
