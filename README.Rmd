@@ -117,5 +117,5 @@ funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnu
 <br><br>
 These methods can be used for any similar indicators, e.g. standardised mortality ratios, readmissions etc.
 
-__Please read the package documentation for more info, at: https://chrismainey.github.io/FunnelPlotR/__
+Please read the package documentation for more info, at: https://chrismainey.github.io/FunnelPlotR/
 
