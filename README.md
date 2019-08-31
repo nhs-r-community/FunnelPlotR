@@ -24,7 +24,7 @@ et al
 [Funnel plots for comparing institutional performance. Spiegelhalter
 (2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
 [Handling over-dispersion of performance indicators. Spiegelhalter
-(2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
+(2005)](https://qualitysafety.bmj.com/lookup/doi/10.1136/qshc.2005.013755)<br>
 
 It draws funnel plots using `ggplot2` and allows users to specify
 whether they want ‘overdispersed’ limits, setting a Winsorisation
