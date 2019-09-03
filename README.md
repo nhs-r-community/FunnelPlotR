@@ -44,8 +44,9 @@ This package was originally developed for use in CM’s PhD project, but
 published on github in case it’s of use for others.
 
 Please note that the ‘FunnelPlotR’ project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
-this project, you agree to abide by its terms.
+[Contributor Code of
+Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
 
 More information available at
 <https://chrismainey.github.io/FunnelPlotR/>
@@ -160,5 +161,5 @@ funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnu
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.
 
-\_\_Please read the package documentation for more info, at:
-<https://chrismainey.github.io/FunnelPlotR/__>
+Please read the package documentation for more info, at:
+<https://chrismainey.github.io/FunnelPlotR/>
