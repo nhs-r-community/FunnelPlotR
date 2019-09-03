@@ -21,6 +21,9 @@ Comments from two previous CRAN submissions resolved:
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
+NOTES on win-builder and r-hub about possibly invalid links.
+These refer to DOIs in references in the vignette.  I've manually tested all links and they are valid.
+
 
 
 ## Downstream dependencies
