@@ -53,13 +53,13 @@
 #' medpar$prds<- predict(mod, type="response")
 #'
 #' # Draw plot, returning just the plot object
-#' fp<-funnel_plot_dev(denominator=medpar$prds,numerator=medpar$los,
+#' fp<-funnel_plot(denominator=medpar$prds,numerator=medpar$los,
 #' group = medpar$provnum, return_elements=c("plot"))
 #'fp
 #'
 #'
 #' @seealso Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x> \cr
-#' Funnel plots for comparing institutional performance. Spiegelhalter (2005)}, <doi:10.1002/sim.1970> \cr
+#' Funnel plots for comparing institutional performance. Spiegelhalter (2005) <doi:10.1002/sim.1970> \cr
 #' Handling over-dispersion of performance indicators. Spiegelhalter (2005) <doi:10.1136/qshc.2005.013755>
 #'
 #' @importFrom scales comma
