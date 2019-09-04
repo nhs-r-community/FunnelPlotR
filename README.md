@@ -5,9 +5,13 @@
 
 [![Travis build
 status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
-![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN
+version](http://www.r-pkg.org/badges/version/FunnelPlotR)](http://cran.r-project.org/package=FunnelPlotR)
+![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
+
 [![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR)
 <br><br> <!-- badges: end -->
 
@@ -53,7 +57,11 @@ More information available at
 
 ## Installation
 
+You can install from CRAN, or use the development version on GitHub:
+
 ``` r
+install.packages("FunnelPlotR")
+# or
 remotes::install_github("https://github.com/chrismainey/FunnelPlotR")
 ```
 
