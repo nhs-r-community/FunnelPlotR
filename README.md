@@ -125,14 +125,13 @@ medpar$prds<- predict(mod, type="response")
 and outliers labelled.
 
 ``` r
-
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
             OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
 a[[1]]
 ```
 
-<img src="./man/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
+<img src="man/figures/funnel1-1.png"/>
 
 <br><br>
 
@@ -148,21 +147,20 @@ sum(mod$weights * mod$residuals^2)/mod$df.residual
 
     ## [1] 6.240519
 
+<img src="man/figures/funnel2-1.png"/>
+
 This suggest the variance is 6.24 times the condition mean, and
 definitely overdispersed. This is a huge topic, but applying
 overdispersed limits using either SHMI or Spiegelhalter methods adjust
 for this by inflating the limits:
 
 ``` r
-
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
             OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
 
 b[[1]]
 ```
-
-<img src="./man/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.

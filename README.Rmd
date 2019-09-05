@@ -83,20 +83,19 @@ summary(mod)
 Now we have a regression that we can use to get a predicted `los` that we will compare to observed `los`:
 
 ```{r, prediction}
-
 medpar$prds<- predict(mod, type="response")
 
 ```
 <br><br>
 We can build a funnel plot object with standard Poisson limits, and outliers labelled.
 
-```{r fig.align='center', fig.retina=5, warning=FALSE, collapse=TRUE, funnel1, message=FALSE, fig.path="./man/figures/"}
-
+```{r fig.align='center', fig.retina=5, warning=FALSE, collapse=TRUE, funnel1, message=FALSE, fig.path="./man/figures/", eval=FALSE}
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
             OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
 a[[1]]
 ```
+<img src="man/figures/funnel1-1.png"/>
 
 <br><br>
 
@@ -109,13 +108,12 @@ The following ratio should be 1 if our data are conforming to Poisson distributi
 sum(mod$weights * mod$residuals^2)/mod$df.residual
 
 ```
-
+<img src="man/figures/funnel2-1.png"/>
 
 This suggest the variance is 6.24 times the condition mean, and definitely overdispersed.
 This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:
 
-```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE, fig.path="./man/figures/"}
-
+```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE, fig.path="./man/figures/", eval=FALSE}
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
             OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
