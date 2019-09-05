@@ -122,9 +122,7 @@ medpar$prds<- predict(mod, type="response")
 ```
 
 <br><br> We can build a funnel plot object with standard Poisson limits,
-and outliers labelled. The function returns a list of the plotted data,
-the plotted control limit range, and the ggplot object, hence
-`object[3]` to call it.
+and outliers labelled.
 
 ``` r
 

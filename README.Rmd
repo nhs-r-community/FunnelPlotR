@@ -88,9 +88,9 @@ medpar$prds<- predict(mod, type="response")
 
 ```
 <br><br>
-We can build a funnel plot object with standard Poisson limits, and outliers labelled.  The function returns a list of the plotted data, the plotted control limit range, and the ggplot object, hence `object[3]` to call it.
+We can build a funnel plot object with standard Poisson limits, and outliers labelled.
 
-```{r, funnel1, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE}
+```{r fig.align='center', fig.retina=5, warning=FALSE, collapse=TRUE, funnel1, message=FALSE, fig.path="./man/figures/"}
 
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
@@ -114,7 +114,7 @@ sum(mod$weights * mod$residuals^2)/mod$df.residual
 This suggest the variance is 6.24 times the condition mean, and definitely overdispersed.
 This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:
 
-```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE}
+```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE,afig.path="./man/figures/"}
 
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
