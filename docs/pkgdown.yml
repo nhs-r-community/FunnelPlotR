@@ -1,0 +1,9 @@
+pandoc: 2.7.2
+pkgdown: 1.4.0
+pkgdown_sha: ~
+articles:
+  funnel_plots: funnel_plots.html
+urls:
+  reference: https://chrismainey.github.io/FunnelPlotR/reference
+  article: https://chrismainey.github.io/FunnelPlotR/articles
+
