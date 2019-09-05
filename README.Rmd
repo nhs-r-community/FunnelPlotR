@@ -5,7 +5,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,fig.path = "man/")
+knitr::opts_chunk$set(echo = TRUE,fig.path = "./man/figures/")
 ```
  
 
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE,fig.path = "man/")
 # Funnel plots for risk-adjusted indicators <img src="man/figures/logo.png" width="160px" align="right" />
 
 <!-- badges: start -->
-  [![Travis build status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
+[![Travis build status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN version](http://www.r-pkg.org/badges/version/FunnelPlotR)](http://cran.r-project.org/package=FunnelPlotR)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
