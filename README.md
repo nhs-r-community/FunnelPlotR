@@ -134,7 +134,7 @@ a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$pro
 a[[1]]
 ```
 
-<img src="./docs/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
+<img src="docs/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br>
 
@@ -164,7 +164,7 @@ b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$pro
 b[[1]]
 ```
 
-<img src="./docs/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
+<img src="docs/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.
