@@ -5,7 +5,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.path  = "man/")
+knitr::opts_chunk$set(echo = TRUE)
 ```
  
 
