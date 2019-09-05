@@ -128,11 +128,10 @@ the plotted control limit range, and the ggplot object, hence
 
 ``` r
 
-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
             OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
-## $plot
-## Warning: Removed 1 rows containing missing values (geom_point).
+a[[1]]
 ```
 
 <img src="./man/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
@@ -158,10 +157,11 @@ for this by inflating the limits:
 
 ``` r
 
-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
             OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
-## $plot
+
+b[[1]]
 ```
 
 <img src="./man/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
