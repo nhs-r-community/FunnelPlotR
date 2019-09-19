@@ -41,8 +41,8 @@ if(method == "CQC"){
     )
 
 
-  lz <- quantile(x = mod_plot_agg$Uzscore_CQC, Winsorise_by)
-  uz <- quantile(x = mod_plot_agg$Uzscore_CQC, (1 - Winsorise_by))
+  lz <- quantile(x = mod_plot_agg$Uzscore_CQC, Winsorise_by, na.rm = TRUE)
+  uz <- quantile(x = mod_plot_agg$Uzscore_CQC, (1 - Winsorise_by), na.rm = TRUE)
 
   mod_plot_agg <- mod_plot_agg %>%
     dplyr::mutate(
@@ -113,8 +113,8 @@ if(method == "CQC"){
       UCL99 = multiplier * (exp(3.090232 * sqrt(.data$rrS2)))
     )
 
-  lz <- quantile(x = mod_plot_agg$Uzscore_SHMI, Winsorise_by)
-  uz <- quantile(x = mod_plot_agg$Uzscore_SHMI, (1 - Winsorise_by))
+  lz <- quantile(x = mod_plot_agg$Uzscore_SHMI, Winsorise_by, na.rm = TRUE)
+  uz <- quantile(x = mod_plot_agg$Uzscore_SHMI, (1 - Winsorise_by), na.rm=TRUE)
 
   mod_plot_agg <- mod_plot_agg %>%
     dplyr::mutate(Winsorised = ifelse(.data$Uzscore_SHMI > lz & .data$Uzscore_SHMI < uz, 0, 1))
