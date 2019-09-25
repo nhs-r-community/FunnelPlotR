@@ -22,6 +22,7 @@
 #' @importFrom rlang .data
 #' @import ggplot2
 
+<<<<<<< HEAD
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
                     Poisson_limits, OD_adjust, Tau2 = 0, method, yrange, xrange){
 
