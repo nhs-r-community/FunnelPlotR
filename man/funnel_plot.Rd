@@ -5,11 +5,12 @@
 \title{Funnel Plots for Indirectly-Standardised Ratios}
 \usage{
 funnel_plot(numerator, denominator, group, aggregate_input_data = TRUE,
-  label_outliers = 99, Poisson_limits = FALSE, OD_adjust = TRUE,
+  label_outliers = 95, Poisson_limits = FALSE, OD_adjust = TRUE,
   method = "SHMI", Winsorise_by = 0.1,
   title = "Untitled Funnel Plot", multiplier = 1,
-  x_label = "Expected", y_label = "Standardised Ratio", xrange, yrange,
-  return_elements = c("plot", "data", "limits"))
+  x_label = "Expected", y_label = "Standardised Ratio",
+  xrange = "auto", yrange = "auto", return_elements = c("plot",
+  "data", "limits"))
 }
 \arguments{
 \item{numerator}{A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis}
@@ -44,9 +45,9 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{y_label}{Title for the funnel plot y-axis.  Usually a standardised ratio.}
 
-\item{xrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, NULL, allows function to estimate range. NOT YET IN USE}
+\item{xrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.}
 
-\item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, NULL, allows function to estimate range.  NOT YET IN USE}
+\item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
 \item{return_elements}{a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
 limit lookup table used in the plot. Default is all three objects.}

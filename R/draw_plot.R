@@ -2,17 +2,17 @@
 #' @description Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead.
 #'
 #' @param mod_plot_agg data frame of containing numerator, denominator, ratio/proportion, SEs and limits
-#' @param yrange Specify the plot range.  Not yet implemented
-#' @param xrange Specify the plot range.  Not yet implemented
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
 #' @param title Plot title
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are\: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
-#' @param OD_adjust Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)
+#' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)
 #' @param Tau2 The Tau2 value to use for plotting limits
 #' @param method to pass to limit calculation (\"SHMI\" or \"CQC\")
+#' @param yrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
+#' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 #'
@@ -22,7 +22,7 @@
 #' @importFrom rlang .data
 #' @import ggplot2
 
-<<<<<<< HEAD
+
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
                     Poisson_limits, OD_adjust, Tau2 = 0, method, yrange, xrange){
 
