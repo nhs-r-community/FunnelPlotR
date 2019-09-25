@@ -32,3 +32,4 @@ A data.frame with an index column and various control limits based on the index 
 \description{
 Internal function for funnel plot to build the control limits prior to plotting.
 }
+\keyword{internal}

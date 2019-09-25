@@ -132,7 +132,7 @@ a
 ## $plot
 ```
 
-<img src="man/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
+<img src="./man/figures/funnel1-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br>
 
@@ -162,7 +162,7 @@ b
 ## $plot
 ```
 
-<img src="man/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
+<img src="./man/figures/funnel2-1.png" width="672" style="display: block; margin: auto;" />
 
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.

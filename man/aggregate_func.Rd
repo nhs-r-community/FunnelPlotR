@@ -15,3 +15,4 @@ Returns an aggregated data.frame of the same columns, but summed by 'group', wit
 \description{
 Internal function to aggregate record-level data for plotting as a funnel.
 }
+\keyword{internal}

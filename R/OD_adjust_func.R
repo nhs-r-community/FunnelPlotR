@@ -8,7 +8,8 @@
 #' @param multiplier The amount to multiply the standardised ratio by, default is 1.
 #' @param bypass TRUE\/FALSE, whether to bypass adjustment (not yet in use in main function)
 #'
-#' @return A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)' 
+#' @return A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion ratio), Tau2 (a numeric \"between\" standard error)'
+#' @keywords internal
 #' @importFrom dplyr mutate summarise %>%
 #' @importFrom dplyr group_by summarise mutate %>%
 #' @importFrom rlang .data
@@ -93,12 +94,12 @@ if(method == "CQC"){
       # OD95UCL = multiplier * (1 + ((1.959964 * (sqrt(((1 / (2 * sqrt(.data$S)))^2) + Tau2))))^2),
       # OD99LCL = multiplier * (1 - ((3.090232 * (sqrt(((1 / (2 * sqrt(.data$S)))^2) + Tau2))))^2),
       # OD99UCL = multiplier * (1 + ((3.090232 * (sqrt(((1 / (2 * sqrt(.data$S)))^2) + Tau2))))^2)
-      
+
       OD95LCL = multiplier * ((1 + (-1.959964 * (sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2))))^2),
       OD95UCL = multiplier * ((1 + (1.959964 * (sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2))))^2),
       OD99LCL = multiplier * ((1 + (-3.090232 * (sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2))))^2),
       OD99UCL = multiplier * ((1 + (3.090232 * (sqrt(((1 / (2 * sqrt(.data$denominator)))^2) + Tau2))))^2)
-      
+
     )
 } else if (method == "SHMI") {
 

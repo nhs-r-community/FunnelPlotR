@@ -24,3 +24,4 @@ A list with elements\: aggregated adjusted data fame, Phi (a numeric dispersion 
 \description{
 Internal function to perform the winsorisation and adjustment of z-scores prior to plotting.
 }
+\keyword{internal}

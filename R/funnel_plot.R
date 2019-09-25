@@ -22,7 +22,6 @@
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
-#' @param aggregate_input_data Should the function aggregate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.
 #' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
 #' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param return_elements a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
@@ -68,7 +67,7 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE, label_outliers = 95,
+funnel_plot <- function(numerator, denominator, group, label_outliers = 95,
                             Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorise_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label = "Standardised Ratio",xrange = "auto", yrange = "auto",
@@ -99,17 +98,7 @@ funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE
 
   mod_plot <- data.frame(numerator, denominator, group)
 
-  if (aggregate_input_data==TRUE){
-
-    mod_plot_agg<-aggregate_func(mod_plot)
-
-
-
-  } else {
-    mod_plot_agg <- mod_plot
-    mod_plot_agg$rr <- numerator / denominator
-
-  }
+  mod_plot_agg<-aggregate_func(mod_plot)
 
  #OD Adjust and return table
   adj<-OD_adjust_func(mod_plot_agg, method=method, Winsorise_by= Winsorise_by, bypass=FALSE)

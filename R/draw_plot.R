@@ -15,6 +15,7 @@
 #' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
+#' @keywords internal
 #'
 #'
 #' @importFrom scales comma
