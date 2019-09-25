@@ -9,7 +9,7 @@
 #' @param Tau2 If using OD_adjust, what is the Tau2 ("between" standard error) to use?
 #' @param method Which adjustment method is being used, SHMI or CQC?
 #' @param multiplier Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.
-#'
+#' @keywords internal
 #' @return A data.frame with an index column and various control limits based on the index as an x-axis value.
 #'
 #' @importFrom stats qchisq quantile
@@ -71,7 +71,7 @@ build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisso
       odul95 = multiplier * ((1 + (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
       odll998 = multiplier * ((1 + (-3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
       odul998 = multiplier * ((1 + (3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
-      
+
     )
   } else {
     stop("Invalid method supplied")

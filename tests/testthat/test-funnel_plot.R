@@ -33,6 +33,20 @@ test_that("`funnel_plot()` works with input and returns expected list", {
   expect_length(c[[2]],22)
   expect_gt(b[[2]]$OD95LCL[5], c[[2]]$OD95LCL[5])
 
+  d<-funnel_plot(numerator=c(100, 150,180,80,120, 225), denominator=c(108, 112, 165,95,100, 220),
+                 group=factor(c("a","b","c", "d","e","f")), OD_adjust = FALSE, method="CQC", Winsorise_by = 0.05,
+                 title="My test Funnel Plot", multiplier = 100, x_label = "Expected Values",
+                 y_label = "Standardised Ratio Test", label_outliers = 95, xrange=c(5,250), yrange=c(0, 200))
+  expect_type(d, "list")
+  expect_type(d[[1]], "list")
+  expect_s3_class(d[[2]], "data.frame")
+  expect_s3_class(d[[3]], "data.frame")
+  expect_length(d[[2]]$group,6)
+  expect_length(d[[2]],22)
+
+
+
+
 })
 
 

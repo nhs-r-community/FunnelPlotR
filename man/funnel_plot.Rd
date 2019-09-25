@@ -4,10 +4,9 @@
 \alias{funnel_plot}
 \title{Funnel Plots for Indirectly-Standardised Ratios}
 \usage{
-funnel_plot(numerator, denominator, group, aggregate_input_data = TRUE,
-  label_outliers = 95, Poisson_limits = FALSE, OD_adjust = TRUE,
-  method = "SHMI", Winsorise_by = 0.1,
-  title = "Untitled Funnel Plot", multiplier = 1,
+funnel_plot(numerator, denominator, group, label_outliers = 95,
+  Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI",
+  Winsorise_by = 0.1, title = "Untitled Funnel Plot", multiplier = 1,
   x_label = "Expected", y_label = "Standardised Ratio",
   xrange = "auto", yrange = "auto", return_elements = c("plot",
   "data", "limits"))
@@ -18,8 +17,6 @@ funnel_plot(numerator, denominator, group, aggregate_input_data = TRUE,
 \item{denominator}{A vector of denominator (predicted/population etc).  Used as denominator of the Y-axis and the scale of the x-axis}
 
 \item{group}{A vector of group names as character or factor.  Used to aggregate and group points on plots}
-
-\item{aggregate_input_data}{Should the function aggregate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.}
 
 \item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99}
 

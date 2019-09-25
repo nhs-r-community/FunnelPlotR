@@ -39,3 +39,4 @@ A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 \description{
 Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead.
 }
+\keyword{internal}
