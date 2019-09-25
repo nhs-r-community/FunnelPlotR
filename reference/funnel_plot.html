@@ -144,12 +144,12 @@ There are several parameters for the input, with the assumption that you will wa
 effects models, originally described for meta-analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>funnel_plot</span>(<span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='no'>group</span>, <span class='kw'>aggregate_input_data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>label_outliers</span> <span class='kw'>=</span> <span class='fl'>99</span>, <span class='kw'>Poisson_limits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>OD_adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>, <span class='kw'>Winsorise_by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Untitled Funnel Plot"</span>, <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>x_label</span> <span class='kw'>=</span> <span class='st'>"Expected"</span>, <span class='kw'>y_label</span> <span class='kw'>=</span> <span class='st'>"Standardised Ratio"</span>, <span class='no'>xrange</span>, <span class='no'>yrange</span>,
-  <span class='kw'>return_elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>, <span class='st'>"data"</span>, <span class='st'>"limits"</span>))</pre>
+    <pre class="usage"><span class='fu'>funnel_plot</span>(<span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='no'>group</span>, <span class='kw'>label_outliers</span> <span class='kw'>=</span> <span class='fl'>95</span>,
+  <span class='kw'>Poisson_limits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>OD_adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>,
+  <span class='kw'>Winsorise_by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Untitled Funnel Plot"</span>, <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>x_label</span> <span class='kw'>=</span> <span class='st'>"Expected"</span>, <span class='kw'>y_label</span> <span class='kw'>=</span> <span class='st'>"Standardised Ratio"</span>,
+  <span class='kw'>xrange</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>yrange</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>return_elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>,
+  <span class='st'>"data"</span>, <span class='st'>"limits"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,10 +165,6 @@ effects models, originally described for meta-analysis.</p>
     <tr>
       <th>group</th>
       <td><p>A vector of group names as character or factor.  Used to aggregate and group points on plots</p></td>
-    </tr>
-    <tr>
-      <th>aggregate_input_data</th>
-      <td><p>Should the function aggregate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.</p></td>
     </tr>
     <tr>
       <th>label_outliers</th>
@@ -214,11 +210,11 @@ fashion, e.g. 10% refers to 10% at each end of the distribution (20% winsorised/
     </tr>
     <tr>
       <th>xrange</th>
-      <td><p>Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, NULL, allows function to estimate range. NOT YET IN USE</p></td>
+      <td><p>Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.</p></td>
     </tr>
     <tr>
       <th>yrange</th>
-      <td><p>Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, NULL, allows function to estimate range.  NOT YET IN USE</p></td>
+      <td><p>Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.</p></td>
     </tr>
     <tr>
       <th>return_elements</th>
