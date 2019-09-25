@@ -4,16 +4,12 @@
 \alias{draw_plot}
 \title{Funnel Plots drawing function}
 \usage{
-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title,
-  label_outliers, multiplier, Poisson_limits, OD_adjust, Tau2 = 0,
-  method)
+draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
+  multiplier, Poisson_limits, OD_adjust, Tau2 = 0, method, yrange,
+  xrange)
 }
 \arguments{
 \item{mod_plot_agg}{data frame of containing numerator, denominator, ratio/proportion, SEs and limits}
-
-\item{yrange}{Specify the plot range.  Not yet implemented}
-
-\item{xrange}{Specify the plot range.  Not yet implemented}
 
 \item{x_label}{Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.}
 
@@ -27,11 +23,15 @@ draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title,
 
 \item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
-\item{OD_adjust}{Draw overdispersed limits using Speigelhalter's (2012) Tau2 (default=TRUE)}
+\item{OD_adjust}{Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)}
 
 \item{Tau2}{The Tau2 value to use for plotting limits}
 
 \item{method}{to pass to limit calculation (\"SHMI\" or \"CQC\")}
+
+\item{yrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
+
+\item{xrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
 }
 \value{
 A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
