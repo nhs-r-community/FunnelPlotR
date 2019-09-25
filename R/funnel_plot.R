@@ -23,8 +23,8 @@
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
 #' @param aggregate_input_data Should the function aggregate the inputs, by group, before passing into OD adjustment and plot? Default is TRUE.
-#' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, NULL, allows function to estimate range. NOT YET IN USE
-#' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, NULL, allows function to estimate range.  NOT YET IN USE
+#' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
+#' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param return_elements a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
 #' limit lookup table used in the plot. Default is all three objects.
 #'
@@ -71,7 +71,8 @@
 funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE, label_outliers = 99,
                             Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorise_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
-                            y_label = "Standardised Ratio",xrange, yrange,  return_elements=c("plot", "data", "limits")){
+                            y_label = "Standardised Ratio",xrange = "auto", yrange = "auto",
+                            return_elements=c("plot", "data", "limits")){
 
 
 #funnel_plot(medpar$los, medpar$prds, medpar$provnum)
@@ -125,7 +126,7 @@ funnel_plot <- function(numerator, denominator, group, aggregate_input_data=TRUE
 
   fun_plot<-draw_plot(mod_plot_agg, yrange, xrange, x_label, y_label, title, label_outliers,
                       multiplier=multiplier, Poisson_limits, OD_adjust=OD_adjust,
-                      Tau2=Tau2, method=method)
+                      Tau2=Tau2, method=method, xrange=xrange, yrange=yrange)
 
   #Build return
   rtn<-list()
