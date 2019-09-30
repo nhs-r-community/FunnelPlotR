@@ -2,6 +2,7 @@
 output:
   github_document:
     html_preview: false
+    dev: png
 ---
 
 ```{r setup, include=FALSE}
