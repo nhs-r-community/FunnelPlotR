@@ -14,3 +14,4 @@ cran-comments.md
 ^pkgdown$
 ^CRAN-RELEASE$
 ^README\.Rmd$
+testers.R
