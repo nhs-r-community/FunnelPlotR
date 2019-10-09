@@ -9,7 +9,7 @@ status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https:
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN
-version](http://www.r-pkg.org/badges/version/FunnelPlotR)](http://cran.r-project.org/package=FunnelPlotR)
+version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
 
 [![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR)

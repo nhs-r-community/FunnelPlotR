@@ -1,5 +1,5 @@
 ## Release summary
-This is a second release of a package wrapper for ggplot2 to draw funnel plots for indirectly standardised ratios.  It is a minor release, adding a nex scaling argument, fixing typos, hiding internal functions, and fixing several minor bugs.
+This is a second release of a package wrapper for ggplot2 to draw funnel plots for indirectly standardised ratios.  It is a minor release, adding a new scaling argument, fixing typos, hiding internal functions, and fixing several minor bugs.
 
 ## Test environments
 * local windows 7, R 3.6.1
