@@ -1,16 +1,10 @@
 ## Release summary
-This is a first release of a package wrapper for ggplot2 to draw funnel plots for indirectly standardised ratios, such as those used to compare mortality in hospitals against predicted rates. It processes input data and adjusts for overdispersion before drawing a ggplot2 object and returning relevant data.frames.  Future updates will include methods for proportions and ratios of counts.
-
-Comments from two previous CRAN submissions resolved:
-* Added absolute link to CODE_OF_CONDUCT.md, rather than relative.
-* Links academic papers in roxygen2 and DESCRIPTION changed to use <doi:> rather than \href element
-* Rephrased DESRIPTION to remove 'This package...'
-* Removed \donotrun in examples, as it was not appropriate
-
+This is a second release of a package wrapper for ggplot2 to draw funnel plots for indirectly standardised ratios.  It is a minor release, adding a nex scaling argument, fixing typos, hiding internal functions, and fixing several minor bugs.
 
 ## Test environments
 * local windows 7, R 3.6.1
 * local windows 10, R 3.6.1
+* Windows dev on Win-builder
 * ubuntu 16.04.6 LTS (on travis-ci), R 3.6.1
 
 * r-hub:

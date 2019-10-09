@@ -1,9 +1,9 @@
-# FunnelPlotR 0.2.1.999
+# FunnelPlotR 0.2.1
 
 - Added custom scaling arguments
-- Removed the aggregation option.  It give the same results for preaggreagated data either way
+- Removed the aggregation option.  It gives the same results for pre-aggreagated data either way.
 - Removed redundant pkgdown material
-- Cleaned up diorectories and hidden internal functions
+- Cleaned up directories and hidden internal functions
 
 # FunnelPlotR 0.2.0
 
