@@ -4,6 +4,7 @@
 - Removed the aggregation option.  It gives the same results for pre-aggreagated data either way.
 - Removed redundant pkgdown material
 - Cleaned up directories and hidden internal functions
+- New HEX Sticker! Some people didn't like the old colours so I've gone safer.
 
 # FunnelPlotR 0.2.0
 

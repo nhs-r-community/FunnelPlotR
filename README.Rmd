@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 [![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR) 
 <br><br>
-  <!-- badges: end -->
+<!-- badges: end -->
   
 ## Funnel Plots
 __This package is the newer version of the older `CMFunnels` package. Development work will focus on this package from now on __
@@ -131,3 +131,4 @@ These methods can be used for any similar indicators, e.g. standardised mortalit
 
 Please read the package documentation for more info, at: https://chrismainey.github.io/FunnelPlotR/
 
+Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at: https://themightychip.com/

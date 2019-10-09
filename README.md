@@ -168,3 +168,6 @@ e.g. standardised mortality ratios, readmissions etc.
 
 Please read the package documentation for more info, at:
 <https://chrismainey.github.io/FunnelPlotR/>
+
+Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at:
+<https://themightychip.com/>
