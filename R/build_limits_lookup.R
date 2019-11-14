@@ -31,7 +31,7 @@ build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisso
 
     # general limits + Tau2 limits table
     set.seed(1)
-    number.seq <- c(seq(0.1, 10, 0.1), seq(11.0, max_preds, length.out = 1000))
+    number.seq <- c(seq(0.1, 10.0, 0.1), seq(11.0, as.numeric(max_preds), length.out = 1000))
     dfCI <- data.frame(
       number.seq,
       ll95 = multiplier * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
@@ -42,7 +42,7 @@ build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisso
   } else if (method == "SHMI") {
     # general limits + Tau2 limits table
     set.seed(1)
-    number.seq <- c(seq(0.1, 10, 0.1), seq(11.0, max_preds, length.out = 1000))
+    number.seq <- c(seq(0.1, 10.0, 0.1), seq(11.0, as.numeric(max_preds), length.out = 1000))
     dfCI <- data.frame(
       number.seq,
       ll95 = multiplier * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
