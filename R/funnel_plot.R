@@ -67,7 +67,7 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, label_outliers = 95,
+funnel_plot <- function(numerator, denominator, group, label_outliers = 99,
                             Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorise_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label = "Standardised Ratio",xrange = "auto", yrange = "auto",

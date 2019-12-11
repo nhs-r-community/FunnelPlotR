@@ -1,7 +1,7 @@
 Package: FunnelPlotR
 Type: Package
 Title: Funnel Plots for Indirectly-Standardised Ratios
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
         person("Chris", "Mainey", ,"chris.mainey@uhb.nhs.uk", role= c("aut", "cre"), 
           comment = c(ORCID ="0000-0002-3018-6171")
@@ -11,7 +11,7 @@ Authors@R: c(
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
 Description: An implementation of the Spiegelhalter (2005) <doi:10.1002/sim.1970> Funnel plots  for reporting standardised ratios, with overdispersion adjustment.
 License: MIT + file LICENSE
-URL:  https://chrismainey.github.io/FunnelPlotR, https://github.com/chrismainey/FunnelPlotR
+URL: https://chrismainey.github.io/FunnelPlotR, https://github.com/chrismainey/FunnelPlotR
 BugReports: https://github.com/chrismainey/FunnelPlotR/issues
 Encoding: UTF-8
 LazyData: true
@@ -20,7 +20,7 @@ Imports: ggrepel,
 Depends: ggplot2,
          dplyr,
          rlang
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
@@ -28,4 +28,3 @@ Suggests:
     COUNT,
     tidyr
 VignetteBuilder: knitr
-

@@ -4,8 +4,13 @@
 \alias{OD_adjust_func}
 \title{Winsorisation and adjusted z-score function}
 \usage{
-OD_adjust_func(mod_plot_agg = mod_plot_agg, method = "SHMI",
-  Winsorise_by = 0.1, multiplier = 1, bypass = FALSE)
+OD_adjust_func(
+  mod_plot_agg = mod_plot_agg,
+  method = "SHMI",
+  Winsorise_by = 0.1,
+  multiplier = 1,
+  bypass = FALSE
+)
 }
 \arguments{
 \item{mod_plot_agg}{Aggregated model input data}

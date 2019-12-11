@@ -4,9 +4,20 @@
 \alias{draw_plot}
 \title{Funnel Plots drawing function}
 \usage{
-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
-  multiplier, Poisson_limits, OD_adjust, Tau2 = 0, method, yrange,
-  xrange)
+draw_plot(
+  mod_plot_agg,
+  x_label,
+  y_label,
+  title,
+  label_outliers,
+  multiplier,
+  Poisson_limits,
+  OD_adjust,
+  Tau2 = 0,
+  method,
+  yrange,
+  xrange
+)
 }
 \arguments{
 \item{mod_plot_agg}{data frame of containing numerator, denominator, ratio/proportion, SEs and limits}

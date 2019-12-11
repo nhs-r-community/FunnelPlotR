@@ -4,12 +4,23 @@
 \alias{funnel_plot}
 \title{Funnel Plots for Indirectly-Standardised Ratios}
 \usage{
-funnel_plot(numerator, denominator, group, label_outliers = 95,
-  Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI",
-  Winsorise_by = 0.1, title = "Untitled Funnel Plot", multiplier = 1,
-  x_label = "Expected", y_label = "Standardised Ratio",
-  xrange = "auto", yrange = "auto", return_elements = c("plot",
-  "data", "limits"))
+funnel_plot(
+  numerator,
+  denominator,
+  group,
+  label_outliers = 99,
+  Poisson_limits = FALSE,
+  OD_adjust = TRUE,
+  method = "SHMI",
+  Winsorise_by = 0.1,
+  title = "Untitled Funnel Plot",
+  multiplier = 1,
+  x_label = "Expected",
+  y_label = "Standardised Ratio",
+  xrange = "auto",
+  yrange = "auto",
+  return_elements = c("plot", "data", "limits")
+)
 }
 \arguments{
 \item{numerator}{A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis}

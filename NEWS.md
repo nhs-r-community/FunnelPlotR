@@ -1,7 +1,11 @@
+# FunnelPlotR 0.2.2
+
+- Minor bug fix for discrepancy between documentation and function defaults
+
 # FunnelPlotR 0.2.1
 
 - Added custom scaling arguments
-- Removed the aggregation option.  It gives the same results for pre-aggreagated data either way.
+- Removed the aggregation option.  It gives the same results for pre-aggregated data either way.
 - Removed redundant pkgdown material
 - Cleaned up directories and hidden internal functions
 - New HEX Sticker! Some people didn't like the old colours so I've gone safer.

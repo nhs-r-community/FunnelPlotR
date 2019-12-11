@@ -4,8 +4,17 @@
 \alias{build_limits_lookup}
 \title{Function to build funnel limits}
 \usage{
-build_limits_lookup(min_preds, max_preds, min_ratio, max_ratio,
-  Poisson_limits, OD_adjust, Tau2, method, multiplier)
+build_limits_lookup(
+  min_preds,
+  max_preds,
+  min_ratio,
+  max_ratio,
+  Poisson_limits,
+  OD_adjust,
+  Tau2,
+  method,
+  multiplier
+)
 }
 \arguments{
 \item{min_preds}{Minimum predicted value for range of x-axis}
