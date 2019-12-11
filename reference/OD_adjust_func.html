@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -138,8 +138,13 @@
     <p>Internal function to perform the winsorisation and adjustment of z-scores prior to plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>OD_adjust_func</span>(<span class='kw'>mod_plot_agg</span> <span class='kw'>=</span> <span class='no'>mod_plot_agg</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>,
-  <span class='kw'>Winsorise_by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bypass</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>OD_adjust_func</span>(
+  <span class='kw'>mod_plot_agg</span> <span class='kw'>=</span> <span class='no'>mod_plot_agg</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>,
+  <span class='kw'>Winsorise_by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>bypass</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
