@@ -16,7 +16,7 @@ This is a second release of a package wrapper for ggplot2 to draw funnel plots f
 There were no ERRORs or WARNINGs.
 
 NOTES on win-builder and r-hub about possibly invalid links.
-These refer to DOIs in references in the vignette.  I've manually tested all links and they are valid.
+These refer to DOIs for references in the vignette.  I've manually tested all links and they are valid.
 
 Further note on win-builder and some r-hub builds about a CRAN reference not being in canonical form.  This has been changed to use https as suggested.
 
