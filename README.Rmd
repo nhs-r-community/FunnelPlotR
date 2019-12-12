@@ -43,7 +43,7 @@ It draws funnel plots using `ggplot2` and allows users to specify whether they w
 There is a variant method for this, used in the NHS' Summary Hospital Mortality Indicator'<br>
 [Summary Hospital-level Mortality Indicator, NHS Digital, SHMI specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi) <br>
 
-This uses a log-transformation and truncation of the distribution for calculating overdispersion, whereas Spieglehalter's methods use a square-root and Winsorisation.
+This uses a log-transformation and truncation of the distribution for calculating overdispersion, whereas Spiegelhalter's methods use a square-root and Winsorisation.
 
 
 This package was originally developed for use in CM's PhD project, but published on github in case it's of use for others.

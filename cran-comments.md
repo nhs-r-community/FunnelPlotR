@@ -1,5 +1,5 @@
 ## Release summary
-This is a minor bug-fix for the FunnelPlotR where support material and function defaults did not match.  Updated documentation, no other changes made.
+This is a minor bug-fix for the FunnelPlotR where support material and function defaults did not match and added CITATION file.  Updated documentation, no other changes made.
 
 ## Test environments
 * local windows 7, R 3.6.1
@@ -15,11 +15,8 @@ This is a minor bug-fix for the FunnelPlotR where support material and function 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
-NOTES on win-builder and r-hub about possibly invalid links.
-These refer to DOIs for references in the vignette.  I've manually tested all links and they are valid.
-
-Further note on win-builder and some r-hub builds about a CRAN reference not being in canonical form.  This has been changed to use https as suggested.
+NOTE on r-hub about possibly mis-spelt word, that is not mis-spelt.
 
 
 ## Downstream dependencies
-There are currently no downstream dependencies for this package.
+There are currently no downstream dependencies for this package to my knowledge.

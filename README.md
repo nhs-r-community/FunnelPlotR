@@ -41,7 +41,7 @@ specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/s
 <br>
 
 This uses a log-transformation and truncation of the distribution for
-calculating overdispersion, whereas Spieglehalter’s methods use a
+calculating overdispersion, whereas Spiegelhalter’s methods use a
 square-root and Winsorisation.
 
 This package was originally developed for use in CM’s PhD project, but
