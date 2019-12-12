@@ -1,0 +1,15 @@
+citHeader("To cite FunnelPlotR in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "FunnelPlotR: Funnel plots for risk-adjusted indicators",
+  author   = "Chris Mainey",
+  year     = "2019",
+  note     = "Rpackage version 0.2.2",
+  url      = "https://CRAN.R-project.org/package=FunnelPlotR",
+  textVersion  =
+  paste("Chris Mainey (2019).",
+  "FunnelPlotR: Funnel plots for risk-adjusted indicators.",
+  "Rpackage version 0.2.2.",
+  "https://CRAN.R-project.org/package=FunnelPlotR.")
+)

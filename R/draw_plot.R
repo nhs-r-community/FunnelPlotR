@@ -83,7 +83,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
-    # theme_bw()+
+     # theme_bw()+
     theme(
       plot.title = element_text(hjust = 0.5, face = "bold"),
       plot.subtitle = element_text(hjust = 0.5, face = "italic")
