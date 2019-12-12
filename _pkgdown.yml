@@ -10,7 +10,7 @@ navbar:
   - text: Articles
     menu:
     - text: Introduction to Funnel Plots
-      href: articles/funnel_plot.html
+      href: articles/funnel_plots.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/chrismainey/FunnelPlotR
@@ -25,7 +25,7 @@ authors:
 twitter:
      icon: fa-lg fa-twitter
      href: http://twitter.com/chrismainey
-     
+
 template:
   params:
     ganalytics: UA-146859070-1
