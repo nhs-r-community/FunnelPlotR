@@ -1,5 +1,5 @@
 ## Release summary
-This is a minor bug-fix for the FunnelPlotR where support material and function defaults did not match and added CITATION file.  Updated documentation, no other changes made.
+This is a minor bug-fix for the FunnelPlotR where some plot limits were incorrectly coloured.
 
 ## Test environments
 * local windows 7, R 3.6.1

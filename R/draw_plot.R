@@ -123,7 +123,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
         geom_line(aes(x = .data$number.seq, y = .data$ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
         scale_color_manual(values = c(
-          "99.8% Poisson" = "#7E9C06", # "#1F77B4FF"
+          "99.8% Poisson" = "#1F77B4FF", # "#1F77B4FF"
           "95% Poisson" = "#FF7F0EFF"
         ), name = "Control limits")
     }
@@ -135,7 +135,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
         geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
         scale_color_manual(values = c(
-          "99.8% Overdispersed" = "#DEC400", # "#F7EF0A", #"#2CA02CFF",
+          "99.8% Overdispersed" = "#2CA02CFF",
           "95% Overdispersed" = "#9467BDFF"
         ), name = "Control limits")
     }
