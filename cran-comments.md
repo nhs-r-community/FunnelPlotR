@@ -1,5 +1,5 @@
 ## Release summary
-This is a minor bug-fix for the FunnelPlotR where some plot limits were incorrectly coloured.
+This is a minor bug-fix for the FunnelPlotR where some plot limits were incorrectly coloured3.
 
 ## Test environments
 * local windows 7, R 3.6.1

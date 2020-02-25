@@ -1,3 +1,7 @@
+# FunnelPlotR 0.2.3
+
+- Minor bug fix for discrepancy between limit colours
+
 # FunnelPlotR 0.2.2
 
 - Minor bug fix for discrepancy between documentation and function defaults
