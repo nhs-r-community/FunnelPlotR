@@ -19,7 +19,8 @@ funnel_plot(
   y_label = "Standardised Ratio",
   xrange = "auto",
   yrange = "auto",
-  return_elements = c("plot", "data", "limits")
+  return_elements = c("plot", "data", "limits"),
+  theme = funnel_clean()
 )
 }
 \arguments{
@@ -59,6 +60,8 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{return_elements}{a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
 limit lookup table used in the plot. Default is all three objects.}
+
+\item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
 }
 \value{
 A list containing [1] the funnel plot as a ggplot2 object, [2] the base table for the plot, [3] the limits table.

@@ -16,7 +16,8 @@ draw_plot(
   Tau2 = 0,
   method,
   yrange,
-  xrange
+  xrange,
+  theme
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ draw_plot(
 \item{yrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
 
 \item{xrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
+
+\item{theme}{a ggplot theme function.  .}
 }
 \value{
 A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.

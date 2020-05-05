@@ -26,6 +26,7 @@
 #' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param return_elements a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
 #' limit lookup table used in the plot. Default is all three objects.
+#' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object, [2] the base table for the plot, [3] the limits table.
 #'
@@ -71,7 +72,7 @@ funnel_plot <- function(numerator, denominator, group, label_outliers = 99,
                             Poisson_limits = FALSE, OD_adjust = TRUE, method = "SHMI", Winsorise_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label = "Standardised Ratio",xrange = "auto", yrange = "auto",
-                            return_elements=c("plot", "data", "limits")){
+                            return_elements=c("plot", "data", "limits"), theme = funnel_clean()){
 
 
 #funnel_plot(medpar$los, medpar$prds, medpar$provnum)
@@ -115,7 +116,8 @@ funnel_plot <- function(numerator, denominator, group, label_outliers = 99,
 
   fun_plot<-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
                       multiplier=multiplier, Poisson_limits, OD_adjust=OD_adjust,
-                      Tau2=Tau2, method=method, xrange=xrange, yrange=yrange)
+                      Tau2=Tau2, method=method, xrange=xrange, yrange=yrange,
+                      theme = theme)
 
   #Build return
   rtn<-list()

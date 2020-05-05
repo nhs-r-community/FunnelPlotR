@@ -13,6 +13,7 @@
 #' @param method to pass to limit calculation (\"SHMI\" or \"CQC\")
 #' @param yrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
+#' @param theme a ggplot theme function.  .
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 #' @keywords internal
@@ -25,24 +26,23 @@
 
 
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
-                    Poisson_limits, OD_adjust, Tau2 = 0, method, yrange, xrange){
+                    Poisson_limits, OD_adjust, Tau2 = 0, method, yrange, xrange,
+                    theme){
 
 #plot ranges
   # Determine the range of plots
   if(xrange[1] == "auto"){
-    max_x <- dplyr::summarise(mod_plot_agg, ceiling(max(.data$denominator, na.rm = FALSE))) %>% as.numeric()
-    min_x <- dplyr::summarise(mod_plot_agg, ceiling(min(.data$denominator,na.rm = FALSE))) %>% as.numeric()
+    max_x <- ceiling(max(mod_plot_agg$denominator, na.rm = FALSE)) %>% as.numeric()
+    min_x <- ceiling(min(mod_plot_agg$denominator,na.rm = FALSE)) %>% as.numeric()
   } else {
     min_x <- xrange[1]
     max_x <- xrange[2]
   }
 
   if(yrange[1] == "auto"){
-    min_y <- max((0.7 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
-                                                          max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
+    min_y <- max((0.7 * multiplier), multiplier *  max((mod_plot_agg$numerator / mod_plot_agg$denominator)) %>% as.numeric(), na.rm = FALSE)
 
-    max_y <- max((1.3 * multiplier), dplyr::summarise(mod_plot_agg, multiplier *
-                                                        max((.data$numerator / .data$denominator))) %>% as.numeric(), na.rm = FALSE)
+    max_y <- max((1.3 * multiplier), multiplier *  max((mod_plot_agg$numerator / mod_plot_agg$denominator)) %>% as.numeric(), na.rm = FALSE)
   } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
@@ -76,13 +76,14 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
 
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((.data$numerator / .data$denominator)), x = .data$denominator)) +
-    geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue2") +
+    geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue") +
     # scale_y_continuous(limits = c((min_y-0.1), (max_y+0.1)))+
     # scale_x_continuous(labels = scales::comma, limits = c(0,max_x+1)) +
     geom_hline(aes(yintercept = multiplier), linetype = 2) +
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
+    theme +
      # theme_bw()+
     theme(
       plot.title = element_text(hjust = 0.5, face = "bold"),
