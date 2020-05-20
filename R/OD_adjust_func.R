@@ -273,4 +273,78 @@ winsorisation <- function(mod_plot_agg = mod_plot_agg, sr_method = "SHMI"){
 }
 
 
- 
+
+#' Transformation function for z-scoring
+#'
+#' @description Internal function to perform the transformations for data types.
+#'
+#' @param n vector of the count of the number of groups (and therefore z-scores)
+#' @param zscore Value for z-scores to be used.  COmmonly, this would be 'winsorised' first to remove inpact of extreme outliers.  SHMI truncates instead, but this simply reduced the n as well as the z-score.
+#'
+#' @return A numeric phi value
+#' @keywords internal
+#' 
+#'
+phi_func <- function(n, zscore){
+  phi <- mod_plot_agg %>%
+  dplyr::summarise(phi = (1 / as.numeric(n())) * sum(.data$Wuzscore2)) %>%
+  as.numeric()
+  
+  return(phi)
+}
+
+
+
+
+#' Calculate the between group standard error (tau2) using a dispersion factor
+#'
+#' @description Internal function to calcuate teh additional, between group, standard error (tau2) to add to S2.
+#'
+#' @param n The number of groups for data items, e.g. hospitals trusts that z-scores are calculated at.
+#' @param phi The dispersion ratio, where > 1 means overdispersion
+#' @param S Standardard error (within cluster, calcualted in z-score process)
+#'
+#' @return A numeric Tau2 value
+#' @keywords internal
+#'  
+#'  
+tau_func <- function(n,  phi, S){
+
+  if(phi < n - 1){
+    Tau2 <- 0
+  } else {
+  
+  Tau2 <- max(0, ((sum(n) * sum(phi)) - (sum(n) - 1)) /
+          (sum(1/(S^2)) - (sum((1/(S^2))^2) / sum(1/(S^2)))))
+
+  }
+  
+  return(Tau2)
+}
+
+
+
+#' Poisson funnel limit calculation
+#'
+#' @description Add 95% and 99.8 % funnel limits from Poisson distribution
+#'
+#' @param mod_plot_agg Aggregated model input data
+#' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
+#' @param sr_method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
+#'
+#' @return A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
+#' @keywords internal
+#' 
+transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI"){
+  
+  mod_plot_agg$LCL95 <- multiplier * (qchisq(0.975, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
+  mod_plot_agg$UCL95 <- multiplier * (qchisq(0.025, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
+  mod_plot_agg$LCL99 <- multiplier * (qchisq(0.999, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
+  mod_plot_agg$UCL99 <- multiplier * (qchisq(0.999, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
+}
+
+
+LCL95 = multiplier * 1 - (1.959964 * .data$S),                  
+UCL95 = multiplier * 1 + (1.959964 * .data$S),
+LCL99 = multiplier * 1 - (3.090232 * .data$S),
+UCL99 = multiplier * 1 + (3.090232 * .data$S),
