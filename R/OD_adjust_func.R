@@ -184,7 +184,7 @@ stop("Need to specify model denominator")}
 if(data_type == "SR"){
   
   # sum(observed) = sum(expected in SR model)
-  Target<- 1
+  mod_plot_agg$Target<- 1
   
   # log-transformed SHMI verison
   if(sr_method == "sHMI"){}
@@ -202,7 +202,7 @@ if(data_type == "SR"){
 } if(data_type == "PR") {
   
   # use average proportion as target
-  Target<- asin(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+  mod_plot_agg$Target<- asin(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
   
   mod_plot_agg$Y <- asin(mod_plot_agg$numerator / mod_plot_agg$denominator)
   mod_plot_agg$s  <- 1 / (2 * sqrt(mod_plot_agg$denominator))
@@ -212,7 +212,7 @@ if(data_type == "SR"){
 } if(data_type=="RC"){
   
   # use average proportion as target
-  Target<- log(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+  mod_plot_agg$Target<- log(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
   
   mod_plot_agg$Y <- log((mod_plot_agg$numerator +0.5) / (mod_plot_agg$denominator +0.5))
   mod_plot_agg$s  <- 
@@ -335,16 +335,39 @@ tau_func <- function(n,  phi, S){
 #' @return A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
 #' @keywords internal
 #' 
-transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI"){
+poisson_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI"){
   
-  mod_plot_agg$LCL95 <- multiplier * (qchisq(0.975, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
-  mod_plot_agg$UCL95 <- multiplier * (qchisq(0.025, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
-  mod_plot_agg$LCL99 <- multiplier * (qchisq(0.999, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
-  mod_plot_agg$UCL99 <- multiplier * (qchisq(0.999, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
+  mod_plot_agg$LCL95 <- multiplier * mod_plot_agg$Type * (qchisq(0.975, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
+  mod_plot_agg$UCL95 <- multiplier * mod_plot_agg$Type * (qchisq(0.025, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
+  mod_plot_agg$LCL99 <- multiplier * mod_plot_agg$Type * (qchisq(0.999, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
+  mod_plot_agg$UCL99 <- multiplier * mod_plot_agg$Type * (qchisq(0.999, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
 }
 
 
-LCL95 = multiplier * 1 - (1.959964 * .data$S),                  
-UCL95 = multiplier * 1 + (1.959964 * .data$S),
-LCL99 = multiplier * 1 - (3.090232 * .data$S),
-UCL99 = multiplier * 1 + (3.090232 * .data$S),
+
+#' OD funnel limit calculation
+#'
+#' @description Add 95% and 99.8 % funnel limits from Poisson distribution
+#'
+#' @param mod_plot_agg Aggregated model input data
+#' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
+#' @param sr_method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
+#'
+#' @return A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
+#' @keywords internal
+#' 
+OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI", multiplier = 1){
+  
+  if(data_type = "SR" & sr_method == "SHMI"){
+    mod_plot_agg$OD95LCL <- multiplier * (exp(-1.959964 * sqrt((1 / mod_plot_agg$denominator) + mod_plot_agg$Tau2)))
+    mod_plot_agg$OD95UCL <- multiplier * (exp(1.959964 * sqrt((1 / mod_plot_agg$denominator) + mod_plot_agg$Tau2)))
+    mod_plot_agg$OD99LCL <- multiplier * (exp(-3.090232 * sqrt((1 / mod_plot_agg$denominator) + mod_plot_agg$Tau2)))
+    mod_plot_agg$OD99UCL <- multiplier * (exp(3.090232 * sqrt((1 / mod_plot_agg$denominator) + mod_plot_agg$Tau2)))
+  } else {
+    mod_plot_agg$OD95LCL <-  multiplier * (mod_plot_agg$Target * ((1 + (-1.959964 * (sqrt((mod_plot_agg$S^2) + mod_plot_agg$Tau2))))^2))
+    mod_plot_agg$OD95UCL <-  multiplier * (mod_plot_agg$Target * ((1 + (1.959964 * (sqrt((mod_plot_agg$S^2) + mod_plot_agg$Tau2))))^2))
+    mod_plot_agg$OD99LCL <-  multiplier * (mod_plot_agg$Target * ((1 + (-3.090232 * (sqrt((mod_plot_agg$S^2) + mod_plot_agg$Tau2))))^2))
+    mod_plot_agg$OD99UCL <-  multiplier * (mod_plot_agg$Target * ((1 + (3.090232 * (sqrt((mod_plot_agg$S^2) + mod_plot_agg$Tau2))))^2))
+  }
+}
+
