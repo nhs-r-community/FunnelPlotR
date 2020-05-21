@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @return Returns an aggregated data.frame of the same columns, but summed by 'group', with a relative risk 'rr' column added.
 
-aggregate_func2<- function(mod_plot) {
+aggregate_func<- function(mod_plot) {
 
  mod_plot_agg <- 
    data.frame(

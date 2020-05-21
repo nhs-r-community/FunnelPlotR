@@ -10,7 +10,6 @@
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)
 #' @param Tau2 The Tau2 value to use for plotting limits
-#' @param method to pass to limit calculation (\"SHMI\" or \"CQC\")
 #' @param yrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param theme a ggplot theme function.  .
@@ -26,7 +25,7 @@
 
 
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
-                    Poisson_limits, OD_adjust, Tau2 = 0, method, yrange, xrange,
+                    Poisson_limits, OD_adjust, Tau2 = 0, yrange, xrange,
                     theme){
 
 #plot ranges
@@ -71,7 +70,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   #   stop("Invalid method supplied")
   # }
 
-  dfCI<-build_limits_lookup(min_x, max_x, min_y, max_y, Poisson_limits, OD_adjust, Tau2, method, multiplier)
+  dfCI<-build_limits_lookup(min_x, max_x, min_y, max_y, Poisson_limits, OD_adjust, Tau2, method="SHMI", multiplier)
 
 
   # base funnel plot

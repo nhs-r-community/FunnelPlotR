@@ -17,3 +17,10 @@ mod_plot <-
 
 # install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.3.tar.gz", repos=NULL)
 
+for (i in seq_len(ncol(medpar))) {
+  if (any(class(medpar[,i]) == "labelled")) {
+    #browser()
+    ind = which(class(medpar[,i])=="labelled")
+    attr(medpar[,i],"class")[ind] <- "labelled_ch"
+  }
+}

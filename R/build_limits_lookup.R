@@ -72,6 +72,10 @@ build_limits_lookup<-function(min_preds, max_preds, min_ratio, max_ratio, Poisso
       odll998 = multiplier * ((1 + (-3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2),
       odul998 = multiplier * ((1 + (3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
 
+      
+      
+      
+      
     )
   } else {
     stop("Invalid method supplied")

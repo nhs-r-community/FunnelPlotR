@@ -15,3 +15,6 @@ cran-comments.md
 ^CRAN-RELEASE$
 ^README\.Rmd$
 ^testers.R$
+manual_test.R
+test.R
+plot_reference.RDS

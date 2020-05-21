@@ -102,23 +102,30 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
 
   mod_plot_agg<-aggregate_func(mod_plot)
 
- #OD Adjust and return table
-  adj<-OD_adjust_func(mod_plot_agg, method=method, Winsorise_by= Winsorise_by, bypass=FALSE)
-  mod_plot_agg<-as.data.frame(adj[1])
-
- # Need to sort out bypass mechanism, but set phi and tau to zero as needed
+  
   if(OD_adjust == TRUE){
-  phi<-as.numeric(adj[2])
-  Tau2<-as.numeric(adj[3])
+  #OD Adjust and return table
+  # transform to z-score
+  mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
+  
+  # Winsorise or truncate depeding on method
+  mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, sr_method = sr_method, Winsorise_by=Winsorise_by)
+  
+  n <- sum(!is.na(mod_plot_agg$Wuzscore))
+  # Calcualte Phi (the overdiseprsion factor)
+  phi <- phi_func(n= n, zscores=na.omit(mod_plot_agg$Wuzscore))
+  
+  # Use phi to calculate Tau, the between group standard deviation
+  Tau2 <- tau_func(n=n,  phi=phi, mod_plot_agg$s)
   } else {
+  
   phi<-as.numeric(0)
   Tau2<-as.numeric(0)
   }
 
   fun_plot<-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
                       multiplier=multiplier, Poisson_limits, OD_adjust=OD_adjust,
-                      Tau2=Tau2, method=method, xrange=xrange, yrange=yrange,
-                      theme = theme)
+                      Tau2=Tau2, xrange=xrange, yrange=yrange, theme = theme)
 
   #Build return
   rtn<-list()
