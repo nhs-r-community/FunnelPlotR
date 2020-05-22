@@ -98,7 +98,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   }
 
 
-  mod_plot <- data.frame(numerator, denominator, group)
+  mod_plot <- data.frame(numerator=as.numeric(numerator)
+                         ,denominator=as.numeric(denominator)
+                         , group=as.factor(group))
+  
 
   mod_plot_agg<-aggregate_func(mod_plot)
 
@@ -111,21 +114,31 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   # Winsorise or truncate depeding on method
   mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, sr_method = sr_method, Winsorise_by=Winsorise_by)
   
-  n <- sum(!is.na(mod_plot_agg$Wuzscore))
+  n <- as.numeric(sum(!is.na(mod_plot_agg$Wuzscore)))
   # Calcualte Phi (the overdiseprsion factor)
   phi <- phi_func(n= n, zscores=na.omit(mod_plot_agg$Wuzscore))
   
   # Use phi to calculate Tau, the between group standard deviation
-  Tau2 <- tau_func(n=n,  phi=phi, mod_plot_agg$s)
+  Tau2 <- tau_func(n=n,  phi=phi, S=mod_plot_agg$s)
   } else {
   
   phi<-as.numeric(0)
   Tau2<-as.numeric(0)
   }
+  
+  # Poisson limits
+  mod_plot_agg <- poisson_limits(mod_plot_agg, multiplier=multiplier)
+  
+  # OD limits
+  mod_plot_agg <- OD_limits(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method
+                            , multiplier = multiplier, Tau2 = Tau2)
+  
+  Target <- ifelse(data_type == "SR" & sr_method =="SHMI",1,mod_plot_agg$Target[1])
 
   fun_plot<-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
-                      multiplier=multiplier, Poisson_limits, OD_adjust=OD_adjust,
-                      Tau2=Tau2, xrange=xrange, yrange=yrange, theme = theme)
+                      multiplier=multiplier, Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
+                      Tau2=Tau2, Target=Target, xrange=xrange, yrange=yrange, data_type=data_type,
+                      sr_method = sr_method, theme = theme)
 
   #Build return
   rtn<-list()

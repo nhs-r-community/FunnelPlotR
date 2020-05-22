@@ -5,18 +5,34 @@
 \title{Function to build funnel limits}
 \usage{
 build_limits_lookup(
-  min_preds,
-  max_preds,
-  min_ratio,
-  max_ratio,
+  min_x,
+  max_x,
+  min_y,
+  max_y,
   Poisson_limits,
   OD_adjust,
   Tau2,
-  method,
+  data_type,
+  sr_method,
+  Target,
   multiplier
 )
 }
 \arguments{
+\item{Poisson_limits}{TRUE/FALSE Draw Poisson distribution limits?}
+
+\item{OD_adjust}{TRUE/FALSE Use overdispersion adjustment}
+
+\item{Tau2}{If using OD_adjust, what is the Tau2 ("between" standard error) to use?}
+
+\item{data_type}{SR, PR or RC. Usedtoset tarrget reference}
+
+\item{sr_method}{Which adjustment method is being used, SHMI or CQC?}
+
+\item{Target}{target to be used to set centre line}
+
+\item{multiplier}{Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.}
+
 \item{min_preds}{Minimum predicted value for range of x-axis}
 
 \item{max_preds}{Maximum predicted value for range of x-axis}
@@ -24,16 +40,6 @@ build_limits_lookup(
 \item{min_ratio}{Minimum ratio value for range of y-axis}
 
 \item{max_ratio}{Maximum ratio value for range of y-axis}
-
-\item{Poisson_limits}{TRUE/FALSE Draw Poisson distribution limits?}
-
-\item{OD_adjust}{TRUE/FALSE Use overdispersion adjustment}
-
-\item{Tau2}{If using OD_adjust, what is the Tau2 ("between" standard error) to use?}
-
-\item{method}{Which adjustment method is being used, SHMI or CQC?}
-
-\item{multiplier}{Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.}
 }
 \value{
 A data.frame with an index column and various control limits based on the index as an x-axis value.

@@ -8,7 +8,8 @@ aggregate_func<- function(mod_plot) {
 
  mod_plot_agg <- 
    data.frame(
-     aggregate(list(numerator =mod_plot$numerator, denominator=mod_plot$denominator)
+     aggregate(list(numerator =mod_plot$numerator, 
+                    denominator=mod_plot$denominator)
                ,  by=list(group = mod_plot$group)
                , FUN=sum)
    )

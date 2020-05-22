@@ -10,9 +10,12 @@
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)
 #' @param Tau2 The Tau2 value to use for plotting limits
+#' @param Target the calculated target value for the data type
 #' @param yrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
-#' @param theme a ggplot theme function.  .
+#' @param data_type thedata type SR, PR or RC.
+#' @param sr_method CQC or SHMI methods for standardised ratios
+#' @param theme a ggplot theme function.
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 #' @keywords internal
@@ -25,23 +28,23 @@
 
 
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
-                    Poisson_limits, OD_adjust, Tau2 = 0, yrange, xrange,
-                    theme){
+                    Poisson_limits, OD_adjust, Tau2 = 0, Target, yrange, xrange, data_type, 
+                    sr_method, theme){
 
 #plot ranges
   # Determine the range of plots
   if(xrange[1] == "auto"){
-    max_x <- ceiling(max(mod_plot_agg$denominator, na.rm = FALSE)) %>% as.numeric()
-    min_x <- ceiling(min(mod_plot_agg$denominator,na.rm = FALSE)) %>% as.numeric()
+    max_x <- as.numeric(ceiling(max(mod_plot_agg$denominator, na.rm = FALSE)))
+    min_x <- as.numeric(ceiling(min(mod_plot_agg$denominator,na.rm = FALSE)))
   } else {
     min_x <- xrange[1]
     max_x <- xrange[2]
   }
 
   if(yrange[1] == "auto"){
-    min_y <- max((0.7 * multiplier), multiplier *  max((mod_plot_agg$numerator / mod_plot_agg$denominator)) %>% as.numeric(), na.rm = FALSE)
+    min_y <- max((0.7 * Target * multiplier), multiplier * Target * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
 
-    max_y <- max((1.3 * multiplier), multiplier *  max((mod_plot_agg$numerator / mod_plot_agg$denominator)) %>% as.numeric(), na.rm = FALSE)
+    max_y <- max((1.3 * Target *multiplier), multiplier *  Target * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
   } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
@@ -70,15 +73,17 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   #   stop("Invalid method supplied")
   # }
 
-  dfCI<-build_limits_lookup(min_x, max_x, min_y, max_y, Poisson_limits, OD_adjust, Tau2, method="SHMI", multiplier)
+  dfCI<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y, 
+                            Poisson_limits=Poisson_limits, OD_adjust=OD_adjust, Tau2=Tau2, 
+                            data_type=data_type, sr_method=sr_method, Target=Target, multiplier=multiplier)
 
-
+  
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((.data$numerator / .data$denominator)), x = .data$denominator)) +
     geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue") +
     # scale_y_continuous(limits = c((min_y-0.1), (max_y+0.1)))+
     # scale_x_continuous(labels = scales::comma, limits = c(0,max_x+1)) +
-    geom_hline(aes(yintercept = multiplier), linetype = 2) +
+    geom_hline(aes(yintercept = Target), linetype = 2) +
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
@@ -144,17 +149,19 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
 
   if (OD_adjust == TRUE) {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_y - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)))), ((max(max_y + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_y - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1))))
+                                                    , ((max(max_y + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   } else {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_y - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$LCL99)*multiplier) - (multiplier*0.1)))), ((max(max_y + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, limits = c(((min(min_y - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$LCL99)*multiplier) - (multiplier*0.1))))
+                                                    , ((max(max_y + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   }
 
 
   if (label_outliers == 95) {
-    if (Tau2 ==0) {
+    if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +
         ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL95,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
@@ -173,7 +180,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
     }
   }
   if (label_outliers == 99) {
-    if (Tau2 == 0) {
+    if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +
         ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL99,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",

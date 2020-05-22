@@ -14,9 +14,11 @@ draw_plot(
   Poisson_limits,
   OD_adjust,
   Tau2 = 0,
-  method,
+  Target,
   yrange,
   xrange,
+  data_type,
+  sr_method,
   theme
 )
 }
@@ -39,13 +41,17 @@ draw_plot(
 
 \item{Tau2}{The Tau2 value to use for plotting limits}
 
-\item{method}{to pass to limit calculation (\"SHMI\" or \"CQC\")}
+\item{Target}{the calculated target value for the data type}
 
 \item{yrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
 
 \item{xrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
 
-\item{theme}{a ggplot theme function.  .}
+\item{data_type}{thedata type SR, PR or RC.}
+
+\item{sr_method}{CQC or SHMI methods for standardised ratios}
+
+\item{theme}{a ggplot theme function.}
 }
 \value{
 A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
