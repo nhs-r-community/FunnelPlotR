@@ -15,15 +15,13 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
     
     # log-transformed SHMI verison
     if(sr_method == "SHMI"){
-      mod_plot_agg$Target<- 0
+      mod_plot_agg$Target_transformed<- 0
       mod_plot_agg$Y <- log(mod_plot_agg$numerator / mod_plot_agg$denominator)
       mod_plot_agg$s <- 1 / (sqrt(mod_plot_agg$denominator))
       
     # sQRT-transformed CQC version
-    } 
-    
-    if(sr_method == "CQC"){
-      mod_plot_agg$Target<- 1
+    } else if(sr_method == "CQC"){
+      mod_plot_agg$Target_transformed<- 1
       mod_plot_agg$Y <- sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator)
       mod_plot_agg$s  <- 1 / (sqrt(mod_plot_agg$denominator))
       
@@ -32,8 +30,8 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
   
   if(data_type == "PR"){
     
-    # use average proportion as target
-    mod_plot_agg$Target<- asin(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+    # use average proportion as Target_transformed
+    mod_plot_agg$Target_transformed<- asin(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
     
     mod_plot_agg$Y <- asin(mod_plot_agg$numerator / mod_plot_agg$denominator)
     mod_plot_agg$s  <- 1 / (2 * sqrt(mod_plot_agg$denominator))
@@ -44,14 +42,14 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
   
   if(data_type=="RC"){
     
-    # use average proportion as target
-    mod_plot_agg$Target<- log(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+    # use average proportion as Target_transformed
+    mod_plot_agg$Target_transformed<- log(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
     
     mod_plot_agg$Y <- log((mod_plot_agg$numerator +0.5) / (mod_plot_agg$denominator +0.5))
     mod_plot_agg$s  <- 
       sqrt(
-        (mod_plot_agg$numerator/((mod_plot_agg$numerator +0.5)^2))
-        /
+        (mod_plot_agg$numerator/((mod_plot_agg$numerator + 0.5 )^2))
+        +
         (mod_plot_agg$denominator/((mod_plot_agg$denominator +0.5)^2))
       )
                               
@@ -60,7 +58,7 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
     
   }
   
-  mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$Target) / mod_plot_agg$s
+  mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$Target_transformed) / mod_plot_agg$s
   
   return(mod_plot_agg)
 
@@ -71,6 +69,7 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
 #' @description Internal function to perform the winsorization or truncation.
 #'
 #' @param mod_plot_agg Aggregated model input data
+#' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
 #' @param sr_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. Not relevant to PR or RC data types
 #' @param Winsorise_by The amount to winsorise\/truncate the distribution by, prior to transformation. 0.1 means 10\% (at each end).
 #'
@@ -78,7 +77,7 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
 #' @keywords internal
 #' 
 #' 
-winsorisation <- function(mod_plot_agg = mod_plot_agg, sr_method = "SHMI", Winsorise_by = 0.1){
+winsorisation <- function(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = "SHMI", Winsorise_by = 0.1){
   
   lz <- quantile(x = mod_plot_agg$Uzscore, Winsorise_by, na.rm = TRUE)
   uz <- quantile(x = mod_plot_agg$Uzscore, (1 - Winsorise_by), na.rm = TRUE)
@@ -184,11 +183,13 @@ poisson_limits<-function(mod_plot_agg=mod_plot_agg, multiplier = 1){
 #' @param sr_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
 #' @param multiplier Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.
 #' @param Tau2 A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.
+#' @param Target The centre line of the plot. Mean for non-SRs or 1 for SR
 #'
 #' @return A data.frame of with appended OD limits
 #' @keywords internal
 #' 
-OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI", multiplier = 1, Tau2 = 0){
+OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI", multiplier = 1, Tau2 = 0
+                    ,Target=Target){
   
   if(data_type == "SR" & sr_method == "SHMI"){
     mod_plot_agg$OD95LCL <- multiplier * (exp(-1.959964 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
@@ -198,22 +199,22 @@ OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SH
 
   } else if(data_type=="RC"){
     
-    dfCI$odll95 <- multiplier * ((Target + (-1.959964 * (sqrt( sqrt( 
+    mod_plot_agg$OD95LCL <- multiplier * Target * (1 - ((1.959964 * (sqrt( sqrt( 
                                                                     (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
                                                                     +
                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
                                                                       ^2) + Tau2))))^2)
-    dfCI$odul95 <- multiplier * ((Target + (1.959964 * (sqrt( sqrt( 
+    mod_plot_agg$OD95UCL <- multiplier * Target * (1 + ((1.959964 * (sqrt( sqrt( 
                                                                     (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
                                                                     +
                                                                       (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
                                                                     ^2) + Tau2))))^2)
-    dfCI$odll998 <- multiplier * ((Target + (-3.090232 * (sqrt( sqrt( 
+    mod_plot_agg$OD99LCL <- multiplier * Target * (1 - ((3.090232 * (sqrt( sqrt( 
                                                                     (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
                                                                     +
                                                                       (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
                                                                     ^2) + Tau2))))^2)
-    dfCI$odul998 <- multiplier * ((Target + (3.090232 * (sqrt( sqrt( 
+    mod_plot_agg$OD99UCL <- multiplier * Target * (1 + ((3.090232 * (sqrt( sqrt( 
                                                                     (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
                                                                     +
                                                                       (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))

@@ -104,7 +104,8 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   
 
   mod_plot_agg<-aggregate_func(mod_plot)
-
+  
+  Target <- ifelse(data_type == "SR", 1, sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
   
   if(OD_adjust == TRUE){
   #OD Adjust and return table
@@ -112,7 +113,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
   
   # Winsorise or truncate depeding on method
-  mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, sr_method = sr_method, Winsorise_by=Winsorise_by)
+  mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = sr_method, Winsorise_by=Winsorise_by)
   
   n <- as.numeric(sum(!is.na(mod_plot_agg$Wuzscore)))
   # Calcualte Phi (the overdiseprsion factor)
@@ -131,10 +132,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   
   # OD limits
   mod_plot_agg <- OD_limits(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method
-                            , multiplier = multiplier, Tau2 = Tau2)
+                            , multiplier = multiplier, Tau2 = Tau2, Target=Target)
   
-  Target <- ifelse(data_type == "SR" & sr_method =="SHMI",1,mod_plot_agg$Target[1])
-
+  
+                   
   fun_plot<-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
                       multiplier=multiplier, Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
                       Tau2=Tau2, Target=Target, xrange=xrange, yrange=yrange, data_type=data_type,

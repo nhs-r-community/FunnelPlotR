@@ -9,7 +9,8 @@ OD_limits(
   data_type = "SR",
   sr_method = "SHMI",
   multiplier = 1,
-  Tau2 = 0
+  Tau2 = 0,
+  Target = Target
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ OD_limits(
 \item{multiplier}{Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.}
 
 \item{Tau2}{A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.}
+
+\item{Target}{The centre line of the plot. Mean for non-SRs or 1 for SR}
 }
 \value{
 A data.frame of with appended OD limits

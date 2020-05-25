@@ -42,9 +42,9 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   }
 
   if(yrange[1] == "auto"){
-    min_y <- max((0.7 * Target * multiplier), multiplier * Target * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
+    min_y <- min((0.7 * Target * multiplier), multiplier * Target * 0.7 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
 
-    max_y <- max((1.3 * Target *multiplier), multiplier *  Target * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
+    max_y <- max((1.3 * Target *multiplier), multiplier *  Target * 1.3 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
   } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
@@ -83,7 +83,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
     geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue") +
     # scale_y_continuous(limits = c((min_y-0.1), (max_y+0.1)))+
     # scale_x_continuous(labels = scales::comma, limits = c(0,max_x+1)) +
-    geom_hline(aes(yintercept = Target), linetype = 2) +
+    geom_hline(aes(yintercept = Target), linetype = 2) + # Move this to limits section
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
@@ -114,6 +114,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
       geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
       geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+      #geom_hline(aes(yintercept = Target), linetype = 2) +
       scale_color_manual(values = c(
         "99.8% Poisson" = "#1F77B4FF",
         "95% Poisson" = "#FF7F0EFF",
@@ -127,6 +128,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
         geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+        #geom_hline(aes(yintercept = Target), linetype = 2) +
         scale_color_manual(values = c(
           "99.8% Poisson" = "#1F77B4FF", # "#1F77B4FF"
           "95% Poisson" = "#FF7F0EFF"
@@ -139,6 +141,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
         geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
         geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+        #geom_hline(aes(yintercept = Target), linetype = 2) +
         scale_color_manual(values = c(
           "99.8% Overdispersed" = "#2CA02CFF",
           "95% Overdispersed" = "#9467BDFF"
@@ -149,13 +152,35 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
 
   if (OD_adjust == TRUE) {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_y - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1))))
-                                                    , ((max(max_y + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label, 
+                         limits = c(((max(min_y
+                                          , (min(subset(mod_plot_agg
+                                                        , mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)
+                                          )
+                                      )
+                                     )
+                                    , ((max(max_y 
+                                            , (max(subset(mod_plot_agg
+                                                          , mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1))
+                                        )
+                                       )
+                                    )
+                         ) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   } else {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, limits = c(((min(min_y - (multiplier*0.05), (min(subset(mod_plot_agg, mod_plot_agg$numerator>4)$LCL99)*multiplier) - (multiplier*0.1))))
-                                                    , ((max(max_y + (multiplier*0.05), (max(subset(mod_plot_agg, mod_plot_agg$numerator >4)$UCL99)*multiplier) + (multiplier*0.1)))))) +
+      scale_y_continuous(name = y_label
+                         , limits = c(((max(min_y 
+                                            , (min(subset(mod_plot_agg
+                                                          , mod_plot_agg$numerator>4)$LCL99)*multiplier) - (multiplier*0.1))
+                                        )
+                                       )
+                                      , ((max(max_y
+                                              , (max(subset(mod_plot_agg, mod_plot_agg$numerator >4)$UCL99)*multiplier) + (multiplier*0.1))
+                                          )
+                                         )
+                                      )
+                         ) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   }
 
