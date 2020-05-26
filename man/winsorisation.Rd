@@ -6,12 +6,15 @@
 \usage{
 winsorisation(
   mod_plot_agg = mod_plot_agg,
+  data_type = data_type,
   sr_method = "SHMI",
   Winsorise_by = 0.1
 )
 }
 \arguments{
 \item{mod_plot_agg}{Aggregated model input data}
+
+\item{data_type}{Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").}
 
 \item{sr_method}{Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. Not relevant to PR or RC data types}
 

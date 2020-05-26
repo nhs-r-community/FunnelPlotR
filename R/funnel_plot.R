@@ -128,7 +128,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   }
   
   # Poisson limits
-  mod_plot_agg <- poisson_limits(mod_plot_agg, multiplier=multiplier)
+  mod_plot_agg <- poisson_limits(mod_plot_agg, multiplier=multiplier, Target=Target)
   
   # OD limits
   mod_plot_agg <- OD_limits(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method

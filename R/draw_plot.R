@@ -42,9 +42,9 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   }
 
   if(yrange[1] == "auto"){
-    min_y <- min((0.7 * Target * multiplier), multiplier * Target * 0.7 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
+    min_y <- min((0.7 * Target * multiplier), multiplier * Target * 0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
 
-    max_y <- max((1.3 * Target *multiplier), multiplier *  Target * 1.3 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
+    max_y <- max((1.3 * Target *multiplier), multiplier *  Target * 1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
   } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
@@ -149,7 +149,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
     }
   }
 
-
+  # Apply plot scaling
   if (OD_adjust == TRUE) {
     funnel_p <- funnel_p +
       scale_y_continuous(name = y_label, 
@@ -184,7 +184,7 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   }
 
-
+ # Label outliers
   if (label_outliers == 95) {
     if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +

@@ -57,7 +57,13 @@ install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz",
 
 # Now proportion
 
-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
-            data_type = "PR",
+funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
+            data_type = "RC",return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI", yrange=c(0, 2))
+            OD_adjust = TRUE, label_outliers = 95, sr_method="SHMI")#, yrange=c(0, 2))
+
+draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
+                    multiplier=multiplier, Poisson_limits=FALSE, OD_adjust=TRUE,
+                    Tau2=Tau2, Target=sum(numerator)/sum(denominator), xrange=xrange, 
+                    yrange=yrange, data_type=data_type,
+                    sr_method = sr_method, theme = theme)

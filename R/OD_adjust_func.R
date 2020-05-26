@@ -157,16 +157,17 @@ tau_func <- function(n,  phi, S){
 #'
 #' @param mod_plot_agg Aggregated model input data
 #' @param multiplier Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.
+#' @param Target supplied target value
 #' 
 #' @return A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
 #' @keywords internal
 #' 
-poisson_limits<-function(mod_plot_agg=mod_plot_agg, multiplier = 1){
+poisson_limits<-function(mod_plot_agg=mod_plot_agg, multiplier = 1, Target = Target){
   
-  mod_plot_agg$LCL95 <- multiplier * mod_plot_agg$Target * (qchisq(0.975, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
-  mod_plot_agg$UCL95 <- multiplier * mod_plot_agg$Target * (qchisq(0.025, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
-  mod_plot_agg$LCL99 <- multiplier * mod_plot_agg$Target * (qchisq(0.999, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
-  mod_plot_agg$UCL99 <- multiplier * mod_plot_agg$Target * (qchisq(0.999, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
+  mod_plot_agg$LCL95 <- multiplier * Target * (qchisq(0.975, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
+  mod_plot_agg$UCL95 <- multiplier * Target * (qchisq(0.025, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
+  mod_plot_agg$LCL99 <- multiplier * Target * (qchisq(0.999, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
+  mod_plot_agg$UCL99 <- multiplier * Target * (qchisq(0.999, 2*(mod_plot_agg$denominator), lower.tail = FALSE)/2) / mod_plot_agg$denominator
 
   return(mod_plot_agg)
 }
@@ -197,35 +198,35 @@ OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SH
     mod_plot_agg$OD99LCL <- multiplier * (exp(-3.090232 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
     mod_plot_agg$OD99UCL <- multiplier * (exp(3.090232 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
 
-  } else if(data_type=="RC"){
-    
-    mod_plot_agg$OD95LCL <- multiplier * Target * (1 - ((1.959964 * (sqrt( sqrt( 
-                                                                    (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-                                                                    +
-                                                                    (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-                                                                      ^2) + Tau2))))^2)
-    mod_plot_agg$OD95UCL <- multiplier * Target * (1 + ((1.959964 * (sqrt( sqrt( 
-                                                                    (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-                                                                    +
-                                                                      (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-                                                                    ^2) + Tau2))))^2)
-    mod_plot_agg$OD99LCL <- multiplier * Target * (1 - ((3.090232 * (sqrt( sqrt( 
-                                                                    (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-                                                                    +
-                                                                      (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-                                                                    ^2) + Tau2))))^2)
-    mod_plot_agg$OD99UCL <- multiplier * Target * (1 + ((3.090232 * (sqrt( sqrt( 
-                                                                    (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-                                                                    +
-                                                                      (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-                                                                    ^2) + Tau2))))^2)
+  # } else if(data_type=="RC"){
+  #   
+  #   mod_plot_agg$OD95LCL <- multiplier * Target * (1 - (1.959964 * (sqrt( sqrt( 
+  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
+  #                                                                   +
+  #                                                                   (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
+  #                                                                     ^2) + Tau2)))^2)
+  #   mod_plot_agg$OD95UCL <- multiplier * Target * (1 + (1.959964 * (sqrt( sqrt( 
+  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
+  #                                                                   +
+  #                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
+  #                                                                   ^2) + Tau2)))^2)
+  #   mod_plot_agg$OD99LCL <- multiplier * Target * (1 - (3.090232 * (sqrt( sqrt( 
+  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
+  #                                                                   +
+  #                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
+  #                                                                   ^2) + Tau2)))^2)
+  #   mod_plot_agg$OD99UCL <- multiplier * Target * (1 + (3.090232 * (sqrt( sqrt( 
+  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
+  #                                                                   +
+  #                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
+  #                                                                   ^2) + Tau2)))^2)
     
   } else {
-    
-    mod_plot_agg$OD95LCL <-  multiplier * mod_plot_agg$Target * ((1 + (-1.959964 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
-    mod_plot_agg$OD95UCL <-  multiplier * mod_plot_agg$Target * ((1 + (1.959964 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
-    mod_plot_agg$OD99LCL <-  multiplier * mod_plot_agg$Target * ((1 + (-3.090232 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
-    mod_plot_agg$OD99UCL <-  multiplier * mod_plot_agg$Target * ((1 + (3.090232 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
+                                                                    
+    mod_plot_agg$OD95LCL <-  multiplier * Target * ((1 - (1.959964 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
+    mod_plot_agg$OD95UCL <-  multiplier * Target * ((1 + (1.959964 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
+    mod_plot_agg$OD99LCL <-  multiplier * Target * ((1 - (3.090232 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
+    mod_plot_agg$OD99UCL <-  multiplier * Target * ((1 + (3.090232 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
 
   }
   

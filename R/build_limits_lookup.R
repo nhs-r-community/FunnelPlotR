@@ -55,14 +55,19 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
     
   } else if(data_type=="RC"){
     
-    dfCI$odll95 <- multiplier * Target * (1 - ((1.959964 * (sqrt(( sqrt( (number.seq/((number.seq+0.5)^2) )*2)  ^2) + Tau2))))^2)
-    dfCI$odul95 <- multiplier * Target * (1 + ((1.959964 * (sqrt(( sqrt( (number.seq/((number.seq+0.5)^2) )*2)  ^2) + Tau2))))^2)
-    dfCI$odll998 <- multiplier * Target * (1 - ((3.090232 * (sqrt(( sqrt( (number.seq/((number.seq+0.5)^2) )*2)  ^2) + Tau2))))^2)
-    dfCI$odul998 <- multiplier * Target * (1 + ((3.090232 * (sqrt(( sqrt( (number.seq/((number.seq+0.5)^2) )*2)  ^2) + Tau2))))^2)
+    dfCI$odll95 <- multiplier * Target * ((1 - (1.959964 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
+                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
+
+    dfCI$odul95 <- multiplier * Target * ((1 + (1.959964 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
+                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
     
+    dfCI$odll998 <- multiplier * Target * ((1 - (3.090232 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
+                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
     
+    dfCI$odul998 <- multiplier * Target * ((1 + (3.090232 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
+                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
     
-  } else {
+  } else { 
       
     dfCI$odll95 <- multiplier * Target * ((1 + (-1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
     dfCI$odul95 <- multiplier * Target * ((1 + (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
@@ -72,3 +77,5 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
   
   return(dfCI)
 }
+
+
