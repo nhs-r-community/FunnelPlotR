@@ -7,7 +7,7 @@
 #' @param Poisson_limits TRUE/FALSE Draw Poisson distribution limits?
 #' @param OD_adjust TRUE/FALSE Use overdispersion adjustment
 #' @param Tau2 If using OD_adjust, what is the Tau2 ("between" standard error) to use?
-#' @param data_type SR, PR or RC. Usedtoset tarrget reference
+#' @param data_type SR, PR or RC. Used to set target reference
 #' @param sr_method Which adjustment method is being used, SHMI or CQC?
 #' @param Target target to be used to set centre line
 #' @param multiplier Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.
@@ -22,7 +22,7 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
   
   # general limits + Tau2 limits table
   set.seed(1)
-  number.seq <- c(seq(1, as.numeric(max_x), length.out = 1000))
+  number.seq <- c(seq(1.1, as.numeric(max_x), length.out = 1000))
   dfCI <- data.frame(
     number.seq,
     ll95 = multiplier * Target * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
@@ -44,37 +44,56 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
   }
     
   if (OD_adjust == FALSE){
+    message("No adjustment for overdispersion made")
     return(dfCI)
     
-  } else if (data_type=="SR" & sr_method == "SHMI"){
+  }
+  
+  if (data_type=="SR" & sr_method == "SHMI"){
+    dfCI$s <-sqrt(1/number.seq)
     
     dfCI$odll95 <- multiplier * (exp(-1.959964 * sqrt((1 / number.seq) + Tau2)))
     dfCI$odul95 <- multiplier * (exp(1.959964 * sqrt((1 / number.seq) + Tau2)))
     dfCI$odll998 <- multiplier * (exp(-3.090232 * sqrt((1 / number.seq) + Tau2)))
     dfCI$odul998 <- multiplier * (exp(3.090232 * sqrt((1 / number.seq) + Tau2)))
     
+    
+  }  else if (data_type=="SR" & sr_method == "CQC"){
+    
+    # PR 1/2*sqrt(n) and CQC SR methods 1/2*sqrt(E)
+    #Target = 1 
+    dfCI$s <- 1/(2*sqrt(number.seq))
+    
+    dfCI$odll95 <- multiplier * (1 - (1.959964 * sqrt(dfCI$s^2 + Tau2))^2)
+    dfCI$odul95 <- multiplier * (1 + (1.959964 * sqrt(dfCI$s^2 + Tau2))^2)
+    dfCI$odll998 <- multiplier * (1 - (3.090232 * sqrt(dfCI$s^2 + Tau2))^2)
+    dfCI$odul998 <- multiplier * (1 + (3.090232 * sqrt(dfCI$s^2 + Tau2))^2)
+    
+    
   } else if(data_type=="RC"){
     
-    dfCI$odll95 <- multiplier * Target * ((1 - (1.959964 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
-                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
+    dfCI$s <-sqrt((number.seq/((number.seq+0.5)^2))  
+                  +
+                   (number.seq/((number.seq+0.5)^2)))
+    
+    dfCI$odll95 <- multiplier * (exp( log(Target) -(1.959964 * sqrt(dfCI$s^2 + Tau2))))
+    dfCI$odul95 <- multiplier * (exp( log(Target) + (1.959964 * sqrt(dfCI$s^2 + Tau2))))
+    dfCI$odll998 <- multiplier * (exp( log(Target) - (3.090232 * sqrt(dfCI$s^2 + Tau2))))
+    dfCI$odul998 <- multiplier * (exp( log(Target) + (3.090232 * sqrt(dfCI$s^2 + Tau2))))
 
-    dfCI$odul95 <- multiplier * Target * ((1 + (1.959964 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
-                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
     
-    dfCI$odll998 <- multiplier * Target * ((1 - (3.090232 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
-                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
+  } else if (data_type=="PR"){
     
-    dfCI$odul998 <- multiplier * Target * ((1 + (3.090232 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
-                                                                    (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
+    # PR 1/2*sqrt(n) and CQC SR methods 1/2*sqrt(E)
+    dfCI$s <- 1/(2*sqrt(number.seq))
     
-  } else { 
-      
-    dfCI$odll95 <- multiplier * Target * ((1 + (-1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
-    dfCI$odul95 <- multiplier * Target * ((1 + (1.959964 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
-    dfCI$odll998 <- multiplier * Target * ((1 + (-3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
-    dfCI$odul998 <- multiplier * Target * ((1 + (3.090232 * (sqrt(((1 / (2 * sqrt(number.seq)))^2) + Tau2))))^2)
+    dfCI$odll95 <- multiplier * (sin((asin(sqrt(Target)) - (1.959964 * sqrt(dfCI$s^2 + Tau2))))^2)
+    dfCI$odul95 <- multiplier * (sin((asin(sqrt(Target)) + (1.959964 * sqrt(dfCI$s^2 + Tau2))))^2)
+    dfCI$odll998 <- multiplier * (sin((asin(sqrt(Target)) - (3.090232 * sqrt(dfCI$s^2 + Tau2))))^2)
+    dfCI$odul998 <- multiplier * (sin((asin(sqrt(Target)) + (3.090232 * sqrt(dfCI$s^2 + Tau2))))^2)
+    
   }
-  
+
   return(dfCI)
 }
 

@@ -42,9 +42,9 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   }
 
   if(yrange[1] == "auto"){
-    min_y <- min((0.7 * Target * multiplier), multiplier * Target * 0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
+    min_y <- min((0.7 * Target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
 
-    max_y <- max((1.3 * Target *multiplier), multiplier *  Target * 1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator))), na.rm = FALSE)
+    max_y <- max((1.3 * Target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
   } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
@@ -152,35 +152,36 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   # Apply plot scaling
   if (OD_adjust == TRUE) {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label, 
-                         limits = c(((max(min_y
-                                          , (min(subset(mod_plot_agg
-                                                        , mod_plot_agg$numerator>4)$OD99LCL)*multiplier) - (multiplier*0.1)
-                                          )
-                                      )
-                                     )
-                                    , ((max(max_y 
-                                            , (max(subset(mod_plot_agg
-                                                          , mod_plot_agg$numerator>4)$OD99UCL)*multiplier) - (multiplier*0.1))
-                                        )
-                                       )
-                                    )
-                         ) +
+      scale_y_continuous(name = y_label, limits = c(min_y, max_y))+
+                         # limits = c(((max(min_y
+                         #                  , (min(subset(mod_plot_agg
+                         #                                , mod_plot_agg$denominator>4)$OD99LCL)*multiplier) - (multiplier*0.1)
+                         #                  )
+                         #              )
+                         #             )
+                         #            , ((max(max_y 
+                         #                    , (max(subset(mod_plot_agg
+                         #                                  , mod_plot_agg$denominator>4)$OD99UCL)*multiplier) - (multiplier*0.1))
+                         #                )
+                         #               )
+                         #            )
+                         # ) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   } else {
     funnel_p <- funnel_p +
-      scale_y_continuous(name = y_label
-                         , limits = c(((max(min_y 
-                                            , (min(subset(mod_plot_agg
-                                                          , mod_plot_agg$numerator>4)$LCL99)*multiplier) - (multiplier*0.1))
-                                        )
-                                       )
-                                      , ((max(max_y
-                                              , (max(subset(mod_plot_agg, mod_plot_agg$numerator >4)$UCL99)*multiplier) + (multiplier*0.1))
-                                          )
-                                         )
-                                      )
-                         ) +
+      scale_y_continuous(name = y_label, limits=c(min_y, max_y))+
+                         # , limits = c(((max(min_y 
+                         #                    , (min(subset(mod_plot_agg
+                         #                                  , mod_plot_agg$denominator>4)$LCL99)*multiplier) - (multiplier*0.1))
+                         #                )
+                         #               )
+                         #                )
+                         #              , ((max(max_y
+                         #                      , (max(subset(mod_plot_agg, mod_plot_agg$denminator >4)$UCL99)*multiplier) + (multiplier*0.1))
+                         #                  )
+                         #                 )
+                         #              )
+                         # ) +
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   }
 
@@ -188,18 +189,18 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   if (label_outliers == 95) {
     if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL95,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$UCL95,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL95,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$LCL95,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD95UCL,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$OD95UCL,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD95LCL,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$OD95LCL,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     }
@@ -207,18 +208,18 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   if (label_outliers == 99) {
     if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$UCL99,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$UCL99,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$LCL99,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$LCL99,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator > .data$OD99UCL,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$OD99UCL,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$numerator / .data$denominator < .data$OD99LCL,
+        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$OD99LCL,
                                                      as.character(.data$group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     }

@@ -17,7 +17,7 @@ funnel_plot(
   title = "Untitled Funnel Plot",
   multiplier = 1,
   x_label = "Expected",
-  y_label = "Standardised Ratio",
+  y_label,
   xrange = "auto",
   yrange = "auto",
   return_elements = c("plot", "data", "limits"),

@@ -11,12 +11,12 @@ tau_func(n, phi, S)
 
 \item{phi}{The dispersion ratio, where > 1 means overdispersion}
 
-\item{S}{Standardard error (within cluster, calcualted in z-score process)}
+\item{S}{Standard error (within cluster, calculated in z-score process)}
 }
 \value{
 A numeric Tau2 value
 }
 \description{
-Internal function to calcuate teh additional, between group, standard error (tau2) to add to S2.
+Internal function to calculate the additional, between group, standard error (tau2) to add to S2.
 }
 \keyword{internal}

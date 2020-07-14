@@ -25,7 +25,7 @@ build_limits_lookup(
 
 \item{Tau2}{If using OD_adjust, what is the Tau2 ("between" standard error) to use?}
 
-\item{data_type}{SR, PR or RC. Usedtoset tarrget reference}
+\item{data_type}{SR, PR or RC. Used to set target reference}
 
 \item{sr_method}{Which adjustment method is being used, SHMI or CQC?}
 

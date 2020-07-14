@@ -72,7 +72,7 @@
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_outliers = 99,
                             Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI", Winsorise_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
-                            y_label = "Standardised Ratio",xrange = "auto", yrange = "auto",
+                            y_label ,xrange = "auto", yrange = "auto",
                             return_elements=c("plot", "data", "limits"), theme = funnel_clean()){
 
 
@@ -87,7 +87,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
     stop("Need to supply numerator")
   }
   if (missing(title)) {
-    title <- ("Untitled Funnel Plot")
+      title <- ("Untitled Funnel Plot")
   }
   if (missing(numerator)) {
     stop("Need to supply the column name for numerator")
@@ -95,6 +95,24 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
 
   if (class(denominator)[1] == "array") {
     denominator <- as.numeric(denominator)
+  }
+  
+  if (missing(x_label)){
+    if(data_type=="SR"){
+      x_label <- "Expected"
+      } else {
+      x_label <- "n"
+    }
+  }
+  
+  if (missing(y_label)){
+    if(data_type=="SR"){
+      y_label <- "Standardised Ratio"
+    } else if(data_type=="PR"){
+      y_label <- "Proportion"
+    } else {
+      y_label <- "Ratio"
+    }
   }
 
 
@@ -107,22 +125,22 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   
   Target <- ifelse(data_type == "SR", 1, sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
   
-  if(OD_adjust == TRUE){
   #OD Adjust and return table
   # transform to z-score
   mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
   
-  # Winsorise or truncate depeding on method
+  # Winsorise or truncate depending on method
   mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = sr_method, Winsorise_by=Winsorise_by)
   
   n <- as.numeric(sum(!is.na(mod_plot_agg$Wuzscore)))
-  # Calcualte Phi (the overdiseprsion factor)
+  # Calculate Phi (the overdispersion factor)
   phi <- phi_func(n= n, zscores=na.omit(mod_plot_agg$Wuzscore))
   
   # Use phi to calculate Tau, the between group standard deviation
   Tau2 <- tau_func(n=n,  phi=phi, S=mod_plot_agg$s)
-  } else {
   
+  
+  if(OD_adjust == FALSE){
   phi<-as.numeric(0)
   Tau2<-as.numeric(0)
   }
@@ -130,6 +148,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   # Poisson limits
   mod_plot_agg <- poisson_limits(mod_plot_agg, multiplier=multiplier, Target=Target)
   
+
   # OD limits
   mod_plot_agg <- OD_limits(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method
                             , multiplier = multiplier, Tau2 = Tau2, Target=Target)

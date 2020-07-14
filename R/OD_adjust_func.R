@@ -6,20 +6,20 @@
 #' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
 #' @param sr_method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
 #'
-#' @return A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
+#' @return A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
 #' @keywords internal
 #' 
 transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI"){
 
   if(data_type == "SR"){
     
-    # log-transformed SHMI verison
+    # log-transformed SHMI version
     if(sr_method == "SHMI"){
       mod_plot_agg$Target_transformed<- 0
       mod_plot_agg$Y <- log(mod_plot_agg$numerator / mod_plot_agg$denominator)
       mod_plot_agg$s <- 1 / (sqrt(mod_plot_agg$denominator))
       
-    # sQRT-transformed CQC version
+    # SQRT-transformed CQC version
     } else if(sr_method == "CQC"){
       mod_plot_agg$Target_transformed<- 1
       mod_plot_agg$Y <- sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator)
@@ -31,11 +31,10 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
   if(data_type == "PR"){
     
     # use average proportion as Target_transformed
-    mod_plot_agg$Target_transformed<- asin(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+    mod_plot_agg$Target_transformed<- asin(sqrt(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator)))
     
-    mod_plot_agg$Y <- asin(mod_plot_agg$numerator / mod_plot_agg$denominator)
+    mod_plot_agg$Y <- asin(sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator))
     mod_plot_agg$s  <- 1 / (2 * sqrt(mod_plot_agg$denominator))
-    #mod_plot_agg$rrS2 <- mod_plot_agg$s^2
     
     
   } 
@@ -125,11 +124,11 @@ phi_func <- function(n, zscores){
 
 #' Calculate the between group standard error (tau2) using a dispersion factor
 #'
-#' @description Internal function to calcuate teh additional, between group, standard error (tau2) to add to S2.
+#' @description Internal function to calculate the additional, between group, standard error (tau2) to add to S2.
 #'
 #' @param n The number of groups for data items, e.g. hospitals trusts that z-scores are calculated at.
 #' @param phi The dispersion ratio, where > 1 means overdispersion
-#' @param S Standardard error (within cluster, calcualted in z-score process)
+#' @param S Standard error (within cluster, calculated in z-score process)
 #'
 #' @return A numeric Tau2 value
 #' @keywords internal
@@ -137,7 +136,7 @@ phi_func <- function(n, zscores){
 #'  
 tau_func <- function(n,  phi, S){
 
-  if((n*phi) < n - 1){
+  if((n*phi) < (n - 1)){
     Tau2 <- 0
   } else {
   
@@ -153,13 +152,13 @@ tau_func <- function(n,  phi, S){
 
 #' Poisson funnel limit calculation
 #'
-#' @description Adds 95% and 99.8 % funnel limits from Poisson distribution, using eact Poisson limits.
+#' @description Adds 95% and 99.8 % funnel limits from Poisson distribution, using exact Poisson limits.
 #'
 #' @param mod_plot_agg Aggregated model input data
 #' @param multiplier Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.
 #' @param Target supplied target value
 #' 
-#' @return A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
+#' @return A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
 #' @keywords internal
 #' 
 poisson_limits<-function(mod_plot_agg=mod_plot_agg, multiplier = 1, Target = Target){
@@ -192,43 +191,45 @@ poisson_limits<-function(mod_plot_agg=mod_plot_agg, multiplier = 1, Target = Tar
 OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI", multiplier = 1, Tau2 = 0
                     ,Target=Target){
   
-  if(data_type == "SR" & sr_method == "SHMI"){
-    mod_plot_agg$OD95LCL <- multiplier * (exp(-1.959964 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
-    mod_plot_agg$OD95UCL <- multiplier * (exp(1.959964 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
-    mod_plot_agg$OD99LCL <- multiplier * (exp(-3.090232 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
-    mod_plot_agg$OD99UCL <- multiplier * (exp(3.090232 * sqrt((1 / mod_plot_agg$denominator) + Tau2)))
-
-  # } else if(data_type=="RC"){
-  #   
-  #   mod_plot_agg$OD95LCL <- multiplier * Target * (1 - (1.959964 * (sqrt( sqrt( 
-  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-  #                                                                   +
-  #                                                                   (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-  #                                                                     ^2) + Tau2)))^2)
-  #   mod_plot_agg$OD95UCL <- multiplier * Target * (1 + (1.959964 * (sqrt( sqrt( 
-  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-  #                                                                   +
-  #                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-  #                                                                   ^2) + Tau2)))^2)
-  #   mod_plot_agg$OD99LCL <- multiplier * Target * (1 - (3.090232 * (sqrt( sqrt( 
-  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-  #                                                                   +
-  #                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-  #                                                                   ^2) + Tau2)))^2)
-  #   mod_plot_agg$OD99UCL <- multiplier * Target * (1 + (3.090232 * (sqrt( sqrt( 
-  #                                                                   (mod_plot_agg$numerator/((mod_plot_agg$numerator+0.5)^2))
-  #                                                                   +
-  #                                                                     (mod_plot_agg$denominator/((mod_plot_agg$denominator+0.5)^2))
-  #                                                                   ^2) + Tau2)))^2)
+  if(data_type == "SR"){
     
-  } else {
-                                                                    
-    mod_plot_agg$OD95LCL <-  multiplier * Target * ((1 - (1.959964 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
-    mod_plot_agg$OD95UCL <-  multiplier * Target * ((1 + (1.959964 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
-    mod_plot_agg$OD99LCL <-  multiplier * Target * ((1 - (3.090232 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
-    mod_plot_agg$OD99UCL <-  multiplier * Target * ((1 + (3.090232 * (sqrt((mod_plot_agg$s^2) + Tau2))))^2)
+    if(sr_method == "SHMI"){
+      mod_plot_agg$OD95LCL <- multiplier * (exp(-1.959964 * sqrt((1/mod_plot_agg$denominator) + Tau2)))
+      mod_plot_agg$OD95UCL <- multiplier * (exp(1.959964 * sqrt((1/mod_plot_agg$denominator) + Tau2)))
+      mod_plot_agg$OD99LCL <- multiplier * (exp(-3.090232 * sqrt((1/mod_plot_agg$denominator) + Tau2)))
+      mod_plot_agg$OD99UCL <- multiplier * (exp(3.090232 * sqrt((1/mod_plot_agg$denominator) + Tau2)))
+    
+      } else { 
+      
+      mod_plot_agg$OD95LCL <- multiplier * (mod_plot_agg$Target_transformed - (1.959964 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
+      mod_plot_agg$OD95UCL <- multiplier * (mod_plot_agg$Target_transformed + (1.959964 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
+      mod_plot_agg$OD99LCL <- multiplier * (mod_plot_agg$Target_transformed - (3.090232 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
+      mod_plot_agg$OD99UCL <- multiplier * (mod_plot_agg$Target_transformed + (3.090232 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
+      
+      }
+
+   } else if(data_type=="RC"){
+     
+
+    mod_plot_agg$OD95LCL <- multiplier * (exp( mod_plot_agg$Target_transformed - (1.959964 * sqrt( mod_plot_agg$s^2 + Tau2))))
+    mod_plot_agg$OD95UCL <- multiplier * (exp( mod_plot_agg$Target_transformed + (1.959964 * sqrt( mod_plot_agg$s^2 + Tau2))))
+    mod_plot_agg$OD99LCL <- multiplier * (exp( mod_plot_agg$Target_transformed - (3.090232 * sqrt( mod_plot_agg$s^2 + Tau2))))
+    mod_plot_agg$OD99UCL <- multiplier * (exp( mod_plot_agg$Target_transformed + (3.090232 * sqrt( mod_plot_agg$s^2 + Tau2))))
+    
+  } else if(data_type=="PR"){
+    
+    #dfCI$odll95 <- multiplier * (sin(asin(sqrt(Target)) - (1.959964 * sqrt(dfCI$s^2 + Tau2)))^2)
+    
+    mod_plot_agg$OD95LCL <-  multiplier * (sin((mod_plot_agg$Target_transformed - (1.959964 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
+    mod_plot_agg$OD99LCL <-  multiplier * (sin((mod_plot_agg$Target_transformed + (1.959964 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
+    mod_plot_agg$OD95UCL <-  multiplier * (sin((mod_plot_agg$Target_transformed - (3.090232 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
+    mod_plot_agg$OD99UCL <-  multiplier * (sin((mod_plot_agg$Target_transformed + (3.090232 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
+    
+    # dfCI$odul998 <- multiplier * Target * ((1 + (3.090232 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
+    #                                                                  (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
 
   }
   
   return(mod_plot_agg)
 }
+

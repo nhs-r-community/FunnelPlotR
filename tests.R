@@ -3,9 +3,9 @@ library(COUNT)
 library(ggplot2)
 
 # Setup
-data_type = "SR"
+data_type = "PR"
 label_outliers = 99
-Poisson_limits = FALSE
+Poisson_limits = TRUE
 OD_adjust = TRUE
 sr_method = "SHMI"
 Winsorise_by = 0.1
@@ -37,8 +37,8 @@ fp2
 
 
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, label_outliers = 99, sr_method="CQC")
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
+            OD_adjust = TRUE, label_outliers = 95, sr_method="CQC")
 
 fp[[2]]
 
@@ -54,13 +54,28 @@ grid.arrange(fp$plot, rtn$plot, nrow=1)
 
 install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz", repo=NULL)
 
+# proportion 
 
-# Now proportion
+# Now ratio of counts
 
-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
-            data_type = "RC",return_elements=c("plot"),
+funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
+            data_type = "PR",#return_elements=c("plot"),
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
+            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI", return_elements = "plot")
+
+
+a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
+            data_type = "RC",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
             OD_adjust = TRUE, label_outliers = 95, sr_method="SHMI")#, yrange=c(0, 2))
+
+a[1]
+
+a[[2]] %>% 
+  arrange(rr) %>% 
+  dplyr::select(group, denominator, rr, OD95LCL, OD95UCL, OD99LCL, OD99UCL)
+
+a[3]
 
 draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
                     multiplier=multiplier, Poisson_limits=FALSE, OD_adjust=TRUE,

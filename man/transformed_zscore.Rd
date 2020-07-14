@@ -18,7 +18,7 @@ transformed_zscore(
 \item{sr_method}{Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.}
 }
 \value{
-A data.frame of original, aggreagated data plus transformed z-score (unadjusted for overdispersion)
+A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
 }
 \description{
 Internal function to perform the transformations for data types.
