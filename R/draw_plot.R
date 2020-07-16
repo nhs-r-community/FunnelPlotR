@@ -13,7 +13,7 @@
 #' @param Target the calculated target value for the data type
 #' @param yrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
-#' @param data_type thedata type SR, PR or RC.
+#' @param data_type the data type SR, PR or RC.
 #' @param sr_method CQC or SHMI methods for standardised ratios
 #' @param theme a ggplot theme function.
 #'
