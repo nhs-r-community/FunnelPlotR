@@ -22,7 +22,14 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
   
   # general limits + Tau2 limits table
   set.seed(1)
+  
+  if(data_type=="SR"){
   number.seq <- c(seq(1.1, as.numeric(max_x), length.out = 1000))
+  } else {
+    number.seq <- c(seq(3, as.numeric(max_x), length.out = 1000))
+  }
+  
+  
   dfCI <- data.frame(
     number.seq,
     ll95 = multiplier * Target * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),

@@ -63,9 +63,10 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
 
 }
 
+
 #' Winsorisation function
 #'
-#' @description Internal function to perform the winsorization or truncation.
+#' @description Internal function to perform the winsorisation or truncation.
 #'
 #' @param mod_plot_agg Aggregated model input data
 #' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").

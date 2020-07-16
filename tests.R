@@ -4,8 +4,8 @@ library(ggplot2)
 
 # Setup
 data_type = "PR"
-label_outliers = 99
-Poisson_limits = TRUE
+label_outliers = 95
+Poisson_limits = FALSE
 OD_adjust = TRUE
 sr_method = "SHMI"
 Winsorise_by = 0.1
@@ -15,7 +15,7 @@ x_label = "Expected"
 y_label = "Standardised Ratio"
 xrange = "auto"
 yrange = "auto"
-return_elements=c("plot", "data", "limits")
+#return_elements=c("plot", "data", "limits")
 theme = funnel_clean()
 # lets use the \'medpar\' dataset from the \'COUNT\' package. Little reformatting needed
 #library(COUNT)
@@ -31,16 +31,17 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, return_elements=c("plot"))
+                 group = medpar$provnum, label_outliers = 99,
+                 Poisson_limits = TRUE)
 
 fp2
 
 
-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
+fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
             OD_adjust = TRUE, label_outliers = 95, sr_method="CQC")
 
-fp[[2]]
+fp[[1]]
 
 View(fp[[3]])
 
@@ -58,11 +59,17 @@ install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz",
 
 # Now ratio of counts
 
-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
+b<-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
             data_type = "PR",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI", return_elements = "plot")
+            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI")
+b[[1]]
 
+ifelse(b[[2]]$rr > b[[2]]$OD99UCL, as.character(b[[2]]$group), "")
+
+b[[2]] %>% 
+  arrange(rr) %>% 
+  dplyr::select(group, denominator, rr, OD99LCL, OD99UCL)
 
 a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
             data_type = "RC",#return_elements=c("plot"),
