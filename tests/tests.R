@@ -62,7 +62,7 @@ install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz",
 b<-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
             data_type = "PR",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', 
-            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI")
+            OD_adjust = TRUE, label_outliers = 95, sr_method="SHMI")
 b[[1]]
 
 ifelse(b[[2]]$rr > b[[2]]$OD99UCL, as.character(b[[2]]$group), "")
@@ -74,7 +74,7 @@ b[[2]] %>%
 a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
             data_type = "RC",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, label_outliers = 95, sr_method="SHMI")#, yrange=c(0, 2))
+            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI")
 
 a[1]
 

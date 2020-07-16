@@ -1,12 +1,10 @@
 ^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^packrat/
 ^\.Rprofile$
 ^\.travis\.yml$
-^Sticker$
+^sticker$
 ^CODE_OF_CONDUCT\.md$
-tests.R
 README.Rmd
 cran-comments.md
 ^_pkgdown\.yml$
@@ -14,9 +12,6 @@ cran-comments.md
 ^pkgdown$
 ^CRAN-RELEASE$
 ^README\.Rmd$
-^testers.R$
-manual_test.R
-test.R
 plot_reference.RDS
 NHSEI_AHSN_limits.R
-workingout_binom.R
+^dev$

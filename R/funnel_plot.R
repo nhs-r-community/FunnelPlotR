@@ -18,7 +18,7 @@
 #' SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison.
 #' Both methods then calculate a dispersion ratio (phi) on this altered dataset.  This ratio is then used to scale the full dataset,
 #' and the plot is drawn for the full dataset.
-#' @param Winsorise_by Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
+#' @param winsorise_by Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
 #' fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsorised/truncated)
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
@@ -70,7 +70,7 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_outliers = 99,
-                            Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI", Winsorise_by = 0.1,
+                            Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI", winsorise_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label ,xrange = "auto", yrange = "auto",
                             return_elements=c("plot", "data", "limits"), theme = funnel_clean()){
@@ -130,7 +130,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
   
   # Winsorise or truncate depending on method
-  mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = sr_method, Winsorise_by=Winsorise_by)
+  mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = sr_method, winsorise_by=winsorise_by)
   
   n <- as.numeric(sum(!is.na(mod_plot_agg$Wuzscore)))
   # Calculate Phi (the overdispersion factor)

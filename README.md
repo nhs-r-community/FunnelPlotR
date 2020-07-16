@@ -1,5 +1,5 @@
 
-# Funnel plots for risk-adjusted indicators <img src="man/figures/logo.png" width="160px" align="right" />
+# Funnel plots for comparing institutional performance <img src="man/figures/logo.png" width="160px" align="right" />
 
 <!-- badges: start -->
 
@@ -18,7 +18,7 @@ version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-projec
 ## Funnel Plots
 
 **This package is the newer version of the older `CMFunnels` package.
-Development work will focus on this package from now on **
+Development work will focus on this package from now on.**
 
 This is an implementation of the funnel plot processes, and
 overdispersion methods described in:<br> [Statistical methods for
@@ -31,12 +31,22 @@ et al
 (2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
 
 It draws funnel plots using `ggplot2` and allows users to specify
-whether they want ‘overdispersed’ limits, setting a Winsorisation
-percentage (default 10%)
+whether they want t adjust the funnel plot limits for ‘overdispersion.’
+This adjustment makes the assumption that we are dealing with clusters
+of values (means) at institutions that are themselves arranged around a
+global mean. We then have ‘within’ institution variation and ‘between
+institution’ variation. The process assessed the expected variance in
+our data, and where it is greater than that expected by the Poisson
+distribution, uses the difference as a scaling factor. It is then used
+in an additive fashion, after ‘robustifying’ the data by either
+Winsorised or truncated (with a default 10% at each end of the
+distribution.)
 
-There is a variant method for this, used in the NHS’ Summary Hospital
-Mortality Indicator’<br> [Summary Hospital-level Mortality Indicator,
-NHS Digital, SHMI
+Methods are based on those presented in Spiegelhalter’s papers and the
+Care Quality Commission’s Intelligent Monitoring methodology documents.
+There is a variant method for standardised ratios, used in the NHS’
+Summary Hospital Mortality Indicator’<br> [Summary Hospital-level
+Mortality Indicator, NHS Digital, SHMI
 specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi)
 <br>
 
@@ -44,11 +54,11 @@ This uses a log-transformation and truncation of the distribution for
 calculating overdispersion, whereas Spiegelhalter’s methods use a
 square-root and Winsorisation.
 
-This package was originally developed for use in CM’s PhD project, but
-published on github in case it’s of use for others.
+This package was originally developed for use in the author’s PhD
+project, but published on github in case it’s of use for others.
 
-Please note that the ‘FunnelPlotR’ project is released with a
-[Contributor Code of
+Contributions are welcome. Please note that the ‘FunnelPlotR’ project is
+released with a [Contributor Code of
 Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
@@ -125,8 +135,8 @@ and outliers labelled.
 
 ``` r
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = FALSE,label_outliers = TRUE, return_elements = "plot")
+            title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR",
+            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = 99, return_elements = "plot" )
 a
 #> $plot
 ```
@@ -153,9 +163,9 @@ overdispersed limits using either SHMI or Spiegelhalter methods adjust
 for this by inflating the limits:
 
 ``` r
-b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, method = "SHMI",label_outliers = TRUE, return_elements = "plot")
+            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99, return_elements = "plot")
 
 b
 #> $plot

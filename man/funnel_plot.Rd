@@ -13,7 +13,7 @@ funnel_plot(
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
-  Winsorise_by = 0.1,
+  winsorise_by = 0.1,
   title = "Untitled Funnel Plot",
   multiplier = 1,
   x_label = "Expected",
@@ -46,7 +46,7 @@ SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the 
 Both methods then calculate a dispersion ratio (phi) on this altered dataset.  This ratio is then used to scale the full dataset,
 and the plot is drawn for the full dataset.}
 
-\item{Winsorise_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
+\item{winsorise_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
 fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsorised/truncated)}
 
 \item{title}{Plot title}

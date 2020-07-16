@@ -34,7 +34,7 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
     number.seq,
     ll95 = multiplier * Target * ((qchisq(0.975, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
     ul95 = multiplier * Target *((qchisq(0.025, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq),
-    ll998 = multiplier * Target *((qchisq(0.998, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
+    ll998 = multiplier * Target *((qchisq(0.999, 2 * number.seq, lower.tail = FALSE) / 2) / number.seq),
     ul998 = multiplier * Target *((qchisq(0.001, 2 * (number.seq + 1), lower.tail = FALSE) / 2) / number.seq)
   )
 

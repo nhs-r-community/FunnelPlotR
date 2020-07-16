@@ -1,3 +1,12 @@
+# FunnelPlotR 0.2.9999
+
+- Added methods for ratio of counts and proportions
+- Renamed several arguments
+- Added 'themes' as people don't like the ggplot grey as default
+- Broke process into much smaller functions for easier editing and speed
+- Tweaked vignette to make it work
+- Removed unecceary rlang dependency
+
 # FunnelPlotR 0.2.3
 
 - Minor bug fix for discrepancy between limit colours

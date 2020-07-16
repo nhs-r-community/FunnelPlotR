@@ -79,21 +79,17 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
 
   
   # base funnel plot
-  funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((.data$numerator / .data$denominator)), x = .data$denominator)) +
+  funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
     geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue") +
-    # scale_y_continuous(limits = c((min_y-0.1), (max_y+0.1)))+
-    # scale_x_continuous(labels = scales::comma, limits = c(0,max_x+1)) +
-    geom_hline(aes(yintercept = Target), linetype = 2) + # Move this to limits section
+    geom_hline(aes(yintercept = Target), linetype = 2) +
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
     theme +
-     # theme_bw()+
     theme(
       plot.title = element_text(hjust = 0.5, face = "bold"),
       plot.subtitle = element_text(hjust = 0.5, face = "italic")
-      # plot.background =  element_rect(fill='white', colour='white'),
-    ) +
+      ) +
     guides(colour = guide_legend(title.theme = element_text(
       size = 10,
       face = "bold",
@@ -106,15 +102,14 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
 
   if (Poisson_limits == TRUE & OD_adjust == TRUE) {
     funnel_p <- funnel_p +
-      geom_line(aes(x = .data$number.seq, y = .data$ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-      geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-      #geom_hline(aes(yintercept = Target), linetype = 2) +
+      geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
       scale_color_manual(values = c(
         "99.8% Poisson" = "#1F77B4FF",
         "95% Poisson" = "#FF7F0EFF",
@@ -124,11 +119,10 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   } else {
     if (Poisson_limits == TRUE & OD_adjust == FALSE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = .data$number.seq, y = .data$ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = .data$number.seq, y = .data$ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = .data$number.seq, y = .data$ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = .data$number.seq, y = .data$ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
-        #geom_hline(aes(yintercept = Target), linetype = 2) +
+        geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = dfCI, na.rm = TRUE) +
         scale_color_manual(values = c(
           "99.8% Poisson" = "#1F77B4FF", # "#1F77B4FF"
           "95% Poisson" = "#FF7F0EFF"
@@ -137,11 +131,10 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
 
     if (Poisson_limits == FALSE &  OD_adjust == TRUE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = .data$number.seq, y = .data$odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = .data$number.seq, y = .data$odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = .data$number.seq, y = .data$odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-        geom_line(aes(x = .data$number.seq, y = .data$odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
-        #geom_hline(aes(yintercept = Target), linetype = 2) +
+        geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = dfCI, na.rm = TRUE) +
         scale_color_manual(values = c(
           "99.8% Overdispersed" = "#2CA02CFF",
           "95% Overdispersed" = "#9467BDFF"
@@ -189,38 +182,38 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   if (label_outliers == 95) {
     if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$UCL95,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr > UCL95,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$LCL95,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr < LCL95,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$OD95UCL,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr > OD95UCL,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$OD95LCL,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr < OD95LCL,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     }
   }
   if (label_outliers == 99) {
     if (OD_adjust==FALSE) {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$UCL99,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr > UCL99,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$LCL99,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr < LCL99,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     } else {
       funnel_p <- funnel_p +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr > .data$OD99UCL,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr > OD99UCL,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0) +
-        ggrepel::geom_label_repel(aes(label = ifelse(.data$rr < .data$OD99LCL,
-                                                     as.character(.data$group), "")), size = 2.7, direction = "y",
+        ggrepel::geom_label_repel(aes(label = ifelse(rr < OD99LCL,
+                                                     as.character(group), "")), size = 2.7, direction = "y",
                                   force = 2, min.segment.length = 0)
     }
   }
