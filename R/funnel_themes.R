@@ -7,7 +7,8 @@
 #' @importFrom ggplot2 theme_minimal theme_bw theme theme_grey
 #' @export
 #' 
-#' @examples funnel_plot(theme=funnel_clean())
+#' @examples 
+#'\dontrun{funnel_plot(theme=funnel_clean())}
 funnel_clean <- function(){
   theme_minimal() %+replace% 
   theme(legend.position = "bottom")
@@ -15,7 +16,7 @@ funnel_clean <- function(){
 
 
 #' A grey ggplot funnel theme
-#' @description A calssic ggplot theme function for funnel plots.  Try funnel_clean if you don't like the grey background.
+#' @description A classic ggplot theme function for funnel plots.  Try funnel_clean if you don't like the grey background.
 #' @return a list of ggplot theme items
 #' 
 #' @seealso funnel_clean
@@ -23,7 +24,8 @@ funnel_clean <- function(){
 #' @importFrom ggplot2 theme_classic
 #' @export
 #'
-#' @examples funnel_plot(theme=funnel_grey())
+#' @examples 
+#' \dontrun{funnel_plot(theme=funnel_grey())}
 funnel_grey <- function(){
   theme_grey()
 }

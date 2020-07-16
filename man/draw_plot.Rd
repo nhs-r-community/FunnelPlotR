@@ -47,7 +47,7 @@ draw_plot(
 
 \item{xrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
 
-\item{data_type}{thedata type SR, PR or RC.}
+\item{data_type}{the data type SR, PR or RC.}
 
 \item{sr_method}{CQC or SHMI methods for standardised ratios}
 

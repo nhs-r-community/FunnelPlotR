@@ -29,8 +29,12 @@
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
                     Poisson_limits, OD_adjust, Tau2 = 0, Target, yrange, xrange, data_type, 
                     sr_method, theme){
-
-#plot ranges
+  
+  # Bind variable for NSE
+  numerator <- denominator <- number.seq <- ll95 <- ul95 <- ll998 <- ul998 <- odll95 <- odul95 <-
+  odll998 <- odul998 <- rr <- UCL95 <- group <- LCL95 <- OD95UCL <- OD95LCL <-UCL99 <-LCL99 <-
+    OD99UCL <- OD99LCL <- NULL
+#p
   # Determine the range of plots
   if(xrange[1] == "auto"){
     max_x <- as.numeric(ceiling(max(mod_plot_agg$denominator, na.rm = FALSE)))

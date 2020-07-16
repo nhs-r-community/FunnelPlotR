@@ -54,9 +54,9 @@
 #' medpar$prds<- predict(mod, type="response")
 #'
 #' # Draw plot, returning just the plot object
-#' fp<-funnel_plot(denominator=medpar$prds,numerator=medpar$los,
+#' fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
 #' group = medpar$provnum, return_elements=c("plot"))
-#'fp
+#' fp
 #'
 #'
 #' @seealso Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x> \cr
@@ -66,6 +66,7 @@
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom dplyr select filter arrange mutate summarise group_by %>% n
+#' @importFrom stats na.omit
 #' @import ggplot2
 
 

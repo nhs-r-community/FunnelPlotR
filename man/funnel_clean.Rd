@@ -13,7 +13,7 @@ a list of ggplot theme items
 A ggplot theme function for clean looking funnel plots.  Try funnel_grey if you like the old one.
 }
 \examples{
-funnel_plot(theme=funnel_clean())
+\dontrun{funnel_plot(theme=funnel_clean())}
 }
 \seealso{
 funnel_grey

@@ -98,7 +98,7 @@ summary(mod)
 medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
-fp<-funnel_plot(denominator=medpar$prds,numerator=medpar$los,
+fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
 group = medpar$provnum, return_elements=c("plot"))
 fp
 
