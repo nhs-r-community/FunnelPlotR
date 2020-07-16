@@ -2,7 +2,7 @@
 % Please edit documentation in R/od_limits.R
 \name{OD_limits}
 \alias{OD_limits}
-\title{OD funnel limit calculation}
+\title{Overdispersion-adjusted funnel limit calculation}
 \usage{
 OD_limits(
   mod_plot_agg = mod_plot_agg,

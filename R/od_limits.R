@@ -1,4 +1,4 @@
-#' OD funnel limit calculation
+#' Overdispersion-adjusted funnel limit calculation
 #'
 #' @description Add 95% and 99.8 % funnel limits from OD-adjusted Poisson distribution
 #'

@@ -23,7 +23,6 @@
 #'
 #' @importFrom scales comma
 #' @importFrom ggrepel geom_text_repel
-#' @importFrom rlang .data
 #' @import ggplot2
 
 

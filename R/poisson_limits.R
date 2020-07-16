@@ -9,6 +9,8 @@
 #' @return A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
 #' @export
 #' 
+#' @importFrom stats qchisq
+#' 
 poisson_limits<-function(mod_plot_agg=mod_plot_agg, multiplier = 1, Target = Target){
   
   mod_plot_agg$LCL95 <- multiplier * Target * (qchisq(0.975, (2*mod_plot_agg$denominator+1), lower.tail = FALSE)/2)/ mod_plot_agg$denominator
