@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -48,7 +52,6 @@ There are several parameters for the input, with the assumption that you will wa
  overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \(\tau^2\) additive random
 effects models, originally described for meta-analysis." />
 <meta property="og:image" content="https://chrismainey.github.io/FunnelPlotR/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 <meta name="robots" content="noindex">
@@ -76,7 +79,7 @@ effects models, originally described for meta-analysis." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -90,7 +93,7 @@ effects models, originally described for meta-analysis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.2.999</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9999</span>
       </span>
     </div>
 
@@ -107,7 +110,7 @@ effects models, originally described for meta-analysis." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/funnel_plot.html">Introduction to Funnel Plots</a>
+      <a href="../articles/funnel_plots.html">Introduction to Funnel Plots</a>
     </li>
   </ul>
 </li>
@@ -144,12 +147,25 @@ There are several parameters for the input, with the assumption that you will wa
 effects models, originally described for meta-analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>funnel_plot</span>(<span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='no'>group</span>, <span class='kw'>label_outliers</span> <span class='kw'>=</span> <span class='fl'>95</span>,
-  <span class='kw'>Poisson_limits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>OD_adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>,
-  <span class='kw'>Winsorise_by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Untitled Funnel Plot"</span>, <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>x_label</span> <span class='kw'>=</span> <span class='st'>"Expected"</span>, <span class='kw'>y_label</span> <span class='kw'>=</span> <span class='st'>"Standardised Ratio"</span>,
-  <span class='kw'>xrange</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>yrange</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>return_elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>,
-  <span class='st'>"data"</span>, <span class='st'>"limits"</span>))</pre>
+    <pre class="usage"><span class='fu'>funnel_plot</span>(
+  <span class='no'>numerator</span>,
+  <span class='no'>denominator</span>,
+  <span class='no'>group</span>,
+  <span class='kw'>data_type</span> <span class='kw'>=</span> <span class='st'>"SR"</span>,
+  <span class='kw'>label_outliers</span> <span class='kw'>=</span> <span class='fl'>99</span>,
+  <span class='kw'>Poisson_limits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>OD_adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>sr_method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>,
+  <span class='kw'>winsorise_by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Untitled Funnel Plot"</span>,
+  <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>x_label</span> <span class='kw'>=</span> <span class='st'>"Expected"</span>,
+  <span class='no'>y_label</span>,
+  <span class='kw'>xrange</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>yrange</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>return_elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>, <span class='st'>"data"</span>, <span class='st'>"limits"</span>),
+  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='funnel_clean.html'>funnel_clean</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,6 +183,10 @@ effects models, originally described for meta-analysis.</p>
       <td><p>A vector of group names as character or factor.  Used to aggregate and group points on plots</p></td>
     </tr>
     <tr>
+      <th>data_type</th>
+      <td><p>A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" forindirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".</p></td>
+    </tr>
+    <tr>
       <th>label_outliers</th>
       <td><p>Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95% or 99.8% quantiles of the distribution. Default=99</p></td>
     </tr>
@@ -180,15 +200,15 @@ effects models, originally described for meta-analysis.</p>
 It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
+      <th>sr_method</th>
+      <td><p>Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
 SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison.
 Both methods then calculate a dispersion ratio (phi) on this altered dataset.  This ratio is then used to scale the full dataset,
 and the plot is drawn for the full dataset.</p></td>
     </tr>
     <tr>
-      <th>Winsorise_by</th>
+      <th>winsorise_by</th>
       <td><p>Proportion of the distribution for winsorisation/truncation. Default is 10 % (0.1).  Note, this is applied in a two-sided
 fashion, e.g. 10% refers to 10% at each end of the distribution (20% winsorised/truncated)</p></td>
     </tr>
@@ -220,6 +240,10 @@ fashion, e.g. 10% refers to 10% at each end of the distribution (20% winsorised/
       <th>return_elements</th>
       <td><p>a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
 limit lookup table used in the plot. Default is all three objects.</p></td>
+    </tr>
+    <tr>
+      <th>theme</th>
+      <td><p>a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.</p></td>
     </tr>
     </table>
 
@@ -283,22 +307,16 @@ Handling over-dispersion of performance indicators. Spiegelhalter (2005) &lt;doi
 <span class='no'>medpar</span>$<span class='no'>prds</span><span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"response"</span>)
 
 <span class='co'># Draw plot, returning just the plot object</span>
-<span class='no'>fp</span><span class='kw'>&lt;-</span><span class='fu'>funnel_plot</span>(<span class='kw'>denominator</span><span class='kw'>=</span><span class='no'>medpar</span>$<span class='no'>prds</span>,<span class='kw'>numerator</span><span class='kw'>=</span><span class='no'>medpar</span>$<span class='no'>los</span>,
+<span class='no'>fp</span><span class='kw'>&lt;-</span><span class='fu'>funnel_plot</span>(<span class='kw'>denominator</span><span class='kw'>=</span><span class='no'>medpar</span>$<span class='no'>prds</span>, <span class='kw'>numerator</span><span class='kw'>=</span><span class='no'>medpar</span>$<span class='no'>los</span>,
 <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>medpar</span>$<span class='no'>provnum</span>, <span class='kw'>return_elements</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>))
 <span class='no'>fp</span></div><div class='output co'>#&gt; $plot</div><div class='img'><img src='funnel_plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'>
 
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -309,7 +327,7 @@ Handling over-dispersion of performance indicators. Spiegelhalter (2005) &lt;doi
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
