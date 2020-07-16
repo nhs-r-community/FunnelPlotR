@@ -24,6 +24,6 @@ winsorisation(
 A data.frame with winsorized z-scores returned added
 }
 \description{
-Internal function to perform the winsorization or truncation.
+Internal function to perform the winsorisation or truncation.
 }
 \keyword{internal}

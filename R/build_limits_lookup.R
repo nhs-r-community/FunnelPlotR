@@ -94,10 +94,10 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
     # PR 1/2*sqrt(n) and CQC SR methods 1/2*sqrt(E)
     dfCI$s <- 1/(2*sqrt(number.seq))
     
-    dfCI$odll95 <- multiplier * (sin((asin(sqrt(Target)) - (1.959964 * sqrt(dfCI$s^2 + Tau2))))^2)
-    dfCI$odul95 <- multiplier * (sin((asin(sqrt(Target)) + (1.959964 * sqrt(dfCI$s^2 + Tau2))))^2)
-    dfCI$odll998 <- multiplier * (sin((asin(sqrt(Target)) - (3.090232 * sqrt(dfCI$s^2 + Tau2))))^2)
-    dfCI$odul998 <- multiplier * (sin((asin(sqrt(Target)) + (3.090232 * sqrt(dfCI$s^2 + Tau2))))^2)
+    dfCI$odll95 <- multiplier * sin(asin(sqrt(Target)) + 1.959964 * sqrt((dfCI$s^2) +Tau2))^2
+    dfCI$odul95 <- multiplier * sin(asin(sqrt(Target)) - 1.959964 * sqrt((dfCI$s^2) +Tau2))^2
+    dfCI$odll998 <- multiplier * sin(asin(sqrt(Target)) + 3.090232 * sqrt((dfCI$s^2) +Tau2))^2
+    dfCI$odul998 <- multiplier * sin(asin(sqrt(Target)) - 3.090232 * sqrt((dfCI$s^2) +Tau2))^2
     
   }
 

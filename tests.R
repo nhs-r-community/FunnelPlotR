@@ -61,7 +61,7 @@ install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz",
 
 b<-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
             data_type = "PR",#return_elements=c("plot"),
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
+            title = 'Length of Stay Funnel plot for `medpar` data', 
             OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI")
 b[[1]]
 

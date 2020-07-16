@@ -219,15 +219,10 @@ OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SH
     
   } else if(data_type=="PR"){
     
-    #dfCI$odll95 <- multiplier * (sin(asin(sqrt(Target)) - (1.959964 * sqrt(dfCI$s^2 + Tau2)))^2)
-    
-    mod_plot_agg$OD95LCL <-  multiplier * (sin((mod_plot_agg$Target_transformed - (1.959964 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
-    mod_plot_agg$OD99LCL <-  multiplier * (sin((mod_plot_agg$Target_transformed + (1.959964 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
-    mod_plot_agg$OD95UCL <-  multiplier * (sin((mod_plot_agg$Target_transformed - (3.090232 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
-    mod_plot_agg$OD99UCL <-  multiplier * (sin((mod_plot_agg$Target_transformed + (3.090232 * sqrt(mod_plot_agg$s^2 + Tau2))))^2)
-    
-    # dfCI$odul998 <- multiplier * Target * ((1 + (3.090232 * (sqrt(((number.seq/((number.seq+0.5)^2))  +
-    #                                                                  (number.seq/((number.seq+0.5)^2))) + Tau2))))^2)
+    mod_plot_agg$OD95LCL <-  multiplier * sin(mod_plot_agg$Target_transformed - 1.959964 * sqrt((mod_plot_agg$s^2) +Tau2))^2
+    mod_plot_agg$OD95UCL <-  multiplier * sin(mod_plot_agg$Target_transformed + 1.959964 * sqrt((mod_plot_agg$s^2) +Tau2))^2
+    mod_plot_agg$OD99LCL <-  multiplier * sin(mod_plot_agg$Target_transformed - 3.090232 * sqrt((mod_plot_agg$s^2) +Tau2))^2
+    mod_plot_agg$OD99UCL <-  multiplier * sin(mod_plot_agg$Target_transformed + 3.090232 * sqrt((mod_plot_agg$s^2) +Tau2))^2
 
   }
   
