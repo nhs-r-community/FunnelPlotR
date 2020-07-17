@@ -3,7 +3,7 @@ pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   funnel_plots: funnel_plots.html
-last_built: 2020-07-16T21:33Z
+last_built: 2020-07-17T13:46Z
 urls:
   reference: https://chrismainey.github.io/FunnelPlotR/reference
   article: https://chrismainey.github.io/FunnelPlotR/articles
