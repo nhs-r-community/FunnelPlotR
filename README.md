@@ -26,7 +26,7 @@ healthcare regulation: rating, screening and surveillance. Spiegelhalter
 et al
 (2012)](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x)<br>
 [Funnel plots for comparing institutional performance. Spiegelhalter
-(2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
+(2005)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
 [Handling over-dispersion of performance indicators. Spiegelhalter
 (2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
 
