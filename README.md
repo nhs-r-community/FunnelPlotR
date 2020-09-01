@@ -10,8 +10,7 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN
 version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
-![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
-
+[\[\]](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
 [![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR)
 <br><br> <!-- badges: end -->
 
