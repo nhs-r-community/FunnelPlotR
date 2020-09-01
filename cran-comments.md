@@ -1,8 +1,7 @@
 ## Release summary
-This is a minor bug-fix for the FunnelPlotR where some plot limits were incorrectly coloured3.
+This is a major release for the FunnelPlotR package, adding more methods, changes to uer interface, and removing dependencies.
 
 ## Test environments
-* local windows 7, R 3.6.1
 * local windows 10, R 3.6.1
 * Windows dev on Win-builder
 * ubuntu 16.04.6 LTS (on travis-ci), R 3.6.1

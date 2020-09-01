@@ -1,7 +1,7 @@
 Package: FunnelPlotR
 Type: Package
-Title: Funnel plots for comparing institutional performance
-Version: 0.2.9999
+Title: Funnel Plots for Comparing Institutional Performance
+Version: 0.3
 Authors@R: c(
         person("Chris", "Mainey", ,"chris.mainey@uhb.nhs.uk", role= c("aut", "cre"), 
           comment = c(ORCID ="0000-0002-3018-6171")
@@ -15,10 +15,10 @@ URL: https://chrismainey.github.io/FunnelPlotR, https://github.com/chrismainey/F
 BugReports: https://github.com/chrismainey/FunnelPlotR/issues
 Encoding: UTF-8
 LazyData: true
-Imports: ggrepel,
+Imports: dplyr,
+         ggrepel,
+         ggplot2,
          scales
-Depends: ggplot2,
-         dplyr
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0),

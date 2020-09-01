@@ -9,7 +9,7 @@
 #' @param group A vector of group names as character or factor.  Used to aggregate and group points on plots
 #' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" forindirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
 #' @param title Plot title
-#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
+#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>.
 #' It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -18,7 +18,7 @@
 #' SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison.
 #' Both methods then calculate a dispersion ratio (phi) on this altered dataset.  This ratio is then used to scale the full dataset,
 #' and the plot is drawn for the full dataset.
-#' @param winsorise_by Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
+#' @param trim_by Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
 #' fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsorised/truncated)
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
@@ -71,7 +71,7 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_outliers = 99,
-                            Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI", winsorise_by = 0.1,
+                            Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI", trim_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label ,xrange = "auto", yrange = "auto",
                             return_elements=c("plot", "data", "limits"), theme = funnel_clean()){
@@ -131,7 +131,11 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
   
   # Winsorise or truncate depending on method
-  mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = sr_method, winsorise_by=winsorise_by)
+  if(data_type=="SR" & sr_method=="SHMI"){
+    mod_plot_agg <- truncation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
+  } else {
+    mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
+  }
   
   n <- as.numeric(sum(!is.na(mod_plot_agg$Wuzscore)))
   # Calculate Phi (the overdispersion factor)

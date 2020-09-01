@@ -2,7 +2,7 @@
 % Please edit documentation in R/od_adjustment.R
 \name{phi_func}
 \alias{phi_func}
-\title{Transformation function for z-scoring}
+\title{Calculate overdispersion ratio}
 \usage{
 phi_func(n, zscores)
 }

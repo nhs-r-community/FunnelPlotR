@@ -3,12 +3,12 @@ library(COUNT)
 library(ggplot2)
 
 # Setup
-data_type = "PR"
+data_type = "SR"
 label_outliers = 95
 Poisson_limits = FALSE
 OD_adjust = TRUE
 sr_method = "SHMI"
-Winsorise_by = 0.1
+trim_by = 0.1
 title="Untitled Funnel Plot"
 multiplier = 1
 x_label = "Expected"
@@ -31,7 +31,7 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, label_outliers = 99,
+                 group = medpar$provnum, label_outliers = 95,
                  Poisson_limits = TRUE)
 
 fp2

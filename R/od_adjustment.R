@@ -66,44 +66,63 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
 
 #' Winsorisation function
 #'
-#' @description Internal function to perform the winsorisation or truncation.
+#' @description Internal function to perform the Winsorisation.
 #'
 #' @param mod_plot_agg Aggregated model input data
-#' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
-#' @param sr_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. Not relevant to PR or RC data types
-#' @param winsorise_by The amount to winsorise\/truncate the distribution by, prior to transformation. 0.1 means 10\% (at each end).
+#' @param trim_by The amount to Winsorise the distribution by, prior to transformation. 0.1 means 10\% (at each end).
 #'
-#' @return A data.frame with winsorized z-scores returned added
+#' @return A data.frame with winsorised z-scores returned added
 #' @keywords internal
 #' 
 #' 
-winsorisation <- function(mod_plot_agg = mod_plot_agg, data_type=data_type, sr_method = "SHMI", winsorise_by = 0.1){
+winsorisation <- function(mod_plot_agg = mod_plot_agg, trim_by = 0.1){
   
-  lz <- quantile(x = mod_plot_agg$Uzscore, winsorise_by, na.rm = TRUE)
-  uz <- quantile(x = mod_plot_agg$Uzscore, (1 - winsorise_by), na.rm = TRUE)
+  lz <- quantile(x = mod_plot_agg$Uzscore, trim_by, na.rm = TRUE)
+  uz <- quantile(x = mod_plot_agg$Uzscore, (1 - trim_by), na.rm = TRUE)
   mod_plot_agg$winsorised = ifelse(mod_plot_agg$Uzscore > lz & mod_plot_agg$Uzscore < uz, 0, 1)
   
-  if(data_type == "SR" & sr_method == "SHMI"){
-    
-    #mod_plot_agg$Wuzscore[mod_plot_agg$winsorised == 1] <- mod_plot_agg$Uzscore
-    mod_plot_agg$Wuzscore <-ifelse(mod_plot_agg$winsorised == 0, mod_plot_agg$Uzscore, NA)
-  
-  } else {
-  
-  #if(sr_method == "CQC"){
-
-    mod_plot_agg$Wuzscore = ifelse(mod_plot_agg$Uzscore < lz
+  mod_plot_agg$Wuzscore = ifelse(mod_plot_agg$Uzscore < lz
                                    , lz
                                    , ifelse(mod_plot_agg$Uzscore > uz
                                           , uz
                                           , mod_plot_agg$Uzscore))
-  }
+  
+  return(mod_plot_agg)
+}
+
+#' Truncation function for NHSD method
+#'
+#' @description Internal function to perform the truncation.
+#'
+#' @param mod_plot_agg Aggregated model input data
+#' @param trim_by The amount to truncate the distribution by, prior to transformation. 0.1 means 10\% (at each end).
+#'
+#' @return A data.frame with truncated z-scores added
+#' @keywords internal
+#' 
+#' 
+truncation <- function(mod_plot_agg = mod_plot_agg, trim_by = 0.1){
+  
+  # How many groups for truncation
+  k <- 1/trim_by
+  maxk<- k-1
+  mink<-min(k/k)-1
+  
+  mod_plot_agg$rk <- rank(mod_plot_agg$Uzscore, ties.method = "average")
+  mod_plot_agg$sp <- floor(mod_plot_agg$rk  * k / (length(mod_plot_agg$rk) + 1))
+  
+  mod_plot_agg$truncated = ifelse(mod_plot_agg$sp > mink & mod_plot_agg$Uzscore < maxk, 0, 1)
+  
+  mod_plot_agg$Wuzscore = ifelse(mod_plot_agg$truncated == 1 
+                                , NA
+                                , mod_plot_agg$Uzscore)
+  
   return(mod_plot_agg)
 }
 
 
 
-#' Transformation function for z-scoring
+#' Calculate overdispersion ratio
 #'
 #' @description Internal function to perform the transformations for data types.
 #'

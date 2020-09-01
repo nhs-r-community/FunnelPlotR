@@ -1,5 +1,5 @@
 
-# Funnel plots for comparing institutional performance <img src="man/figures/logo.png" width="160px" align="right" />
+# Funnel Plots for Comparing Institutional Performance <img src="man/figures/logo.png" width="160px" align="right" />
 
 <!-- badges: start -->
 
@@ -55,7 +55,7 @@ calculating overdispersion, whereas Spiegelhalter’s methods use a
 square-root and Winsorisation.
 
 This package was originally developed for use in the author’s PhD
-project, but published on github in case it’s of use for others.
+project, but published on Github in case it’s of use for others.
 
 Contributions are welcome. Please note that the ‘FunnelPlotR’ project is
 released with a [Contributor Code of

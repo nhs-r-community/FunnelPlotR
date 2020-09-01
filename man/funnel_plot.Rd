@@ -13,7 +13,7 @@ funnel_plot(
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
-  winsorise_by = 0.1,
+  trim_by = 0.1,
   title = "Untitled Funnel Plot",
   multiplier = 1,
   x_label = "Expected",
@@ -33,7 +33,7 @@ funnel_plot(
 
 \item{data_type}{A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" forindirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".}
 
-\item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99}
+\item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
@@ -46,7 +46,7 @@ SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the 
 Both methods then calculate a dispersion ratio (phi) on this altered dataset.  This ratio is then used to scale the full dataset,
 and the plot is drawn for the full dataset.}
 
-\item{winsorise_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
+\item{trim_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
 fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsorised/truncated)}
 
 \item{title}{Plot title}

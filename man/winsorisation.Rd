@@ -4,26 +4,17 @@
 \alias{winsorisation}
 \title{Winsorisation function}
 \usage{
-winsorisation(
-  mod_plot_agg = mod_plot_agg,
-  data_type = data_type,
-  sr_method = "SHMI",
-  winsorise_by = 0.1
-)
+winsorisation(mod_plot_agg = mod_plot_agg, trim_by = 0.1)
 }
 \arguments{
 \item{mod_plot_agg}{Aggregated model input data}
 
-\item{data_type}{Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").}
-
-\item{sr_method}{Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. Not relevant to PR or RC data types}
-
-\item{winsorise_by}{The amount to winsorise\/truncate the distribution by, prior to transformation. 0.1 means 10\% (at each end).}
+\item{trim_by}{The amount to Winsorise the distribution by, prior to transformation. 0.1 means 10\% (at each end).}
 }
 \value{
-A data.frame with winsorized z-scores returned added
+A data.frame with winsorised z-scores returned added
 }
 \description{
-Internal function to perform the winsorisation or truncation.
+Internal function to perform the Winsorisation.
 }
 \keyword{internal}
