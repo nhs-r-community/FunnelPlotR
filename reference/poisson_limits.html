@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function to build funnel limits — build_limits_lookup • FunnelPlotR</title>
+<title>Poisson funnel limit calculation — poisson_limits • FunnelPlotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Function to build funnel limits — build_limits_lookup" />
-<meta property="og:description" content="Internal function for funnel plot to build the control limits prior to plotting." />
+<meta property="og:title" content="Poisson funnel limit calculation — poisson_limits" />
+<meta property="og:description" content="Adds 95" />
 <meta property="og:image" content="https://chrismainey.github.io/FunnelPlotR/logo.png" />
 
 
@@ -132,81 +132,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function to build funnel limits</h1>
-    <small class="dont-index">Source: <a href='https://github.com/chrismainey/FunnelPlotR/blob/master/R/build_limits_lookup.R'><code>R/build_limits_lookup.R</code></a></small>
-    <div class="hidden name"><code>build_limits_lookup.Rd</code></div>
+    <h1>Poisson funnel limit calculation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/chrismainey/FunnelPlotR/blob/master/R/poisson_limits.R'><code>R/poisson_limits.R</code></a></small>
+    <div class="hidden name"><code>poisson_limits.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Internal function for funnel plot to build the control limits prior to plotting.</p>
+    <p>Adds 95<!-- % and 99.8 % funnel limits from Poisson distribution, using exact Poisson limits. --></p>
     </div>
 
-    <pre class="usage"><span class='fu'>build_limits_lookup</span>(
-  <span class='no'>min_x</span>,
-  <span class='no'>max_x</span>,
-  <span class='no'>min_y</span>,
-  <span class='no'>max_y</span>,
-  <span class='no'>Poisson_limits</span>,
-  <span class='no'>OD_adjust</span>,
-  <span class='no'>Tau2</span>,
-  <span class='no'>data_type</span>,
-  <span class='no'>sr_method</span>,
-  <span class='no'>Target</span>,
-  <span class='no'>multiplier</span>
-)</pre>
+    <pre class="usage"><span class='fu'>poisson_limits</span>(<span class='kw'>mod_plot_agg</span> <span class='kw'>=</span> <span class='no'>mod_plot_agg</span>, <span class='kw'>multiplier</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Target</span> <span class='kw'>=</span> <span class='no'>Target</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>Poisson_limits</th>
-      <td><p>TRUE/FALSE Draw Poisson distribution limits?</p></td>
-    </tr>
-    <tr>
-      <th>OD_adjust</th>
-      <td><p>TRUE/FALSE Use overdispersion adjustment</p></td>
-    </tr>
-    <tr>
-      <th>Tau2</th>
-      <td><p>If using OD_adjust, what is the Tau2 ("between" standard error) to use?</p></td>
-    </tr>
-    <tr>
-      <th>data_type</th>
-      <td><p>SR, PR or RC. Used to set target reference</p></td>
-    </tr>
-    <tr>
-      <th>sr_method</th>
-      <td><p>Which adjustment method is being used, SHMI or CQC?</p></td>
-    </tr>
-    <tr>
-      <th>Target</th>
-      <td><p>target to be used to set centre line</p></td>
+      <th>mod_plot_agg</th>
+      <td><p>Aggregated model input data</p></td>
     </tr>
     <tr>
       <th>multiplier</th>
-      <td><p>Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.</p></td>
+      <td><p>Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.</p></td>
     </tr>
     <tr>
-      <th>min_preds</th>
-      <td><p>Minimum predicted value for range of x-axis</p></td>
-    </tr>
-    <tr>
-      <th>max_preds</th>
-      <td><p>Maximum predicted value for range of x-axis</p></td>
-    </tr>
-    <tr>
-      <th>min_ratio</th>
-      <td><p>Minimum ratio value for range of y-axis</p></td>
-    </tr>
-    <tr>
-      <th>max_ratio</th>
-      <td><p>Maximum ratio value for range of y-axis</p></td>
+      <th>Target</th>
+      <td><p>supplied target value</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame with an index column and various control limits based on the index as an x-axis value.</p>
+    <p>A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
