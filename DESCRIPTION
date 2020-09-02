@@ -25,5 +25,6 @@ Suggests:
     knitr,
     rmarkdown,
     COUNT,
-    tidyr
+    tidyr,
+    covr
 VignetteBuilder: knitr

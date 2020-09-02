@@ -12,7 +12,7 @@ before_install:
        ')'))" >> ~/.Rprofile.site
        
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'covr::codecov()'
 
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 deploy:
