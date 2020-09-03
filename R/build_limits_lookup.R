@@ -71,10 +71,10 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
     #Target = 1 
     dfCI$s <- 1/(2*sqrt(number.seq))
     
-    dfCI$odll95 <- multiplier * (1 - (1.959964 * sqrt(dfCI$s^2 + Tau2))^2)
-    dfCI$odul95 <- multiplier * (1 + (1.959964 * sqrt(dfCI$s^2 + Tau2))^2)
-    dfCI$odll998 <- multiplier * (1 - (3.090232 * sqrt(dfCI$s^2 + Tau2))^2)
-    dfCI$odul998 <- multiplier * (1 + (3.090232 * sqrt(dfCI$s^2 + Tau2))^2)
+    dfCI$odll95 <- multiplier * (1 - (1.959964 * sqrt((dfCI$s + sqrt(Tau2)^2))))
+    dfCI$odul95 <- multiplier * (1 + (1.959964 * sqrt((dfCI$s + sqrt(Tau2)^2))))
+    dfCI$odll998 <- multiplier * (1 - (3.090232 * sqrt((dfCI$s + sqrt(Tau2)^2))))
+    dfCI$odul998 <- multiplier * (1 + (3.090232 * sqrt((dfCI$s + sqrt(Tau2)^2))))
     
     
   } else if(data_type=="RC"){

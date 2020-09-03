@@ -23,7 +23,7 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
     } else if(sr_method == "CQC"){
       mod_plot_agg$Target_transformed<- 1
       mod_plot_agg$Y <- sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator)
-      mod_plot_agg$s  <- 1 / (sqrt(mod_plot_agg$denominator))
+      mod_plot_agg$s  <- 1 / (2*sqrt(mod_plot_agg$denominator))
       
     }
   } 

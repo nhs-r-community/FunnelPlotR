@@ -25,10 +25,10 @@ OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SH
       
     } else { 
       
-      mod_plot_agg$OD95LCL <- multiplier * (mod_plot_agg$Target_transformed - (1.959964 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
-      mod_plot_agg$OD95UCL <- multiplier * (mod_plot_agg$Target_transformed + (1.959964 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
-      mod_plot_agg$OD99LCL <- multiplier * (mod_plot_agg$Target_transformed - (3.090232 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
-      mod_plot_agg$OD99UCL <- multiplier * (mod_plot_agg$Target_transformed + (3.090232 * sqrt( mod_plot_agg$s^2 + Tau2))^2)
+      mod_plot_agg$OD95LCL <- multiplier * (mod_plot_agg$target_transformed - (1.959964 * sqrt( (mod_plot_agg$s + sqrt(tau2)^2))))
+      mod_plot_agg$OD95UCL <- multiplier * (mod_plot_agg$target_transformed + (1.959964 * sqrt( (mod_plot_agg$s + sqrt(tau2)^2))))
+      mod_plot_agg$OD99LCL <- multiplier * (mod_plot_agg$target_transformed - (3.090232 * sqrt( (mod_plot_agg$s + sqrt(tau2)^2))))
+      mod_plot_agg$OD99UCL <- multiplier * (mod_plot_agg$target_transformed + (3.090232 * sqrt( (mod_plot_agg$s + sqrt(tau2)^2))))
       
     }
     
