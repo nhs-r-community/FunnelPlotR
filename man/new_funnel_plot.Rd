@@ -2,10 +2,10 @@
 % Please edit documentation in R/new_funnel_plot.R
 \name{new_funnel_plot}
 \alias{new_funnel_plot}
-\title{COnstructor for new funnel plot object}
+\title{Constructor for new funnel plot object}
 \usage{
 new_funnel_plot(funnelplot = list())
 }
 \description{
-COnstructor for new funnel plot object
+Constructor for new funnel plot object
 }

@@ -7,9 +7,10 @@
 #' @param numerator  A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis
 #' @param denominator A vector of denominator (predicted/population etc).  Used as denominator of the Y-axis and the scale of the x-axis
 #' @param group A vector of group names as character or factor.  Used to aggregate and group points on plots
-#' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" forindirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
+#' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
 #' @param title Plot title
-#' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
+#' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
+#' @param label_outliers Logical (TRUE or FALSE) for adding outlier labels to the plot.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>.
 #' It calculates a second variance component ' for the 'between' standard deviation (tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -70,7 +71,7 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_outliers = 99,
+funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label_outliers = TRUE,
                             Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI", trim_by = 0.1,
                             title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label ,xrange = "auto", yrange = "auto",
@@ -137,6 +138,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
     mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
   }
   
+  # New n for winsorised/truncated values
   n <- as.numeric(sum(!is.na(mod_plot_agg$Wuzscore)))
   # Calculate Phi (the overdispersion factor)
   phi <- phi_func(n= n, zscores=na.omit(mod_plot_agg$Wuzscore))
@@ -158,15 +160,67 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   mod_plot_agg <- OD_limits(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method
                             , multiplier = multiplier, tau2 = tau2, target=target)
   
+  # Set limits
+  # Determine the range of plots
+  if(xrange[1] == "auto"){
+    max_x <- as.numeric(ceiling(max(mod_plot_agg$denominator, na.rm = FALSE)))
+    min_x <- as.numeric(ceiling(min(mod_plot_agg$denominator,na.rm = FALSE)))
+  } else {
+    min_x <- xrange[1]
+    max_x <- xrange[2]
+  }
   
-                   
-  fun_plot<-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
+  if(yrange[1] == "auto"){
+    min_y <- min((0.7 * target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
+    
+    max_y <- max((1.3 * target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
+  } else {
+    min_y <- yrange[1]
+    max_y <- yrange[2]
+  }
+  
+  ### Calculate funnel limits ####
+  if (OD_adjust == FALSE) {
+    Poisson_limits <- TRUE
+    message("OD_adjust set to FALSE, plotting using Poisson limits")
+  }
+  
+  if (OD_adjust == TRUE & tau2 == 0) {
+    OD_adjust <- FALSE
+    Poisson_limits <- TRUE
+    
+    message("No overdispersion detected, or OD_adjust to FALSE, plotting using Poisson limits")
+    
+  }
+  
+  plot_limits<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y, 
+                              Poisson_limits=Poisson_limits, OD_adjust=OD_adjust, tau2=tau2, 
+                              data_type=data_type, sr_method=sr_method, target=target, 
+                              multiplier=multiplier)
+  
+  # limits<- set_plot_range(mod_plot_agg, multiplier,
+  #                         Poisson_limits, OD_adjust, tau2 , target, yrange, xrange, data_type, 
+  #                         sr_method)
+  #
+  
+  # Add outliers flag
+  mod_plot_agg <- outliers(mod_plot_agg, OD_adjust, Poisson_limits, limit)
+  
+  # Assemble plot
+  fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label_outliers,
                       multiplier=multiplier, Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
-                      tau2=tau2, target=target, xrange=xrange, yrange=yrange, data_type=data_type,
+                      target=target, min_y, max_y, min_x, max_x, data_type=data_type,
                       sr_method = sr_method, theme = theme)
-
+  
+  
+  # Subset outliers for reporting
+  outliers<- subset(mod_plot_agg, outlier==1)
+  
   #Build return
-  rtn<- new_funnel_plot(list(unlist(fun_plot), model_plot_agg, phi, tau2))
+  rtn<- new_funnel_plot(list(fun_plot, plot_limits, mod_plot_agg, phi, tau2
+                             , OD_adjust, Poisson_limits, outliers))
+  
+  validate_funnel_plot(rtn)
   
   return(rtn)
 }

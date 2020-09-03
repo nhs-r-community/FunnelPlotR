@@ -31,15 +31,16 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, label_outliers = 95,
+                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
                  Poisson_limits = TRUE)
 
 fp2
+class(fp2)
 
 
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = TRUE, label_outliers = 95, sr_method="CQC")
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
+            OD_adjust = TRUE, limit=99, label_outliers = TRUE, sr_method="CQC")
 
 fp[[1]]
 

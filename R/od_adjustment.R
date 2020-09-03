@@ -15,23 +15,23 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
     
     # log-transformed SHMI version
     if(sr_method == "SHMI"){
-      mod_plot_agg$Target_transformed<- 0
+      mod_plot_agg$target_transformed<- 0
       mod_plot_agg$Y <- log(mod_plot_agg$numerator / mod_plot_agg$denominator)
       mod_plot_agg$s <- 1 / (sqrt(mod_plot_agg$denominator))
       
     # SQRT-transformed CQC version
     } else if(sr_method == "CQC"){
-      mod_plot_agg$Target_transformed<- 1
+      mod_plot_agg$target_transformed<- 1
       mod_plot_agg$Y <- sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator)
-      mod_plot_agg$s  <- 1 / (sqrt(mod_plot_agg$denominator))
+      mod_plot_agg$s  <- 1 / (2 * sqrt(mod_plot_agg$denominator))
       
     }
   } 
   
   if(data_type == "PR"){
     
-    # use average proportion as Target_transformed
-    mod_plot_agg$Target_transformed<- asin(sqrt(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator)))
+    # use average proportion as target_transformed
+    mod_plot_agg$target_transformed<- asin(sqrt(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator)))
     
     mod_plot_agg$Y <- asin(sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator))
     mod_plot_agg$s  <- 1 / (2 * sqrt(mod_plot_agg$denominator))
@@ -41,8 +41,8 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
   
   if(data_type=="RC"){
     
-    # use average proportion as Target_transformed
-    mod_plot_agg$Target_transformed<- log(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+    # use average proportion as target_transformed
+    mod_plot_agg$target_transformed<- log(sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
     
     mod_plot_agg$Y <- log((mod_plot_agg$numerator +0.5) / (mod_plot_agg$denominator +0.5))
     mod_plot_agg$s  <- 
@@ -57,7 +57,7 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
     
   }
   
-  mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$Target_transformed) / mod_plot_agg$s
+  mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$target_transformed) / mod_plot_agg$s
   
   return(mod_plot_agg)
 

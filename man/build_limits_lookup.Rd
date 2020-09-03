@@ -11,10 +11,10 @@ build_limits_lookup(
   max_y,
   Poisson_limits,
   OD_adjust,
-  Tau2,
+  tau2,
   data_type,
   sr_method,
-  Target,
+  target,
   multiplier
 )
 }
@@ -23,13 +23,13 @@ build_limits_lookup(
 
 \item{OD_adjust}{TRUE/FALSE Use overdispersion adjustment}
 
-\item{Tau2}{If using OD_adjust, what is the Tau2 ("between" standard error) to use?}
+\item{tau2}{If using OD_adjust, what is the tau2 ("between" standard error) to use?}
 
 \item{data_type}{SR, PR or RC. Used to set target reference}
 
 \item{sr_method}{Which adjustment method is being used, SHMI or CQC?}
 
-\item{Target}{target to be used to set centre line}
+\item{target}{target to be used to set centre line}
 
 \item{multiplier}{Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.}
 
