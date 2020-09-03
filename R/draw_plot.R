@@ -8,9 +8,9 @@
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are\: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
-#' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)
-#' @param Tau2 The Tau2 value to use for plotting limits
-#' @param Target the calculated target value for the data type
+#' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)
+#' @param tau2 The tau2 value to use for plotting limits
+#' @param target the calculated target value for the data type
 #' @param yrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param xrange Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)
 #' @param data_type the data type SR, PR or RC.
@@ -27,7 +27,7 @@
 
 
 draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multiplier,
-                    Poisson_limits, OD_adjust, Tau2 = 0, Target, yrange, xrange, data_type, 
+                    Poisson_limits, OD_adjust, tau2 = 0, target, yrange, xrange, data_type, 
                     sr_method, theme){
   
   # Bind variable for NSE
@@ -45,9 +45,9 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   }
 
   if(yrange[1] == "auto"){
-    min_y <- min((0.7 * Target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
+    min_y <- min((0.7 * target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
 
-    max_y <- max((1.3 * Target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
+    max_y <- max((1.3 * target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
   } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
@@ -59,14 +59,14 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
     message("OD_adjust set to FALSE, plotting using Poisson limits")
   }
 
-  if (OD_adjust == TRUE & Tau2 == 0) {
+  if (OD_adjust == TRUE & tau2 == 0) {
     OD_adjust <- FALSE
     Poisson_limits <- TRUE
 
     message("No overdispersion detected, or OD_adjust to FALSE, plotting using Poisson limits")
 
   }
-  # if (OD_adjust == TRUE & Tau2 == 0) {
+  # if (OD_adjust == TRUE & tau2 == 0) {
   #   OD_adjust <- FALSE
   #   Poisson_limits <- TRUE
   #
@@ -77,14 +77,14 @@ draw_plot<-function(mod_plot_agg, x_label, y_label, title, label_outliers, multi
   # }
 
   dfCI<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y, 
-                            Poisson_limits=Poisson_limits, OD_adjust=OD_adjust, Tau2=Tau2, 
-                            data_type=data_type, sr_method=sr_method, Target=Target, multiplier=multiplier)
+                            Poisson_limits=Poisson_limits, OD_adjust=OD_adjust, tau2=tau2, 
+                            data_type=data_type, sr_method=sr_method, target=target, multiplier=multiplier)
 
   
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
     geom_point(size = 2, alpha = 0.55, shape = 21, fill = "dodgerblue") +
-    geom_hline(aes(yintercept = Target), linetype = 2) +
+    geom_hline(aes(yintercept = target), linetype = 2) +
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +

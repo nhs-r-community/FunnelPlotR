@@ -12,7 +12,7 @@
 #' @param label_outliers Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>.
-#' It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)
+#' It calculates a second variance component ' for the 'between' standard deviation (tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)
 #' @param sr_method Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 #' uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
 #' SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison.
@@ -124,7 +124,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
 
   mod_plot_agg<-aggregate_func(mod_plot)
   
-  Target <- ifelse(data_type == "SR", 1, sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
+  target <- ifelse(data_type == "SR", 1, sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
   
   #OD Adjust and return table
   # transform to z-score
@@ -142,40 +142,31 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", label_o
   phi <- phi_func(n= n, zscores=na.omit(mod_plot_agg$Wuzscore))
   
   # Use phi to calculate Tau, the between group standard deviation
-  Tau2 <- tau_func(n=n,  phi=phi, S=mod_plot_agg$s)
+  tau2 <- tau_func(n=n,  phi=phi, S=mod_plot_agg$s)
   
   
   if(OD_adjust == FALSE){
   phi<-as.numeric(0)
-  Tau2<-as.numeric(0)
+  tau2<-as.numeric(0)
   }
   
   # Poisson limits
-  mod_plot_agg <- poisson_limits(mod_plot_agg, multiplier=multiplier, Target=Target)
+  mod_plot_agg <- poisson_limits(mod_plot_agg, multiplier=multiplier, target=target)
   
 
   # OD limits
   mod_plot_agg <- OD_limits(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method
-                            , multiplier = multiplier, Tau2 = Tau2, Target=Target)
+                            , multiplier = multiplier, tau2 = tau2, target=target)
   
   
                    
   fun_plot<-draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
                       multiplier=multiplier, Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
-                      Tau2=Tau2, Target=Target, xrange=xrange, yrange=yrange, data_type=data_type,
+                      tau2=tau2, target=target, xrange=xrange, yrange=yrange, data_type=data_type,
                       sr_method = sr_method, theme = theme)
 
   #Build return
-  rtn<-list()
-  if(length(grep("plot", return_elements))>0){
-  rtn[["plot"]]<-fun_plot[[1]]
-  }
-  if(length(grep("data", return_elements))>0){
-  rtn[["data"]]<-mod_plot_agg
-  }
-  if(length(grep("limits", return_elements))>0){
-  rtn[["limits"]]<-fun_plot[[2]]
-  }
-
+  rtn<- new_funnel_plot(list(unlist(fun_plot), model_plot_agg, phi, tau2))
+  
   return(rtn)
 }

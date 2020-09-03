@@ -13,8 +13,8 @@ draw_plot(
   multiplier,
   Poisson_limits,
   OD_adjust,
-  Tau2 = 0,
-  Target,
+  tau2 = 0,
+  target,
   yrange,
   xrange,
   data_type,
@@ -37,11 +37,11 @@ draw_plot(
 
 \item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
-\item{OD_adjust}{Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)}
+\item{OD_adjust}{Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)}
 
-\item{Tau2}{The Tau2 value to use for plotting limits}
+\item{tau2}{The tau2 value to use for plotting limits}
 
-\item{Target}{the calculated target value for the data type}
+\item{target}{the calculated target value for the data type}
 
 \item{yrange}{Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)}
 
