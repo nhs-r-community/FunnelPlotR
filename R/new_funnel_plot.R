@@ -56,3 +56,20 @@ validate_funnel_plot <- function(funnelplot){
     )
   }
 }
+
+
+
+#### Methods
+
+
+limits <- function(x) {
+  UseMethod("limits")
+}
+
+
+# plot
+# data
+# limits
+# phi
+# tau
+# outliers
