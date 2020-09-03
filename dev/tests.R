@@ -37,6 +37,13 @@ fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los,
 fp2
 class(fp2)
 
+limits(fp2)
+print(fp2)
+summary(fp2)
+phi(fp2)
+tau2(fp2)
+outliers(fp2)
+
 
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,

@@ -204,7 +204,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   #
   
   # Add outliers flag
-  mod_plot_agg <- outliers(mod_plot_agg, OD_adjust, Poisson_limits, limit)
+  mod_plot_agg <- outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit)
   
   # Assemble plot
   fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label_outliers,
@@ -214,11 +214,11 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   
   # Subset outliers for reporting
-  outliers<- subset(mod_plot_agg, outlier==1)
+  outliers_df<- subset(mod_plot_agg, outlier==1)
   
   #Build return
   rtn<- new_funnel_plot(list(fun_plot, plot_limits, mod_plot_agg, phi, tau2
-                             , OD_adjust, Poisson_limits, outliers))
+                             , OD_adjust, Poisson_limits, outliers_df))
   
   validate_funnel_plot(rtn)
   

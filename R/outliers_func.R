@@ -6,7 +6,7 @@
 #' @param limit which limit to use.  Currently 95 or 99.
 #' 
 #' 
-outliers <- function(mod_plot_agg, OD_adjust, Poisson_limits, limit){
+outliers_func <- function(mod_plot_agg, OD_adjust, Poisson_limits, limit){
 
   if (limit == 95) {
     if (OD_adjust==FALSE){
