@@ -72,7 +72,7 @@ print.funnelplot <- function(x){
   
   cat("A funnel plot object with", nrow(x[[3]]), "points of which", nrow(x[[8]]), "are outliers. \n")
   
-  if(OD_adjust==TRUE){cat("Plot is adjusted for overdispersion. \n")}
+  if(x[[6]]==TRUE){cat("Plot is adjusted for overdispersion. \n")}
   else {cat("Plot is not adjusted for overdispersion. \n")}
   
 }
