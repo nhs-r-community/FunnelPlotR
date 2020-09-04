@@ -4,10 +4,12 @@
 \alias{plot.funnelplot}
 \title{Extractor function for ggplot object of funnel plot}
 \usage{
-\method{plot}{funnelplot}(x)
+\method{plot}{funnelplot}(x, ...)
 }
 \arguments{
 \item{x}{object of class `funnelplot`}
+
+\item{...}{Other arguments}
 }
 \description{
 Extractor function for ggplot object of funnel plot

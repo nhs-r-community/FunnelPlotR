@@ -6,6 +6,9 @@
 \usage{
 validate_funnel_plot(funnelplot)
 }
+\arguments{
+\item{funnelplot}{object of class funnelplot}
+}
 \description{
 Validator for new funnel plot object
 }

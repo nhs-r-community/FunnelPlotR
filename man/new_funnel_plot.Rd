@@ -4,7 +4,10 @@
 \alias{new_funnel_plot}
 \title{Constructor for new funnel plot object}
 \usage{
-new_funnel_plot(funnelplot = list())
+new_funnel_plot(x = list())
+}
+\arguments{
+\item{x}{List of objects to convert to class}
 }
 \description{
 Constructor for new funnel plot object

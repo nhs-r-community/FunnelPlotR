@@ -32,6 +32,11 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
                     Poisson_limits, OD_adjust, target, min_y, max_y, min_x, max_x, data_type, 
                     sr_method, theme){
   
+  # Bind variable for NSE
+  numerator <- denominator <- number.seq <- ll95 <- ul95 <- ll998 <- ul998 <- odll95 <- odul95 <-
+    odll998 <- odul998 <- rr <- UCL95 <- group <- LCL95 <- OD95UCL <- OD95LCL <-UCL99 <-LCL99 <-
+    OD99UCL <- OD99LCL <- outlier <- NULL
+  
 
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +

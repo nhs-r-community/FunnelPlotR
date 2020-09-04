@@ -1,10 +1,11 @@
 #' @title Constructor for new funnel plot object
+#' @param x List of objects to convert to class 
 #' @export 
-new_funnel_plot <- function(funnelplot = list()) {
+new_funnel_plot <- function(x = list()) {
   
-  stopifnot(is.list(funnelplot))
+  stopifnot(is.list(x))
   
-  structure(funnelplot,
+  structure(x,
             class = "funnelplot")
   
 }
@@ -12,6 +13,7 @@ new_funnel_plot <- function(funnelplot = list()) {
 
 
 #' @title Validator for new funnel plot object
+#' @param funnelplot object of class funnelplot
 #' @export 
 validate_funnel_plot <- function(funnelplot){
   
@@ -63,10 +65,11 @@ validate_funnel_plot <- function(funnelplot){
 
 #'@title Print method for funnel plot
 #'@param x object of class `funnelplot`
+#'@param ... Other arguments
 #'@method print funnelplot
 #'@export
 
-print.funnelplot <- function(x){
+print.funnelplot <- function(x, ...){
   
   print(x[[1]])
   
@@ -80,31 +83,33 @@ print.funnelplot <- function(x){
 
 #'@title Extractor function for ggplot object of funnel plot
 #'@param x object of class `funnelplot`
+#'@param ... Other arguments
 #'@method plot funnelplot
 #'@export
 
-plot.funnelplot <- function(x){
+plot.funnelplot <- function(x, ...){
   
   x[[1]]
   
 }
 
 #'@title Summary method for funnel plot
-#'@param x object of class `funnelplot`
+#'@param object object of class `funnelplot`
+#'@param ... Other arguments
 #'@method summary funnelplot
 #'@export
 
-summary.funnelplot <- function(x){
+summary.funnelplot <- function(object, ...){
   
-  cat("A funnel plot object with", nrow(x[[3]]), "points of which", nrow(x[[8]]), "are outliers. \n")
+  cat("A funnel plot object with", nrow(object[[3]]), "points of which", nrow(object[[8]]), "are outliers. \n")
   
-  cat("Dispersion ratio: \u03d5 =", x[[4]],". \n")
-  if(x[[6]]==TRUE){cat("Plot is adjusted for overdispersion. Between unit variance: 
-  \u1D70F\u00B2, =", x[[5]], ". \n")}
+  cat("Dispersion ratio: \u03d5 =", object[[4]],". \n")
+  if(object[[6]]==TRUE){cat("Plot is adjusted for overdispersion. Between unit variance: 
+  \u1D70F\u00B2, =", object[[5]], ". \n")}
   else {cat("Plot is not adjusted for overdispersion. \n")}
   
   cat("Outliers: \n")
-  print(x[[8]])
+  print(object[[8]])
   
 }
 

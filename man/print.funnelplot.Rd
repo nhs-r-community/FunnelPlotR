@@ -4,10 +4,12 @@
 \alias{print.funnelplot}
 \title{Print method for funnel plot}
 \usage{
-\method{print}{funnelplot}(x)
+\method{print}{funnelplot}(x, ...)
 }
 \arguments{
 \item{x}{object of class `funnelplot`}
+
+\item{...}{Other arguments}
 }
 \description{
 Print method for funnel plot

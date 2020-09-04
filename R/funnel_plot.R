@@ -214,7 +214,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   
   # Subset outliers for reporting
-  outliers_df<- subset(mod_plot_agg, outlier==1)
+  outliers_df<- subset(mod_plot_agg, mod_plot_agg$outlier==1)
   
   #Build return
   rtn<- new_funnel_plot(list(fun_plot, plot_limits, mod_plot_agg, phi, tau2

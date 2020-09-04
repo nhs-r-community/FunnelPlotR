@@ -4,10 +4,12 @@
 \alias{summary.funnelplot}
 \title{Summary method for funnel plot}
 \usage{
-\method{summary}{funnelplot}(x)
+\method{summary}{funnelplot}(object, ...)
 }
 \arguments{
-\item{x}{object of class `funnelplot`}
+\item{object}{object of class `funnelplot`}
+
+\item{...}{Other arguments}
 }
 \description{
 Summary method for funnel plot
