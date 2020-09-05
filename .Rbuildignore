@@ -16,3 +16,4 @@ plot_reference.RDS
 NHSEI_AHSN_limits.R
 ^dev$
 ^codecov\.yml$
+^\.github$
