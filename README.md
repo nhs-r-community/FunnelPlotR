@@ -10,9 +10,10 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN
 version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
-![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
-[![codecov](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR)
-<br><br> <!-- badges: end -->
+![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR) [![Codecov
+test
+coverage](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR?branch=master)
+<!-- badges: end -->
 
 ## Funnel Plots
 
@@ -134,13 +135,15 @@ and outliers labelled.
 
 ``` r
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR",
-            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = 99, return_elements = "plot" )
-a
-#> $plot
+            title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR", limit=99,
+            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = TRUE)
+print(a)
 ```
 
 <img src="man/figures/README-funnel1-1.png" width="100%" style="display: block; margin: auto;" />
+
+    #> A funnel plot object with 54 points of which 25 are outliers. 
+    #> Plot is not adjusted for overdispersion.
 
 <br><br>
 
@@ -164,13 +167,15 @@ for this by inflating the limits:
 ``` r
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99, return_elements = "plot")
+            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99)
 
-b
-#> $plot
+print(b)
 ```
 
 <img src="man/figures/README-funnel2-1.png" width="100%" style="display: block; margin: auto;" />
+
+    #> A funnel plot object with 54 points of which 9 are outliers. 
+    #> Plot is adjusted for overdispersion.
 
 <br><br> These methods can be used for any similar indicators,
 e.g. standardised mortality ratios, readmissions etc.

@@ -9,7 +9,8 @@ funnel_plot(
   denominator,
   group,
   data_type = "SR",
-  label_outliers = 99,
+  limit = 99,
+  label_outliers = TRUE,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
@@ -31,14 +32,16 @@ funnel_plot(
 
 \item{group}{A vector of group names as character or factor.  Used to aggregate and group points on plots}
 
-\item{data_type}{A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" forindirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".}
+\item{data_type}{A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".}
 
-\item{label_outliers}{Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
+\item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
+
+\item{label_outliers}{Logical (TRUE or FALSE) for adding outlier labels to the plot.}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
 \item{OD_adjust}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>.
-It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
+It calculates a second variance component ' for the 'between' standard deviation (tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
 
 \item{sr_method}{Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).

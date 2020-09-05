@@ -98,9 +98,9 @@ We can build a funnel plot object with standard Poisson limits, and outliers lab
 
 ```{r fig.align='center', fig.retina=5, warning=FALSE, collapse=TRUE, funnel1, message=FALSE, eval=TRUE}
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
-            title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR",
-            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = 99, return_elements = "plot" )
-a
+            title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR", limit=99,
+            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = TRUE)
+print(a)
 ```
 
 
@@ -122,9 +122,9 @@ This is a huge topic, but applying overdispersed limits using either SHMI or Spi
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE, eval=TRUE}
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99, return_elements = "plot")
+            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99)
 
-b
+print(b)
 ```
 
 <br><br>
