@@ -25,10 +25,49 @@
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/funnel_plot.html</loc>
   </url>
   <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/limits.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/limits.funnelplot.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/new_funnel_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/outliers.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/outliers.funnelplot.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/outliers_func.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/phi.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/phi.funnelplot.html</loc>
+  </url>
+  <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/phi_func.html</loc>
   </url>
   <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/plot.funnelplot.html</loc>
+  </url>
+  <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/poisson_limits.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/print.funnelplot.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/summary.funnelplot.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/tau2.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/tau2.funnelplot.html</loc>
   </url>
   <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/tau_func.html</loc>
@@ -38,6 +77,9 @@
   </url>
   <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/truncation.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/validate_funnel_plot.html</loc>
   </url>
   <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/winsorisation.html</loc>

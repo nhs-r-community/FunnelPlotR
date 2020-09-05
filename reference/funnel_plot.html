@@ -152,7 +152,8 @@ effects models, originally described for meta-analysis.</p>
   <span class='no'>denominator</span>,
   <span class='no'>group</span>,
   <span class='kw'>data_type</span> <span class='kw'>=</span> <span class='st'>"SR"</span>,
-  <span class='kw'>label_outliers</span> <span class='kw'>=</span> <span class='fl'>99</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>99</span>,
+  <span class='kw'>label_outliers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>Poisson_limits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>OD_adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>sr_method</span> <span class='kw'>=</span> <span class='st'>"SHMI"</span>,
@@ -184,11 +185,15 @@ effects models, originally described for meta-analysis.</p>
     </tr>
     <tr>
       <th>data_type</th>
-      <td><p>A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" forindirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".</p></td>
+      <td><p>A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".</p></td>
+    </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Plot limits, accepted values are: 95 or 99, corresponding to 95% or 99.8% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.</p></td>
     </tr>
     <tr>
       <th>label_outliers</th>
-      <td><p>Add group labels to outliers on plot. Accepted values are: 95 or 99 corresponding to 95% or 99.8% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.</p></td>
+      <td><p>Logical (TRUE or FALSE) for adding outlier labels to the plot.</p></td>
     </tr>
     <tr>
       <th>Poisson_limits</th>
@@ -197,7 +202,7 @@ effects models, originally described for meta-analysis.</p>
     <tr>
       <th>OD_adjust</th>
       <td><p>Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) &lt;doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x&gt;.
-It calculates a second variance component ' for the 'between' standard deviation (Tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)</p></td>
+It calculates a second variance component ' for the 'between' standard deviation (tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)</p></td>
     </tr>
     <tr>
       <th>sr_method</th>
@@ -306,7 +311,8 @@ Handling over-dispersion of performance indicators. Spiegelhalter (2005) &lt;doi
 <span class='co'># Draw plot, returning just the plot object</span>
 <span class='no'>fp</span><span class='kw'>&lt;-</span><span class='fu'>funnel_plot</span>(<span class='kw'>denominator</span><span class='kw'>=</span><span class='no'>medpar</span>$<span class='no'>prds</span>, <span class='kw'>numerator</span><span class='kw'>=</span><span class='no'>medpar</span>$<span class='no'>los</span>,
 <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>medpar</span>$<span class='no'>provnum</span>, <span class='kw'>return_elements</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>))
-<span class='no'>fp</span></div><div class='output co'>#&gt; $plot</div><div class='img'><img src='funnel_plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'>
+<span class='no'>fp</span></div><div class='img'><img src='funnel_plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; A funnel plot object with 54 points of which 9 are outliers. 
+#&gt; Plot is adjusted for overdispersion. </div><div class='input'>
 
 </div></pre>
   </div>
