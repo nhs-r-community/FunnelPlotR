@@ -1,5 +1,5 @@
 #' @title Funnel Plots for Indirectly-Standardised Ratios
-#' @description An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) \code{\link{https://doi.org/10.1002/sim.1970}}.
+#' @description An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) \href{https://doi.org/10.1002/sim.1970}.
 #' There are several parameters for the input, with the assumption that you will want smooth,
 #'  overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \eqn{\tau^2} additive random
 #' effects models, originally described for meta-analysis.
@@ -12,7 +12,7 @@
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param label_outliers Logical (TRUE or FALSE) for adding outlier labels to the plot.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
-#' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) \code{\link{https://doi.org/10.1111/j.1467-985X.2011.01010.x}}.
+#' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) \href{https://doi.org/10.1111/j.1467-985X.2011.01010.x}.
 #' It calculates a second variance component ' for the 'between' standard deviation (tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)
 #' @param sr_method Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 #' uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
@@ -29,9 +29,16 @@
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
 #' @param plot_cols A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
 #'
-#' @return A fitted `funnelplot` object, defined in \code{\link{funnelplot}}.  A `funnelplot` object is a list containing the following components:
-#' plot           A ggplot object with the funnel plot and the appropriate limits
-#' limits_lookup  A lookup table with selected limits for drawing a plot in software that requires limits.
+#' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:
+#' print            Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot.
+#' plot             A ggplot object with the funnel plot and the appropriate limits
+#' limits_lookup    A lookup table with selected limits for drawing a plot in software that requires limits.
+#' aggregated_data  A data.frame of the the aggregated dataset used for the plot
+#' outliers         A data frame of outliers from the data
+#' tau2             The between-groups standard deviation
+#' phi              The dispersion ratio
+#' OD_adjust        Whether overdispersion adjusted limits were used
+#' Poisson limits   Whether unadjusted Poisson limits were used
 #'
 #' @export
 #' @details
@@ -41,7 +48,7 @@
 #'    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 #'    Future versions of `funnelplotr` may allow users to change this.
 #' @examples
-#' #' # We will use the 'medpar' dataset from the 'COUNT' package.
+#' # We will use the 'medpar' dataset from the 'COUNT' package.
 #' # Little reformatting needed
 #'
 #' library(COUNT)
