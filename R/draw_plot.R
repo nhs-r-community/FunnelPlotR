@@ -30,7 +30,7 @@
 
 draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outliers, multiplier,
                     Poisson_limits, OD_adjust, target, min_y, max_y, min_x, max_x, data_type, 
-                    sr_method, theme){
+                    sr_method, theme, plot_cols){
   
   # Bind variable for NSE
   numerator <- denominator <- number.seq <- ll95 <- ul95 <- ll998 <- ul998 <- odll95 <- odul95 <-
@@ -70,12 +70,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
       geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
       geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-      scale_color_manual(values = c(
-        "99.8% Poisson" = "#1F77B4FF",
-        "95% Poisson" = "#FF7F0EFF",
-        "99.8% Overdispersed" = "#2CA02CFF",
-        "95% Overdispersed" = "#9467BDFF"
-      ), name = "Control limits")
+      scale_color_manual(values = plot_cols, name = "Control limits")
   } else {
     if (Poisson_limits == TRUE & OD_adjust == FALSE) {
       funnel_p <- funnel_p +
@@ -83,10 +78,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
         geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = limits, na.rm = TRUE) +
-        scale_color_manual(values = c(
-          "99.8% Poisson" = "#1F77B4FF", # "#1F77B4FF"
-          "95% Poisson" = "#FF7F0EFF"
-        ), name = "Control limits")
+        scale_color_manual(values = plot_cols[1:2], name = "Control limits")
     }
 
     if (Poisson_limits == FALSE &  OD_adjust == TRUE) {
@@ -95,10 +87,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
         geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-        scale_color_manual(values = c(
-          "99.8% Overdispersed" = "#2CA02CFF",
-          "95% Overdispersed" = "#9467BDFF"
-        ), name = "Control limits")
+        scale_color_manual(values = plot_cols[3:4], name = "Control limits")
     }
   }
 

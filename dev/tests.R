@@ -4,7 +4,8 @@ library(ggplot2)
 
 # Setup
 data_type = "SR"
-label_outliers = 95
+limit=99
+label_outliers = TRUE
 Poisson_limits = FALSE
 OD_adjust = TRUE
 sr_method = "SHMI"
@@ -32,7 +33,7 @@ medpar$prds<- predict(mod, type="response")
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
                  group = medpar$provnum, limit=99 ,label_outliers = TRUE,
-                 Poisson_limits = TRUE)
+                 Poisson_limits = TRUE, plot_cols= c("#8c8c8c", "#00b159", "#00aedb", "#d11141"))
 
 fp2
 class(fp2)

@@ -21,7 +21,7 @@ funnel_plot(
   y_label,
   xrange = "auto",
   yrange = "auto",
-  return_elements = c("plot", "data", "limits"),
+  plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF"),
   theme = funnel_clean()
 )
 }
@@ -40,7 +40,7 @@ funnel_plot(
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
-\item{OD_adjust}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>.
+\item{OD_adjust}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012) \code{\link{https://doi.org/10.1111/j.1467-985X.2011.01010.x}}.
 It calculates a second variance component ' for the 'between' standard deviation (tau2), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
 
 \item{sr_method}{Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
@@ -64,25 +64,27 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
-\item{return_elements}{a vector of elements to return, options include "plot" for ggplot2 object, "data" for data after processing, and "limits" for control
-limit lookup table used in the plot. Default is all three objects.}
+\item{plot_cols}{A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
 }
 \value{
-A list containing [1] the funnel plot as a ggplot2 object, [2] the base table for the plot, [3] the limits table.
+A fitted `funnelplot` object, defined in \code{\link{funnelplot}}.  A `funnelplot` object is a list containing the following components:
+plot           A ggplot object with the funnel plot and the appropriate limits
+limits_lookup  A lookup table with selected limits for drawing a plot in software that requires limits.
 }
 \description{
-An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <doi:10.1002/sim.1970>.
+An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) \code{\link{https://doi.org/10.1002/sim.1970}}.
 There are several parameters for the input, with the assumption that you will want smooth,
  overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the DerSimmonian Laird \eqn{\tau^2} additive random
 effects models, originally described for meta-analysis.
 }
 \details{
-Outliers are marked based on the grouping, and controlled by `label_outliers` .
-   Overdispersion can be factored in based on the methods in Spiegelhalter et al (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>, set `OD_adjust` to FALSE to suppress this. \cr
-   To use Poisson limits set `Poisson_limits=TRUE`. This uses 95% & 99.8% limits limits. \cr
-   It deliberately avoids red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
+Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99\% quantiles of the normal distribution. Labels can be turned on or of using the `label_outliers` argument.
+   Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012) <doi:https://doi.org/10.1111/j.1467-985X.2011.01010.x>, set `OD_adjust` to FALSE to suppress this. \cr
+   To use Poisson limits set `Poisson_limits=TRUE`. \cr
+   The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
+   Future versions of `funnelplotr` may allow users to change this.
 }
 \examples{
 #' # We will use the 'medpar' dataset from the 'COUNT' package.
@@ -102,8 +104,18 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
-group = medpar$provnum, return_elements=c("plot"))
-fp
+group = medpar$provnum, limits=95, title="An example funnel plot")
+
+# Methods for viewing/extracting
+print(fp)
+plot(fp)
+summary(fp)
+limits(fp)
+outliers(fp)
+source_data(fp)
+phi(fp)
+tau2(fp)
+
 
 
 }

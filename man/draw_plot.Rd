@@ -21,7 +21,8 @@ draw_plot(
   max_x,
   data_type,
   sr_method,
-  theme
+  theme,
+  plot_cols
 )
 }
 \arguments{

@@ -198,3 +198,23 @@ outliers.funnelplot <- function(x){
   
 }
 
+
+#' Source data class for funnel plots
+#' 
+#' @title source data used to create Funnel plots
+#' @param x object of class funnel plot
+#' @export
+source_data <- function(x) {
+  UseMethod("source_data")
+}
+
+
+#'@title Extractor function for funnel plot source data
+#'@param x object of class `funnelplot`
+#'@method source_data funnelplot
+#'@export
+source_data.funnelplot <- function(x){
+  
+  print(x[[3]])
+}
+
