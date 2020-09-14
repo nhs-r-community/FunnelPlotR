@@ -26,5 +26,6 @@ Suggests:
     rmarkdown,
     COUNT,
     tidyr,
-    covr
+    covr,
+    Cairo
 VignetteBuilder: knitr
