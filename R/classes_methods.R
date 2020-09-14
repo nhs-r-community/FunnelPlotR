@@ -105,7 +105,7 @@ summary.funnelplot <- function(object, ...){
   
   cat("Dispersion ratio: \u03d5 =", object[[4]],". \n")
   if(object[[6]]==TRUE){cat("Plot is adjusted for overdispersion. Between unit variance: 
-  \u1D70F\u00B2, =", object[[5]], ". \n")}
+  \U1D70F\u00B2, =", object[[5]], ". \n")}
   else {cat("Plot is not adjusted for overdispersion. \n")}
   
   cat("Outliers: \n")
