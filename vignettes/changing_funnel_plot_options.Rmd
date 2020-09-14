@@ -1,0 +1,75 @@
+---
+title: "Changing funnel plot options"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Changing funnel plot options}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(FunnelPlotR)
+```
+
+This brief vignette shows how to go about changing some of the parameters available in the `funnelplotr` package.
+Firstly, lets set up some data, the same as the README and other vignette:
+
+```{r dtsetup}
+library(COUNT)
+data(medpar)
+medpar$provnum<-factor(medpar$provnum)
+medpar$los<-as.numeric(medpar$los)
+
+mod<- glm(los ~ hmo + died + age80 + factor(type), family="poisson", data=medpar)
+summary(mod)
+
+# Get predicted value for ratio
+medpar$prds<- predict(mod, type="response")
+
+# Draw plot, returning just the plot object
+funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
+                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
+                 Poisson_limits = TRUE)
+
+```
+
+
+## Themes
+
+You can alter themes in the `funnelplotr` packages by using the theme argument.  There are a couple of options included with the package `funnel_clean` (the default) and `funnel_grey`, but you can write you own theme using any valid `ggplot2` theme and pass it to the plot.
+
+```{r plottheme1}
+
+funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
+                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
+                 Poisson_limits = TRUE, theme = funnel_grey() )
+
+```
+
+
+
+## Plot colours
+
+YOu can change the colours of the limits.  I am aiming to allow better colour theme support in future versions, but at present they are supplied as a vector of four hex colours to the `plot_cols` argument, in the order 95% Poisson, 99.8% Poisson, 95% OD and 99.8% OD.  At present all four values are required, whether you are plotting all four limits or not.  
+I have deliberately avoided using red and green colours as defaults because it encourages value judgements about 'good' v.s. 'bad' which may be unreasonable for a given data set.  Default colours are: `c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")`
+
+Here are four other colours instead:
+
+```{r colours}
+
+funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
+                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
+                 Poisson_limits = TRUE, plot_cols= c("#8c8c8c", "#00b159", "#00aedb", "#d11141"))
+
+
+```
+
+## Changing scales
+
