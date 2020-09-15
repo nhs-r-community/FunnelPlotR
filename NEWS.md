@@ -3,11 +3,11 @@
 - Added methods for ratios of counts and proportions
 - Renamed several arguments  -  please read the help file!
 - Added S3 object system and associated methods
-- Added 'themes' as people don't like the ggplot grey as default
+- Added 'themes' as people don't like the `ggplot2` grey as default
 - Added ability to change colours
 - Broke process into much smaller functions for easier editing and speed
-- Tweaked vignette to make it work, and added new one showing plot options
-- Removed unnecessary rlang dependency
+- Tweaked vignettes for new methods and added new one showing plot options
+- Removed unnecessary `rlang` dependency
 
 # FunnelPlotR 0.2.3
 
