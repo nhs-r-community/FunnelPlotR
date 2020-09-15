@@ -11,6 +11,9 @@ navbar:
     menu:
     - text: Introduction to Funnel Plots
       href: articles/funnel_plots.html
+    - text: Changing funnel plot options
+      href: articles/changing_funnel_plot_options.html
+
   right:
   - icon: fa-github fa-lg
     href: https://github.com/chrismainey/FunnelPlotR
