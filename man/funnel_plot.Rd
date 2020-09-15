@@ -84,7 +84,7 @@ A fitted `funnelplot` object.  A `funnelplot` object is a list containing the fo
 \description{
 An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970>.
 There are several parameters for the input, with the assumption that you will want smooth,
-overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimmonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau}) 
+overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau}) 
 and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
 }
 \details{
