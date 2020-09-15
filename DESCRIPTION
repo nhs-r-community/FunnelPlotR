@@ -11,7 +11,7 @@ Authors@R: c(
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
 Description: An implementation of methods presented by Spiegelhalter (2005) <doi:10.1002/sim.1970> Funnel plots for comparing institutional performance, for standardised ratios, ratios of counts and proportions with additive overdispersion adjustment.
 License: MIT + file LICENSE
-URL: https://chrismainey.github.io/FunnelPlotR, https://github.com/chrismainey/FunnelPlotR
+URL: https://chrismainey.github.io/FunnelPlotR/, https://github.com/chrismainey/FunnelPlotR
 BugReports: https://github.com/chrismainey/FunnelPlotR/issues
 Encoding: UTF-8
 LazyData: true

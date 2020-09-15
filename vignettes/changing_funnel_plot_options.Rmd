@@ -8,6 +8,7 @@ vignette: >
   %\VignetteIndexEntry{Changing funnel plot options}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r, include = FALSE}

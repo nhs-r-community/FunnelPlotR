@@ -8,6 +8,7 @@ vignette: >
   %\VignetteIndexEntry{Funnel Plots for Indirectly-standardised ratios}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 bibliography: references.bib
 ---
 
