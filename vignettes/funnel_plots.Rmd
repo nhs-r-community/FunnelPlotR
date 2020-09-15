@@ -10,6 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   \usepackage[utf8]{inputenc}
 bibliography: references.bib
+csl: harvard.csl
 ---
 
 ```{r, include = FALSE, echo=FALSE, fig.height= 5, fig.width=7}

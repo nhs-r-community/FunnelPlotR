@@ -29,7 +29,7 @@ funnel_plot(
 \arguments{
 \item{numerator}{A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis}
 
-\item{denominator}{A vector of denominator (predicted/population etc).  Used as denominator of the Y-axis and the scale of the x-axis}
+\item{denominator}{A vector of denominator (predicted/population etc.)  Used as denominator of the Y-axis and the scale of the x-axis}
 
 \item{group}{A vector of group names as character or factor.  Used to aggregate and group points on plots}
 
@@ -42,12 +42,12 @@ funnel_plot(
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
 \item{OD_adjust}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
-It calculates a second variance component ' for the 'between' standard deviation (𝜏), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
+It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
 
 \item{sr_method}{Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
 SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison .
-Both methods then calculate a dispersion ratio (ϕ) on this altered dataset.  This ratio is then used to scale the full dataset,
+Both methods then calculate a dispersion ratio (\eqn{\phi}) on this altered dataset.  This ratio is then used to scale the full dataset,
 and the plot is drawn for the full dataset.}
 
 \item{trim_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
@@ -76,15 +76,15 @@ A fitted `funnelplot` object.  A `funnelplot` object is a list containing the fo
 \item{limits_lookup}{A lookup table with selected limits for drawing a plot in software that requires limits.}
 \item{aggregated_data}{A data.frame of the the aggregated dataset used for the plot.}
 \item{outlier}{A data frame of outliers from the data.}
-\item{tau2}{The between-groups standard deviation, 𝜏².}
-\item{phi}{The dispersion ratio, ϕ.}
+\item{tau2}{The between-groups standard deviation, \eqn{\tau^2}.}
+\item{phi}{The dispersion ratio, \eqn{\phi}.}
 \item{OD_adjust}{Whether overdispersion-adjusted limits were used.}
 \item{Poisson_limits}{Whether unadjusted Poisson limits were used.}
 }
 \description{
 An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970>.
 There are several parameters for the input, with the assumption that you will want smooth,
-overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimmonian & Laird (1986), buy calculating a between unit standard deviation (𝜏²) 
+overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimmonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau}) 
 and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
 }
 \details{
@@ -106,7 +106,6 @@ medpar$los<-as.numeric(medpar$los)
 
 mod<- glm(los ~ hmo + died + age80 + factor(type)
       , family="poisson", data=medpar)
-summary(mod)
 
 # Get predicted values for building ratio
 medpar$prds<- predict(mod, type="response")

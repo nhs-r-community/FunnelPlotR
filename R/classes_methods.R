@@ -86,6 +86,7 @@ plot.funnelplot <- function(x, ...){
 }
 
 
+#'@encoding UTF-8
 #'@export
 
 summary.funnelplot <- function(object, ...){
