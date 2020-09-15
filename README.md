@@ -40,7 +40,7 @@ global mean. We then have ‘within’ institution variation and ‘between
 institution’ variation. The process assessed the expected variance in
 our data, and where it is greater than that expected by the Poisson
 distribution, uses the difference as a scaling factor. It is then used
-in an additive fashion, after ‘robustifying’ the data by either
+in an additive fashion, after an adjustment for outliers by either
 Winsorised or truncated (with a default 10% at each end of the
 distribution.)
 
@@ -55,9 +55,6 @@ specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/s
 This uses a log-transformation and truncation of the distribution for
 calculating overdispersion, whereas Spiegelhalter’s methods use a
 square-root and Winsorisation.
-
-This package was originally developed for use in the author’s PhD
-project, but published on Github in case it’s of use for others.
 
 Contributions are welcome. Please note that the ‘FunnelPlotR’ project is
 released with a [Contributor Code of
@@ -169,7 +166,7 @@ for this by inflating the limits:
 ``` r
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99)
+            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = TRUE, limit=99)
 
 print(b)
 ```

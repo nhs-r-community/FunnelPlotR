@@ -40,15 +40,13 @@ This is an implementation of the funnel plot processes, and overdispersion metho
 [Funnel plots for comparing institutional performance. Spiegelhalter (2005)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
 [Handling over-dispersion of performance indicators. Spiegelhalter (2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
     
-It draws funnel plots using `ggplot2` and allows users to specify whether they want t adjust the funnel plot limits for 'overdispersion.'  This adjustment makes the assumption that we are dealing with clusters of values (means) at institutions that are themselves arranged around a global mean.  We then have 'within' institution variation and 'between institution' variation.   The process assessed the expected variance in our data, and where it is greater than that expected by the Poisson distribution, uses the difference as a scaling factor.  It is then used in an additive fashion, after 'robustifying' the data by either Winsorised or truncated (with a default 10% at each end of the distribution.)
+It draws funnel plots using `ggplot2` and allows users to specify whether they want t adjust the funnel plot limits for 'overdispersion.'  This adjustment makes the assumption that we are dealing with clusters of values (means) at institutions that are themselves arranged around a global mean.  We then have 'within' institution variation and 'between institution' variation.   The process assessed the expected variance in our data, and where it is greater than that expected by the Poisson distribution, uses the difference as a scaling factor.  It is then used in an additive fashion, after an adjustment for outliers by either Winsorised or truncated (with a default 10% at each end of the distribution.)
 
 Methods are based on those presented in Spiegelhalter's papers and the Care Quality Commission's Intelligent Monitoring methodology documents.  There is a variant method for standardised ratios, used in the NHS' Summary Hospital Mortality Indicator'<br>
 [Summary Hospital-level Mortality Indicator, NHS Digital, SHMI specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi) <br>
 
 This uses a log-transformation and truncation of the distribution for calculating overdispersion, whereas Spiegelhalter's methods use a square-root and Winsorisation.
 
-
-This package was originally developed for use in the author's PhD project, but published on Github in case it's of use for others.
 
 Contributions are welcome.  Please note that the 'FunnelPlotR' project is released with a
 [Contributor Code of Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
@@ -123,7 +121,7 @@ This is a huge topic, but applying overdispersed limits using either SHMI or Spi
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE, eval=TRUE}
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = 99)
+            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = TRUE, limit=99)
 
 print(b)
 ```
