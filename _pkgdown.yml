@@ -32,3 +32,4 @@ twitter:
 template:
   params:
     ganalytics: UA-146859070-1
+    bootswatch: cerulean
