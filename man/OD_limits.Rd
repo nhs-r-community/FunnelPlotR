@@ -32,3 +32,4 @@ A data.frame of with appended OD limits
 \description{
 Add 95% and 99.8 % funnel limits from OD-adjusted Poisson distribution
 }
+\keyword{internal}

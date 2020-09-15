@@ -18,3 +18,4 @@ outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit)
 \description{
 Label outliers
 }
+\keyword{internal}

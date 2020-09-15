@@ -8,9 +8,8 @@
 #' @param multiplier Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.
 #' @param tau2 A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.
 #' @param target The centre line of the plot. Mean for non-SRs or 1 for SR
-#'
+#' @keywords internal
 #' @return A data.frame of with appended OD limits
-#' @export
 #' 
 OD_limits<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI", multiplier = 1, tau2 = 0
                     ,target=target){

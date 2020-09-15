@@ -5,7 +5,7 @@
 #' @param Poisson_limits Logical for drawing Poisson limits
 #' @param limit which limit to use.  Currently 95 or 99.
 #' 
-#' 
+#' @keywords internal
 outliers_func <- function(mod_plot_agg, OD_adjust, Poisson_limits, limit){
 
   if (limit == 95) {

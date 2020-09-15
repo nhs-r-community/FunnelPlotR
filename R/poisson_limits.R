@@ -7,7 +7,7 @@
 #' @param target supplied target value
 #' 
 #' @return A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
-#' @export
+#' @keywords internal
 #' 
 #' @importFrom stats qchisq
 #' 

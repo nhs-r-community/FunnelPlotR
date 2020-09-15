@@ -1,6 +1,9 @@
 ---
 title: "Funnel Plots for Indirectly-standardised ratios"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
 vignette: >
   %\VignetteIndexEntry{Funnel Plots for Indirectly-standardised ratios}
   %\VignetteEngine{knitr::rmarkdown}
@@ -8,7 +11,7 @@ vignette: >
 bibliography: references.bib
 ---
 
-```{r, include = FALSE, echo=FALSE}
+```{r, include = FALSE, echo=FALSE, fig.height= 5, fig.width=7}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",

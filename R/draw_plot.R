@@ -46,10 +46,6 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
     ylab(y_label) +
     ggtitle(title) +
     theme +
-    theme(
-      plot.title = element_text(hjust = 0.5, face = "bold"),
-      plot.subtitle = element_text(hjust = 0.5, face = "italic")
-      ) +
     guides(colour = guide_legend(title.theme = element_text(
       size = 10,
       face = "bold",

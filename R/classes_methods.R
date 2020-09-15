@@ -1,6 +1,6 @@
 #' @title Constructor for new funnel plot object
 #' @param x List of objects to convert to class 
-#' @export 
+
 new_funnel_plot <- function(x = list()) {
   
   stopifnot(is.list(x))
@@ -14,7 +14,7 @@ new_funnel_plot <- function(x = list()) {
 
 #' @title Validator for new funnel plot object
 #' @param funnelplot object of class funnelplot
-#' @export 
+
 validate_funnel_plot <- function(funnelplot){
   
   if (!is.list(funnelplot[[1]])){
@@ -63,10 +63,6 @@ validate_funnel_plot <- function(funnelplot){
 
 #### Methods
 
-#'@title Print method for funnel plot
-#'@param x object of class `funnelplot`
-#'@param ... Other arguments
-#'@method print funnelplot
 #'@export
 
 print.funnelplot <- function(x, ...){
@@ -81,10 +77,6 @@ print.funnelplot <- function(x, ...){
 }
 
 
-#'@title Extractor function for ggplot object of funnel plot
-#'@param x object of class `funnelplot`
-#'@param ... Other arguments
-#'@method plot funnelplot
 #'@export
 
 plot.funnelplot <- function(x, ...){
@@ -93,10 +85,7 @@ plot.funnelplot <- function(x, ...){
   
 }
 
-#'@title Summary method for funnel plot
-#'@param object object of class `funnelplot`
-#'@param ... Other arguments
-#'@method summary funnelplot
+
 #'@export
 
 summary.funnelplot <- function(object, ...){
@@ -124,9 +113,6 @@ phi <- function(x) {
 
 
 
-#'@title Extractor function for dispersion ratio, \eqn{\phi}, for funnel plots
-#'@param x object of class `funnelplot`
-#'@method phi funnelplot
 #'@export
 
 phi.funnelplot <- function(x){
@@ -144,9 +130,7 @@ tau2 <- function(x) {
   UseMethod("tau2")
 }
 
-#'@title Extractor function for between group variance, \eqn{\tau^2}, for funnel plots
-#'@param x object of class `funnelplot`
-#'@method tau2 funnelplot
+
 #'@export
 
 tau2.funnelplot <- function(x){
@@ -165,9 +149,7 @@ limits <- function(x) {
   UseMethod("limits")
 }
 
-#'@title Extractor function for funnel plot limits
-#'@param x object of class `funnelplot`
-#'@method limits funnelplot
+
 #'@export
 
 limits.funnelplot <- function(x){
@@ -187,9 +169,7 @@ outliers <- function(x) {
   UseMethod("outliers")
 }
 
-#'@title Extractor function for funnel plot outliers
-#'@param x object of class `funnelplot`
-#'@method outliers funnelplot
+
 #'@export
 
 outliers.funnelplot <- function(x){
@@ -209,9 +189,6 @@ source_data <- function(x) {
 }
 
 
-#'@title Extractor function for funnel plot source data
-#'@param x object of class `funnelplot`
-#'@method source_data funnelplot
 #'@export
 source_data.funnelplot <- function(x){
   

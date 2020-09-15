@@ -1,6 +1,9 @@
 ---
 title: "Changing funnel plot options"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
 vignette: >
   %\VignetteIndexEntry{Changing funnel plot options}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,11 +13,15 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.height= 5, 
+  fig.width=7
 )
 ```
 
-```{r setup}
+## Setup
+
+```{r setup, fig.height= 5, fig.width=7}
 library(FunnelPlotR)
 ```
 
@@ -27,33 +34,50 @@ data(medpar)
 medpar$provnum<-factor(medpar$provnum)
 medpar$los<-as.numeric(medpar$los)
 
+# Logistic model to predict LOS, LOS is quite overdispersed
 mod<- glm(los ~ hmo + died + age80 + factor(type), family="poisson", data=medpar)
-summary(mod)
 
 # Get predicted value for ratio
 medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
-                 Poisson_limits = TRUE)
+funnel_plot(denominator=medpar$prds,numerator=medpar$los
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE)
 
 ```
 
 
 ## Themes
 
-You can alter themes in the `funnelplotr` packages by using the theme argument.  There are a couple of options included with the package `funnel_clean` (the default) and `funnel_grey`, but you can write you own theme using any valid `ggplot2` theme and pass it to the plot.
+You can alter themes in the `funnelplotr` packages by using the theme argument.  There are a couple of options included with the package `funnel_clean` (the default) and `funnel_grey`, but you can write your own theme using any valid `ggplot2` theme and pass it to the plot.
 
 ```{r plottheme1}
 
-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
-                 Poisson_limits = TRUE, theme = funnel_grey() )
+funnel_plot(denominator=medpar$prds,numerator=medpar$los
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE, theme = funnel_grey() )
 
 ```
 
+If you are not familiar with themes, you can create a theme with the `theme` function from `ggplot2`. I will create a new theme, including the `funnel_grey` theme, but with some different (exaggerated) elements.
 
+```{r plottheme2}
+library(ggplot2)
+
+new_funnel_theme <-
+  funnel_grey()+
+    theme(plot.title = element_text(face="bold", colour="red", size=6), # Change plot title
+          legend.background = element_rect(fill="brown"), # Alter legend background colour
+          axis.title.y = element_text(angle=0)  #Rotate y axis label
+    )
+  
+
+funnel_plot(denominator=medpar$prds,numerator=medpar$los 
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE, theme = new_funnel_theme)
+
+```
 
 ## Plot colours
 
@@ -63,13 +87,52 @@ I have deliberately avoided using red and green colours as defaults because it e
 Here are four other colours instead:
 
 ```{r colours}
-
-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
-                 Poisson_limits = TRUE, plot_cols= c("#8c8c8c", "#00b159", "#00aedb", "#d11141"))
-
-
+funnel_plot(denominator=medpar$prds,numerator=medpar$los 
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE, plot_cols= c("#8c8c8c", "#00b159", "#00aedb", "#d11141"))
 ```
 
 ## Changing scales
 
+`funnelplotr` automatically sets it's scales from the data you present to it but, on occasions, the scale rules might fall down for a particular dataset, or you may want to fix the plot to a particular scale.  You can do this using the `xrange` and `yrange` arguments.  Each takes a vector of two values, the minimum and the maximum:
+
+```{r funnelscales}
+## Changing labels
+funnel_plot(denominator=medpar$prds,numerator=medpar$los 
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE, xrange=c(0, 400), yrange=c(0,2))
+
+```
+
+`ggplot2` will warn you, as above, if you are excluding any points from your plot.
+
+## Changing labels
+
+You can change the plot labels and axis labels easily using the options: `title`, `x_label` and `y_label`.
+
+```{r funnellabels}
+funnel_plot(denominator=medpar$prds,numerator=medpar$los 
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE, title = "Vignette funnel plot"
+            , x_label = "x-axis", y_label = "y-axis")
+```
+
+## Cutting out the ggplot object
+
+Since `funnelplotr` uses `ggplot2`, you could always extract the plot and alter it manually like any other `ggplot2` object.  The easiest way is to extract it with `plot()`.  Below we'll add a (completely useless) vertical line to demonstrate adding more elements:
+
+```{r cutoutplot}
+# Original funnel plot object
+fp <-
+funnel_plot(denominator=medpar$prds,numerator=medpar$los
+            , group = medpar$provnum, limit=99 ,label_outliers = TRUE
+            , Poisson_limits = TRUE)
+
+# Extract just the plot
+my_plot <- plot(fp)
+
+# Add an additional geom to plot
+my_plot +
+  geom_vline(aes(xintercept=400), linetype = "dashed", colour="red", size=2)
+
+```

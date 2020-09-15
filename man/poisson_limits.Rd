@@ -19,3 +19,4 @@ A data.frame of original, aggregated data plus transformed z-score (unadjusted f
 \description{
 Adds 95% and 99.8 % funnel limits from Poisson distribution, using exact Poisson limits.
 }
+\keyword{internal}
