@@ -1,5 +1,6 @@
 # FunnelPlotR 0.3.1
 
+- Significantly reorganised the internals into more small functions
 - Added methods for ratios of counts and proportions
 - Renamed several arguments  -  please read the help file!
 - Added S3 object system and associated methods
