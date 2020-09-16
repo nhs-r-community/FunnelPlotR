@@ -25,6 +25,7 @@ This is a major release for the FunnelPlotR package, adding more stats methods, 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
+NOTE on Win-builder for possibly invalid URL.  URL was checked and is valid.
 NOTE on all systems except fedora: checking for future file timestamps - unable to verify current time
 
 
