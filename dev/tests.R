@@ -4,9 +4,9 @@ library(ggplot2)
 
 # Setup
 data_type = "SR"
-limit=99
+limit=95
 label_outliers = TRUE
-Poisson_limits = FALSE
+Poisson_limits = TRUE
 OD_adjust = TRUE
 sr_method = "SHMI"
 trim_by = 0.1
@@ -18,6 +18,8 @@ xrange = "auto"
 yrange = "auto"
 #return_elements=c("plot", "data", "limits")
 theme = funnel_clean()
+plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
+
 # lets use the \'medpar\' dataset from the \'COUNT\' package. Little reformatting needed
 #library(COUNT)
 data(medpar)
@@ -32,23 +34,25 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
-                 group = medpar$provnum, limit=99 ,label_outliers = TRUE,
-                 Poisson_limits = TRUE, plot_cols= c("#8c8c8c", "#00b159", "#00aedb", "#d11141"))
+                 group = medpar$provnum, limit=99 ,label_outliers = TRUE, sr_method = "CQC",
+                 Poisson_limits = TRUE)
 
 fp2
 class(fp2)
-
+plot(fp2)
 limits(fp2)
 print(fp2)
 summary(fp2)
 phi(fp2)
 tau2(fp2)
 outliers(fp2)
+source_data(fp2)[53,]
+
 
 
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, limit=99, label_outliers = TRUE, sr_method="CQC")
+            OD_adjust = TRUE, limit=99, label_outliers = TRUE, sr_method="SHMI")
 
 fp[[1]]
 
@@ -71,8 +75,12 @@ install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz",
 b<-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
             data_type = "PR",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', 
-            OD_adjust = TRUE, label_outliers = TRUE, limit=95, sr_method="SHMI")
-b[[1]]
+            OD_adjust = TRUE, label_outliers = TRUE, limit=95)
+b
+
+tau2(b)
+phi(b)
+limits(b)
 
 ifelse(b[[2]]$rr > b[[2]]$OD99UCL, as.character(b[[2]]$group), "")
 
@@ -83,7 +91,7 @@ b[[2]] %>%
 a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
             data_type = "RC",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, label_outliers = 99, sr_method="SHMI")
+            OD_adjust = TRUE, label_outliers = TRUE, sr_method="SHMI")
 
 a[1]
 

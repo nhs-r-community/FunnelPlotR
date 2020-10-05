@@ -71,10 +71,10 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
     #target = 1 
     dfCI$s <- 1/(2*sqrt(number.seq))
     
-    dfCI$odll95 <- multiplier * (1 - (1.959964 * sqrt((dfCI$s + sqrt(tau2)^2))))
-    dfCI$odul95 <- multiplier * (1 + (1.959964 * sqrt((dfCI$s + sqrt(tau2)^2))))
-    dfCI$odll998 <- multiplier * (1 - (3.090232 * sqrt((dfCI$s + sqrt(tau2)^2))))
-    dfCI$odul998 <- multiplier * (1 + (3.090232 * sqrt((dfCI$s + sqrt(tau2)^2))))
+    dfCI$odll95 <- multiplier * (1 - (1.959964 * sqrt((dfCI$s^2 + sqrt(tau2)^2))))
+    dfCI$odul95 <- multiplier * (1 + (1.959964 * sqrt((dfCI$s^2 + sqrt(tau2)^2))))
+    dfCI$odll998 <- multiplier * (1 - (3.090232 * sqrt((dfCI$s^2 + sqrt(tau2)^2))))
+    dfCI$odul998 <- multiplier * (1 + (3.090232 * sqrt((dfCI$s^2 + sqrt(tau2)^2))))
     
     
   } else if(data_type=="RC"){
@@ -94,10 +94,10 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y, Poisson_limits
     # PR 1/2*sqrt(n) and CQC SR methods 1/2*sqrt(E)
     dfCI$s <- 1/(2*sqrt(number.seq))
     
-    dfCI$odll95 <- multiplier * sin(asin(sqrt(target)) + 1.959964 * sqrt((dfCI$s^2) +tau2))^2
-    dfCI$odul95 <- multiplier * sin(asin(sqrt(target)) - 1.959964 * sqrt((dfCI$s^2) +tau2))^2
-    dfCI$odll998 <- multiplier * sin(asin(sqrt(target)) + 3.090232 * sqrt((dfCI$s^2) +tau2))^2
-    dfCI$odul998 <- multiplier * sin(asin(sqrt(target)) - 3.090232 * sqrt((dfCI$s^2) +tau2))^2
+    dfCI$odll95 <- multiplier * (sin(asin(sqrt(target)) - (1.959964 * sqrt((dfCI$s^2) +tau2)))^2)
+    dfCI$odul95 <- multiplier * (sin(asin(sqrt(target)) + (1.959964 * sqrt((dfCI$s^2) +tau2)))^2)
+    dfCI$odll998 <- multiplier * (sin(asin(sqrt(target)) - (3.090232 * sqrt((dfCI$s^2) +tau2)))^2)
+    dfCI$odul998 <- multiplier * (sin(asin(sqrt(target)) + (3.090232 * sqrt((dfCI$s^2) +tau2)))^2)
     
   }
 

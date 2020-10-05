@@ -54,7 +54,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
     )))
 
 
-
+  #limits
 
   if (Poisson_limits == TRUE & OD_adjust == TRUE) {
     funnel_p <- funnel_p +

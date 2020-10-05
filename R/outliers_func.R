@@ -20,19 +20,20 @@ outliers_func <- function(mod_plot_agg, OD_adjust, Poisson_limits, limit){
                                      0,
                                      1)
     }
-  }
+  } else {
   
-  if (limit == 99) {
-    if (OD_adjust==FALSE){
-      mod_plot_agg$outlier <- ifelse(mod_plot_agg$rr <= mod_plot_agg$UCL99 &
-                                       mod_plot_agg$rr >= mod_plot_agg$LCL99,
-                                     0,
-                                     1)
-    } else {
-      mod_plot_agg$outlier <- ifelse(mod_plot_agg$rr <= mod_plot_agg$OD99UCL &
-                                       mod_plot_agg$rr >= mod_plot_agg$OD99LCL,
-                                     0,
-                                     1)
+    if (limit == 99) {
+      if (OD_adjust==FALSE){
+        mod_plot_agg$outlier <- ifelse(mod_plot_agg$rr <= mod_plot_agg$UCL99 &
+                                         mod_plot_agg$rr >= mod_plot_agg$LCL99,
+                                       0,
+                                       1)
+      } else {
+        mod_plot_agg$outlier <- ifelse(mod_plot_agg$rr <= mod_plot_agg$OD99UCL &
+                                         mod_plot_agg$rr >= mod_plot_agg$OD99LCL,
+                                       0,
+                                       1)
+      }
     }
   }
   return(mod_plot_agg)

@@ -121,6 +121,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     denominator <- as.numeric(denominator)
   }
   
+  if(identical(numerator,denominator)){
+    stop("Numerator and denominator are the same. Please check your inputs")
+  }
+  
   if(length(plot_cols) < 4){
     stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson, 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
   }
@@ -211,10 +215,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   }
   
   if(yrange[1] == "auto"){
-    min_y <- min((0.7 * target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
-    
     max_y <- max((1.3 * target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
-  } else {
+    min_y <- min((0.7 * target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
+  
+    } else {
     min_y <- yrange[1]
     max_y <- yrange[2]
   }
