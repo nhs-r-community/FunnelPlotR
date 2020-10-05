@@ -31,7 +31,7 @@ test_that("`funnel_plot()` works with input and returns expected list", {
   expect_s3_class(c[[3]], "data.frame")
   expect_length(c[[3]]$group,6)
   expect_length(c[[3]],19)
-  expect_gt(b[[3]]$OD95LCL[5], c[[3]]$OD95LCL[5])
+  expect_lt(b[[3]]$OD95LCL[5], c[[3]]$OD95LCL[5])
 
   d<-funnel_plot(numerator=c(100, 150,180,80,120, 225), denominator=c(108, 112, 165,95,100, 220),
                  group=factor(c("a","b","c", "d","e","f")), OD_adjust = FALSE, sr_method="CQC", trim_by = 0.05,
