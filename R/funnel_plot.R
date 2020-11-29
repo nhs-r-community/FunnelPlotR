@@ -169,6 +169,11 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
 
   mod_plot_agg<-aggregate_func(mod_plot)
   
+  # Round to two decimal places for expected SHMI expected
+  if(data_type == "SR" & sr_method == "SHMI"){
+    mod_plot_agg$denominator <- round(mod_plot_agg$denominator,2)
+  }
+  
   target <- ifelse(data_type == "SR", 1, sum(mod_plot_agg$numerator)/ sum(mod_plot_agg$denominator))
   
   #OD Adjust and return table

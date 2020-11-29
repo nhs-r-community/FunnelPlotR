@@ -57,10 +57,10 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
 
   }
   
-  # special case in SHMI, requires rounding "expected to two digits" 29/11/2020
+  
   if(data_type == "SR" & sr_method=="SHMI"){
    
-      mod_plot_agg$Uzscore <-  sqrt(round(mod_plot_agg$denominator,2)) * log(mod_plot_agg$numerator / round(mod_plot_agg$denominator,2))
+      mod_plot_agg$Uzscore <-  sqrt(mod_plot_agg$denominator) * log(mod_plot_agg$numerator / mod_plot_agg$denominator)
 
     } else {
 
