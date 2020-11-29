@@ -66,7 +66,6 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
       mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$target_transformed) / mod_plot_agg$s
     }
 
-  }
 
   return(mod_plot_agg)
 
