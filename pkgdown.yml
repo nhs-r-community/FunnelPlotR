@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   changing_funnel_plot_options: changing_funnel_plot_options.html
   funnel_plots: funnel_plots.html
-last_built: 2020-11-29T14:49Z
+last_built: 2020-11-29T15:16Z
 urls:
   reference: https://chrismainey.github.io/FunnelPlotR/reference
   article: https://chrismainey.github.io/FunnelPlotR/articles
