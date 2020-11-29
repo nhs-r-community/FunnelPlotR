@@ -193,12 +193,13 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   phi <- phi_func(n= n, zscores=na.omit(mod_plot_agg$Wuzscore))
   
   # Use phi to calculate Tau, the between group standard deviation
-  tau2 <- tau_func(n=n,  phi=phi, S=mod_plot_agg$s)
+  # Update on 29/11/2020 to only include the S without NA values in SHMI
+  tau2 <- tau_func(n=n,  phi=phi, S=mod_plot_agg[!is.na(mod_plot_agg$Wuzscore),]$s)
   
   
   if(OD_adjust == FALSE){
-  phi<-as.numeric(0)
-  tau2<-as.numeric(0)
+    phi<-as.numeric(0)
+    tau2<-as.numeric(0)
   }
   
   # Poisson limits

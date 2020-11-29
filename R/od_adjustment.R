@@ -169,8 +169,8 @@ tau_func <- function(n,  phi, S){
     Tau2 <- 0
   } else {
 
-  Tau2 <- max(0, ((sum(n) * sum(phi)) - (sum(n) - 1)) /
-          (sum(1/(S^2)) - (sum((1/(S^2))^2) / sum(1/(S^2)))))
+    Tau2 <- max(0, ((sum(n) * sum(phi)) - (sum(n) - 1)) /
+            (sum(1/(S^2)) - (sum((1/(S^2))^2) / sum(1/(S^2)))))
 
   }
 
