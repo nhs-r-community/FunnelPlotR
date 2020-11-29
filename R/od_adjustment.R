@@ -111,7 +111,7 @@ truncation <- function(mod_plot_agg = mod_plot_agg, trim_by = 0.1){
   mod_plot_agg$rk <- rank(mod_plot_agg$Uzscore, ties.method = "average")
   mod_plot_agg$sp <- floor(mod_plot_agg$rk  * k / (length(mod_plot_agg$rk) + 1))
   
-  mod_plot_agg$truncated = ifelse(mod_plot_agg$sp > mink & mod_plot_agg$Uzscore < maxk, 0, 1)
+  mod_plot_agg$truncated = ifelse(mod_plot_agg$sp > mink & mod_plot_agg$sp < maxk, 0, 1)
   
   mod_plot_agg$Wuzscore = ifelse(mod_plot_agg$truncated == 1 
                                 , NA
