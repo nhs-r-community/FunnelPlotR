@@ -57,7 +57,15 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
     
   }
   
-  mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$target_transformed) / mod_plot_agg$s
+  if(data_type == "SR" & sr_method=="SHMI"){
+   
+      mod_plot_agg$Uzscore <-  sqrt(mod_plot_agg$denominator) * log(mod_plot_agg$numerator / mod_plot_agg$denominator)
+ 
+    } else {
+      
+      mod_plot_agg$Uzscore <- (mod_plot_agg$Y - mod_plot_agg$target_transformed) / mod_plot_agg$s
+    }
+  
   
   return(mod_plot_agg)
 
@@ -127,7 +135,7 @@ truncation <- function(mod_plot_agg = mod_plot_agg, trim_by = 0.1){
 #' @description Internal function to perform the transformations for data types.
 #'
 #' @param n Single numeric value for the count of the number of groups (and therefore z-scores)
-#' @param zscores Vector of z-scores z-scores to be used.  Commonly, this would be 'winsorised' first to remove inpact of extreme outliers.  SHMI truncates instead, but this simply reduced the n as well as the z-score.
+#' @param zscores Vector of z-scores z-scores to be used.  Commonly, this would be 'winsorised' first to remove impact of extreme outliers.  SHMI truncates instead, but this simply reduced the n as well as the z-score.
 #'
 #' @return A numeric phi value
 #' @keywords internal
