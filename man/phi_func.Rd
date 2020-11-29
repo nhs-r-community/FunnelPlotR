@@ -9,7 +9,7 @@ phi_func(n, zscores)
 \arguments{
 \item{n}{Single numeric value for the count of the number of groups (and therefore z-scores)}
 
-\item{zscores}{Vector of z-scores z-scores to be used.  Commonly, this would be 'winsorised' first to remove inpact of extreme outliers.  SHMI truncates instead, but this simply reduced the n as well as the z-score.}
+\item{zscores}{Vector of z-scores z-scores to be used.  Commonly, this would be 'winsorised' first to remove impact of extreme outliers.  SHMI truncates instead, but this simply reduced the n as well as the z-score.}
 }
 \value{
 A numeric phi value
