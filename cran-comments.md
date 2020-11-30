@@ -1,17 +1,17 @@
 ## Release summary
-This is a major release for the FunnelPlotR package, adding more stats methods, S3 system, changes to user interface, new vignette and removing un-needed dependencies.
+This is a minor release for the FunnelPlotR package, correcting a bug in the way one set of control limits were calculated, plus a several small typos in support material..
 
 ## Test environments
-* local windows 10, R 4.0.2
+* local windows 10, R 4.0.3
 * Windows, R devel 2020-09-09 r79174, on Win-builder
 * Ubuntu 16.04.6 LTS (on travis-ci), R 4.0.2
 
 * GitHub actions:
-  * Mac OS x, R 4.0.2
-  * Windows Server x64 latest, R 4.0.2
+  * Mac OS x 10.15.7, R 4.0.3
+  * Windows Server x64 2019, R 4.0.3
   * Windows Server x64 latest, R 3.6.3
-  * Ubuntu 16.04.07, R-devel 2020-09-13 r79195
-  * Ubuntu 16.04.07, R 4.0.2
+  * Ubuntu 16.04.07, R-devel 2020-11-27 r79522
+  * Ubuntu 16.04.07, R 4.0.3
   * Ubuntu 16.04.07, R 3.6.3
   * Ubuntu 16.04.07, R 3.5.3
   * Ubuntu 16.04.07, R 3.4.4
@@ -26,7 +26,7 @@ This is a major release for the FunnelPlotR package, adding more stats methods, 
 There were no ERRORs or WARNINGs.
 
 NOTE on Win-builder for possibly invalid URL.  URL was checked and is valid.
-NOTE on all systems except fedora: checking for future file timestamps - unable to verify current time
+NOTE on R-Hub Fedora: checking for future file timestamps - unable to verify current time
 
 
 ## Downstream dependencies
