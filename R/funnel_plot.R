@@ -11,7 +11,7 @@
 #' @param title Plot title
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param label_outliers Logical (TRUE or FALSE) for adding outlier labels to the plot.
-#' @param higlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
+#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -95,7 +95,7 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label_outliers = TRUE,
-                            highlight = NULL, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
+                            highlight = FALSE, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
                             , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label ,xrange = "auto", yrange = "auto", plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
                             , theme = funnel_clean()){
@@ -154,12 +154,14 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
 
   # Error handling for highlight argument
-  if (!is.character(highlight)){
-    stop("Please supply `highlight` in character format, or a character vector")
+  if (!(highlight == FALSE)){
+    if(!is.character(highlight)) {
+      stop("Please supply `highlight` in character format, or a character vector")
+    }
   }
   
 
-  if(!is.null(highlight)){
+  if(!highlight==FALSE){
     if (is.factor(group)){
       if((!(highlight %in% levels(mod_plot_agg$group)))){
          stop("Value(s) specified to `highlight` not found in `group` variable")
