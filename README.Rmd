@@ -40,12 +40,12 @@ This is an implementation of the funnel plot processes, and overdispersion metho
 [Funnel plots for comparing institutional performance. Spiegelhalter (2005)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
 [Handling over-dispersion of performance indicators. Spiegelhalter (2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
     
-It draws funnel plots using `ggplot2` and allows users to specify whether they want t adjust the funnel plot limits for 'overdispersion.'  This adjustment makes the assumption that we are dealing with clusters of values (means) at institutions that are themselves arranged around a global mean.  We then have 'within' institution variation and 'between institution' variation.   The process assessed the expected variance in our data, and where it is greater than that expected by the Poisson distribution, uses the difference as a scaling factor.  It is then used in an additive fashion, after an adjustment for outliers by either Winsorised or truncated (with a default 10% at each end of the distribution.)
+It draws funnel plots using `ggplot2` and allows users to specify whether they want to adjust the funnel plot limits for 'overdispersion.'  This adjustment makes the assumption that we are dealing with clusters of values (means) at institutions that are themselves arranged around a global mean.  We then have 'within' institution variation and 'between institution' variation.   The process assessed the expected variance in our data, and where it is greater than that expected by the Poisson distribution, uses the difference as a scaling factor.  It is then used in an additive fashion, after an adjustment for outliers by either Winsorised or truncated (with a default 10% at each end of the distribution.)
 
-Methods are based on those presented in Spiegelhalter's papers and the Care Quality Commission's Intelligent Monitoring methodology documents.  There is a variant method for standardised ratios, used in the NHS' Summary Hospital Mortality Indicator'<br>
+Methods are based on those presented in Spiegelhalter's papers and the Care Quality Commission's Intelligent Monitoring methodology documents, with methods for proportions, ratios of counts and indirectly standardised ratios.  There is a also a variant method for standardised ratios, used in the NHS' Summary Hospital Mortality Indicator'<br>
 [Summary Hospital-level Mortality Indicator, NHS Digital, SHMI specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi) <br>
 
-This uses a log-transformation and truncation of the distribution for calculating overdispersion, whereas Spiegelhalter's methods use a square-root and Winsorisation.
+This variant uses a log-transformation and truncation of the distribution for calculating overdispersion, whereas Spiegelhalter's methods use a square-root and Winsorisation.
 
 
 Contributions are welcome.  Please note that the 'FunnelPlotR' project is released with a
@@ -98,7 +98,7 @@ We can build a funnel plot object with standard Poisson limits, and outliers lab
 ```{r fig.align='center', fig.retina=5, warning=FALSE, collapse=TRUE, funnel1, message=FALSE, eval=TRUE}
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR", limit=99,
-            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = TRUE)
+            Poisson_limits = TRUE, OD_adjust = FALSE, label = "outlier")
 print(a)
 ```
 
@@ -121,7 +121,7 @@ This is a huge topic, but applying overdispersed limits using either SHMI or Spi
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE, eval=TRUE}
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = TRUE, limit=99)
+            OD_adjust = TRUE, sr_method = "SHMI",label = "outlier", limit=99)
 
 print(b)
 ```
