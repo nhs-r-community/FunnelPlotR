@@ -95,7 +95,7 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label_outliers = TRUE,
-                            highlight = FALSE, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
+                            highlight = NULL, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
                             , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label ,xrange = "auto", yrange = "auto", plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
                             , theme = funnel_clean()){
