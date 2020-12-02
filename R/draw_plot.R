@@ -35,7 +35,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
   # Bind variable for NSE
   numerator <- denominator <- number.seq <- ll95 <- ul95 <- ll998 <- ul998 <- odll95 <- odul95 <-
     odll998 <- odul998 <- rr <- UCL95 <- group <- LCL95 <- OD95UCL <- OD95LCL <-UCL99 <-LCL99 <-
-    OD99UCL <- OD99LCL <- outlier <- NULL
+    OD99UCL <- OD99LCL <- outlier <- highlight <- NULL
   
   
   
