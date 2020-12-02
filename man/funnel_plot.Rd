@@ -12,6 +12,7 @@ funnel_plot(
   data_type = "SR",
   limit = 99,
   label_outliers = TRUE,
+  highlight = FALSE,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
@@ -38,6 +39,8 @@ funnel_plot(
 \item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 
 \item{label_outliers}{Logical (TRUE or FALSE) for adding outlier labels to the plot.}
+
+\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
