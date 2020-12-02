@@ -147,7 +147,7 @@
     <p>Label outliers</p>
     </div>
 
-    <pre class="usage"><span class='fu'>outliers_func</span><span class='op'>(</span><span class='va'>mod_plot_agg</span>, <span class='va'>OD_adjust</span>, <span class='va'>Poisson_limits</span>, <span class='va'>limit</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>outliers_func</span><span class='op'>(</span><span class='va'>mod_plot_agg</span>, <span class='va'>OD_adjust</span>, <span class='va'>Poisson_limits</span>, <span class='va'>limit</span>, <span class='va'>multiplier</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,6 +167,10 @@
     <tr>
       <th>limit</th>
       <td><p>which limit to use.  Currently 95 or 99.</p></td>
+    </tr>
+    <tr>
+      <th>multiplier</th>
+      <td><p>the amount to scale the RR / limits by. Default is 1 \(no scaling\).</p></td>
     </tr>
     </table>
 

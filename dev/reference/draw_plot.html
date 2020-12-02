@@ -153,9 +153,8 @@
   <span class='va'>x_label</span>,
   <span class='va'>y_label</span>,
   <span class='va'>title</span>,
-  <span class='va'>label_outliers</span>,
+  <span class='va'>label</span>,
   <span class='va'>multiplier</span>,
-  <span class='va'>highlight</span>,
   <span class='va'>Poisson_limits</span>,
   <span class='va'>OD_adjust</span>,
   <span class='va'>target</span>,
@@ -193,8 +192,8 @@
       <td><p>Plot title</p></td>
     </tr>
     <tr>
-      <th>label_outliers</th>
-      <td><p>Add group labels to outliers on plot. Accepted values are\: 95 or 99 corresponding to 95% or 99.8% quantiles of the distribution. Default=99</p></td>
+      <th>label</th>
+      <td><p>Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".</p></td>
     </tr>
     <tr>
       <th>multiplier</th>
@@ -239,10 +238,6 @@
     <tr>
       <th>theme</th>
       <td><p>a ggplot theme function.</p></td>
-    </tr>
-    <tr>
-      <th>higlight</th>
-      <td><p>Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.</p></td>
     </tr>
     </table>
 
