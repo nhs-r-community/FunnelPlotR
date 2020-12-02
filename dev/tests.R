@@ -7,7 +7,7 @@ data_type = "SR"
 limit=95
 label_outliers = TRUE
 Poisson_limits = TRUE
-OD_adjust = TRUE
+OD_adjust = FALSE
 sr_method = "SHMI"
 trim_by = 0.1
 title="Untitled Funnel Plot"
@@ -19,9 +19,10 @@ yrange = "auto"
 #return_elements=c("plot", "data", "limits")
 theme = funnel_clean()
 plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
+highlight = c("030001")
 
 # lets use the \'medpar\' dataset from the \'COUNT\' package. Little reformatting needed
-#library(COUNT)
+library(COUNT)
 data(medpar)
 medpar$provnum<-factor(medpar$provnum)
 medpar$los<-as.numeric(medpar$los)
@@ -35,7 +36,7 @@ medpar$prds<- predict(mod, type="response")
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, 
                  group = medpar$provnum, limit=99 ,label_outliers = TRUE, sr_method = "CQC",
-                 Poisson_limits = TRUE)
+                 Poisson_limits = TRUE, highlight = c("030001", "030002"))
 
 fp2
 class(fp2)

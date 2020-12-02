@@ -12,6 +12,7 @@ draw_plot(
   title,
   label_outliers,
   multiplier,
+  highlight,
   Poisson_limits,
   OD_adjust,
   target,
@@ -59,6 +60,8 @@ draw_plot(
 \item{sr_method}{CQC or SHMI methods for standardised ratios}
 
 \item{theme}{a ggplot theme function.}
+
+\item{higlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
 }
 \value{
 A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.

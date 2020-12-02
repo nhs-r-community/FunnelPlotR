@@ -12,6 +12,7 @@ funnel_plot(
   data_type = "SR",
   limit = 99,
   label_outliers = TRUE,
+  highlight = FALSE,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
@@ -68,6 +69,8 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 \item{plot_cols}{A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
+
+\item{higlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
