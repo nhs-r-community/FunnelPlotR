@@ -11,7 +11,7 @@
 #' @param title Plot title
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".
-#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
+#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -28,7 +28,9 @@
 #' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
 #' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
-#' @param plot_cols A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
+#' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper). 
+#' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  
+#' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
 #' \item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
@@ -95,9 +97,10 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
-                            highlight = FALSE, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
-                            , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
-                            y_label ,xrange = "auto", yrange = "auto", plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
+                            highlight = NA, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
+                            , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected"
+                            , y_label ,xrange = "auto", yrange = "auto"
+                            , plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
                             , theme = funnel_clean()){
 
 
@@ -154,14 +157,15 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
 
   # Error handling for highlight argument
-  if (!(highlight == FALSE)){
+  if (!(is.na(highlight))){
     if(!is.character(highlight)) {
       stop("Please supply `highlight` in character format, or a character vector")
     }
   }
   
+  
 
-  if(!highlight==FALSE){
+  if(!is.na(highlight)){
     if (is.factor(group)){
       if((!(highlight %in% levels(group)))){
          stop("Value(s) specified to `highlight` not found in `group` variable")
@@ -178,10 +182,15 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   # Define vector for scale colours
   plot_cols<-c(
-    "99.8% Poisson" = plot_cols[2],
-    "95% Poisson" = plot_cols[1],
-    "99.8% Overdispersed" = plot_cols[4],
-    "95% Overdispersed" = plot_cols[3]
+    
+    "95% Lower Poisson" = plot_cols[1],
+    "95% Upper Poisson" = plot_cols[2],
+    "99.8% Lower Poisson" = plot_cols[3],
+    "99.8% Upper Poisson" = plot_cols[4],
+    "95% Lower Overdispersed" = plot_cols[5],
+    "95% Upper Overdispersed" = plot_cols[6],
+    "99.8% Lower Overdispersed" = plot_cols[7],
+    "99.8% Upper Overdispersed" = plot_cols[8]
   )
 
 

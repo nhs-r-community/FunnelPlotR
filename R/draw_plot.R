@@ -41,8 +41,8 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
   
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
-    geom_point(aes(fill=highlight, shape=highlight, size = highlight), alpha = 0.55, col=1, show.legend = FALSE) +
     geom_hline(aes(yintercept = target * multiplier), linetype = 2) +
+    geom_point(aes(fill=highlight, shape=highlight, size = highlight), alpha = 0.55, col=1, show.legend = FALSE) +
     scale_shape_manual(values = c("0"=21, "1"=23, 1))+
     scale_fill_manual(values = c("0"="dodgerblue","1"="yellow", 1))+
     scale_size_manual(values = c("0"=2, "1"=3, 2), )+
@@ -59,35 +59,35 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
 
 
   #limits
-
-  if (Poisson_limits == TRUE & OD_adjust == TRUE) {
+  
+    if (Poisson_limits == TRUE & OD_adjust == TRUE) {
     funnel_p <- funnel_p +
-      geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll95, col = "95% Lower Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul95, col = "95% Upper Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower Poisson"), size = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper Poisson"), size = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
       scale_color_manual(values = plot_cols, name = "Control limits")
   } else {
     if (Poisson_limits == TRUE & OD_adjust == FALSE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = ll95, col = "95% Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul95, col = "95% Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Poisson"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Poisson"), size = 1, data = limits, na.rm = TRUE) +
-        scale_color_manual(values = plot_cols[1:2], name = "Control limits")
+        geom_line(aes(x = number.seq, y = ll95, col = "95% Lower Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul95, col = "95% Upper Poisson"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower Poisson"), size = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper Poisson"), size = 1, data = limits, na.rm = TRUE) +
+        scale_color_manual(values = plot_cols[1:4], name = "Control limits")
     }
 
     if (Poisson_limits == FALSE &  OD_adjust == TRUE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-        scale_color_manual(values = plot_cols[3:4], name = "Control limits")
+        geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed"), size = 1, linetype = 2, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
+        scale_color_manual(values = plot_cols[5:8], name = "Control limits")
     }
   }
 

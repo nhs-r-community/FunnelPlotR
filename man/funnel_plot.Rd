@@ -12,7 +12,7 @@ funnel_plot(
   data_type = "SR",
   limit = 99,
   label = "outlier",
-  highlight = FALSE,
+  highlight = NA,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
@@ -23,7 +23,8 @@ funnel_plot(
   y_label,
   xrange = "auto",
   yrange = "auto",
-  plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF"),
+  plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF", "#1F77B4FF", "#9467BDFF",
+    "#9467BDFF", "#2CA02CFF", "#2CA02CFF"),
   theme = funnel_clean()
 )
 }
@@ -40,7 +41,7 @@ funnel_plot(
 
 \item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".}
 
-\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
+\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
@@ -68,7 +69,9 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
-\item{plot_cols}{A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")}
+\item{plot_cols}{A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper). 
+Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  
+Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
 }

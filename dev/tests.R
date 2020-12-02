@@ -36,7 +36,9 @@ medpar$prds<- predict(mod, type="response")
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
                  group = medpar$provnum, limit=99 ,label = "outlier", sr_method = "CQC",
-                 Poisson_limits = TRUE, OD_adjust=FALSE, highlight = "030002")
+                 Poisson_limits = TRUE, OD_adjust=FALSE, highlight = "030002", theme=funnel_grey(),
+                 plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
+                 
 
 fp2
 class(fp2)
