@@ -8,7 +8,6 @@
 #' @param title Plot title
 #' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
-#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)
 #' @param target the calculated target value for the data type
@@ -30,7 +29,7 @@
 
 
 draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multiplier,
-                    highlight, Poisson_limits, OD_adjust, target, min_y, max_y, min_x, max_x
+                     Poisson_limits, OD_adjust, target, min_y, max_y, min_x, max_x
                     , data_type, sr_method, theme, plot_cols){
   
   # Bind variable for NSE
@@ -38,8 +37,6 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
     odll998 <- odul998 <- rr <- UCL95 <- group <- LCL95 <- OD95UCL <- OD95LCL <-UCL99 <-LCL99 <-
     OD99UCL <- OD99LCL <- outlier <- NULL
   
-  # Add a colouring variable 
-  mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
   
   
   # base funnel plot

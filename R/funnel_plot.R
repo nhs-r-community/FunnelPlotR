@@ -271,13 +271,15 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
                               data_type=data_type, sr_method=sr_method, target=target, 
                               multiplier=multiplier)
   
+  # Add a colouring variable 
+  mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
   
   # Add outliers flag
   mod_plot_agg <- outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit, multiplier)
   
   # Assemble plot
   fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,
-                      multiplier=multiplier, highlight=highlight, 
+                      multiplier=multiplier,  
                       Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
                       sr_method = sr_method, theme = theme, plot_cols=plot_cols)

@@ -140,13 +140,13 @@ medpar$prds<- predict(mod, type="response")
 
 ### Build plot
 
-Now we can build a funnel plot object with standard Poisson limits, and outliers labelled.  The function returns a list of the plotted data, the plotted control limit range, and the `ggplot` object, hence `object[3]` to call it.
+Now we can build a funnel plot object with standard Poisson limits, and outliers labelled.  The function returns an S3 object, with various methods including `print()`, `outlier()`, `limits()`, `source_data()` etc.  See the help file: `?funnel_plot` for more details.  
 
 ```{r, funnel1, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = FALSE,label_outliers = TRUE, limit=99)
+            OD_adjust = FALSE,label = "outlier", limit=99)
 ```
 
 <br>
@@ -172,7 +172,7 @@ This is a huge topic, but applying overdispersed limits using either SHMI or Spi
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE}
 funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, data_type="SR", sr_method = "SHMI",label_outliers = TRUE, limit=99
+            OD_adjust = TRUE, data_type="SR", sr_method = "SHMI",label = "outlier", limit=99
             )
 ```
 

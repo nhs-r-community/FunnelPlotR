@@ -149,7 +149,7 @@ Since `funnelplotr` uses `ggplot2`, you could always extract the plot and alter 
 # Original funnel plot object
 fp <-
 funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+            , group = medpar$provnum, limit=99, label = "outlier"
             , Poisson_limits = TRUE)
 
 # Extract just the plot

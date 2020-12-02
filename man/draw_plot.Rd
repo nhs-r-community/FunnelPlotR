@@ -12,7 +12,6 @@ draw_plot(
   title,
   label,
   multiplier,
-  highlight,
   Poisson_limits,
   OD_adjust,
   target,
@@ -40,8 +39,6 @@ draw_plot(
 \item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".}
 
 \item{multiplier}{Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR}
-
-\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
 
 \item{Poisson_limits}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
