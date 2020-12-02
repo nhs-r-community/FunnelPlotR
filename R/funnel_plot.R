@@ -10,7 +10,7 @@
 #' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
 #' @param title Plot title
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
-#' @param label_outliers Logical (TRUE or FALSE) for adding outlier labels to the plot.
+#' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
@@ -44,7 +44,7 @@
 #' @export
 #' @details
 #'    Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99.8\% quantiles of the normal distribution.\cr
-#'    Labels can be turned on or of using the `label_outliers` argument.\cr
+#'    Labels can attached using the `label` argument.\cr
 #'    Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012), set `OD_adjust` to FALSE to suppress this. \cr
 #'    To use Poisson limits set `Poisson_limits=TRUE`. \cr
 #'    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
@@ -94,7 +94,7 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label_outliers = TRUE,
+funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
                             highlight = FALSE, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
                             , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
                             y_label ,xrange = "auto", yrange = "auto", plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
@@ -130,8 +130,8 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson, 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
   }
   
-  if(!is.logical(label_outliers)){
-    stop("No logical argument for label_oultiers detected.  e.g. Have you passed 95 to it instead of TRUE? See help file for argments.")
+  if(!(label %in% c("outlier", "highlight", "both", NA))){
+    stop("No permitted labelling specification.  See help: `?funnel_plot`")
   }
   
   if (missing(x_label)){
@@ -163,11 +163,11 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
 
   if(!highlight==FALSE){
     if (is.factor(group)){
-      if((!(highlight %in% levels(mod_plot_agg$group)))){
+      if((!(highlight %in% levels(group)))){
          stop("Value(s) specified to `highlight` not found in `group` variable")
       }
     } else {
-      if (!(highlight %in% mod_plot_agg$group)) {
+      if (!(highlight %in% group)) {
         stop("Value(s) specified to `highlight` not found in `group` variable")
       }
     }
@@ -273,11 +273,12 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   
   # Add outliers flag
-  mod_plot_agg <- outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit)
+  mod_plot_agg <- outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit, multiplier)
   
   # Assemble plot
-  fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label_outliers,
-                      multiplier=multiplier, highlight=highlight, Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
+  fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,
+                      multiplier=multiplier, highlight=highlight, 
+                      Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
                       sr_method = sr_method, theme = theme, plot_cols=plot_cols)
   

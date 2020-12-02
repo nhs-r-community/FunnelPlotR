@@ -164,14 +164,17 @@ phi_func <- function(n, zscores){
 #'
 #'
 tau_func <- function(n,  phi, S){
-
-  if((n*phi) < (n - 1)){
+  
+  if(length(S) == 0){
     Tau2 <- 0
   } else {
-
-    Tau2 <- max(0, ((sum(n) * sum(phi)) - (sum(n) - 1)) /
-            (sum(1/(S^2)) - (sum((1/(S^2))^2) / sum(1/(S^2)))))
-
+      if((n*phi) < (n - 1)){
+      Tau2 <- 0
+    } else {
+  
+      Tau2 <- max(0, ((sum(n) * sum(phi)) - (sum(n) - 1)) /
+              (sum(1/(S^2)) - (sum((1/(S^2))^2) / sum(1/(S^2)))))
+    }
   }
 
   return(Tau2)

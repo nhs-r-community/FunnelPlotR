@@ -6,9 +6,9 @@
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
 #' @param title Plot title
-#' @param label_outliers Add group labels to outliers on plot. Accepted values are\: 95 or 99 corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99
+#' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR
-#' @param higlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
+#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
 #' @param Poisson_limits Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)
 #' @param target the calculated target value for the data type
@@ -29,7 +29,7 @@
 #' @import ggplot2
 
 
-draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outliers, multiplier,
+draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multiplier,
                     highlight, Poisson_limits, OD_adjust, target, min_y, max_y, min_x, max_x
                     , data_type, sr_method, theme, plot_cols){
   
@@ -48,7 +48,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
     geom_hline(aes(yintercept = target * multiplier), linetype = 2) +
     scale_shape_manual(values = c("0"=21, "1"=23, 1))+
     scale_fill_manual(values = c("0"="dodgerblue","1"="yellow", 1))+
-    scale_size_manual(values = c("0"=2, "1"=3, 2))+
+    scale_size_manual(values = c("0"=2, "1"=3, 2), )+
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
@@ -109,15 +109,32 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
   
   
 
- # Label outliers
-  
-  if(label_outliers==TRUE){
-  
-    funnel_p <- funnel_p +
-      geom_label_repel(aes(label = ifelse(outlier == 1,
-                                          as.character(group), ""))
-                       , size = 2.7, direction = "y",
-                       force = 2, min.segment.length = 0)
+ # Label points
+  if(!is.na(label)){
+    if(label=="outlier"){
+    
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse(outlier == 1,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    } 
+    
+    if(label=="highlight"){
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse(highlight == 1,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    } 
+    
+    if(label=="both"){
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    }
   }
      
   

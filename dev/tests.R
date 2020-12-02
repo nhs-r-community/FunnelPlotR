@@ -22,7 +22,7 @@ plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
 highlight = c("030001")
 
 # lets use the \'medpar\' dataset from the \'COUNT\' package. Little reformatting needed
-library(COUNT)
+#library(COUNT)
 data(medpar)
 medpar$provnum<-factor(medpar$provnum)
 medpar$los<-as.numeric(medpar$los)
@@ -35,8 +35,8 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
-                 group = medpar$provnum, limit=99 ,label_outliers = TRUE, sr_method = "CQC",
-                 Poisson_limits = TRUE)
+                 group = medpar$provnum, limit=99 ,label = "outlier", sr_method = "CQC",
+                 Poisson_limits = TRUE, OD_adjust=FALSE, highlight = "030002")
 
 fp2
 class(fp2)
@@ -47,7 +47,7 @@ summary(fp2)
 phi(fp2)
 tau2(fp2)
 outliers(fp2)
-source_data(fp2)[53,]
+source_data(fp2)
 
 
 

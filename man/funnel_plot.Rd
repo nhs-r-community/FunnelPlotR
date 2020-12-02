@@ -11,7 +11,7 @@ funnel_plot(
   group,
   data_type = "SR",
   limit = 99,
-  label_outliers = TRUE,
+  label = "outlier",
   highlight = FALSE,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
@@ -38,7 +38,7 @@ funnel_plot(
 
 \item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 
-\item{label_outliers}{Logical (TRUE or FALSE) for adding outlier labels to the plot.}
+\item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".}
 
 \item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
 
@@ -92,7 +92,7 @@ and constructing an additive random effects models, originally used for meta-ana
 }
 \details{
 Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99.8\% quantiles of the normal distribution.\cr
-   Labels can be turned on or of using the `label_outliers` argument.\cr
+   Labels can attached using the `label` argument.\cr
    Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012), set `OD_adjust` to FALSE to suppress this. \cr
    To use Poisson limits set `Poisson_limits=TRUE`. \cr
    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
