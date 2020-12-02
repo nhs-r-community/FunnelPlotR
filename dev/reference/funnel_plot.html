@@ -160,6 +160,7 @@ and constructing an additive random effects models, originally used for meta-ana
   data_type <span class='op'>=</span> <span class='st'>"SR"</span>,
   limit <span class='op'>=</span> <span class='fl'>99</span>,
   label_outliers <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  highlight <span class='op'>=</span> <span class='cn'>FALSE</span>,
   Poisson_limits <span class='op'>=</span> <span class='cn'>FALSE</span>,
   OD_adjust <span class='op'>=</span> <span class='cn'>TRUE</span>,
   sr_method <span class='op'>=</span> <span class='st'>"SHMI"</span>,
@@ -200,6 +201,10 @@ and constructing an additive random effects models, originally used for meta-ana
     <tr>
       <th>label_outliers</th>
       <td><p>Logical (TRUE or FALSE) for adding outlier labels to the plot.</p></td>
+    </tr>
+    <tr>
+      <th>highlight</th>
+      <td><p>Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.</p></td>
     </tr>
     <tr>
       <th>Poisson_limits</th>
