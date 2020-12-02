@@ -12,7 +12,7 @@ funnel_plot(
   data_type = "SR",
   limit = 99,
   label_outliers = TRUE,
-  highlight = FALSE,
+  highlight = NULL,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
