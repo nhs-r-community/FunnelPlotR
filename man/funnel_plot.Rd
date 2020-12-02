@@ -11,8 +11,8 @@ funnel_plot(
   group,
   data_type = "SR",
   limit = 99,
-  label_outliers = TRUE,
-  highlight = FALSE,
+  label = "outlier",
+  highlight = NA,
   Poisson_limits = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
@@ -23,7 +23,8 @@ funnel_plot(
   y_label,
   xrange = "auto",
   yrange = "auto",
-  plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF"),
+  plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF", "#1F77B4FF", "#9467BDFF",
+    "#9467BDFF", "#2CA02CFF", "#2CA02CFF"),
   theme = funnel_clean()
 )
 }
@@ -38,9 +39,9 @@ funnel_plot(
 
 \item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 
-\item{label_outliers}{Logical (TRUE or FALSE) for adding outlier labels to the plot.}
+\item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".}
 
-\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.}
+\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
@@ -68,7 +69,9 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
-\item{plot_cols}{A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")}
+\item{plot_cols}{A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper). 
+Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  
+Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
 }
@@ -92,7 +95,7 @@ and constructing an additive random effects models, originally used for meta-ana
 }
 \details{
 Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99.8\% quantiles of the normal distribution.\cr
-   Labels can be turned on or of using the `label_outliers` argument.\cr
+   Labels can attached using the `label` argument.\cr
    Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012), set `OD_adjust` to FALSE to suppress this. \cr
    To use Poisson limits set `Poisson_limits=TRUE`. \cr
    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.

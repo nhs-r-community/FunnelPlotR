@@ -10,8 +10,8 @@
 #' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
 #' @param title Plot title
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
-#' @param label_outliers Logical (TRUE or FALSE) for adding outlier labels to the plot.
-#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`.
+#' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".
+#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -28,7 +28,9 @@
 #' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
 #' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
-#' @param plot_cols A vector of 4 colours for funnel limits, in order: 95\% Poisson, 99.8\% Poisson, 95\% OD-adjusted, 99.8\% OD-adjusted. Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
+#' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper). 
+#' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  
+#' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
 #' \item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
@@ -44,7 +46,7 @@
 #' @export
 #' @details
 #'    Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99.8\% quantiles of the normal distribution.\cr
-#'    Labels can be turned on or of using the `label_outliers` argument.\cr
+#'    Labels can attached using the `label` argument.\cr
 #'    Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012), set `OD_adjust` to FALSE to suppress this. \cr
 #'    To use Poisson limits set `Poisson_limits=TRUE`. \cr
 #'    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
@@ -94,10 +96,11 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label_outliers = TRUE,
-                            highlight = FALSE, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
-                            , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected",
-                            y_label ,xrange = "auto", yrange = "auto", plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
+funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
+                            highlight = NA, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
+                            , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected"
+                            , y_label ,xrange = "auto", yrange = "auto"
+                            , plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
                             , theme = funnel_clean()){
 
 
@@ -130,8 +133,8 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson, 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
   }
   
-  if(!is.logical(label_outliers)){
-    stop("No logical argument for label_oultiers detected.  e.g. Have you passed 95 to it instead of TRUE? See help file for argments.")
+  if(!(label %in% c("outlier", "highlight", "both", NA))){
+    stop("No permitted labelling specification.  See help: `?funnel_plot`")
   }
   
   if (missing(x_label)){
@@ -154,20 +157,21 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
 
   # Error handling for highlight argument
-  if (!(highlight == FALSE)){
+  if (!(is.na(highlight))){
     if(!is.character(highlight)) {
       stop("Please supply `highlight` in character format, or a character vector")
     }
   }
   
+  
 
-  if(!highlight==FALSE){
+  if(!is.na(highlight)){
     if (is.factor(group)){
-      if((!(highlight %in% levels(mod_plot_agg$group)))){
+      if((!(highlight %in% levels(group)))){
          stop("Value(s) specified to `highlight` not found in `group` variable")
       }
     } else {
-      if (!(highlight %in% mod_plot_agg$group)) {
+      if (!(highlight %in% group)) {
         stop("Value(s) specified to `highlight` not found in `group` variable")
       }
     }
@@ -178,10 +182,15 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   # Define vector for scale colours
   plot_cols<-c(
-    "99.8% Poisson" = plot_cols[2],
-    "95% Poisson" = plot_cols[1],
-    "99.8% Overdispersed" = plot_cols[4],
-    "95% Overdispersed" = plot_cols[3]
+    
+    "95% Lower Poisson" = plot_cols[1],
+    "95% Upper Poisson" = plot_cols[2],
+    "99.8% Lower Poisson" = plot_cols[3],
+    "99.8% Upper Poisson" = plot_cols[4],
+    "95% Lower Overdispersed" = plot_cols[5],
+    "95% Upper Overdispersed" = plot_cols[6],
+    "99.8% Lower Overdispersed" = plot_cols[7],
+    "99.8% Upper Overdispersed" = plot_cols[8]
   )
 
 
@@ -271,13 +280,16 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
                               data_type=data_type, sr_method=sr_method, target=target, 
                               multiplier=multiplier)
   
+  # Add a colouring variable 
+  mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
   
   # Add outliers flag
-  mod_plot_agg <- outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit)
+  mod_plot_agg <- outliers_func(mod_plot_agg, OD_adjust, Poisson_limits, limit, multiplier)
   
   # Assemble plot
-  fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label_outliers,
-                      multiplier=multiplier, highlight=highlight, Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
+  fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,
+                      multiplier=multiplier,  
+                      Poisson_limits=Poisson_limits, OD_adjust=OD_adjust,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
                       sr_method = sr_method, theme = theme, plot_cols=plot_cols)
   
