@@ -45,7 +45,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label_outlier
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
     geom_point(aes(fill=highlight, shape=highlight, size = highlight), alpha = 0.55, col=1, show.legend = FALSE) +
-    geom_hline(aes(yintercept = target), linetype = 2) +
+    geom_hline(aes(yintercept = target * multiplier), linetype = 2) +
     scale_shape_manual(values = c("0"=21, "1"=23, 1))+
     scale_fill_manual(values = c("0"="dodgerblue","1"="yellow", 1))+
     scale_size_manual(values = c("0"=2, "1"=3, 2))+

@@ -152,10 +152,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     }
   }
   
-<<<<<<< HEAD
 
-=======
->>>>>>> master
   # Error handling for highlight argument
   if (!is.character(highlight)){
     stop("Please supply `highlight` in character format, or a character vector")
