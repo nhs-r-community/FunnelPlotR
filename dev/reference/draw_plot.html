@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9999</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.9999</span>
       </span>
     </div>
 
@@ -109,7 +109,13 @@
     <li>
       <a href="../articles/funnel_plots.html">Introduction to Funnel Plots</a>
     </li>
+    <li>
+      <a href="../articles/changing_funnel_plot_options.html">Changing funnel plot options</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -141,30 +147,37 @@
     <p>Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>draw_plot</span>(
-  <span class='no'>mod_plot_agg</span>,
-  <span class='no'>x_label</span>,
-  <span class='no'>y_label</span>,
-  <span class='no'>title</span>,
-  <span class='no'>label_outliers</span>,
-  <span class='no'>multiplier</span>,
-  <span class='no'>Poisson_limits</span>,
-  <span class='no'>OD_adjust</span>,
-  <span class='kw'>Tau2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>Target</span>,
-  <span class='no'>yrange</span>,
-  <span class='no'>xrange</span>,
-  <span class='no'>data_type</span>,
-  <span class='no'>sr_method</span>,
-  <span class='no'>theme</span>
-)</pre>
+    <pre class="usage"><span class='fu'>draw_plot</span><span class='op'>(</span>
+  <span class='va'>mod_plot_agg</span>,
+  <span class='va'>limits</span>,
+  <span class='va'>x_label</span>,
+  <span class='va'>y_label</span>,
+  <span class='va'>title</span>,
+  <span class='va'>label_outliers</span>,
+  <span class='va'>multiplier</span>,
+  <span class='va'>Poisson_limits</span>,
+  <span class='va'>OD_adjust</span>,
+  <span class='va'>target</span>,
+  <span class='va'>min_y</span>,
+  <span class='va'>max_y</span>,
+  <span class='va'>min_x</span>,
+  <span class='va'>max_x</span>,
+  <span class='va'>data_type</span>,
+  <span class='va'>sr_method</span>,
+  <span class='va'>theme</span>,
+  <span class='va'>plot_cols</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mod_plot_agg</th>
-      <td><p>data frame of containing numerator, denominator, ratio/proportion, SEs and limits</p></td>
+      <td><p>data.frame of containing numerator, denominator, ratio/proportion, SEs and limits</p></td>
+    </tr>
+    <tr>
+      <th>limits</th>
+      <td><p>data.frame of limits from set_plot_range().</p></td>
     </tr>
     <tr>
       <th>x_label</th>
@@ -192,23 +205,27 @@
     </tr>
     <tr>
       <th>OD_adjust</th>
-      <td><p>Draw overdispersed limits using Spiegelhalter's (2012) Tau2 (default=TRUE)</p></td>
+      <td><p>Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)</p></td>
     </tr>
     <tr>
-      <th>Tau2</th>
-      <td><p>The Tau2 value to use for plotting limits</p></td>
-    </tr>
-    <tr>
-      <th>Target</th>
+      <th>target</th>
       <td><p>the calculated target value for the data type</p></td>
     </tr>
     <tr>
-      <th>yrange</th>
-      <td><p>Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)</p></td>
+      <th>min_y</th>
+      <td><p>Specify the plot range.</p></td>
     </tr>
     <tr>
-      <th>xrange</th>
-      <td><p>Specify the plot range. Default is "auto", else vector of length 2 e.g. c(0,200)</p></td>
+      <th>max_y</th>
+      <td><p>Specify the plot range.</p></td>
+    </tr>
+    <tr>
+      <th>min_x</th>
+      <td><p>Specify the plot range.</p></td>
+    </tr>
+    <tr>
+      <th>max_x</th>
+      <td><p>Specify the plot range.</p></td>
     </tr>
     <tr>
       <th>data_type</th>
@@ -239,11 +256,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://www.mainard.co.uk'>Chris Mainey</a>.</p>
+  <p>Developed by <a href='https://www.mainard.co.uk'>Chris Mainey</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

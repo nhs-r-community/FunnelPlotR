@@ -25,10 +25,31 @@
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/funnel_plot.html</loc>
   </url>
   <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/limits.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/new_funnel_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/outliers.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/outliers_func.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/phi.html</loc>
+  </url>
+  <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/phi_func.html</loc>
   </url>
   <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/poisson_limits.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/source_data.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/tau2.html</loc>
   </url>
   <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/tau_func.html</loc>
@@ -37,7 +58,16 @@
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/transformed_zscore.html</loc>
   </url>
   <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/truncation.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/reference/validate_funnel_plot.html</loc>
+  </url>
+  <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/reference/winsorisation.html</loc>
+  </url>
+  <url>
+    <loc>https://chrismainey.github.io/FunnelPlotR/articles/changing_funnel_plot_options.html</loc>
   </url>
   <url>
     <loc>https://chrismainey.github.io/FunnelPlotR/articles/funnel_plots.html</loc>

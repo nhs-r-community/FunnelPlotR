@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9999</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.9999</span>
       </span>
     </div>
 
@@ -64,7 +64,13 @@
 <li>
       <a href="../articles/funnel_plots.html">Introduction to Funnel Plots</a>
     </li>
+    <li>
+      <a href="../articles/changing_funnel_plot_options.html">Changing funnel plot options</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -84,7 +90,8 @@
 
       
 
-      </header><div class="row">
+      </header><link href="funnel_plots_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="funnel_plots_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Funnel Plots for Indirectly-standardised ratios</h1>
@@ -101,7 +108,7 @@
 <h2 class="hasAnchor">
 <a href="#funnel-plots" class="anchor"></a>Funnel plots</h2>
 <p>Funnel plots are a common tool for comparing organisations or units using proportions or standardised rates. A common use of them is for monitoring mortality at hospitals. This is an introductory post on the subject, that gives a little information about them and how they are constructed. It is deliberately light on theory, focusing on use, some of the theory is referenced for interested readers.</p>
-<p>This post also uses a funnel plot function, for indirectly standardised ratios, that I built as part of my PhD work. The function is based on <code>ggplot2</code> <span class="citation">(Wickham 2009)</span>, and is available at <a href="https://github.com/chrismainey/FunnelPlotR" class="uri">https://github.com/chrismainey/FunnelPlotR</a>, although it’s a work in progress.</p>
+<p>This post also uses a funnel plot function, for indirectly standardised ratios, that I built as part of my PhD work. The function is based on <code>ggplot2</code> <span class="citation">(Wickham, 2009)</span>, and is available at <a href="https://github.com/chrismainey/FunnelPlotR" class="uri">https://github.com/chrismainey/FunnelPlotR</a>, although it’s a work in progress.</p>
 <p>There are different kinds of funnel plot, but this post focuses on the type used to compare standardised mortality and other similarly constructed indicators .</p>
 </div>
 <div id="why-do-we-use-them" class="section level2">
@@ -110,50 +117,53 @@
 <div id="rationale" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rationale" class="anchor"></a>Rationale</h3>
-<p>How do you go about comparing organisations? We could simply look at indicator data and rank them, but that could be unfair if the conditions are different at each organisation. E.g. every hospital differs in size, the services it offers, and the patients it sees. We might expect a hospital seeing a higher proportion of elderly patients to have a higher mortality rate. Is it fair to compare it to an organisation serving a younger population who may be ‘healthier’ in general? Naively comparing organisations by ranking in league tables has been shown to be a bad idea <span class="citation">(Goldstein and Spiegelhalter 1996; Lilford et al. 2004)</span>.</p>
-<p>This scenario is not a million miles away from the techniques used in meta-analysis of clinical trials, where we may have trials of different sizes, with different estimates of effect, and differing variances. Some of the techniques applied to meta-analysis have been adapted for healthcare monitoring, including funnel plots and methods to adjust for overdispersion <span class="citation">(Spiegelhalter 2005a, 2005b; Spiegelhalter et al. 2012)</span>.</p>
+<p>How do you go about comparing organisations? We could simply look at indicator data and rank them, but that could be unfair if the conditions are different at each organisation. E.g. every hospital differs in size, the services it offers, and the patients it sees. We might expect a hospital seeing a higher proportion of elderly patients to have a higher mortality rate. Is it fair to compare it to an organisation serving a younger population who may be ‘healthier’ in general? Naively comparing organisations by ranking in league tables has been shown to be a bad idea <span class="citation">(Goldstein and Spiegelhalter, 1996; Lilford <em>et al.</em>, 2004)</span>.</p>
+<p>This scenario is not a million miles away from the techniques used in meta-analysis of clinical trials, where we may have trials of different sizes, with different estimates of effect, and differing variances. Some of the techniques applied to meta-analysis have been adapted for healthcare monitoring, including funnel plots and methods to adjust for overdispersion <span class="citation">(D. J. Spiegelhalter, 2005a, 2005b; Spiegelhalter <em>et al.</em>, 2012)</span>.</p>
 </div>
 <div id="construction" class="section level3">
 <h3 class="hasAnchor">
 <a href="#construction" class="anchor"></a>Construction</h3>
-<p>If we want to compare a standardised ratio or similar indicator, we can make a plot with the indicator on the Y-axis, and a measure of the unit size on the X-axis. This is commonly the sum of the predicted values for standardised ratios (e.g. the predicted number of cases), or the number of patients/discharges etc. Our centre line, the average value, can be surrounded by ‘control limits,’ a concept from Statistical Process Control. These limits are statistical boundaries to separate natural (‘common-cause’) variation and systematic differences (‘special-cause variation’) <span class="citation">(Mohammed et al. 2001)</span>. This is commonly at organisational level, but could be at any aggregation.</p>
+<p>If we want to compare a standardised ratio or similar indicator, we can make a plot with the indicator on the Y-axis, and a measure of the unit size on the X-axis. This is commonly the sum of the predicted values for standardised ratios (e.g. the predicted number of cases), or the number of patients/discharges etc. Our centre line, the average value, can be surrounded by ‘control limits,’ a concept from Statistical Process Control. These limits are statistical boundaries to separate natural (‘common-cause’) variation and systematic differences (‘special-cause variation’) <span class="citation">(Mohammed <em>et al.</em>, 2001)</span>. This is commonly at organisational level, but could be at any aggregation.</p>
 <p>The reason these limits resemble a funnel is due to the effects of size. The expected variation is larger when we are looking at fewer cases. For example, imagine an experiment where we toss an unbiased coin to see the expected value. If we toss that coin twice and both are ‘heads,’ our data is telling us that all coin tosses end up as ‘heads.’ This is not true, and we are making an assumption that we know would be different if we repeated it more times. The margin of error around this is high. So if we performed the same experiment 10, 100 or 1000 times, we would expect it to become 50:50, heads/tails, and the margin of error is proportionally smaller. This is also true of indicators based on counts, like funnel plots. We expect less variation between points as organisations get larger.</p>
 </div>
 <div id="example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example:</h3>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 
 <span class="co"># Make up some data, as if it was from a regression model with observed and predicted (expected) events.</span>
-<span class="no">dt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">observed</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">15</span>,<span class="fl">40</span>,<span class="fl">72</span>,<span class="fl">28</span>,<span class="fl">50</span>, <span class="fl">66</span>, <span class="fl">75</span>),
-                 <span class="kw">expected</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">13</span>,<span class="fl">32</span>,<span class="fl">75</span>,<span class="fl">33</span>,<span class="fl">54</span>, <span class="fl">60</span>, <span class="fl">72</span>),
-                 <span class="kw">unit</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"c"</span>,<span class="st">"D"</span>,<span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>))
-)
+<span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fl">15</span>,<span class="fl">40</span>,<span class="fl">72</span>,<span class="fl">28</span>,<span class="fl">50</span>, <span class="fl">66</span>, <span class="fl">75</span><span class="op">)</span>,
+                 expected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fl">13</span>,<span class="fl">32</span>,<span class="fl">75</span>,<span class="fl">33</span>,<span class="fl">54</span>, <span class="fl">60</span>, <span class="fl">72</span><span class="op">)</span>,
+                 unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"c"</span>,<span class="st">"D"</span>,<span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
 
 <span class="co"># Add a ratio (SR) of observed to expected, our indicator </span>
-<span class="no">dt</span>$<span class="no">SR</span> <span class="kw">&lt;-</span> <span class="no">dt</span>$<span class="no">observed</span> / <span class="no">dt</span>$<span class="no">expected</span>
+<span class="va">dt</span><span class="op">$</span><span class="va">SR</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">$</span><span class="va">observed</span> <span class="op">/</span> <span class="va">dt</span><span class="op">$</span><span class="va">expected</span>
 
 <span class="co"># Scatter plot in ggplot</span>
-<span class="no">a</span><span class="kw">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">dt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">expected</span>, <span class="kw">y</span><span class="kw">=</span> <span class="no">SR</span>))+
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>()
+<span class="va">a</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">expected</span>, y<span class="op">=</span> <span class="va">SR</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="no">a</span></pre></body></html></div>
+<span class="va">a</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-1.png" width="672"></p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># Now add a central line, in a ration like this, 1 is the average/expected value.</span>
-<span class="no">a</span><span class="kw">&lt;-</span> <span class="no">a</span>+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">yintercept</span><span class="kw">=</span><span class="fl">1</span>))
-<span class="no">a</span></pre></body></html></div>
+<span class="va">a</span><span class="op">&lt;-</span> <span class="va">a</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>yintercept<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">a</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-2.png" width="672"></p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># Add a 95% Poisson limit, by using the density function to get the quantile value for each 'expected'.</span>
-<span class="no">lkup</span><span class="kw">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">id</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">dt</span>$<span class="no">expected</span>), <span class="fl">1</span>))
-<span class="no">lkup</span>$<span class="no">Upper</span><span class="kw">&lt;-</span>(<span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">qpois</a></span>(<span class="fl">0.975</span>,<span class="kw">lambda</span> <span class="kw">=</span> <span class="no">lkup</span>$<span class="no">id</span>) - <span class="fl">0.025</span>) / <span class="no">lkup</span>$<span class="no">id</span>
-<span class="no">lkup</span>$<span class="no">lower</span><span class="kw">&lt;-</span>(<span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">qpois</a></span>(<span class="fl">0.025</span>,<span class="kw">lambda</span> <span class="kw">=</span> <span class="no">lkup</span>$<span class="no">id</span>) - <span class="fl">0.975</span>) / <span class="no">lkup</span>$<span class="no">id</span>
+<span class="va">lkup</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">expected</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">lkup</span><span class="op">$</span><span class="va">Upper</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">qpois</a></span><span class="op">(</span><span class="fl">0.975</span>,lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.025</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span>
+<span class="va">lkup</span><span class="op">$</span><span class="va">lower</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">qpois</a></span><span class="op">(</span><span class="fl">0.025</span>,lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.975</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span>
 
-<span class="no">lkup</span><span class="kw">&lt;-</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="no">lkup</span>, <span class="no">key</span>, <span class="no">value</span>,-<span class="no">id</span>)
+<span class="va">lkup</span><span class="op">&lt;-</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span><span class="op">(</span><span class="va">lkup</span>, <span class="va">key</span>, <span class="va">value</span>,<span class="op">-</span><span class="va">id</span><span class="op">)</span>
 
-<span class="no">a</span>+ <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">id</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">value</span>, <span class="kw">col</span><span class="kw">=</span><span class="no">key</span>), <span class="kw">data</span><span class="kw">=</span><span class="no">lkup</span>)</pre></body></html></div>
+<span class="va">a</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">id</span>, y<span class="op">=</span><span class="va">value</span>, col<span class="op">=</span><span class="va">key</span><span class="op">)</span>, data<span class="op">=</span><span class="va">lkup</span><span class="op">)</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-3.png" width="672"></p>
 <p>You’ll probably notice the ‘jagged’ lines in the plot above. This is because the Poisson distribution is only defined on integers, and most common implementations of Poisson functions make some sort of rounding/guess between points. They are generally poorly defined on low values, but there are other options that I’ll discuss in another future post.</p>
 <p><br></p>
@@ -163,34 +173,36 @@
 <h2 class="hasAnchor">
 <a href="#expanding-limits" class="anchor"></a>Expanding limits</h2>
 <p>The methods described above have been developed into a basic R package to draw these plots using <code>ggplot2</code>. It also allows users to specify whether they want ‘overdispersed’ limits. I will write another post about overdispersion in the coming weeks, but essentially, we have more variation than we would expect from theory alone. To account for this, we can estimate how much greater the variance in our data is, and expand the funnel limits by this amount.</p>
-<p>Part of this process involves ‘Winsorisation’ of the distribution <span class="citation">(Spiegelhalter 2005b; Spiegelhalter et al. 2012)</span>, where we set the outer most values to a defined percentile to reduce the effects of outliers. This is commonly set to 10% at each end of the distribution, but there is a variant method for this, used in the NHS’ Summary Hospital Mortality Indicator’, where the distribution is truncated instead of Winsorised <span class="citation">(Clinical Indicators Team 2018)</span>.</p>
+<p>Part of this process involves ‘Winsorisation’ of the distribution <span class="citation">(D. J. Spiegelhalter, 2005b; Spiegelhalter <em>et al.</em>, 2012)</span>, where we set the outer most values to a defined percentile to reduce the effects of outliers. This is commonly set to 10% at each end of the distribution, but there is a variant method for this, used in the NHS’ Summary Hospital Mortality Indicator’, where the distribution is truncated instead of Winsorised <span class="citation">(Clinical Indicators Team, 2018)</span>.</p>
 <p>I originally wrote this package to present plots for my PhD thesis, focused on predicting NRLS incident reporting ratios after risk-adjustment. The overdispersion was particularly high in this case, and differences between the two methods were noticeable, with the SHMI/truncation method appearing better suited.</p>
 <p><br></p>
 </div>
 <div id="application" class="section level2">
 <h2 class="hasAnchor">
 <a href="#application" class="anchor"></a>Application</h2>
-<p>Here we will apply this to some data by picking up the <code>medpar</code> dataset discussed by Hilbe and available in the <code>COUNT</code> package <span class="citation">(Hilbe 2014)</span>. It is a set of data points from hospitals in Arizona, in 1991, based on US Medicare data. We’ll use the ‘length of stay’ field ’, <code>los</code>, and model it from the other predictors in the data.</p>
+<p>Here we will apply this to some data by picking up the <code>medpar</code> dataset discussed by Hilbe and available in the <code>COUNT</code> package <span class="citation">(Hilbe, 2014)</span>. It is a set of data points from hospitals in Arizona, in 1991, based on US Medicare data. We’ll use the ‘length of stay’ field ’, <code>los</code>, and model it from the other predictors in the data.</p>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"https://github.com/chrismainey/FunnelPlotR"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"https://github.com/chrismainey/FunnelPlotR"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="basic-model-build" class="section level3">
 <h3 class="hasAnchor">
 <a href="#basic-model-build" class="anchor"></a>Basic model build</h3>
 <p>We will first load the data and build a simple predictive model, using a Poisson GLM, with a few of the predictors from the dataset. This post is not focused on modelling techniques, but a Poisson Generalised Linear Model (GLM) is more appropriate for count data than linear regression. The key message, though, is that Poisson models make no adjustment for the variance within the data and are likely to be overdispersed. A more sophisticated approach might use something like a negative binomial or multilevel model (discussed in a later post).</p>
 <p>A little reformatting is required before modelling:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">FunnelPlotR</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">COUNT</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://chrismainey.github.io/FunnelPlotR/">FunnelPlotR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">COUNT</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">medpar</span>)
-<span class="no">medpar</span>$<span class="no">provnum</span><span class="kw">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">medpar</span>$<span class="no">provnum</span>)
-<span class="no">medpar</span>$<span class="no">los</span><span class="kw">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="no">medpar</span>$<span class="no">los</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">)</span>
+<span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">)</span>
+<span class="va">medpar</span><span class="op">$</span><span class="va">los</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span><span class="op">)</span>
 
-<span class="no">mod</span><span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">los</span> ~ <span class="no">hmo</span> + <span class="no">died</span> + <span class="no">age80</span> + <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">type</span>), <span class="kw">family</span><span class="kw">=</span><span class="st">"poisson"</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">medpar</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod</span>)
+<span class="va">mod</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">los</span> <span class="op">~</span> <span class="va">hmo</span> <span class="op">+</span> <span class="va">died</span> <span class="op">+</span> <span class="va">age80</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">medpar</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; glm(formula = los ~ hmo + died + age80 + factor(type), family = "poisson", </span>
@@ -217,22 +229,25 @@
 <span class="co">#&gt; Residual deviance: 7977.7  on 1489  degrees of freedom</span>
 <span class="co">#&gt; AIC: 13705</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number of Fisher Scoring iterations: 5</span></pre></body></html></div>
+<span class="co">#&gt; Number of Fisher Scoring iterations: 5</span></code></pre></div>
 <p>Now we have a regression that we can use to get a predicted <code>los</code> that we will compare to observed <code>los</code>:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">
-<span class="no">medpar</span>$<span class="no">prds</span><span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">type</span><span class="kw">=</span><span class="st">"response"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">medpar</span><span class="op">$</span><span class="va">prds</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="build-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#build-plot" class="anchor"></a>Build plot</h3>
 <p>Now we can build a funnel plot object with standard Poisson limits, and outliers labelled. The function returns a list of the plotted data, the plotted control limit range, and the <code>ggplot</code> object, hence <code>object[3]</code> to call it.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r">
-<span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span>(<span class="kw">numerator</span><span class="kw">=</span><span class="no">medpar</span>$<span class="no">los</span>, <span class="kw">denominator</span><span class="kw">=</span><span class="no">medpar</span>$<span class="no">prds</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">medpar</span>$<span class="no">provnum</span>,
-            <span class="kw">title</span> <span class="kw">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, <span class="kw">Poisson_limits</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-            <span class="kw">OD_adjust</span> <span class="kw">=</span> <span class="fl">FALSE</span>,<span class="kw">label_outliers</span> <span class="kw">=</span> <span class="fl">99</span>, <span class="kw">return_elements</span> <span class="kw">=</span> <span class="st">"plot"</span>)
-<span class="co">#&gt; $plot</span></pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
+            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">TRUE</span>,
+            OD_adjust <span class="op">=</span> <span class="cn">FALSE</span>,label_outliers <span class="op">=</span> <span class="cn">TRUE</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel1-1.png" width="672" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; A funnel plot object with 54 points of which 25 are outliers. 
+#&gt; Plot is not adjusted for overdispersion.</code></pre>
 <p><br></p>
 </div>
 <div id="overdispersion" class="section level3">
@@ -240,16 +255,19 @@
 <a href="#overdispersion" class="anchor"></a>Overdispersion</h3>
 <p>That looks like too many outliers! There is more variation in our data than we would expect, and this is referred to as: <strong>overdispersion</strong>.</p>
 <p><br> So lets check for it: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">mod</span>$<span class="no">weights</span> * <span class="no">mod</span>$<span class="no">residuals</span>^<span class="fl">2</span>)/<span class="no">mod</span>$<span class="no">df.residual</span>
-<span class="co">#&gt; [1] 6.240519</span></pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span>
+<span class="co">#&gt; [1] 6.240519</span></code></pre></div>
 <p>This suggests the variance is 6.24 times the condition mean, and definitely overdispersed. This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span>(<span class="kw">numerator</span><span class="kw">=</span><span class="no">medpar</span>$<span class="no">los</span>, <span class="kw">denominator</span><span class="kw">=</span><span class="no">medpar</span>$<span class="no">prds</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">medpar</span>$<span class="no">provnum</span>,
-            <span class="kw">title</span> <span class="kw">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, <span class="kw">Poisson_limits</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-            <span class="kw">OD_adjust</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">data_type</span><span class="kw">=</span><span class="st">"SR"</span>, <span class="kw">sr_method</span> <span class="kw">=</span> <span class="st">"SHMI"</span>,<span class="kw">label_outliers</span> <span class="kw">=</span> <span class="fl">99</span>
-            , <span class="kw">return_elements</span> <span class="kw">=</span><span class="st">"plot"</span>)
-<span class="co">#&gt; $plot</span></pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
+            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">FALSE</span>,
+            OD_adjust <span class="op">=</span> <span class="cn">TRUE</span>, data_type<span class="op">=</span><span class="st">"SR"</span>, sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,label_outliers <span class="op">=</span> <span class="cn">TRUE</span>, limit<span class="op">=</span><span class="fl">99</span>
+            <span class="op">)</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel2-1.png" width="672" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; A funnel plot object with 54 points of which 9 are outliers. 
+#&gt; Plot is adjusted for overdispersion.</code></pre>
 <p><br><br> Given these adjustments, we now only have nine organisations showing special-cause variation. To interpret this plot properly, we would first investigate these outlying organisations before making any changes to the system/indicator. We should check for possible data quality issues, such as errors, missing model predictors, environmental factors (e.g. one organisation changing computer systems and data standards etc. during the monitoring period), but once these are examined we might suspect issues with care at the hospitals in question. They can then be investigated by local audit and casenote review.</p>
 <p>These methods can be used for any similar indicators, e.g. standardised mortality ratios, readmissions etc.</p>
 <p><br></p>
@@ -266,31 +284,31 @@
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
 <div id="ref-clinicalindicatorsteamnhsdigitalSummaryHospitallevelMortality2018">
-<p>Clinical Indicators Team, NHS Digital. 2018. “Summary Hospital-Level Mortality Indicator (SHMI) - Indicator Specification.” NHS Digital.</p>
+<p>Clinical Indicators Team, N. D. (2018) ‘Summary Hospital-level Mortality Indicator (SHMI) - Indicator specification’. NHS Digital.</p>
 </div>
 <div id="ref-goldsteinLeagueTablesTheir1996">
-<p>Goldstein, Harvey, and David J. Spiegelhalter. 1996. “League Tables and Their Limitations: Statistical Issues in Comparisons of Institutional Performance.” <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em> 159 (3): 385–409. <a href="https://doi.org/10/chf9kj" class="uri">https://doi.org/10/chf9kj</a>.</p>
+<p>Goldstein, H. and Spiegelhalter, D. J. (1996) ‘League Tables and Their Limitations: Statistical Issues in Comparisons of Institutional Performance’, <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, 159(3), pp. 385–409. doi: <a href="https://doi.org/10.2307/2983325">10.2307/2983325</a>.</p>
 </div>
 <div id="ref-hilbeModelingCountData2014">
-<p>Hilbe, Joseph M. 2014. <em>Modeling Count Data</em>. Cambridge: Cambridge University Press. <a href="https://doi.org/10.1017/CBO9781139236065" class="uri">https://doi.org/10.1017/CBO9781139236065</a>.</p>
+<p>Hilbe, J. M. (2014) <em>Modeling Count Data</em>. Cambridge: Cambridge University Press. doi: <a href="https://doi.org/10.1017/CBO9781139236065">10.1017/CBO9781139236065</a>.</p>
 </div>
 <div id="ref-lilfordUseMisuseProcess2004">
-<p>Lilford, R., M. A. Mohammed, D. Spiegelhalter, and R. Thomson. 2004. “Use and Misuse of Process and Outcome Data in Managing Performance of Acute Medical Care: Avoiding Institutional Stigma.” <em>Lancet</em> 363 (9415): 1147–54. <a href="https://doi.org/10.1016/s0140-6736(04)15901-1" class="uri">https://doi.org/10.1016/s0140-6736(04)15901-1</a>.</p>
+<p>Lilford, R. <em>et al.</em> (2004) ‘Use and misuse of process and outcome data in managing performance of acute medical care: Avoiding institutional stigma’, <em>Lancet</em>, 363(9415), pp. 1147–54. doi: <a href="https://doi.org/10.1016/s0140-6736(04)15901-1">10.1016/s0140-6736(04)15901-1</a>.</p>
 </div>
 <div id="ref-mohammedBristolShipmanClinical2001">
-<p>Mohammed, Mohammed A, KK Cheng, Andrew Rouse, and Tom Marshall. 2001. “Bristol, Shipman, and Clinical Governance: Shewhart’s Forgotten Lessons.” <em>The Lancet</em> 357 (9254): 463–67. <a href="https://doi.org/10/cqjskf" class="uri">https://doi.org/10/cqjskf</a>.</p>
+<p>Mohammed, M. A. <em>et al.</em> (2001) ‘Bristol, Shipman, and clinical governance: Shewhart’s forgotten lessons’, <em>The Lancet</em>, 357(9254), pp. 463–467. doi: <a href="https://doi.org/10/cqjskf">10/cqjskf</a>.</p>
 </div>
 <div id="ref-spiegelhalterFunnelPlotsComparing2005">
-<p>Spiegelhalter, David J. 2005a. “Funnel Plots for Comparing Institutional Performance.” <em>Stat Med</em> 24 (8): 1185–1202. <a href="https://doi.org/10.1002/sim.1970" class="uri">https://doi.org/10.1002/sim.1970</a>.</p>
+<p>Spiegelhalter, D. J. (2005a) ‘Funnel plots for comparing institutional performance’, <em>Stat Med</em>, 24(8), pp. 1185–202. doi: <a href="https://doi.org/10.1002/sim.1970">10.1002/sim.1970</a>.</p>
 </div>
 <div id="ref-spiegelhalterHandlingOverdispersionPerformance2005">
-<p>———. 2005b. “Handling over-Dispersion of Performance Indicators.” <em>Quality and Safety in Health Care</em> 14 (5): 347–51. <a href="https://doi.org/10.1136/qshc.2005.013755" class="uri">https://doi.org/10.1136/qshc.2005.013755</a>.</p>
+<p>Spiegelhalter, D. J. (2005b) ‘Handling over-dispersion of performance indicators’, <em>Quality and Safety in Health Care</em>, 14(5), pp. 347–351. doi: <a href="https://doi.org/10.1136/qshc.2005.013755">10.1136/qshc.2005.013755</a>.</p>
 </div>
 <div id="ref-spiegelhalterStatisticalMethodsHealthcare2012">
-<p>Spiegelhalter, David J., Christopher Sherlaw-Johnson, Martin Bardsley, Ian Blunt, Christopher Wood, and Olivia Grigg. 2012. “Statistical Methods for Healthcare Regulation: Rating, Screening and Surveillance.” <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em> 175 (1): 1–47. <a href="https://doi.org/10.1111/j.1467-985X.2011.01010.x" class="uri">https://doi.org/10.1111/j.1467-985X.2011.01010.x</a>.</p>
+<p>Spiegelhalter, D. J. <em>et al.</em> (2012) ‘Statistical methods for healthcare regulation: Rating, screening and surveillance’, <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, 175(1), pp. 1–47. doi: <a href="https://doi.org/10.1111/j.1467-985X.2011.01010.x">10.1111/j.1467-985X.2011.01010.x</a>.</p>
 </div>
 <div id="ref-wickhamGgplot2ElegantGraphics2009">
-<p>Wickham, Hadley. 2009. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. New York: Springer-Verlag.</p>
+<p>Wickham, H. (2009) <em>Ggplot2: Elegant Graphics for Data Analysis</em>. New York: Springer-Verlag.</p>
 </div>
 </div>
 </div>
@@ -307,11 +325,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://www.mainard.co.uk">Chris Mainey</a>.</p>
+  <p>Developed by <a href="https://www.mainard.co.uk">Chris Mainey</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

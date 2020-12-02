@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9999</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.9999</span>
       </span>
     </div>
 
@@ -108,7 +108,13 @@
     <li>
       <a href="../articles/funnel_plots.html">Introduction to Funnel Plots</a>
     </li>
+    <li>
+      <a href="../articles/changing_funnel_plot_options.html">Changing funnel plot options</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -135,17 +141,29 @@
       <small>Source: <a href='https://github.com/chrismainey/FunnelPlotR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="funnelplotr-0-2-9999" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.9999">
-<a href="#funnelplotr-0-2-9999" class="anchor"></a>FunnelPlotR 0.2.9999<small> Unreleased </small>
+    <div id="funnelplotr-0-3-2" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.2">
+<a href="#funnelplotr-0-3-2" class="anchor"></a>FunnelPlotR 0.3.2<small> 2020-11-30 </small>
 </h1>
 <ul>
-<li>Added methods for ratio of counts and proportions</li>
-<li>Renamed several arguments</li>
-<li>Added ‘themes’ as people don’t like the ggplot grey as default</li>
+<li>Bug fix for limits related to NHS Digital SHMI method, correcting truncation and rounding issue that led to wrong limits being too wide.</li>
+<li>Typos in support material</li>
+</ul>
+</div>
+    <div id="funnelplotr-0-3-1" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.1">
+<a href="#funnelplotr-0-3-1" class="anchor"></a>FunnelPlotR 0.3.1<small> 2020-09-16 </small>
+</h1>
+<ul>
+<li>Significantly reorganised the internals into more small functions</li>
+<li>Added methods for ratios of counts and proportions</li>
+<li>Renamed several arguments - please read the help file!</li>
+<li>Added S3 object system and associated methods</li>
+<li>Added ‘themes’ as people don’t like the <code>ggplot2</code> grey as default</li>
+<li>Added ability to change colours</li>
 <li>Broke process into much smaller functions for easier editing and speed</li>
-<li>Tweaked vignette to make it work</li>
-<li>Removed unecceary rlang dependency</li>
+<li>Tweaked vignettes for new methods and added new one showing plot options</li>
+<li>Removed unnecessary <code>rlang</code> dependency</li>
 </ul>
 </div>
     <div id="funnelplotr-0-2-3" class="section level1">
@@ -197,11 +215,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://www.mainard.co.uk'>Chris Mainey</a>.</p>
+  <p>Developed by <a href='https://www.mainard.co.uk'>Chris Mainey</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
