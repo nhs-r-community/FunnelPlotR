@@ -117,6 +117,24 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
                          force = 2, min.segment.length = 0)
     } 
     
+    if(label=="outlier_lower"){
+      
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse(outlier == 1 & rr < 1,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    } 
+    
+    if(label=="outlier_upper"){
+      
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse(outlier ==  1 & rr > 1,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    } 
+    
     if(label=="highlight"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(highlight == 1,
@@ -128,6 +146,22 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
     if(label=="both"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    }
+    
+    if(label=="both_lower"){
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1& rr < 1)) ,
+                                            as.character(group), ""))
+                         , size = 2.7, direction = "both", 
+                         force = 2, min.segment.length = 0)
+    }
+    
+    if(label=="both_upper"){
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1 & rr > 1)) ,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
                          force = 2, min.segment.length = 0)

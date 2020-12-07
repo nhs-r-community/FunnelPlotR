@@ -39,9 +39,16 @@ funnel_plot(
 
 \item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 
-\item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".}
-
-\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
+\item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
+\item{"outlier"}{Labels upper and lower outliers, determined in relation to the `limit` argument.}
+\item{"outlier_lower"}{Labels just and lower outliers, determined in relation to the `limit` argument.}
+\item{"outlier_upper"}{Labels just upper, determined in relation to the `limit` argument.}
+\item{"highlight"}{Labels the value(s) given in the `Highlights`argument.}
+\item{"both"}{Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
+\item{"both_lower"}{Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
+\item{"both_upper"}{Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
+\item{"NA"}{No labels applied}
+#' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
 
 \item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
