@@ -10,7 +10,17 @@
 #' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
 #' @param title Plot title
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
-#' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".
+#' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
+#' \itemize{
+#' \item{\code{"outlier"}}{ - Labels upper and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"outlier_lower"}}{ - Labels just and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"outlier_upper"}}{ - Labels just upper, determined in relation to the `limit` argument.}
+#' \item{\code{"highlight"}}{ - Labels the value(s) given in the `highlight`argument.}
+#' \item{\code{"both"}}{ - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"both_lower"}}{ - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"both_upper"}}{ - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
+#' \item{\code{NA}}{ - No labels applied}
+#' }
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
 #' @param Poisson_limits Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
@@ -133,7 +143,8 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson, 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
   }
   
-  if(!(label %in% c("outlier", "highlight", "both", NA))){
+  if(!(label %in% c("outlier", "outlier_lower", "outlier_upper", "highlight"
+                    , "both", "both_lower", "both_upper", NA))){
     stop("No permitted labelling specification.  See help: `?funnel_plot`")
   }
   
