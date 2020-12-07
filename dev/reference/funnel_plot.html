@@ -201,7 +201,16 @@ and constructing an additive random effects models, originally used for meta-ana
     </tr>
     <tr>
       <th>label</th>
-      <td><p>Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".</p></td>
+      <td><p>Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:<br /></p><ul>
+<li><p><code>"outlier"</code> - Labels upper and lower outliers, determined in relation to the `limit` argument.</p></li>
+<li><p><code>"outlier_lower"</code> - Labels just and lower outliers, determined in relation to the `limit` argument.</p></li>
+<li><p><code>"outlier_upper"</code> - Labels just upper, determined in relation to the `limit` argument.</p></li>
+<li><p><code>"highlight"</code> - Labels the value(s) given in the `highlight`argument.</p></li>
+<li><p><code>"both"</code> - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.</p></li>
+<li><p><code>"both_lower"</code> - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.</p></li>
+<li><p><code>"both_upper"</code> - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.</p></li>
+<li><p><code>NA</code> - No labels applied</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>highlight</th>
