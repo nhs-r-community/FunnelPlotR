@@ -118,7 +118,7 @@ phi <- function(x) {
 
 phi.funnelplot <- function(x){
   
-  print(x[[4]])
+  x[[4]]
   
 }
 
@@ -136,7 +136,7 @@ tau2 <- function(x) {
 
 tau2.funnelplot <- function(x){
   
-  print(x[[5]])
+  x[[5]]
   
 }
 
@@ -155,7 +155,7 @@ limits <- function(x) {
 
 limits.funnelplot <- function(x){
   
-  print(x[[2]])
+  x[[2]]
   
 }
 
@@ -175,7 +175,7 @@ outliers <- function(x) {
 
 outliers.funnelplot <- function(x){
   
-  print(x[[8]])
+  x[[8]]
   
 }
 
@@ -193,6 +193,6 @@ source_data <- function(x) {
 #'@export
 source_data.funnelplot <- function(x){
   
-  print(x[[3]])
+  x[[3]]
 }
 
