@@ -114,7 +114,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse(outlier == 1,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding = 0.7)
     } 
     
     if(label=="outlier_lower"){
@@ -123,7 +123,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse(outlier == 1 & rr < 1,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding = 0.7)
     } 
     
     if(label=="outlier_upper"){
@@ -132,7 +132,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse(outlier ==  1 & rr > 1,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding = 0.7)
     } 
     
     if(label=="highlight"){
@@ -140,7 +140,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse(highlight == 1,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding = 0.7)
     } 
     
     if(label=="both"){
@@ -148,7 +148,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding =0.7)
     }
     
     if(label=="both_lower"){
@@ -156,7 +156,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1& rr < 1)) ,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding = 0.7)
     }
     
     if(label=="both_upper"){
@@ -164,7 +164,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1 & rr > 1)) ,
                                             as.character(group), ""))
                          , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0)
+                         force = 2, min.segment.length = 0, box.padding = 0.7)
     }
   }
      
