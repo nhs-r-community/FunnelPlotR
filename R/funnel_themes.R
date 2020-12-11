@@ -14,8 +14,8 @@ funnel_clean <- function(){
   theme(legend.position = "bottom"
         ,legend.text = element_text(size = 8)
         ,legend.title = element_text(size = 8)
-        ,plot.title = element_text(hjust = 0.5, face = "bold")
-        ,plot.subtitle = element_text(hjust = 0.5, face = "italic"))
+        ,plot.title = element_text(size = 14, hjust = 0.5, face = "bold")
+        ,plot.subtitle = element_text(size=10, hjust = 0.5, face = "italic"))
 }
 
 
@@ -35,6 +35,6 @@ funnel_grey <- function(){
     theme(legend.position = "bottom"
           ,legend.text = element_text(size = 8)
           ,legend.title = element_text(size = 8)
-          ,plot.title = element_text(hjust = 0.5, face = "bold")
-          ,plot.subtitle = element_text(hjust = 0.5, face = "italic"))
+          ,plot.title = element_text(size = 14, hjust = 0.5, face = "bold")
+          ,plot.subtitle = element_text(size=10, hjust = 0.5, face = "italic"))
 }
