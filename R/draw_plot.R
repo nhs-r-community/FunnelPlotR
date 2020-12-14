@@ -45,7 +45,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
     geom_point(aes(fill=highlight, shape=highlight, size = highlight), alpha = 0.55, col=1, show.legend = FALSE) +
     scale_shape_manual(values = c("0"=21, "1"=23, 1))+
     scale_fill_manual(values = c("0"="dodgerblue","1"="yellow", 1))+
-    scale_size_manual(values = c("0"=2, "1"=3, 2), )+
+    scale_size_manual(values = c("0"=2, "1"=3, 2))+
     xlab(x_label) +
     ylab(y_label) +
     ggtitle(title) +
