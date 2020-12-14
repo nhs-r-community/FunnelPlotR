@@ -67,11 +67,19 @@ More information available at
 
 ## Installation
 
-You can install from CRAN, or use the development version on GitHub:
+You can install from CRAN:
 
 ``` r
 install.packages("FunnelPlotR")
-# or
+```
+
+You can install the development version directly from GitHub using the
+`remotes` (or `devtools`) package. Please be aware that, although I
+endeavour have help files up-to-date, this version may different from
+the one on CRAN. Please consult the help documentation if you get error
+messages.
+
+``` r
 remotes::install_github("https://github.com/chrismainey/FunnelPlotR")
 ```
 
@@ -136,7 +144,7 @@ and outliers labelled.
 ``` r
 a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR", limit=99,
-            Poisson_limits = TRUE, OD_adjust = FALSE, label = "outlier")
+            Poisson_limits = TRUE, OD_adjust = FALSE, label_outliers = TRUE)
 print(a)
 ```
 
@@ -166,7 +174,7 @@ for this by inflating the limits:
 ``` r
 b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, sr_method = "SHMI",label = "outlier", limit=99)
+            OD_adjust = TRUE, sr_method = "SHMI",label_outliers = TRUE, limit=99)
 
 print(b)
 ```
