@@ -15,14 +15,14 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.height= 5, 
-  fig.width=7
+  fig.height = 5, 
+  fig.width = 7
 )
 ```
 
 ## Setup
 
-```{r setup, fig.height= 5, fig.width=7}
+```{r setup}
 library(FunnelPlotR)
 ```
 
@@ -45,7 +45,6 @@ medpar$prds<- predict(mod, newdata = medpar, type="response")
 funnel_plot(denominator=medpar$prds, numerator=medpar$los
             , group = medpar$provnum, limit=99 ,label = "outlier"
             , Poisson_limits = TRUE)
-
 
 ```
 

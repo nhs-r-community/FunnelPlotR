@@ -42,7 +42,7 @@ fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
                  Poisson_limits = TRUE, OD_adjust=FALSE, highlight = "030002", theme=funnel_grey(),
                  plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
                  
-
+#rm(fp2)
 fp2
 class(fp2)
 plot(fp2)
@@ -58,7 +58,7 @@ source_data(fp2)
 
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
             title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, limit=99, label_outliers = TRUE, sr_method="SHMI")
+            OD_adjust = TRUE, limit=99, label = "outlier", sr_method="SHMI")
 
 fp[[1]]
 

@@ -112,101 +112,67 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
     
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier == 1,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding = 1)
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
     } 
     
     if(label=="outlier_lower"){
       
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier == 1 & rr < 1,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding = 1)
+                                            as.character(group), NA))
+                         , size=2.5,point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
     } 
     
     if(label=="outlier_upper"){
       
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier ==  1 & rr > 1,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding = 1)
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
     } 
     
     if(label=="highlight"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(highlight == 1,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding = 1)
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
     } 
     
     if(label=="both"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding =1)
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
+      
     }
     
     if(label=="both_lower"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1& rr < 1)) ,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding = 1)
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
+     
     }
     
     if(label=="both_upper"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1 & rr > 1)) ,
-                                            as.character(group), ""))
-                         , size = 2.7, direction = "both", 
-                         force = 2, min.segment.length = 0, box.padding = 1)
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , min.segment.length=0, na.rm=TRUE)
+     
     }
   }
      
   
-  # if (label_outliers == 95) {
-  #   if (OD_adjust==FALSE) {
-  #     funnel_p <- funnel_p +
-  #       geom_label_repel(aes(label = ifelse(rr > UCL95,
-  #                                            as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0) +
-  #       geom_label_repel(aes(label = ifelse(rr < LCL95,
-  #                                           as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0)
-  #   } else {
-  #     funnel_p <- funnel_p +
-  #       geom_label_repel(aes(label = ifelse(rr > OD95UCL,
-  #                                           as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0) +
-  #       geom_label_repel(aes(label = ifelse(rr < OD95LCL,
-  #                                           as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0)
-  #   }
-  # }
-  # if (label_outliers == 99) {
-  #   if (OD_adjust==FALSE) {
-  #     funnel_p <- funnel_p +
-  #       geom_label_repel(aes(label = ifelse(rr > UCL99,
-  #                                              as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0) +
-  #       geom_label_repel(aes(label = ifelse(rr < LCL99,
-  #                                              as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0)
-  #   } else {
-  #     funnel_p <- funnel_p +
-  #      geom_label_repel(aes(label = ifelse(rr > OD99UCL,
-  #                                              as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0) +
-  #      geom_label_repel(aes(label = ifelse(rr < OD99LCL,
-  #                                             as.character(group), "")), size = 2.7, direction = "both",
-  #                                 force = 2, min.segment.length = 0)
-  #   }
-  # }
+
 
  return(funnel_p)
 
