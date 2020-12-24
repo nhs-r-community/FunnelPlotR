@@ -57,7 +57,7 @@ source_data(fp2)
 
 
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
+            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
             OD_adjust = TRUE, limit=99, label = "outlier", sr_method="SHMI")
 
 fp[[1]]
