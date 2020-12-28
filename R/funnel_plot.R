@@ -9,7 +9,7 @@
 #' @param group A vector of group names as character or factor.  Used to aggregate and group points on plots
 #' @param data_type A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".
 #' @param title Plot title
-#' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
+#' @param show_limit Plot limits to be drawn, or a vector of values, accepting values between 0 and 1. E.g. 0.95 = 95%. Default=c(0.95, 0.99).
 #' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
 #' \itemize{
 #' \item{\code{"outlier"}}{ - Labels upper and lower outliers, determined in relation to the `limit` argument.}
@@ -106,7 +106,8 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
+funnel_plot <- function(numerator, denominator, group, data_type = "SR"
+                            , show_limits = c(0.95, 0.99), outlier_limit=c(0.99), label = "outlier",
                             highlight = NA, Poisson_limits = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
                             , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected"
                             , y_label ,xrange = "auto", yrange = "auto"
@@ -188,21 +189,35 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     }
   }
   
-
+  # sort out the list of limit z-values
+  if(Poisson_limits & OD_adjust){
+    show_limits_working <- unlist(lapply(c(show_limits,show_limits), function(x){c((1-x)/2, 1-(1-x)/2)}))
+  } else {
+    show_limits_working <- unlist(lapply(show_limits, function(x){c((1-x)/2, 1-(1-x)/2)}))
+  }
+  
+  limits_z <- vapply(show_limits_working, FUN = qnorm, FUN.VALUE = 1)
   
   
-  # Define vector for scale colours
-  plot_cols<-c(
-    
-    "95% Lower Poisson" = plot_cols[1],
-    "95% Upper Poisson" = plot_cols[2],
-    "99.8% Lower Poisson" = plot_cols[3],
-    "99.8% Upper Poisson" = plot_cols[4],
-    "95% Lower Overdispersed" = plot_cols[5],
-    "95% Upper Overdispersed" = plot_cols[6],
-    "99.8% Lower Overdispersed" = plot_cols[7],
-    "99.8% Upper Overdispersed" = plot_cols[8]
-  )
+  # Need to turn them into named limits.
+  lims <- transcribe_limits(limits_z, Poisson_limits, OD_adjust)
+  
+  # Truncate plot_cols to right length
+  plot_cols<- plot_cols[1:(length(lims))]
+  names(plot_cols) <- lims
+  
+  # # Define vector for scale colours
+  # plot_cols<-c(
+  #   
+  #   "95% Lower Poisson" = plot_cols[1],
+  #   "95% Upper Poisson" = plot_cols[2],
+  #   "99.8% Lower Poisson" = plot_cols[3],
+  #   "99.8% Upper Poisson" = plot_cols[4],
+  #   "95% Lower Overdispersed" = plot_cols[5],
+  #   "95% Upper Overdispersed" = plot_cols[6],
+  #   "99.8% Lower Overdispersed" = plot_cols[7],
+  #   "99.8% Upper Overdispersed" = plot_cols[8]
+  # )
 
 
   mod_plot <- data.frame(numerator=as.numeric(numerator)

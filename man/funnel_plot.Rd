@@ -10,7 +10,8 @@ funnel_plot(
   denominator,
   group,
   data_type = "SR",
-  limit = 99,
+  show_limits = c(0.95, 0.99),
+  outlier_limit = c(0.99),
   label = "outlier",
   highlight = NA,
   Poisson_limits = FALSE,
@@ -36,8 +37,6 @@ funnel_plot(
 \item{group}{A vector of group names as character or factor.  Used to aggregate and group points on plots}
 
 \item{data_type}{A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".}
-
-\item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 
 \item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
 \itemize{
@@ -84,6 +83,8 @@ Default has been chosen to avoid red and green which can lead to subconscious va
 Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
+
+\item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
