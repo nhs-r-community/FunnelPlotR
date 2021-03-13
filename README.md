@@ -11,8 +11,6 @@ version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-projec
 ![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR) [![Codecov
 test
 coverage](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR?branch=master)
-[![R build
-status](https://github.com/chrismainey/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/chrismainey/FunnelPlotR/actions)
 [![R-CMD-check](https://github.com/chrismainey/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/chrismainey/FunnelPlotR/actions)
 <!-- badges: end -->
 
