@@ -1,10 +1,10 @@
-pandoc: '2.2'
+pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   changing_funnel_plot_options: changing_funnel_plot_options.html
   funnel_plots: funnel_plots.html
-last_built: 2020-12-24T13:14Z
+last_built: 2021-03-13T19:48Z
 urls:
   reference: https://chrismainey.github.io/FunnelPlotR/reference
   article: https://chrismainey.github.io/FunnelPlotR/articles

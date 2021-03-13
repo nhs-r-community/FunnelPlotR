@@ -90,7 +90,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="funnel_plots_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Funnel Plots for Indirectly-standardised ratios</h1>
@@ -129,7 +129,7 @@
 <h3 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example:</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 
 <span class="co"># Make up some data, as if it was from a regression model with observed and predicted (expected) events.</span>
@@ -194,7 +194,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://chrismainey.github.io/FunnelPlotR/">FunnelPlotR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">COUNT</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">)</span>
 <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">)</span>
@@ -244,7 +244,7 @@
 <span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
             title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">TRUE</span>,
             OD_adjust <span class="op">=</span> <span class="cn">FALSE</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Warning: ggrepel: 5 unlabeled data points (too many overlaps). Consider</span>
+<span class="co">#&gt; Warning: ggrepel: 4 unlabeled data points (too many overlaps). Consider</span>
 <span class="co">#&gt; increasing max.overlaps</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel1-1.png" width="672" style="display: block; margin: auto;"></p>
 <pre><code>#&gt; A funnel plot object with 54 points of which 25 are outliers. 

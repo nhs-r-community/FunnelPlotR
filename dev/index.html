@@ -92,9 +92,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="funnel-plots-for-comparing-institutional-performance" class="section level1">
+<div id="funnel-plots-for-comparing-institutional-performance-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#funnel-plots-for-comparing-institutional-performance" class="anchor"></a>Funnel Plots for Comparing Institutional Performance <img src="reference/figures/logo.png" width="160px" align="right">
+<a href="#funnel-plots-for-comparing-institutional-performance-" class="anchor"></a>Funnel Plots for Comparing Institutional Performance <img src="reference/figures/logo.png" width="160px" align="right">
 </h1></div>
 <!-- badges: start -->
 
@@ -126,7 +126,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://chrismainey.github.io/FunnelPlotR/">FunnelPlotR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">COUNT</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># lets use the 'medpar' dataset from the 'COUNT' package. Little reformatting needed</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">)</span>
@@ -172,8 +172,8 @@
             Poisson_limits <span class="op">=</span> <span class="cn">TRUE</span>, OD_adjust <span class="op">=</span> <span class="cn">FALSE</span>, label<span class="op">=</span><span class="st">"outlier"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-funnel1-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">#&gt; A funnel plot object with 54 points of which 25 are outliers. </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; Plot is not adjusted for overdispersion.</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#&gt; A funnel plot object with 54 points of which 25 are outliers. </span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; Plot is not adjusted for overdispersion.</span></span></code></pre></div>
 <p><br><br></p>
 <p>That looks like too many outliers! There is more variation in our data than we would expect, and this is referred to as: <strong>overdispersion</strong>. So lets check for it: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -187,8 +187,8 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-funnel2-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">#&gt; A funnel plot object with 54 points of which 9 are outliers. </span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Plot is adjusted for overdispersion.</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#&gt; A funnel plot object with 54 points of which 9 are outliers. </span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt; Plot is adjusted for overdispersion.</span></span></code></pre></div>
 <p><br><br> These methods can be used for any similar indicators, e.g. standardised mortality ratios, readmissions etc.</p>
 <p>Please read the package documentation for more info, at: <a href="https://chrismainey.github.io/FunnelPlotR/" class="uri">https://chrismainey.github.io/FunnelPlotR/</a></p>
 <p>Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at: <a href="https://themightychip.com/" class="uri">https://themightychip.com/</a></p>
