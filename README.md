@@ -3,8 +3,6 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/chrismainey/FunnelPlotR.svg?branch=master)](https://travis-ci.org/chrismainey/FunnelPlotR)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -15,6 +13,7 @@ test
 coverage](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR?branch=master)
 [![R build
 status](https://github.com/chrismainey/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/chrismainey/FunnelPlotR/actions)
+[![R-CMD-check](https://github.com/chrismainey/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/chrismainey/FunnelPlotR/actions)
 <!-- badges: end -->
 
 ## Funnel Plots
@@ -63,7 +62,7 @@ Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 More information available at
-<a href="https://chrismainey.github.io/FunnelPlotR/" class="uri">https://chrismainey.github.io/FunnelPlotR/</a>
+<https://chrismainey.github.io/FunnelPlotR/>
 
 ## Installation
 
@@ -188,7 +187,7 @@ print(b)
 e.g. standardised mortality ratios, readmissions etc.
 
 Please read the package documentation for more info, at:
-<a href="https://chrismainey.github.io/FunnelPlotR/" class="uri">https://chrismainey.github.io/FunnelPlotR/</a>
+<https://chrismainey.github.io/FunnelPlotR/>
 
 Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at:
-<a href="https://themightychip.com/" class="uri">https://themightychip.com/</a>
+<https://themightychip.com/>
