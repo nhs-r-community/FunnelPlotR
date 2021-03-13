@@ -2,7 +2,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.Rprofile$
-^\.travis\.yml$
 ^sticker$
 ^CODE_OF_CONDUCT\.md$
 README.Rmd

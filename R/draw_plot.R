@@ -145,7 +145,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier == 1,
                                             as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
     } 
     
@@ -154,7 +154,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier == 1 & rr < 1,
                                             as.character(group), NA))
-                         , size=2.5,point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5,point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
     } 
     
@@ -163,7 +163,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier ==  1 & rr > 1,
                                             as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
     } 
     
@@ -171,7 +171,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(highlight == 1,
                                             as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
     } 
     
@@ -179,7 +179,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
                                             as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
       
     }
@@ -188,7 +188,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1& rr < 1)) ,
                                             as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
      
     }
@@ -197,7 +197,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1 & rr > 1)) ,
                                             as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force_pull = 1
+                         , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
      
     }
