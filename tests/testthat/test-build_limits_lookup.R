@@ -1,6 +1,6 @@
 test_that("`build limits funcion` works with input and returns expected data.frame", {
-  z<-build_limits_lookup(10, 250, 0.65, 1.51, Poisson_limits=FALSE, OD_adjust=TRUE, tau2=0.02,
-                         data_type="SR", sr_method="SHMI", multiplier=1, target=1)
+  z<-build_limits_lookup(10, 250, 0.65, 1.51, OD_adjust=TRUE, tau2=0.02,
+                         data_type="SR", adjust_method="SHMI", multiplier=1, target=1)
  
   
   expect_s3_class(z, "data.frame")

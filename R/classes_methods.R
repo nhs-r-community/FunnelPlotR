@@ -49,7 +49,7 @@ validate_funnel_plot <- function(funnelplot){
   }
   if (!is.logical(funnelplot[[7]])){
     stop(
-      "Invalid Poisson_limits value.  Expects logical."
+      "Invalid draw_unadjusted value.  Expects logical."
     )
   }
   if (!is.data.frame(funnelplot[[8]])){

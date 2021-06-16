@@ -4,28 +4,29 @@
 #'
 #' @param dfCI Aggregated model input data
 #' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
-#' @param sr_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
+#' @param adjust_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
 #' @param multiplier Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.
 #' @param tau2 A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.
 #' @param target The centre line of the plot. Mean for non-SRs or 1 for SR
 #' @keywords internal
 #' @return A data.frame of with appended OD limits
 #' 
-calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", multiplier = 1, tau2 = 0
+calculate_limits<-function(dfCI=dfCI, data_type = "SR", adjust_method = "SHMI", multiplier = 1, tau2 = 0
                            ,target=target, OD_adjust=OD_adjust){
   od = ifelse(OD_adjust == TRUE, "od", "")
   tau2 = ifelse(OD_adjust == FALSE, 0, tau2)
   var_names = paste0(od,c("ll95","ul95","ll998","ul998"))
-  ncols = ncol(dfCI)
   if(data_type == "SR"){
     if(OD_adjust == FALSE) {
+      ncols = ncol(dfCI)
       dfCI[,ncols + 1] <- multiplier * target * (qchisq(0.975, 2*dfCI$number.seq, lower.tail = FALSE)/2)/ dfCI$number.seq
       dfCI[,ncols + 2] <- multiplier * target * (qchisq(0.025, 2*(dfCI$number.seq+1), lower.tail = FALSE)/2) / dfCI$number.seq
       dfCI[,ncols + 3] <- multiplier * target * (qchisq(0.999, 2*dfCI$number.seq, lower.tail = FALSE)/2)/ dfCI$number.seq
       dfCI[,ncols + 4] <- multiplier * target * (qchisq(0.001, 2*(dfCI$number.seq+1), lower.tail = FALSE)/2) / dfCI$number.seq
       
-    } else if(sr_method == "SHMI"){
+    } else if(adjust_method == "SHMI"){
       dfCI$s <-sqrt(1/dfCI$number.seq)
+      ncols = ncol(dfCI)
 
       dfCI[,ncols + 1] <- multiplier * (exp(-1.959964 * sqrt((1/dfCI$number.seq) + tau2)))
       dfCI[,ncols + 2] <- multiplier * (exp(1.959964  * sqrt((1/dfCI$number.seq) + tau2)))
@@ -34,6 +35,7 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", mult
 
     } else {
       dfCI$s <- 1/(2*sqrt(dfCI$number.seq))
+      ncols = ncol(dfCI)
 
       dfCI[,ncols + 1] <- multiplier * (1 - (1.959964 * sqrt( (dfCI$s^2 + tau2))))
       dfCI[,ncols + 2] <- multiplier * (1 + (1.959964 * sqrt( (dfCI$s^2 + tau2))))
@@ -43,6 +45,7 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", mult
     
   } else if(data_type=="RC"){
     dfCI$s <- 1/(2*sqrt(dfCI$number.seq))
+    ncols = ncol(dfCI)
     
     dfCI[,ncols + 1] <- multiplier * (exp( log(target) - (1.959964 * sqrt( dfCI$s^2 + tau2))))
     dfCI[,ncols + 2] <- multiplier * (exp( log(target) + (1.959964 * sqrt( dfCI$s^2 + tau2))))
@@ -51,6 +54,7 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", mult
 
   } else if(data_type=="PR"){
     dfCI$s <- 1/(2*sqrt(dfCI$number.seq))
+    ncols = ncol(dfCI)
     
     dfCI[,ncols + 1] <-  multiplier * (sin(asin(sqrt(target)) - 1.959964 * sqrt((dfCI$s^2) +tau2))^2)
     dfCI[,ncols + 2] <-  multiplier * (sin(asin(sqrt(target)) + 1.959964 * sqrt((dfCI$s^2) +tau2))^2)

@@ -22,10 +22,10 @@
 #' \item{\code{NA}}{ - No labels applied}
 #' }
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
-#' @param draw_unadjusted Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)
+#' @param draw_unadjusted Draw control limits without overdispersion adjustment. (default=FALSE)
 #' @param OD_adjust Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
-#' @param sr_method Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
+#' @param adjust_method Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 #' uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
 #' SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison .
 #' Both methods then calculate a dispersion ratio (\eqn{\phi}) on this altered dataset.  This ratio is then used to scale the full dataset,
@@ -107,7 +107,7 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
-                            highlight = NA, draw_unadjusted = FALSE, OD_adjust = TRUE, sr_method = "SHMI"
+                            highlight = NA, draw_unadjusted = FALSE, OD_adjust = TRUE, adjust_method = "SHMI"
                             , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected"
                             , y_label ,xrange = "auto", yrange = "auto"
                             , plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
@@ -137,6 +137,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   if(identical(numerator,denominator)){
     stop("Numerator and denominator are the same. Please check your inputs")
+  }
+
+  if(data_type != "SR" && adjust_method == "SHMI") {
+    stop("SHMI overdispersion adjustment only available with SR data, try CQC instead")
   }
   
   if(length(plot_cols) < 4){
@@ -211,7 +215,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   mod_plot_agg<-aggregate_func(mod_plot)
   
   # Round to two decimal places for expected SHMI expected
-  if(data_type == "SR" & sr_method == "SHMI"){
+  if(data_type == "SR" & adjust_method == "SHMI"){
     mod_plot_agg$denominator <- round(mod_plot_agg$denominator,2)
   }
   
@@ -219,10 +223,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   #OD Adjust and return table
   # transform to z-score
-  mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
+  mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, adjust_method = adjust_method)
   
   # Winsorise or truncate depending on method
-  if(data_type=="SR" & sr_method=="SHMI"){
+  if(data_type=="SR" & adjust_method=="SHMI"){
     mod_plot_agg <- truncation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
   } else {
     mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
@@ -241,6 +245,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   if(OD_adjust == FALSE){
     phi<-as.numeric(0)
     tau2<-as.numeric(0)
+    draw_unadjusted <- TRUE
   }
 
   # Set limits
@@ -270,21 +275,24 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   if (OD_adjust == TRUE & tau2 == 0) {
     OD_adjust <- FALSE
     message("No overdispersion detected, or OD_adjust to FALSE, plotting using unadjusted limits")
-    
+    draw_unadjusted <- TRUE
   }
 
   plot_limits<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y, 
                                     denominators = mod_plot_agg$denominator,
                                     OD_adjust=OD_adjust, tau2=tau2, 
-                                    data_type=data_type, sr_method=sr_method, target=target, 
+                                    data_type=data_type, adjust_method=adjust_method, target=target, 
                                     multiplier=multiplier)
   
   # Join limits
-  mod_plot_agg <- merge(mod_plot_agg, plot_limits, by.x="denominator", by.y="number.seq")
+  mod_plot_agg <- merge(mod_plot_agg[,-grep("\\bs\\b",colnames(mod_plot_agg))],
+                        plot_limits, by.x="denominator", by.y="number.seq")
+  mod_plot_agg <- mod_plot_agg[order(mod_plot_agg$group),]
   
-  new_names = c("odll95"="OD95LCL", "odul95"="OD9UCL", "odll998"="OD99LCL",
+  new_names = c("odll95"="OD95LCL", "odul95"="OD95UCL", "odll998"="OD99LCL",
                 "odul998"="OD99UCL", "ll95"="LCL95", "ul95"="UCL95",
                 "ll998"="LCL99", "ul998"="UCL99")
+                
   names(mod_plot_agg) <- ifelse(is.na(new_names[names(mod_plot_agg)]), names(mod_plot_agg), new_names[names(mod_plot_agg)])             
   # Add a colouring variable 
   mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
@@ -297,7 +305,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
                       multiplier=multiplier,  
                       draw_unadjusted=draw_unadjusted, OD_adjust=OD_adjust,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
-                      sr_method = sr_method, theme = theme, plot_cols=plot_cols)
+                      adjust_method = adjust_method, theme = theme, plot_cols=plot_cols)
   
   
   # Subset outliers for reporting

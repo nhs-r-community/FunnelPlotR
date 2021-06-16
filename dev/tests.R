@@ -6,9 +6,9 @@ library(ggplot2)
 data_type = "SR"
 limit=95
 label_outliers = TRUE
-Poisson_limits = TRUE
+draw_unadjusted = TRUE
 OD_adjust = FALSE
-sr_method = "SHMI"
+adjust_method = "SHMI"
 trim_by = 0.1
 title="Untitled Funnel Plot"
 multiplier = 1
@@ -38,8 +38,8 @@ fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
                  group = medpar$provnum, limit=99 
                  ,label = "both"
                  
-                 , sr_method = "CQC",
-                 Poisson_limits = TRUE, OD_adjust=FALSE, highlight = "030002", theme=funnel_grey(),
+                 , adjust_method = "CQC",
+                 draw_unadjusted = TRUE, OD_adjust=FALSE, highlight = "030002", theme=funnel_grey(),
                  plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
                  
 #rm(fp2)
@@ -57,8 +57,8 @@ source_data(fp2)
 
 
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = TRUE,
-            OD_adjust = TRUE, limit=99, label = "outlier", sr_method="SHMI")
+            title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = TRUE,
+            OD_adjust = TRUE, limit=99, label = "outlier", adjust_method="SHMI")
 
 fp[[1]]
 
@@ -96,8 +96,8 @@ b[[2]] %>%
 
 a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
             data_type = "RC",#return_elements=c("plot"),
-            title = 'Length of Stay Funnel plot for `medpar` data', Poisson_limits = FALSE,
-            OD_adjust = TRUE, label_outliers = TRUE, sr_method="SHMI")
+            title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = FALSE,
+            OD_adjust = TRUE, label_outliers = TRUE, adjust_method="SHMI")
 
 a[1]
 
@@ -108,7 +108,7 @@ a[[2]] %>%
 a[3]
 
 draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
-                    multiplier=multiplier, Poisson_limits=FALSE, OD_adjust=TRUE,
+                    multiplier=multiplier, draw_unadjusted=FALSE, OD_adjust=TRUE,
                     Tau2=Tau2, Target=sum(numerator)/sum(denominator), xrange=xrange, 
                     yrange=yrange, data_type=data_type,
-                    sr_method = sr_method, theme = theme)
+                    adjust_method = adjust_method, theme = theme)

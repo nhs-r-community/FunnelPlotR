@@ -4,23 +4,23 @@
 #'
 #' @param mod_plot_agg Aggregated model input data
 #' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
-#' @param sr_method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.
+#' @param adjust_method Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.
 #'
 #' @return A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
 #' @keywords internal
 #'
-transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_method = "SHMI"){
+transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", adjust_method = "SHMI"){
 
   if(data_type == "SR"){
 
     # log-transformed SHMI version
-    if(sr_method == "SHMI"){
+    if(adjust_method == "SHMI"){
       mod_plot_agg$target_transformed<- 0
       mod_plot_agg$Y <- log(mod_plot_agg$numerator / mod_plot_agg$denominator)
       mod_plot_agg$s <- 1 / (sqrt(mod_plot_agg$denominator))
 
     # SQRT-transformed CQC version
-    } else if(sr_method == "CQC"){
+    } else if(adjust_method == "CQC"){
       mod_plot_agg$target_transformed<- 1
       mod_plot_agg$Y <- sqrt(mod_plot_agg$numerator / mod_plot_agg$denominator)
       mod_plot_agg$s  <- 1 / (2 * sqrt(mod_plot_agg$denominator))
@@ -58,7 +58,7 @@ transformed_zscore<-function(mod_plot_agg=mod_plot_agg, data_type = "SR", sr_met
   }
   
   
-  if(data_type == "SR" & sr_method=="SHMI"){
+  if(data_type == "SR" & adjust_method=="SHMI"){
    
       mod_plot_agg$Uzscore <-  sqrt(mod_plot_agg$denominator) * log(mod_plot_agg$numerator / mod_plot_agg$denominator)
 
