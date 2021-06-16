@@ -13,7 +13,7 @@ funnel_plot(
   limit = 99,
   label = "outlier",
   highlight = NA,
-  Poisson_limits = FALSE,
+  draw_unadjusted = FALSE,
   OD_adjust = TRUE,
   sr_method = "SHMI",
   trim_by = 0.1,
@@ -53,7 +53,7 @@ funnel_plot(
 
 \item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
 
-\item{Poisson_limits}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
+\item{draw_unadjusted}{Draw exact Poisson limits, without overdispersion adjustment. (default=FALSE)}
 
 \item{OD_adjust}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
@@ -95,7 +95,7 @@ A fitted `funnelplot` object.  A `funnelplot` object is a list containing the fo
 \item{tau2}{The between-groups standard deviation, \eqn{\tau^2}.}
 \item{phi}{The dispersion ratio, \eqn{\phi}.}
 \item{OD_adjust}{Whether overdispersion-adjusted limits were used.}
-\item{Poisson_limits}{Whether unadjusted Poisson limits were used.}
+\item{draw_unadjusted}{Whether unadjusted Poisson limits were used.}
 }
 \description{
 An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970>.
@@ -107,7 +107,7 @@ and constructing an additive random effects models, originally used for meta-ana
 Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99.8\% quantiles of the normal distribution.\cr
    Labels can attached using the `label` argument.\cr
    Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012), set `OD_adjust` to FALSE to suppress this. \cr
-   To use Poisson limits set `Poisson_limits=TRUE`. \cr
+   To use Poisson limits set `draw_unadjusted=TRUE`. \cr
    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
    Future versions of `funnelplotr` may allow users to change this.
 }
