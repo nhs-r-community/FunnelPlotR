@@ -278,22 +278,31 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
     draw_unadjusted <- TRUE
   }
 
+  # Calculate both adjusted and unadjusted control limits. This calculates limits for
+  #   for both a range of denominators for plotting as well as the denominators present
+  #   in the data
   plot_limits<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y, 
                                     denominators = mod_plot_agg$denominator,
                                     OD_adjust=OD_adjust, tau2=tau2, 
                                     data_type=data_type, adjust_method=adjust_method, target=target, 
                                     multiplier=multiplier)
   
-  # Join limits
+  # Extract the control limits corresponding to the denominators present in the
+  #   data. This drops the standard error 's' already present in mod_plot_agg
   mod_plot_agg <- merge(mod_plot_agg[,-grep("\\bs\\b",colnames(mod_plot_agg))],
                         plot_limits, by.x="denominator", by.y="number.seq")
+  
+  # Arrange rows by group
   mod_plot_agg <- mod_plot_agg[order(mod_plot_agg$group),]
   
+  # Create named vector mapping the needed changes in variable names
   new_names = c("odll95"="OD95LCL", "odul95"="OD95UCL", "odll998"="OD99LCL",
                 "odul998"="OD99UCL", "ll95"="LCL95", "ul95"="UCL95",
                 "ll998"="LCL99", "ul998"="UCL99")
-                
+  
+  # Rename aggregate data control limits
   names(mod_plot_agg) <- ifelse(is.na(new_names[names(mod_plot_agg)]), names(mod_plot_agg), new_names[names(mod_plot_agg)])             
+  
   # Add a colouring variable 
   mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
   
