@@ -2,12 +2,11 @@
 #' 
 #' @param mod_plot_agg Aggregated data set for plotting
 #' @param OD_adjust Logical for drawing OD limits, takes precedence over Poisson for outliers
-#' @param Poisson_limits Logical for drawing Poisson limits
 #' @param limit which limit to use.  Currently 95 or 99.
 #' @param multiplier the amount to scale the RR / limits by. Default is 1 \(no scaling\).
 #' 
 #' @keywords internal
-outliers_func <- function(mod_plot_agg, OD_adjust, Poisson_limits, limit, multiplier){
+outliers_func <- function(mod_plot_agg, OD_adjust, limit, multiplier){
 
   if (limit == 95) {
     if (OD_adjust==FALSE){
