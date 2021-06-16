@@ -13,11 +13,17 @@
 #' 
 calculate_limits<-function(dfCI=dfCI, data_type = "SR", adjust_method = "SHMI", multiplier = 1, tau2 = 0
                            ,target=target, OD_adjust=OD_adjust){
+  # Construct variable names for limits
   od = ifelse(OD_adjust == TRUE, "od", "")
+  var_names = paste0(od, c("ll95","ul95","ll998","ul998"))
+
+  # Set between-institution variance to zero for calculating approximate
+  #   unadjusted limits for PR and RC data
   tau2 = ifelse(OD_adjust == FALSE, 0, tau2)
-  var_names = paste0(od,c("ll95","ul95","ll998","ul998"))
+
   if(data_type == "SR"){
     if(OD_adjust == FALSE) {
+      # Identify number of existing columns, as we will append the calculated limits the end
       ncols = ncol(dfCI)
       dfCI[,ncols + 1] <- multiplier * target * (qchisq(0.975, 2*dfCI$number.seq, lower.tail = FALSE)/2)/ dfCI$number.seq
       dfCI[,ncols + 2] <- multiplier * target * (qchisq(0.025, 2*(dfCI$number.seq+1), lower.tail = FALSE)/2) / dfCI$number.seq
@@ -62,7 +68,10 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", adjust_method = "SHMI", 
     dfCI[,ncols + 4] <-  multiplier * (sin(asin(sqrt(target)) + 3.090232 * sqrt((dfCI$s^2) +tau2))^2)
 
   }
+
+  # Add variable names
   colnames(dfCI) = c(colnames(dfCI)[1:ncols],var_names)
+
   return(dfCI)
 }
 
