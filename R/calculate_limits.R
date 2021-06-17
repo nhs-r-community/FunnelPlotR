@@ -12,17 +12,17 @@
 #' @return A data.frame of with appended OD limits
 #' 
 calculate_limits<-function(dfCI=dfCI, data_type = "SR", adjust_method = "SHMI", multiplier = 1, tau2 = 0
-                           ,target=target, OD_adjust=OD_adjust){
+                           ,target=target, draw_adjusted=draw_adjusted){
   # Construct variable names for limits
-  od = ifelse(OD_adjust == TRUE, "od", "")
+  od = ifelse(draw_adjusted == TRUE, "od", "")
   var_names = paste0(od, c("ll95","ul95","ll998","ul998"))
 
   # Set between-institution variance to zero for calculating approximate
   #   unadjusted limits for PR and RC data
-  tau2 = ifelse(OD_adjust == FALSE, 0, tau2)
+  tau2 = ifelse(draw_adjusted == FALSE, 0, tau2)
 
   if(data_type == "SR"){
-    if(OD_adjust == FALSE) {
+    if(draw_adjusted == FALSE) {
       # Identify number of existing columns, as we will append the calculated limits the end
       ncols = ncol(dfCI)
       dfCI[,ncols + 1] <- multiplier * target * (qchisq(0.975, 2*dfCI$number.seq, lower.tail = FALSE)/2)/ dfCI$number.seq
