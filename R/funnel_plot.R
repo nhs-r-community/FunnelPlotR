@@ -25,7 +25,7 @@
 #' @param draw_unadjusted Draw control limits without overdispersion adjustment. (default=FALSE)
 #' @param draw_adjusted Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
-#' @param adjust_method Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
+#' @param sr_method Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
 #' uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
 #' SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison .
 #' Both methods then calculate a dispersion ratio (\eqn{\phi}) on this altered dataset.  This ratio is then used to scale the full dataset,
@@ -107,7 +107,7 @@
 
 
 funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
-                            highlight = NA, draw_unadjusted = FALSE, draw_adjusted = TRUE, adjust_method = "SHMI"
+                            highlight = NA, draw_unadjusted = FALSE, draw_adjusted = TRUE, sr_method = "SHMI"
                             , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected"
                             , y_label ,xrange = "auto", yrange = "auto"
                             , plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
@@ -137,10 +137,6 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   if(identical(numerator,denominator)){
     stop("Numerator and denominator are the same. Please check your inputs")
-  }
-
-  if(data_type != "SR" && adjust_method == "SHMI") {
-    stop("SHMI overdispersion adjustment only available with SR data, try CQC instead")
   }
   
   if(length(plot_cols) < 4){
@@ -215,7 +211,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   mod_plot_agg<-aggregate_func(mod_plot)
   
   # Round to two decimal places for expected SHMI expected
-  if(data_type == "SR" & adjust_method == "SHMI"){
+  if(data_type == "SR" & sr_method == "SHMI"){
     mod_plot_agg$denominator <- round(mod_plot_agg$denominator,2)
   }
   
@@ -223,10 +219,10 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   
   #OD Adjust and return table
   # transform to z-score
-  mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, adjust_method = adjust_method)
+  mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
   
   # Winsorise or truncate depending on method
-  if(data_type=="SR" & adjust_method=="SHMI"){
+  if(data_type=="SR" & sr_method=="SHMI"){
     mod_plot_agg <- truncation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
   } else {
     mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
@@ -284,7 +280,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   plot_limits<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y, 
                                     denominators = mod_plot_agg$denominator,
                                     draw_adjusted=draw_adjusted, tau2=tau2, 
-                                    data_type=data_type, adjust_method=adjust_method, target=target, 
+                                    data_type=data_type, sr_method=sr_method, target=target, 
                                     multiplier=multiplier)
   
   # Extract the control limits corresponding to the denominators present in the
@@ -314,7 +310,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
                       multiplier=multiplier,  
                       draw_unadjusted=draw_unadjusted, draw_adjusted=draw_adjusted,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
-                      adjust_method = adjust_method, theme = theme, plot_cols=plot_cols)
+                      sr_method = sr_method, theme = theme, plot_cols=plot_cols)
   
   
   # Subset outliers for reporting
