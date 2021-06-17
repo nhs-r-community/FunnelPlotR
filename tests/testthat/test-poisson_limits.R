@@ -1,6 +1,6 @@
 test_that("`Poisson limits are right", {
   lims <- calculate_limits(data.frame(number.seq= c(15,20,30)), target=1,
-                           OD_adjust=FALSE)
+                           draw_adjusted=FALSE)
   expect_length(lims,5)
   expect_length(lims[,1],3)
   expect_equal(round(lims$ll95,7), c(0.5596924, 0.6108260, 0.6746958))

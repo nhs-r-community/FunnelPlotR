@@ -5,8 +5,8 @@
 #' @param min_ratio Minimum ratio value for range of y-axis
 #' @param max_ratio Maximum ratio value for range of y-axis
 #' @param draw_unadjusted TRUE/FALSE Draw Poisson distribution limits?
-#' @param OD_adjust TRUE/FALSE Use overdispersion adjustment
-#' @param tau2 If using OD_adjust, what is the tau2 ("between" standard error) to use?
+#' @param draw_adjusted TRUE/FALSE Use overdispersion adjustment
+#' @param tau2 If using draw_adjusted, what is the tau2 ("between" standard error) to use?
 #' @param data_type SR, PR or RC. Used to set target reference
 #' @param adjust_method Which adjustment method is being used, SHMI or CQC?
 #' @param target target to be used to set centre line
@@ -16,7 +16,7 @@
 #'
 #' @importFrom stats qchisq quantile
 build_limits_lookup<-function(min_x, max_x, min_y, max_y
-                              , OD_adjust, tau2, data_type, adjust_method
+                              , draw_adjusted, tau2, data_type, adjust_method
                               , target, multiplier, denominators){
   
   
@@ -38,8 +38,8 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y
     number.seq
   )
 
-  dfCI <- calculate_limits(dfCI, data_type, adjust_method, multiplier, tau2, target, OD_adjust=TRUE)
-  dfCI <- calculate_limits(dfCI, data_type, adjust_method, multiplier, tau2, target, OD_adjust=FALSE)
+  dfCI <- calculate_limits(dfCI, data_type, adjust_method, multiplier, tau2, target, draw_adjusted=TRUE)
+  dfCI <- calculate_limits(dfCI, data_type, adjust_method, multiplier, tau2, target, draw_adjusted=FALSE)
 
   return(dfCI)
 }
