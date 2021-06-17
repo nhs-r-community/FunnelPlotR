@@ -4,14 +4,14 @@
 #'
 #' @param dfCI Aggregated model input data
 #' @param data_type Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").
-#' @param adjust_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
+#' @param sr_method Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default. 
 #' @param multiplier Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.
 #' @param tau2 A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.
 #' @param target The centre line of the plot. Mean for non-SRs or 1 for SR
 #' @keywords internal
 #' @return A data.frame of with appended OD limits
 #' 
-calculate_limits<-function(dfCI=dfCI, data_type = "SR", adjust_method = "SHMI", multiplier = 1, tau2 = 0
+calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", multiplier = 1, tau2 = 0
                            ,target=target, draw_adjusted=draw_adjusted){
   # Construct variable names for limits
   od = ifelse(draw_adjusted == TRUE, "od", "")
@@ -30,7 +30,7 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", adjust_method = "SHMI", 
       dfCI[,ncols + 3] <- multiplier * target * (qchisq(0.999, 2*dfCI$number.seq, lower.tail = FALSE)/2)/ dfCI$number.seq
       dfCI[,ncols + 4] <- multiplier * target * (qchisq(0.001, 2*(dfCI$number.seq+1), lower.tail = FALSE)/2) / dfCI$number.seq
       
-    } else if(adjust_method == "SHMI"){
+    } else if(sr_method == "SHMI"){
       dfCI$s <-sqrt(1/dfCI$number.seq)
       ncols = ncol(dfCI)
 

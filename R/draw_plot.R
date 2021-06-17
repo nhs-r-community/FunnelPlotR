@@ -16,7 +16,7 @@
 #' @param min_x Specify the plot range. 
 #' @param max_x Specify the plot range. 
 #' @param data_type the data type SR, PR or RC.
-#' @param adjust_method CQC or SHMI methods for standardised ratios
+#' @param sr_method CQC or SHMI methods for standardised ratios
 #' @param theme a ggplot theme function.
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
@@ -30,7 +30,7 @@
 
 draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multiplier,
                      draw_unadjusted, draw_adjusted, target, min_y, max_y, min_x, max_x
-                    , data_type, adjust_method, theme, plot_cols){
+                    , data_type, sr_method, theme, plot_cols){
   
   # Bind variable for NSE
   numerator <- denominator <- number.seq <- ll95 <- ul95 <- ll998 <- ul998 <- odll95 <- odul95 <-
