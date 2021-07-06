@@ -31,7 +31,7 @@ build_limits_lookup<-function(min_x, max_x, min_y, max_y
   }
 
   if(!missing(denominators)) {
-    number.seq <- unique(c(number.seq, denominators))
+    number.seq <- sort(unique(c(number.seq, denominators)))
   }
 
   dfCI <- data.frame(
