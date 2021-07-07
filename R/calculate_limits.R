@@ -59,16 +59,6 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", mult
     dfCI[,ncols + 4] <- multiplier * (exp( log(target) + (3.090232 * sqrt( dfCI$s^2 + tau2))))
 
   } else if(data_type=="PR"){
-    if(draw_adjusted == FALSE) {
-      # Use Normal approximation for better handling of small denominators
-      dfCI$s <- sqrt(target * (1 - target) / dfCI$number.seq)
-      ncols = ncol(dfCI)
-  
-      dfCI[,ncols + 1] <-  multiplier * target - 1.959964 * dfCI$s
-      dfCI[,ncols + 2] <-  multiplier * target + 1.959964 * dfCI$s
-      dfCI[,ncols + 3] <-  multiplier * target - 3.090232 * dfCI$s
-      dfCI[,ncols + 4] <-  multiplier * target + 3.090232 * dfCI$s
-    } else {
       dfCI$s <- 1/(2*sqrt(dfCI$number.seq))
       ncols = ncol(dfCI)
       
@@ -76,7 +66,7 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", mult
       dfCI[,ncols + 2] <-  multiplier * (sin(asin(sqrt(target)) + 1.959964 * sqrt((dfCI$s^2) +tau2))^2)
       dfCI[,ncols + 3] <-  multiplier * (sin(asin(sqrt(target)) - 3.090232 * sqrt((dfCI$s^2) +tau2))^2)
       dfCI[,ncols + 4] <-  multiplier * (sin(asin(sqrt(target)) + 3.090232 * sqrt((dfCI$s^2) +tau2))^2)
-    }
+
       # Truncate proportion limits at [0, 1]
       dfCI[,ncols + 1] <-  ifelse(dfCI[,ncols + 1] < 0, 0, dfCI[,ncols + 1])
       dfCI[,ncols + 2] <-  ifelse(dfCI[,ncols + 2] > 1, 1, dfCI[,ncols + 2])
