@@ -13,7 +13,7 @@ draw_plot(
   label,
   multiplier,
   draw_unadjusted,
-  OD_adjust,
+  draw_adjusted,
   target,
   min_y,
   max_y,
@@ -42,7 +42,7 @@ draw_plot(
 
 \item{draw_unadjusted}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
 
-\item{OD_adjust}{Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)}
+\item{draw_adjusted}{Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)}
 
 \item{target}{the calculated target value for the data type}
 
