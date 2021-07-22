@@ -11,7 +11,7 @@ calculate_limits(
   multiplier = 1,
   tau2 = 0,
   target = target,
-  OD_adjust = OD_adjust
+  draw_adjusted = draw_adjusted
 )
 }
 \arguments{
