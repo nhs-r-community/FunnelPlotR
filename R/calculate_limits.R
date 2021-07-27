@@ -69,19 +69,19 @@ calculate_limits<-function(dfCI=dfCI, data_type = "SR", sr_method = "SHMI", mult
 
       # Truncate proportion limits at [0, 1]
       dfCI[,ncols + 1] <-  ifelse(dfCI[,ncols + 1] < 0, 0, dfCI[,ncols + 1])
-      dfCI[,ncols + 2] <-  ifelse(dfCI[,ncols + 2] > 1, 1, dfCI[,ncols + 2])
+      dfCI[,ncols + 2] <-  ifelse(dfCI[,ncols + 2] > 1 * multiplier, 1 * multiplier, dfCI[,ncols + 2])
       dfCI[,ncols + 3] <-  ifelse(dfCI[,ncols + 3] < 0, 0, dfCI[,ncols + 3])
-      dfCI[,ncols + 4] <-  ifelse(dfCI[,ncols + 4] > 1, 1, dfCI[,ncols + 4])
+      dfCI[,ncols + 4] <-  ifelse(dfCI[,ncols + 4] > 1 * multiplier, 1 * multiplier, dfCI[,ncols + 4])
 
       # Arcsine limits at low denominators might not be monotonic, truncate if occurs
       dfCI[1:(nrow(dfCI)-1),ncols + 1] <-  ifelse(dfCI[1:(nrow(dfCI)-1),ncols + 1] > dfCI[2:(nrow(dfCI)),ncols + 1],
                                                   0, dfCI[1:(nrow(dfCI)-1),ncols + 1])
       dfCI[1:(nrow(dfCI)-1),ncols + 2] <-  ifelse(dfCI[1:(nrow(dfCI)-1),ncols + 2] < dfCI[2:(nrow(dfCI)),ncols + 2],
-                                                  1, dfCI[1:(nrow(dfCI)-1),ncols + 2])
+                                                  1 * multiplier, dfCI[1:(nrow(dfCI)-1),ncols + 2])
       dfCI[1:(nrow(dfCI)-1),ncols + 3] <-  ifelse(dfCI[1:(nrow(dfCI)-1),ncols + 3] > dfCI[2:(nrow(dfCI)),ncols + 3],
                                                   0, dfCI[1:(nrow(dfCI)-1),ncols + 3])
       dfCI[1:(nrow(dfCI)-1),ncols + 4] <-  ifelse(dfCI[1:(nrow(dfCI)-1),ncols + 4] < dfCI[2:(nrow(dfCI)),ncols + 4],
-                                                  1, dfCI[1:(nrow(dfCI)-1),ncols + 4])
+                                                  1 * multiplier, dfCI[1:(nrow(dfCI)-1),ncols + 4])
   }
 
   # Add variable names
