@@ -11,10 +11,10 @@
 #' @param draw_unadjusted Draw exact limits based only on data points with no iterpolation. (default=FALSE)
 #' @param draw_adjusted Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)
 #' @param target the calculated target value for the data type
-#' @param min_y Specify the plot range. 
-#' @param max_y Specify the plot range. 
-#' @param min_x Specify the plot range. 
-#' @param max_x Specify the plot range. 
+#' @param min_y Specify the plot range.
+#' @param max_y Specify the plot range.
+#' @param min_x Specify the plot range.
+#' @param max_x Specify the plot range.
 #' @param data_type the data type SR, PR or RC.
 #' @param sr_method CQC or SHMI methods for standardised ratios
 #' @param theme a ggplot theme function.
@@ -31,14 +31,14 @@
 draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multiplier,
                      draw_unadjusted, draw_adjusted, target, min_y, max_y, min_x, max_x
                     , data_type, sr_method, theme, plot_cols){
-  
+
   # Bind variable for NSE
   numerator <- denominator <- number.seq <- ll95 <- ul95 <- ll998 <- ul998 <- odll95 <- odul95 <-
     odll998 <- odul998 <- rr <- UCL95 <- group <- LCL95 <- OD95UCL <- OD95LCL <-UCL99 <-LCL99 <-
     OD99UCL <- OD99LCL <- outlier <- highlight <- NULL
-  
-  
-  
+
+
+
   # base funnel plot
   funnel_p <- ggplot(mod_plot_agg, aes(y = multiplier * ((numerator / denominator)), x = denominator)) +
     geom_hline(aes(yintercept = target * multiplier), linetype = 2) +
@@ -50,11 +50,11 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
     ylab(y_label) +
     ggtitle(title) +
     theme
-    
+
 
 
   #limits
-  
+
     if (draw_unadjusted == TRUE & draw_adjusted == TRUE) {
     funnel_p <- funnel_p +
       geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), size = 1, data = limits, na.rm = TRUE) +
@@ -73,15 +73,15 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
                                        , "95% Lower Overdispersed"=2
                                        , "95% Upper Overdispersed"= 2
                                        ,  "99.8% Lower Overdispersed" = 1
-                                       , "99.8% Upper Overdispersed" = 1), guide=FALSE)+
+                                       , "99.8% Upper Overdispersed" = 1), guide = "none")+
       guides(colour = guide_legend(title.theme = element_text(
         size = 10,
         face = "bold",
         colour = "black",
         angle = 0
       ), override.aes = list(linetype = c(2,2,2,2,1,1,1,1)) ))
-                           
-      
+
+
   } else {
     if (draw_unadjusted == TRUE & draw_adjusted == FALSE) {
       funnel_p <- funnel_p +
@@ -93,14 +93,14 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         scale_linetype_manual(values = c("95% Lower"=2
                                          , "95% Upper" = 2
                                          ,  "99.8% Lower" = 1
-                                         , "99.8% Upper" = 1), guide=FALSE)+
+                                         , "99.8% Upper" = 1), guide = "none")+
         guides(colour = guide_legend(title.theme = element_text(
           size = 10,
           face = "bold",
           colour = "black",
           angle = 0
         ), override.aes = list(linetype = c(2,2,1,1)) ))
-        
+
     }
 
     if (draw_unadjusted == FALSE &  draw_adjusted == TRUE) {
@@ -113,7 +113,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         scale_linetype_manual(values = c("95% Lower Overdispersed"=2
                                          , "95% Upper Overdispersed"= 2
                                          ,  "99.8% Lower Overdispersed" = 1
-                                         , "99.8% Upper Overdispersed" = 1), guide=FALSE)+
+                                         , "99.8% Upper Overdispersed" = 1), guide = "none")+
         guides(colour = guide_legend(title.theme = element_text(
           size = 10,
           face = "bold",
@@ -134,76 +134,76 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
       scale_x_continuous(name = x_label, labels = scales::comma, limits = c(min_x -1, max_x + 1))
   }
 
-  
-  
-  
+
+
+
 
  # Label points
   if(!is.na(label)){
     if(label=="outlier"){
-    
+
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier == 1,
                                             as.character(group), NA))
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-    } 
-    
+    }
+
     if(label=="outlier_lower"){
-      
+
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier == 1 & rr < 1,
                                             as.character(group), NA))
                          , size=2.5,point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-    } 
-    
+    }
+
     if(label=="outlier_upper"){
-      
+
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(outlier ==  1 & rr > 1,
                                             as.character(group), NA))
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-    } 
-    
+    }
+
     if(label=="highlight"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(highlight == 1,
                                             as.character(group), NA))
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-    } 
-    
+    }
+
     if(label=="both"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
                                             as.character(group), NA))
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-      
+
     }
-    
+
     if(label=="both_lower"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1& rr < 1)) ,
                                             as.character(group), NA))
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-     
+
     }
-    
+
     if(label=="both_upper"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | (outlier == 1 & rr > 1)) ,
                                             as.character(group), NA))
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE)
-     
+
     }
   }
-     
-  
+
+
 
 
  return(funnel_p)
