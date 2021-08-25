@@ -76,7 +76,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/chrismainey/FunnelPlotR">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -242,8 +242,10 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
-            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">TRUE</span>,
-            OD_adjust <span class="op">=</span> <span class="cn">FALSE</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
+            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, draw_unadjusted <span class="op">=</span> <span class="cn">TRUE</span>,
+            draw_adjusted <span class="op">=</span> <span class="cn">FALSE</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
+<span class="co">#&gt; Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please</span>
+<span class="co">#&gt; use `guide = "none"` instead.</span>
 <span class="co">#&gt; Warning: ggrepel: 4 unlabeled data points (too many overlaps). Consider</span>
 <span class="co">#&gt; increasing max.overlaps</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel1-1.png" width="672" style="display: block; margin: auto;"></p>
@@ -263,9 +265,11 @@
 <p>This suggests the variance is 6.24 times the condition mean, and definitely overdispersed. This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
-            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">FALSE</span>,
-            OD_adjust <span class="op">=</span> <span class="cn">TRUE</span>, data_type<span class="op">=</span><span class="st">"SR"</span>, sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span>
-            <span class="op">)</span></code></pre></div>
+            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, draw_unadjusted <span class="op">=</span> <span class="cn">FALSE</span>,
+            draw_adjusted <span class="op">=</span> <span class="cn">TRUE</span>, data_type<span class="op">=</span><span class="st">"SR"</span>, sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span>
+            <span class="op">)</span>
+<span class="co">#&gt; Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please</span>
+<span class="co">#&gt; use `guide = "none"` instead.</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel2-1.png" width="672" style="display: block; margin: auto;"></p>
 <pre><code>#&gt; A funnel plot object with 54 points of which 9 are outliers. 
 #&gt; Plot is adjusted for overdispersion.</code></pre>

@@ -121,7 +121,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/chrismainey/FunnelPlotR">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -155,8 +155,8 @@
   <span class='va'>title</span>,
   <span class='va'>label</span>,
   <span class='va'>multiplier</span>,
-  <span class='va'>Poisson_limits</span>,
-  <span class='va'>OD_adjust</span>,
+  <span class='va'>draw_unadjusted</span>,
+  <span class='va'>draw_adjusted</span>,
   <span class='va'>target</span>,
   <span class='va'>min_y</span>,
   <span class='va'>max_y</span>,
@@ -200,11 +200,11 @@
       <td><p>Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR</p></td>
     </tr>
     <tr>
-      <th>Poisson_limits</th>
+      <th>draw_unadjusted</th>
       <td><p>Draw exact limits based only on data points with no iterpolation. (default=FALSE)</p></td>
     </tr>
     <tr>
-      <th>OD_adjust</th>
+      <th>draw_adjusted</th>
       <td><p>Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)</p></td>
     </tr>
     <tr>
