@@ -1,14 +1,17 @@
 Package: FunnelPlotR
 Type: Package
 Title: Funnel Plots for Comparing Institutional Performance
-Version: 0.3.9999
+Version: 0.4.9999
 Authors@R: c(
-        person("Chris", "Mainey", ,"chris.mainey@uhb.nhs.uk", role= c("aut", "cre"), 
+        person("Chris", "Mainey", ,"c.mainey@nhs.net", role= c("aut", "cre"), 
+          comment = c(ORCID ="0000-0002-3018-6171")
+        ),
+        person("Andrew", "Johnson", "R" ,"Andrew.Johnson@health.wa.gov.au", role="ctb", 
           comment = c(ORCID ="0000-0002-3018-6171")
         ),
         person("Matthew", "Bass", ,"matthew.bass@uhb.nhs.uk", role="ctb")
         )
-Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
+Maintainer: Chris Mainey <c.mainey@nhs.net>
 Description: An implementation of methods presented by Spiegelhalter (2005) <doi:10.1002/sim.1970> Funnel plots for comparing institutional performance, for standardised ratios, ratios of counts and proportions with additive overdispersion adjustment.
 Language: en-GB
 License: MIT + file LICENSE

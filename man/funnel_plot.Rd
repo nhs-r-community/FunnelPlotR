@@ -79,8 +79,8 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{yrange}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
-\item{plot_cols}{A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper). 
-Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  
+\item{plot_cols}{A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
+Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
 Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
@@ -100,7 +100,7 @@ A fitted `funnelplot` object.  A `funnelplot` object is a list containing the fo
 \description{
 An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970>.
 There are several parameters for the input, with the assumption that you will want smooth,
-overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau}) 
+overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau})
 and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
 }
 \details{
@@ -145,11 +145,11 @@ tau2(fp)
 
 }
 \references{
-DerSimonian & Laird (1986) Meta-analysis in clinical trials. \url{https://doi.org/10.1016/0197-2456(86)90046-2}
+DerSimonian & Laird (1986) <doi:10.1016/0197-2456(86)90046-2> Meta-analysis in clinical trials.
 
-Spiegelhalter (2005) Funnel plots for comparing institutional performance \url{https://doi.org/10.1002/sim.1970}
+Spiegelhalter (2005) <doi:10.1002/sim.1970> Funnel plots for comparing institutional performance
 
-Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: \url{https://doi.org/10.1111/j.1467-985X.2011.01010.x}
+Spiegelhalter et al. (2012) <doi:10.1111/j.1467-985X.2011.01010.x> Statistical methods for healthcare regulation: rating, screening and surveillance: <doi:10.1111/j.1467-985X.2011.01010.x>
 
 NHS Digital (2020) SHMI Methodology v .134\url{https://digital.nhs.uk/data-and-information/publications/clinical-indicators/shmi/current}
 }
