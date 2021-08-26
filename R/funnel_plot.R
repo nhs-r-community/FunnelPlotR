@@ -22,6 +22,9 @@
 #' \item{\code{NA}}{ - No labels applied}
 #' }
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
+#' @param label_outliers Deprecated.  Please use the `label` argument instead.
+#' @param Poisson_limits Deprecated.  Please use the `draw_unadjusted` argument instead.
+#' @param OD_adjust Deprecated.  Please use the `draw_adjusted` argument instead.
 #' @param draw_unadjusted Draw control limits without overdispersion adjustment. (default=FALSE)
 #' @param draw_adjusted Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -35,7 +38,9 @@
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
+#' @param xrange Deprecated.  Please use the `x_range` argument instead.
 #' @param x_range Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
+#' @param yrange Deprecated.  Please use the `y_range` argument instead.
 #' @param y_range Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
 #' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
@@ -116,7 +121,9 @@ funnel_plot <- function(numerator, denominator, group
                         , plot_cols =
                           c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF",
                             "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
-                            , theme = funnel_clean()){
+                            , theme = funnel_clean()
+                        , label_outliers, Poisson_limits, OD_adjust
+                        , xrange, yrange){
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
