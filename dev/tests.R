@@ -81,7 +81,8 @@ install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz",
 b<-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
             data_type = "PR",#return_elements=c("plot"),
             title = 'Length of Stay Funnel plot for `medpar` data',
-            draw_adjusted = TRUE), label_outliers = TRUE, limit=95)
+            OD_adjust = TRUE, Poisson_limits = TRUE, label_outliers = TRUE, limit=95,
+            xrange="auto", yrange="auto")
 b
 
 tau2(b)
