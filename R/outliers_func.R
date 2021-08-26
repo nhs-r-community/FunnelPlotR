@@ -1,11 +1,12 @@
 #' @title Label outliers
-#' 
+#'
 #' @param mod_plot_agg Aggregated data set for plotting
 #' @param draw_adjusted Logical for drawing OD limits, takes precedence over Poisson for outliers
 #' @param limit which limit to use.  Currently 95 or 99.
 #' @param multiplier the amount to scale the RR / limits by. Default is 1 \(no scaling\).
-#' 
+#'
 #' @keywords internal
+#' @noRd
 outliers_func <- function(mod_plot_agg, draw_adjusted, limit, multiplier){
 
   if (limit == 95) {
@@ -23,9 +24,9 @@ outliers_func <- function(mod_plot_agg, draw_adjusted, limit, multiplier){
                                      1)
     }
   } else {
-  
+
     if (limit == 99) {
-      
+
        if (draw_adjusted==FALSE){
       #   cat('3')
         mod_plot_agg$outlier <- ifelse((multiplier*mod_plot_agg$rr) <= mod_plot_agg$UCL99 &
@@ -43,9 +44,9 @@ outliers_func <- function(mod_plot_agg, draw_adjusted, limit, multiplier){
   }
   return(mod_plot_agg)
 }
-  
-  
 
-      
-     
-      
+
+
+
+
+

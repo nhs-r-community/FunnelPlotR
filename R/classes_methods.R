@@ -1,22 +1,24 @@
 #' @title Constructor for new funnel plot object
-#' @param x List of objects to convert to class 
+#' @param x List of objects to convert to class
+#' @noRd
 
 new_funnel_plot <- function(x = list()) {
-  
+
   stopifnot(is.list(x))
-  
+
   structure(x,
             class = "funnelplot")
-  
+
 }
 
 
 
 #' @title Validator for new funnel plot object
 #' @param funnelplot object of class funnelplot
+#' @noRd
 
 validate_funnel_plot <- function(funnelplot){
-  
+
   if (!is.list(funnelplot[[1]])){
     stop(
       "Invalid ggplot object"
@@ -66,23 +68,23 @@ validate_funnel_plot <- function(funnelplot){
 #'@export
 
 print.funnelplot <- function(x, ...){
-  
+
   print(x[[1]])
-  
+
   cat("A funnel plot object with", nrow(x[[3]]), "points of which", nrow(x[[8]]), "are outliers. \n")
-  
+
   if(x[[6]]==TRUE){cat("Plot is adjusted for overdispersion. \n")}
   else {cat("Plot is not adjusted for overdispersion. \n")}
-  
+
 }
 
 
 #'@export
 
 plot.funnelplot <- function(x, ...){
-  
+
   x[[1]]
-  
+
 }
 
 
@@ -90,21 +92,21 @@ plot.funnelplot <- function(x, ...){
 #'@export
 
 summary.funnelplot <- function(object, ...){
-  
+
   cat("A funnel plot object with", nrow(object[[3]]), "points of which", nrow(object[[8]]), "are outliers. \n")
-  
+
   cat("Dispersion ratio: \u03d5 =", object[[4]],". \n")
-  if(object[[6]]==TRUE){cat("Plot is adjusted for overdispersion. Between unit variance: 
+  if(object[[6]]==TRUE){cat("Plot is adjusted for overdispersion. Between unit variance:
   \U1D70F\u00B2, =", object[[5]], ". \n")}
   else {cat("Plot is not adjusted for overdispersion. \n")}
-  
+
   cat("Outliers: \n")
   print(object[[8]])
-  
+
 }
 
 #' Phi class for funnel plots
-#' 
+#'
 #' @title dispersion ratio, \eqn{\phi}, for Funnel plots
 #' @param x object of class funnel plot
 #' @export
@@ -117,13 +119,13 @@ phi <- function(x) {
 #'@export
 
 phi.funnelplot <- function(x){
-  
+
   x[[4]]
-  
+
 }
 
 #' Tau2 class for funnel plots
-#' 
+#'
 #' @title between groups variance, \eqn{\tau^2}, for Funnel plots
 #' @param x object of class funnel plot
 #' @export
@@ -135,14 +137,14 @@ tau2 <- function(x) {
 #'@export
 
 tau2.funnelplot <- function(x){
-  
+
   x[[5]]
-  
+
 }
 
 
 #' Limits class for funnel plots
-#' 
+#'
 #' @title Funnel plot limits
 #' @param x object of class funnel plot
 #' @export
@@ -154,15 +156,15 @@ limits <- function(x) {
 #'@export
 
 limits.funnelplot <- function(x){
-  
+
   x[[2]]
-  
+
 }
 
 
 
 #' Outliers class for funnel plots
-#' 
+#'
 #' @title Funnel plot outliers
 #' @param x object of class funnel plot
 #' @export
@@ -174,14 +176,14 @@ outliers <- function(x) {
 #'@export
 
 outliers.funnelplot <- function(x){
-  
+
   x[[8]]
-  
+
 }
 
 
 #' Source data class for funnel plots
-#' 
+#'
 #' @title source data used to create Funnel plots
 #' @param x object of class funnel plot
 #' @export
@@ -192,7 +194,7 @@ source_data <- function(x) {
 
 #'@export
 source_data.funnelplot <- function(x){
-  
+
   x[[3]]
 }
 
