@@ -49,7 +49,7 @@
 <meta property="og:title" content="Funnel plots for comparing institutional performance — funnel_plot" />
 <meta property="og:description" content="An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) &amp;lt;https://doi.org/10.1002/sim.1970&amp;gt;.
 There are several parameters for the input, with the assumption that you will want smooth,
-overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian &amp;amp; Laird (1986), buy calculating a between unit standard deviation (\(\tau\)) 
+overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian &amp;amp; Laird (1986), buy calculating a between unit standard deviation (\(\tau\))
 and constructing an additive random effects models, originally used for meta-analyses of clinical trials data." />
 <meta property="og:image" content="https://chrismainey.github.io/FunnelPlotR/logo.png" />
 
@@ -149,7 +149,7 @@ and constructing an additive random effects models, originally used for meta-ana
     <div class="ref-description">
     <p>An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) &lt;https://doi.org/10.1002/sim.1970&gt;.
 There are several parameters for the input, with the assumption that you will want smooth,
-overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian &amp; Laird (1986), buy calculating a between unit standard deviation (\(\tau\)) 
+overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian &amp; Laird (1986), buy calculating a between unit standard deviation (\(\tau\))
 and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.</p>
     </div>
 
@@ -169,11 +169,16 @@ and constructing an additive random effects models, originally used for meta-ana
   multiplier <span class='op'>=</span> <span class='fl'>1</span>,
   x_label <span class='op'>=</span> <span class='st'>"Expected"</span>,
   <span class='va'>y_label</span>,
-  xrange <span class='op'>=</span> <span class='st'>"auto"</span>,
-  yrange <span class='op'>=</span> <span class='st'>"auto"</span>,
+  x_range <span class='op'>=</span> <span class='st'>"auto"</span>,
+  y_range <span class='op'>=</span> <span class='st'>"auto"</span>,
   plot_cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#FF7F0EFF"</span>, <span class='st'>"#FF7F0EFF"</span>, <span class='st'>"#1F77B4FF"</span>, <span class='st'>"#1F77B4FF"</span>, <span class='st'>"#9467BDFF"</span>,
     <span class='st'>"#9467BDFF"</span>, <span class='st'>"#2CA02CFF"</span>, <span class='st'>"#2CA02CFF"</span><span class='op'>)</span>,
-  theme <span class='op'>=</span> <span class='fu'><a href='funnel_clean.html'>funnel_clean</a></span><span class='op'>(</span><span class='op'>)</span>
+  theme <span class='op'>=</span> <span class='fu'><a href='funnel_clean.html'>funnel_clean</a></span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='va'>label_outliers</span>,
+  <span class='va'>Poisson_limits</span>,
+  <span class='va'>OD_adjust</span>,
+  <span class='va'>xrange</span>,
+  <span class='va'>yrange</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -255,22 +260,42 @@ fashion, e.g. 10% refers to 10% at each end of the distribution (20% winsorised/
       <td><p>Title for the funnel plot y-axis.  Usually a standardised ratio.</p></td>
     </tr>
     <tr>
-      <th>xrange</th>
+      <th>x_range</th>
       <td><p>Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.</p></td>
     </tr>
     <tr>
-      <th>yrange</th>
+      <th>y_range</th>
       <td><p>Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.</p></td>
     </tr>
     <tr>
       <th>plot_cols</th>
-      <td><p>A vector of 8 colours for funnel limits, in order: 95% Poisson (lower/upper), 99.8% Poisson (lower/upper), 95% OD-adjusted (lower/upper), 99.8% OD-adjusted (lower/upper). 
-Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.  
+      <td><p>A vector of 8 colours for funnel limits, in order: 95% Poisson (lower/upper), 99.8% Poisson (lower/upper), 95% OD-adjusted (lower/upper), 99.8% OD-adjusted (lower/upper).
+Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
 Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")</p></td>
     </tr>
     <tr>
       <th>theme</th>
       <td><p>a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.</p></td>
+    </tr>
+    <tr>
+      <th>label_outliers</th>
+      <td><p>Deprecated.  Please use the `label` argument instead.</p></td>
+    </tr>
+    <tr>
+      <th>Poisson_limits</th>
+      <td><p>Deprecated.  Please use the `draw_unadjusted` argument instead.</p></td>
+    </tr>
+    <tr>
+      <th>OD_adjust</th>
+      <td><p>Deprecated.  Please use the `draw_adjusted` argument instead.</p></td>
+    </tr>
+    <tr>
+      <th>xrange</th>
+      <td><p>Deprecated.  Please use the `x_range` argument instead.</p></td>
+    </tr>
+    <tr>
+      <th>yrange</th>
+      <td><p>Deprecated.  Please use the `y_range` argument instead.</p></td>
     </tr>
     </table>
 
