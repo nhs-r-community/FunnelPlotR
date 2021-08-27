@@ -22,6 +22,9 @@
 #' \item{\code{NA}}{ - No labels applied}
 #' }
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
+#' @param label_outliers Deprecated.  Please use the `label` argument instead.
+#' @param Poisson_limits Deprecated.  Please use the `draw_unadjusted` argument instead.
+#' @param OD_adjust Deprecated.  Please use the `draw_adjusted` argument instead.
 #' @param draw_unadjusted Draw control limits without overdispersion adjustment. (default=FALSE)
 #' @param draw_adjusted Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
 #' It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)
@@ -35,8 +38,10 @@
 #' @param multiplier Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.
 #' @param x_label Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.
 #' @param y_label Title for the funnel plot y-axis.  Usually a standardised ratio.
-#' @param xrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
-#' @param yrange Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
+#' @param xrange Deprecated.  Please use the `x_range` argument instead.
+#' @param x_range Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.
+#' @param yrange Deprecated.  Please use the `y_range` argument instead.
+#' @param y_range Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
 #' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
 #' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
@@ -106,15 +111,67 @@
 #' @import ggplot2
 
 
-funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit = 99, label = "outlier",
-                            highlight = NA, draw_unadjusted = FALSE, draw_adjusted = TRUE, sr_method = "SHMI"
-                            , trim_by = 0.1, title="Untitled Funnel Plot", multiplier = 1, x_label = "Expected"
-                            , y_label ,xrange = "auto", yrange = "auto"
-                            , plot_cols = c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
-                            , theme = funnel_clean()){
+funnel_plot <- function(numerator, denominator, group
+                        , data_type = "SR", limit = 99, label = "outlier"
+                        , highlight = NA, draw_unadjusted = FALSE
+                        , draw_adjusted = TRUE, sr_method = "SHMI"
+                        , trim_by = 0.1, title="Untitled Funnel Plot"
+                        , multiplier = 1, x_label = "Expected"
+                        , y_label ,x_range = "auto", y_range = "auto"
+                        , plot_cols =
+                          c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF",
+                            "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
+                            , theme = funnel_clean()
+                        , label_outliers, Poisson_limits, OD_adjust
+                        , xrange, yrange){
 
+  # Version 0.4 deprecation warnings
+  if (!missing(label_outliers)) {
+    warning('The label_outliers argument deprecated; please use the label argument, e.g. label = "outlier" instead.  For more options, see the help: ?funnel_plot',
+            call. = FALSE)
+    if(label_outliers == TRUE){
+      label <- "outlier"
+    } else {
+      label <- NA
+    }
+  }
 
-#funnel_plot(medpar$los, medpar$prds, medpar$provnum)
+  # Version 0.4 deprecation warnings
+  if (!missing(Poisson_limits)) {
+    warning('The Poisson_limits argument deprecated; please use the draw_unadjusted argument.  For more information, see the help: ?funnel_plot',
+            call. = FALSE)
+    if(Poisson_limits == TRUE){
+      draw_unadjusted <- TRUE
+    } else {
+      draw_unadjusted <- FALSE
+    }
+  }
+
+# Version 0.4 deprecation warnings
+  if (!missing(OD_adjust)) {
+    warning('The OD_adjust argument deprecated; please use the draw_adjusted argument.  For more information, see the help: ?funnel_plot',
+            call. = FALSE)
+    if(OD_adjust == TRUE){
+      draw_adjusted <- TRUE
+    } else {
+      draw_adjusted <- FALSE
+    }
+  }
+
+  # Version 0.4 deprecation warnings
+  if (!missing(xrange)) {
+    warning('The xrange argument deprecated; please use the x_range argument instead.  For more options, see the help: ?funnel_plot',
+            call. = FALSE)
+      x_range <- xrange
+  }
+
+  # Version 0.4 deprecation warnings
+  if (!missing(yrange)) {
+    warning('The yrange argument deprecated; please use the y_range argument instead.  For more options, see the help: ?funnel_plot',
+            call. = FALSE)
+    y_range <- yrange
+  }
+
 
   # build initial dataframe of obs/predicted, with error message caught here in 'try'
 
@@ -246,21 +303,21 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
 
   # Set limits
   # Determine the range of plots
-  if(xrange[1] == "auto"){
+  if(x_range[1] == "auto"){
     max_x <- as.numeric(ceiling(max(mod_plot_agg$denominator, na.rm = FALSE)))
     min_x <- as.numeric(ceiling(min(mod_plot_agg$denominator,na.rm = FALSE)))
   } else {
-    min_x <- xrange[1]
-    max_x <- xrange[2]
+    min_x <- x_range[1]
+    max_x <- x_range[2]
   }
 
-  if(yrange[1] == "auto"){
+  if(y_range[1] == "auto"){
     max_y <- max((1.3 * target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
     min_y <- min((0.7 * target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
 
     } else {
-    min_y <- yrange[1]
-    max_y <- yrange[2]
+    min_y <- y_range[1]
+    max_y <- y_range[2]
   }
 
   ### Calculate funnel limits ####
