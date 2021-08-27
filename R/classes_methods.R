@@ -1,5 +1,6 @@
 #' @title Constructor for new funnel plot object
 #' @param x List of objects to convert to class
+#' @export
 #' @noRd
 
 new_funnel_plot <- function(x = list()) {
