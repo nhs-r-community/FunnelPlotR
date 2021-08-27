@@ -303,7 +303,7 @@ funnel_plot <- function(numerator, denominator, group, data_type = "SR", limit =
   mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
 
   # Add outliers flag
-  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, limit, multiplier)
+  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, limit)
 
   # Assemble plot
   fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,
