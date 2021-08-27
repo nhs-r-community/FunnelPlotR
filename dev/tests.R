@@ -35,13 +35,13 @@ medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
 fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
-                 group = medpar$provnum, limit=99 
+                 group = medpar$provnum, limit=99
                  ,label = "both"
-                 
+
                  , sr_method = "CQC",
                  draw_unadjusted = TRUE, draw_adjusted=FALSE, highlight = "030002", theme=funnel_grey(),
                  plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
-                 
+
 #rm(fp2)
 fp2
 class(fp2)
@@ -74,14 +74,15 @@ grid.arrange(fp$plot, rtn$plot, nrow=1)
 
 install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.9999.tar.gz", repo=NULL)
 
-# proportion 
+# proportion
 
 # Now ratio of counts
 
 b<-funnel_plot(numerator=medpar$died, denominator=1, group = medpar$provnum,
             data_type = "PR",#return_elements=c("plot"),
-            title = 'Length of Stay Funnel plot for `medpar` data', 
-            draw_adjusted = TRUE, label_outliers = TRUE, limit=95)
+            title = 'Length of Stay Funnel plot for `medpar` data',
+            OD_adjust = TRUE, Poisson_limits = TRUE, label_outliers = TRUE, limit=95,
+            xrange="auto", yrange="auto")
 b
 
 tau2(b)
@@ -90,8 +91,8 @@ limits(b)
 
 ifelse(b[[2]]$rr > b[[2]]$OD99UCL, as.character(b[[2]]$group), "")
 
-b[[2]] %>% 
-  arrange(rr) %>% 
+b[[2]] %>%
+  arrange(rr) %>%
   dplyr::select(group, denominator, rr, OD99LCL, OD99UCL)
 
 a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
@@ -101,14 +102,14 @@ a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpa
 
 a[1]
 
-a[[2]] %>% 
-  arrange(rr) %>% 
+a[[2]] %>%
+  arrange(rr) %>%
   dplyr::select(group, denominator, rr, OD95LCL, OD95UCL, OD99LCL, OD99UCL)
 
 a[3]
 
 draw_plot(mod_plot_agg, x_label, y_label, title, label_outliers,
                     multiplier=multiplier, draw_unadjusted=FALSE, draw_adjusted=TRUE,
-                    Tau2=Tau2, Target=sum(numerator)/sum(denominator), xrange=xrange, 
+                    Tau2=Tau2, Target=sum(numerator)/sum(denominator), xrange=xrange,
                     yrange=yrange, data_type=data_type,
                     sr_method = sr_method, theme = theme)
