@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.9999</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4.9999</span>
       </span>
     </div>
 
@@ -151,8 +151,7 @@
 <a href="#themes" class="anchor"></a>Themes</h2>
 <p>You can alter themes in the <code>funnelplotr</code> packages by using the theme argument. There are a couple of options included with the package <code>funnel_clean</code> (the default) and <code>funnel_grey</code>, but you can write your own theme using any valid <code>ggplot2</code> theme and pass it to the plot.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>
             , group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, limit<span class="op">=</span><span class="fl">99</span> ,label <span class="op">=</span> <span class="st">"outlier"</span>
             , draw_unadjusted <span class="op">=</span> <span class="cn">TRUE</span>, theme <span class="op">=</span> <span class="fu"><a href="../reference/funnel_grey.html">funnel_grey</a></span><span class="op">(</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p><img src="changing_funnel_plot_options_files/figure-html/plottheme1-1.png" width="672"></p>
