@@ -110,7 +110,6 @@
 #' @importFrom stats na.omit
 #' @import ggplot2
 
-
 funnel_plot <- function(numerator, denominator, group
                         , data_type = "SR", limit = 99, label = "outlier"
                         , highlight = NA, draw_unadjusted = FALSE
@@ -127,7 +126,7 @@ funnel_plot <- function(numerator, denominator, group
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
-    warning('The label_outliers argument deprecated; please use the label argument, e.g. label = "outlier" instead.  For more options, see the help: ?funnel_plot',
+    warning('The `label_outliers` argument deprecated; please use the `label` argument, e.g. `label = "outlier"` instead.  For more options, see the help: `?funnel_plot`',
             call. = FALSE)
     if(label_outliers == TRUE){
       label <- "outlier"
@@ -138,7 +137,7 @@ funnel_plot <- function(numerator, denominator, group
 
   # Version 0.4 deprecation warnings
   if (!missing(Poisson_limits)) {
-    warning('The Poisson_limits argument deprecated; please use the draw_unadjusted argument.  For more information, see the help: ?funnel_plot',
+    warning('The `Poisson_limits` argument deprecated; please use the `draw_unadjusted` argument.  For more information, see the help: `?funnel_plot`',
             call. = FALSE)
     if(Poisson_limits == TRUE){
       draw_unadjusted <- TRUE
@@ -149,7 +148,7 @@ funnel_plot <- function(numerator, denominator, group
 
 # Version 0.4 deprecation warnings
   if (!missing(OD_adjust)) {
-    warning('The OD_adjust argument deprecated; please use the draw_adjusted argument.  For more information, see the help: ?funnel_plot',
+    warning('The `OD_adjust` argument deprecated; please use the `draw_adjusted` argument.  For more information, see the help: `?funnel_plot`',
             call. = FALSE)
     if(OD_adjust == TRUE){
       draw_adjusted <- TRUE
@@ -160,17 +159,18 @@ funnel_plot <- function(numerator, denominator, group
 
   # Version 0.4 deprecation warnings
   if (!missing(xrange)) {
-    warning('The xrange argument deprecated; please use the x_range argument instead.  For more options, see the help: ?funnel_plot',
+    warning('The `xrange` argument deprecated; please use the `x_range` argument instead.  For more options, see the help: `?funnel_plot`',
             call. = FALSE)
       x_range <- xrange
   }
 
   # Version 0.4 deprecation warnings
   if (!missing(yrange)) {
-    warning('The yrange argument deprecated; please use the y_range argument instead.  For more options, see the help: ?funnel_plot',
+    warning('The `yrange` argument deprecated; please use the `y_range` argument instead.  For more options, see the help: `?funnel_plot`',
             call. = FALSE)
     y_range <- yrange
   }
+
 
 
   # build initial dataframe of obs/predicted, with error message caught here in 'try'

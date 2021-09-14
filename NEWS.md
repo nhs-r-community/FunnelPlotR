@@ -1,3 +1,8 @@
+# FunnelPlotR 0.4.2
+
+Major tidy up of the UI, inputs and the control.  This is was to avoid inconsistency and help
+
+
 # FunnelPlotR 0.3.2
 
 - Bug fix for limits related to NHS Digital SHMI method, correcting truncation and rounding issue that led to wrong limits being too wide.
