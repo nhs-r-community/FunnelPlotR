@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -89,8 +89,7 @@
 
       
 
-      </header><link href="funnel_plots_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="funnel_plots_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="funnel_plots_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Funnel Plots for Indirectly-standardised ratios</h1>
@@ -129,7 +128,7 @@
 <h3 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example:</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 
 <span class="co"># Make up some data, as if it was from a regression model with observed and predicted (expected) events.</span>
@@ -148,14 +147,12 @@
 <span class="va">a</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-1.png" width="672"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># Now add a central line, in a ration like this, 1 is the average/expected value.</span>
+<code class="sourceCode R"><span class="co"># Now add a central line, in a ration like this, 1 is the average/expected value.</span>
 <span class="va">a</span><span class="op">&lt;-</span> <span class="va">a</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>yintercept<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">a</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-2.png" width="672"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># Add a 95% Poisson limit, by using the density function to get the quantile value for each 'expected'.</span>
+<code class="sourceCode R"><span class="co"># Add a 95% Poisson limit, by using the density function to get the quantile value for each 'expected'.</span>
 <span class="va">lkup</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">expected</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">lkup</span><span class="op">$</span><span class="va">Upper</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">qpois</a></span><span class="op">(</span><span class="fl">0.975</span>,lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.025</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span>
 <span class="va">lkup</span><span class="op">$</span><span class="va">lower</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">qpois</a></span><span class="op">(</span><span class="fl">0.025</span>,lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.975</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span>
@@ -194,7 +191,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://chrismainey.github.io/FunnelPlotR/">FunnelPlotR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">COUNT</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">)</span>
 <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">)</span>
@@ -231,19 +228,19 @@
 <span class="co">#&gt; Number of Fisher Scoring iterations: 5</span></code></pre></div>
 <p>Now we have a regression that we can use to get a predicted <code>los</code> that we will compare to observed <code>los</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">medpar</span><span class="op">$</span><span class="va">prds</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="build-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#build-plot" class="anchor"></a>Build plot</h3>
-<p>Now we can build a funnel plot object with standard Poisson limits, and outliers labelled. The function returns a list of the plotted data, the plotted control limit range, and the <code>ggplot</code> object, hence <code>object[3]</code> to call it.</p>
+<p>Now we can build a funnel plot object with standard Poisson limits, and outliers labelled. The function returns an S3 object, with various methods including <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>, <code>outlier()</code>, <code><a href="../reference/limits.html">limits()</a></code>, <code><a href="../reference/source_data.html">source_data()</a></code> etc. See the help file: <code><a href="../reference/funnel_plot.html">?funnel_plot</a></code> for more details.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
-            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">TRUE</span>,
-            OD_adjust <span class="op">=</span> <span class="cn">FALSE</span>,label_outliers <span class="op">=</span> <span class="cn">TRUE</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
+            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, draw_unadjusted <span class="op">=</span> <span class="cn">TRUE</span>,
+            draw_adjusted <span class="op">=</span> <span class="cn">FALSE</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
+<span class="co">#&gt; Warning: ggrepel: 4 unlabeled data points (too many overlaps). Consider</span>
+<span class="co">#&gt; increasing max.overlaps</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel1-1.png" width="672" style="display: block; margin: auto;"></p>
 <pre><code>#&gt; A funnel plot object with 54 points of which 25 are outliers. 
 #&gt; Plot is not adjusted for overdispersion.</code></pre>
@@ -255,14 +252,13 @@
 <p>That looks like too many outliers! There is more variation in our data than we would expect, and this is referred to as: <strong>overdispersion</strong>.</p>
 <p><br> So lets check for it: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span>
 <span class="co">#&gt; [1] 6.240519</span></code></pre></div>
 <p>This suggests the variance is 6.24 times the condition mean, and definitely overdispersed. This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, 
-            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, Poisson_limits <span class="op">=</span> <span class="cn">FALSE</span>,
-            OD_adjust <span class="op">=</span> <span class="cn">TRUE</span>, data_type<span class="op">=</span><span class="st">"SR"</span>, sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,label_outliers <span class="op">=</span> <span class="cn">TRUE</span>, limit<span class="op">=</span><span class="fl">99</span>
+            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, draw_unadjusted <span class="op">=</span> <span class="cn">FALSE</span>,
+            draw_adjusted <span class="op">=</span> <span class="cn">TRUE</span>, data_type<span class="op">=</span><span class="st">"SR"</span>, sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span>
             <span class="op">)</span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel2-1.png" width="672" style="display: block; margin: auto;"></p>
 <pre><code>#&gt; A funnel plot object with 54 points of which 9 are outliers. 

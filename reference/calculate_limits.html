@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Funnel Plots drawing function — draw_plot • FunnelPlotR</title>
+<title>Overdispersion-adjusted funnel limit calculation — calculate_limits • FunnelPlotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Funnel Plots drawing function — draw_plot" />
-<meta property="og:description" content="Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead." />
+<meta property="og:title" content="Overdispersion-adjusted funnel limit calculation — calculate_limits" />
+<meta property="og:description" content="Add 95" />
 <meta property="og:image" content="https://chrismainey.github.io/FunnelPlotR/logo.png" />
 
 
@@ -138,112 +138,57 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Funnel Plots drawing function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/chrismainey/FunnelPlotR/blob/master/R/draw_plot.R'><code>R/draw_plot.R</code></a></small>
-    <div class="hidden name"><code>draw_plot.Rd</code></div>
+    <h1>Overdispersion-adjusted funnel limit calculation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/chrismainey/FunnelPlotR/blob/master/R/calculate_limits.R'><code>R/calculate_limits.R</code></a></small>
+    <div class="hidden name"><code>calculate_limits.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead.</p>
+    <p>Add 95<!-- % and 99.8 % funnel limits from OD-adjusted Poisson distribution --></p>
     </div>
 
-    <pre class="usage"><span class='fu'>draw_plot</span><span class='op'>(</span>
-  <span class='va'>mod_plot_agg</span>,
-  <span class='va'>limits</span>,
-  <span class='va'>x_label</span>,
-  <span class='va'>y_label</span>,
-  <span class='va'>title</span>,
-  <span class='va'>label</span>,
-  <span class='va'>multiplier</span>,
-  <span class='va'>draw_unadjusted</span>,
-  <span class='va'>draw_adjusted</span>,
-  <span class='va'>target</span>,
-  <span class='va'>min_y</span>,
-  <span class='va'>max_y</span>,
-  <span class='va'>min_x</span>,
-  <span class='va'>max_x</span>,
-  <span class='va'>data_type</span>,
-  <span class='va'>sr_method</span>,
-  <span class='va'>theme</span>,
-  <span class='va'>plot_cols</span>
+    <pre class="usage"><span class='fu'>calculate_limits</span><span class='op'>(</span>
+  dfCI <span class='op'>=</span> <span class='va'>dfCI</span>,
+  data_type <span class='op'>=</span> <span class='st'>"SR"</span>,
+  sr_method <span class='op'>=</span> <span class='st'>"SHMI"</span>,
+  multiplier <span class='op'>=</span> <span class='fl'>1</span>,
+  tau2 <span class='op'>=</span> <span class='fl'>0</span>,
+  target <span class='op'>=</span> <span class='va'>target</span>,
+  draw_adjusted <span class='op'>=</span> <span class='va'>draw_adjusted</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>mod_plot_agg</th>
-      <td><p>data.frame of containing numerator, denominator, ratio/proportion, SEs and limits</p></td>
-    </tr>
-    <tr>
-      <th>limits</th>
-      <td><p>data.frame of limits from set_plot_range().</p></td>
-    </tr>
-    <tr>
-      <th>x_label</th>
-      <td><p>Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.</p></td>
-    </tr>
-    <tr>
-      <th>y_label</th>
-      <td><p>Title for the funnel plot y-axis.  Usually a standardised ratio.</p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p>Plot title</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p>Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".</p></td>
-    </tr>
-    <tr>
-      <th>multiplier</th>
-      <td><p>Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR</p></td>
-    </tr>
-    <tr>
-      <th>draw_unadjusted</th>
-      <td><p>Draw exact limits based only on data points with no iterpolation. (default=FALSE)</p></td>
-    </tr>
-    <tr>
-      <th>draw_adjusted</th>
-      <td><p>Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)</p></td>
-    </tr>
-    <tr>
-      <th>target</th>
-      <td><p>the calculated target value for the data type</p></td>
-    </tr>
-    <tr>
-      <th>min_y</th>
-      <td><p>Specify the plot range.</p></td>
-    </tr>
-    <tr>
-      <th>max_y</th>
-      <td><p>Specify the plot range.</p></td>
-    </tr>
-    <tr>
-      <th>min_x</th>
-      <td><p>Specify the plot range.</p></td>
-    </tr>
-    <tr>
-      <th>max_x</th>
-      <td><p>Specify the plot range.</p></td>
+      <th>dfCI</th>
+      <td><p>Aggregated model input data</p></td>
     </tr>
     <tr>
       <th>data_type</th>
-      <td><p>the data type SR, PR or RC.</p></td>
+      <td><p>Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").</p></td>
     </tr>
     <tr>
       <th>sr_method</th>
-      <td><p>CQC or SHMI methods for standardised ratios</p></td>
+      <td><p>Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.</p></td>
     </tr>
     <tr>
-      <th>theme</th>
-      <td><p>a ggplot theme function.</p></td>
+      <th>multiplier</th>
+      <td><p>Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.</p></td>
+    </tr>
+    <tr>
+      <th>tau2</th>
+      <td><p>A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The centre line of the plot. Mean for non-SRs or 1 for SR</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.</p>
+    <p>A data.frame of with appended OD limits</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
