@@ -1,32 +1,29 @@
 ## Release summary
-This is a minor release for the FunnelPlotR package, correcting a bug in the way one set of control limits were calculated, plus a several small typos in support material..
+This is a major update release for the FunnelPlotR package, changing several arguments to the core function for consistency, adding new functionality, and correcting errors in control limit calculations.  All replaced function arguments are soft deprecated, and documented.
 
 ## Test environments
-* local windows 10, R 4.0.3
-* Windows, R devel 2020-09-09 r79174, on Win-builder
-* Ubuntu 16.04.6 LTS (on travis-ci), R 4.0.2
+* local windows 10, R 4.1.1
+
+* R-devel, on Win-builder
 
 * GitHub actions:
-  * Mac OS x 10.15.7, R 4.0.3
-  * Windows Server x64 2019, R 4.0.3
+  * Mac OS x 10.15.7 19H1323, R 4.1.1
+  * Windows Server x64 2019, R 4.1.1
   * Windows Server x64 latest, R 3.6.3
-  * Ubuntu 16.04.07, R-devel 2020-11-27 r79522
-  * Ubuntu 16.04.07, R 4.0.3
-  * Ubuntu 16.04.07, R 3.6.3
-  * Ubuntu 16.04.07, R 3.5.3
-  * Ubuntu 16.04.07, R 3.4.4
-  * Ubuntu 16.04.07, R 3.3.3
+  * Ubuntu 20.04.3 LTS, R-devel 2021-09-11 r80887
+  * Ubuntu 20.04.3 LTS, R 4.1.1
 
 * r-hub:
-  * Ubuntu Linux 16.04 LTS, R-release, GCC
+  * Ubuntu Linux 20.04.1 LTS, R-release, GCC
+  * x86_64-pc-linux-gnu
   * Fedora Linux, R-devel, clang, gfortran
   * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
-NOTE on Win-builder for possibly invalid URL.  URL was checked and is valid.
-NOTE on R-Hub Fedora: checking for future file timestamps - unable to verify current time
+NOTE concerning new maintainer is a change of email address for the old maintainer after changing role.
+NOTEs for 'possibly invalid URL' have all been checked and are valid.
 
 
 ## Downstream dependencies
