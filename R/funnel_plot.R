@@ -116,11 +116,11 @@ funnel_plot <- function(numerator, denominator, group
                         , draw_adjusted = TRUE, sr_method = "SHMI"
                         , trim_by = 0.1, title="Untitled Funnel Plot"
                         , multiplier = 1, x_label = "Expected"
-                        , y_label ,x_range = "auto", y_range = "auto"
+                        , y_label , x_range = "auto", y_range = "auto"
                         , plot_cols =
                           c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF",
                             "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
-                            , theme = funnel_clean()
+                        , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
                         , xrange, yrange){
 
@@ -360,7 +360,7 @@ funnel_plot <- function(numerator, denominator, group
   mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
 
   # Add outliers flag
-  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, limit)
+  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, limit, multiplier = multiplier)
 
   # Assemble plot
   fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,

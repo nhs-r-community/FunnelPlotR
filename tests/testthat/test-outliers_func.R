@@ -14,25 +14,25 @@ test_that("outliers highlights correctly", {
 
 
   # 95 unadjusted
-  a <- outliers_func(dt, draw_adjusted = FALSE, limit = 95)
+  a <- outliers_func(dt, draw_adjusted = FALSE, limit = 95, multiplier=1)
   expect_identical(a$outlier, c(0,0,0,1,1,1,1,1,1,1))
 
   # 95 adjusted
-  b <- outliers_func(dt, draw_adjusted = TRUE, limit = 95)
+  b <- outliers_func(dt, draw_adjusted = TRUE, limit = 95, multiplier=1)
   expect_identical(b$outlier, c(0,0,0,0,0,1,1,1,1,1))
 
   # 99 unadjusted
-  c <- outliers_func(dt, draw_adjusted = FALSE, limit = 99)
+  c <- outliers_func(dt, draw_adjusted = FALSE, limit = 99, multiplier=1)
   expect_identical(c$outlier, c(0,0,0,0,0,0,0,1,1,1))
 
   # 99 adjusted
-  d <- outliers_func(dt, draw_adjusted = TRUE, limit = 99)
+  d <- outliers_func(dt, draw_adjusted = TRUE, limit = 99, multiplier=1)
   expect_identical(d$outlier, c(0,0,0,0,0,0,0,0,0,1))
 
 
   # Check multiplier works
-  e <- outliers_func(dt, draw_adjusted = FALSE, limit = 95)
-  expect_identical(a,e)
+  e <- outliers_func(dt, draw_adjusted = FALSE, limit = 95, multiplier=100)
+  expect_identical(e$outlier, c(1,1,1,1,1,1,1,1,1,1))
 
   # correct type of output
   expect_s3_class(e, "data.frame")

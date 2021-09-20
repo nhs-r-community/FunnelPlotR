@@ -4,7 +4,7 @@ library(ggplot2)
 
 # Setup
 data_type = "SR"
-limit=95
+limit=99
 label_outliers = TRUE
 draw_unadjusted = TRUE
 draw_adjusted = FALSE
@@ -14,8 +14,8 @@ title="Untitled Funnel Plot"
 multiplier = 1
 x_label = "Expected"
 y_label = "Standardised Ratio"
-xrange = "auto"
-yrange = "auto"
+x_range = "auto"
+y_range = "auto"
 #return_elements=c("plot", "data", "limits")
 theme = funnel_clean()
 plot_cols = c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF","#2CA02CFF")
@@ -39,7 +39,7 @@ fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
                  ,label = "both"
 
                  , sr_method = "CQC",
-                 draw_unadjusted = TRUE, draw_adjusted=FALSE, highlight = "030002", theme=funnel_grey(),
+                 draw_unadjusted = FALSE, draw_adjusted=TRUE, highlight = "030002", theme=funnel_grey(),
                  plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
 
 #rm(fp2)
@@ -51,8 +51,13 @@ print(fp2)
 summary(fp2)
 phi(fp2)
 tau2(fp2)
-outliers(fp2)
+a<-outliers(fp2)
 source_data(fp2)
+
+library(dplyr)
+
+mod_plot_agg %>%
+  select(rr, OD95LCL, OD95UCL, OD99LCL, OD99UCL, LCL95, UCL95, LCL99, UCL99, outlier)
 
 
 
