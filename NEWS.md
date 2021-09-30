@@ -1,3 +1,7 @@
+# FunnelPlotR 0.4.1
+
+- Bug-fix release: the outlier function was not passing the 'multiplier' argument and was wrong with anything except the default values.  This has been corrected to pass the multiplier properly.
+
 # FunnelPlotR 0.4.0
 
 - Major tidy up of the UI, inputs, and control options.  This is was to remove inconsistency and help with future development.

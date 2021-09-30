@@ -1,5 +1,5 @@
 ## Release summary
-This is a major update release for the FunnelPlotR package, changing several arguments to the core function for consistency, adding new functionality, and correcting errors in control limit calculations.  All replaced function arguments are soft deprecated, and documented.
+This is a bug-fix release for the FunnelPlotR package, as a labelling function was not passing a 'multiplier' argument correctly, and was wrong when anything except the default value was used. This is a key function, as one common metric that uses these plots is generally multiplied by 100.
 
 ## Test environments
 * local windows 10, R 4.1.1
@@ -22,7 +22,6 @@ This is a major update release for the FunnelPlotR package, changing several arg
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
-NOTE concerning new maintainer is a change of email address for the old maintainer after changing role.
 NOTEs for 'possibly invalid URL' have all been checked and are valid.
 
 
