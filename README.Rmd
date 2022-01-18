@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 [![CRAN version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)
 [![Codecov test coverage](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR?branch=master)
-[![R-CMD-check](https://github.com/chrismainey/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/chrismainey/FunnelPlotR/actions)
+[![R-CMD-check](https://github.com/nhs-r-community/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/nhs-r-community/FunnelPlotR/actions)
 <!-- badges: end -->
   
 ## Funnel Plots
@@ -48,10 +48,10 @@ This variant uses a log-transformation and truncation of the distribution for ca
 
 
 Contributions are welcome.  Please note that the 'FunnelPlotR' project is released with a
-[Contributor Code of Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
+[Contributor Code of Conduct](https://nhs-r-community.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
-More information available at https://chrismainey.github.io/FunnelPlotR/ 
+More information available at https://nhs-r-community.github.io/FunnelPlotR/ 
 
 
 ## Installation ##
@@ -64,7 +64,7 @@ install.packages("FunnelPlotR")
 
 You can install the development version directly from GitHub using the `remotes` (or `devtools`) package.  Please be aware that, although I endeavour have help files up-to-date, this version may different from the one on CRAN.  Please consult the help documentation if you get error messages. 
 ```{r remotes, eval=FALSE}
-remotes::install_github("https://github.com/chrismainey/FunnelPlotR")
+remotes::install_github("https://github.com/nhs-r-community/FunnelPlotR")
 ```
 
 
@@ -132,6 +132,6 @@ print(b)
 <br><br>
 These methods can be used for any similar indicators, e.g. standardised mortality ratios, readmissions etc.
 
-Please read the package documentation for more info, at: https://chrismainey.github.io/FunnelPlotR/
+Please read the package documentation for more info, at: https://nhs-r-community.github.io/FunnelPlotR/
 
 Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at: https://themightychip.com/

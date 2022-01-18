@@ -11,7 +11,7 @@ version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-projec
 ![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR) [![Codecov
 test
 coverage](https://codecov.io/gh/chrismainey/FunnelPlotR/branch/master/graph/badge.svg)](https://codecov.io/gh/chrismainey/FunnelPlotR?branch=master)
-[![R-CMD-check](https://github.com/chrismainey/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/chrismainey/FunnelPlotR/actions)
+[![R-CMD-check](https://github.com/nhs-r-community/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/nhs-r-community/FunnelPlotR/actions)
 <!-- badges: end -->
 
 ## Funnel Plots
@@ -56,11 +56,11 @@ methods use a square-root and Winsorisation.
 
 Contributions are welcome. Please note that the ‘FunnelPlotR’ project is
 released with a [Contributor Code of
-Conduct](https://chrismainey.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
+Conduct](https://nhs-r-community.github.io/FunnelPlotR/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 More information available at
-<https://chrismainey.github.io/FunnelPlotR/>
+<https://nhs-r-community.github.io/FunnelPlotR/>
 
 ## Installation
 
@@ -77,7 +77,7 @@ the one on CRAN. Please consult the help documentation if you get error
 messages.
 
 ``` r
-remotes::install_github("https://github.com/chrismainey/FunnelPlotR")
+remotes::install_github("https://github.com/nhs-r-community/FunnelPlotR")
 ```
 
 ## Summary of Use
@@ -185,7 +185,7 @@ print(b)
 e.g. standardised mortality ratios, readmissions etc.
 
 Please read the package documentation for more info, at:
-<https://chrismainey.github.io/FunnelPlotR/>
+<https://nhs-r-community.github.io/FunnelPlotR/>
 
 Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at:
 <https://themightychip.com/>
