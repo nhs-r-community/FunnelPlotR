@@ -1,6 +1,6 @@
 destination: docs
 
-url: https://chrismainey.github.io/FunnelPlotR
+url: https://nhs-r-community.github.io/FunnelPlotR
 
 navbar:
   type: default
@@ -18,7 +18,7 @@ navbar:
 
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/chrismainey/FunnelPlotR
+    href: https://github.com/nhs-r-community/FunnelPlotR
 
 development:
   mode: auto
