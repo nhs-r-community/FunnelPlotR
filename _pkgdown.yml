@@ -26,10 +26,13 @@ development:
 authors:
   Chris Mainey:
     href: https://www.mainard.co.uk
+  Andrew Johnson:
+  Matthew Bass:
+    href: https://atomic-vector.netlify.app/
 
 twitter:
      icon: fa-lg fa-twitter
-     href: http://twitter.com/chrismainey
+     href: http://twitter.com/NHSrCommunity
 
 template:
   params:
