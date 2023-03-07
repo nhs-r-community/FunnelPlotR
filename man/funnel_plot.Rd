@@ -30,7 +30,8 @@ funnel_plot(
   Poisson_limits,
   OD_adjust,
   xrange,
-  yrange
+  yrange,
+  SHMI_rounding = TRUE
 )
 }
 \arguments{
@@ -99,6 +100,8 @@ Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9
 \item{xrange}{Deprecated.  Please use the `x_range` argument instead.}
 
 \item{yrange}{Deprecated.  Please use the `y_range` argument instead.}
+
+\item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr

@@ -22,7 +22,7 @@ Imports: dplyr,
          ggrepel,
          ggplot2,
          scales
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
