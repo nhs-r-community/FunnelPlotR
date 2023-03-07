@@ -103,7 +103,8 @@ and constructing an additive random effects models, originally used for meta-ana
 <span>  <span class="va">Poisson_limits</span>,</span>
 <span>  <span class="va">OD_adjust</span>,</span>
 <span>  <span class="va">xrange</span>,</span>
-<span>  <span class="va">yrange</span></span>
+<span>  <span class="va">yrange</span>,</span>
+<span>  SHMI_rounding <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -219,6 +220,10 @@ Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9
 
 <dt>yrange</dt>
 <dd><p>Deprecated.  Please use the `y_range` argument instead.</p></dd>
+
+
+<dt>SHMI_rounding</dt>
+<dd><p>TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)</p></dd>
 
 </dl></div>
     <div id="value">
