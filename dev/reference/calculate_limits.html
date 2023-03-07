@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,35 +72,48 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_limits</span><span class="op">(</span>
-  dfCI <span class="op">=</span> <span class="va">dfCI</span>,
-  data_type <span class="op">=</span> <span class="st">"SR"</span>,
-  sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,
-  multiplier <span class="op">=</span> <span class="fl">1</span>,
-  tau2 <span class="op">=</span> <span class="fl">0</span>,
-  target <span class="op">=</span> <span class="va">target</span>,
-  draw_adjusted <span class="op">=</span> <span class="va">draw_adjusted</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_limits</span><span class="op">(</span></span>
+<span>  dfCI <span class="op">=</span> <span class="va">dfCI</span>,</span>
+<span>  data_type <span class="op">=</span> <span class="st">"SR"</span>,</span>
+<span>  sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,</span>
+<span>  multiplier <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  tau2 <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  target <span class="op">=</span> <span class="va">target</span>,</span>
+<span>  draw_adjusted <span class="op">=</span> <span class="va">draw_adjusted</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dfCI</dt>
 <dd><p>Aggregated model input data</p></dd>
+
+
 <dt>data_type</dt>
 <dd><p>Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").</p></dd>
+
+
 <dt>sr_method</dt>
 <dd><p>Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.</p></dd>
+
+
 <dt>multiplier</dt>
 <dd><p>Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.</p></dd>
+
+
 <dt>tau2</dt>
 <dd><p>A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The centre line of the plot. Mean for non-SRs or 1 for SR</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame of with appended OD limits</p>
+    
+
+<p>A data.frame of with appended OD limits</p>
     </div>
 
   </div>
@@ -115,7 +128,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

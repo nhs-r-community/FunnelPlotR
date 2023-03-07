@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,68 +72,103 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">draw_plot</span><span class="op">(</span>
-  <span class="va">mod_plot_agg</span>,
-  <span class="va">limits</span>,
-  <span class="va">x_label</span>,
-  <span class="va">y_label</span>,
-  <span class="va">title</span>,
-  <span class="va">label</span>,
-  <span class="va">multiplier</span>,
-  <span class="va">draw_unadjusted</span>,
-  <span class="va">draw_adjusted</span>,
-  <span class="va">target</span>,
-  <span class="va">min_y</span>,
-  <span class="va">max_y</span>,
-  <span class="va">min_x</span>,
-  <span class="va">max_x</span>,
-  <span class="va">data_type</span>,
-  <span class="va">sr_method</span>,
-  <span class="va">theme</span>,
-  <span class="va">plot_cols</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">draw_plot</span><span class="op">(</span></span>
+<span>  <span class="va">mod_plot_agg</span>,</span>
+<span>  <span class="va">limits</span>,</span>
+<span>  <span class="va">x_label</span>,</span>
+<span>  <span class="va">y_label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">multiplier</span>,</span>
+<span>  <span class="va">draw_unadjusted</span>,</span>
+<span>  <span class="va">draw_adjusted</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  <span class="va">min_y</span>,</span>
+<span>  <span class="va">max_y</span>,</span>
+<span>  <span class="va">min_x</span>,</span>
+<span>  <span class="va">max_x</span>,</span>
+<span>  <span class="va">data_type</span>,</span>
+<span>  <span class="va">sr_method</span>,</span>
+<span>  <span class="va">theme</span>,</span>
+<span>  <span class="va">plot_cols</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mod_plot_agg</dt>
 <dd><p>data.frame of containing numerator, denominator, ratio/proportion, SEs and limits</p></dd>
+
+
 <dt>limits</dt>
 <dd><p>data.frame of limits from set_plot_range().</p></dd>
+
+
 <dt>x_label</dt>
 <dd><p>Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.</p></dd>
+
+
 <dt>y_label</dt>
 <dd><p>Title for the funnel plot y-axis.  Usually a standardised ratio.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>Plot title</p></dd>
+
+
 <dt>label</dt>
 <dd><p>Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".</p></dd>
+
+
 <dt>multiplier</dt>
 <dd><p>Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR</p></dd>
+
+
 <dt>draw_unadjusted</dt>
 <dd><p>Draw exact limits based only on data points with no iterpolation. (default=FALSE)</p></dd>
+
+
 <dt>draw_adjusted</dt>
 <dd><p>Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)</p></dd>
+
+
 <dt>target</dt>
 <dd><p>the calculated target value for the data type</p></dd>
+
+
 <dt>min_y</dt>
 <dd><p>Specify the plot range.</p></dd>
+
+
 <dt>max_y</dt>
 <dd><p>Specify the plot range.</p></dd>
+
+
 <dt>min_x</dt>
 <dd><p>Specify the plot range.</p></dd>
+
+
 <dt>max_x</dt>
 <dd><p>Specify the plot range.</p></dd>
+
+
 <dt>data_type</dt>
 <dd><p>the data type SR, PR or RC.</p></dd>
+
+
 <dt>sr_method</dt>
 <dd><p>CQC or SHMI methods for standardised ratios</p></dd>
+
+
 <dt>theme</dt>
 <dd><p>a ggplot theme function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.</p>
+    
+
+<p>A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.</p>
     </div>
 
   </div>
@@ -148,7 +183,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

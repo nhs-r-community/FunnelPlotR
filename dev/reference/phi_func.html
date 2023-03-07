@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,19 +72,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">phi_func</span><span class="op">(</span><span class="va">n</span>, <span class="va">zscores</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">phi_func</span><span class="op">(</span><span class="va">n</span>, <span class="va">zscores</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>n</dt>
 <dd><p>Single numeric value for the count of the number of groups (and therefore z-scores)</p></dd>
+
+
 <dt>zscores</dt>
 <dd><p>Vector of z-scores z-scores to be used.  Commonly, this would be 'winsorised' first to remove impact of extreme outliers.  SHMI truncates instead, but this simply reduced the n as well as the z-score.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numeric phi value</p>
+    
+
+<p>A numeric phi value</p>
     </div>
 
   </div>
@@ -99,7 +104,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
