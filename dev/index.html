@@ -177,7 +177,8 @@
 <p><br><br></p>
 <p>That looks like too many outliers! There is more variation in our data than we would expect, and this is referred to as: <strong>overdispersion</strong>. So lets check for it: <br> The following ratio should be 1 if our data are conforming to Poisson distribution assumption (conditional mean = variance). If it is greater than 1, we have overdispersion:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span></span>
 <span><span class="co">#&gt; [1] 6.240519</span></span></code></pre></div>
 <p>This suggest the variance is 6.24 times the condition mean, and definitely overdispersed. This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
