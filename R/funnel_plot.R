@@ -57,6 +57,7 @@
 #' \item{phi}{The dispersion ratio, \eqn{\phi}.}
 #' \item{draw_adjusted}{Whether overdispersion-adjusted limits were used.}
 #' \item{draw_unadjusted}{Whether unadjusted Poisson limits were used.}
+#' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
 #'
 #' @export
 #' @details
@@ -118,11 +119,12 @@ funnel_plot <- function(numerator, denominator, group
                         , multiplier = 1, x_label = "Expected"
                         , y_label , x_range = "auto", y_range = "auto"
                         , plot_cols =
-                          c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF",
-                            "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
+                          c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF"
+                            , "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
                         , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
-                        , xrange, yrange){
+                        , xrange, yrange
+                        , SHMI_rounding = TRUE){
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
@@ -268,7 +270,7 @@ funnel_plot <- function(numerator, denominator, group
   mod_plot_agg<-aggregate_func(mod_plot)
 
   # Round to two decimal places for expected SHMI expected
-  if(data_type == "SR" & sr_method == "SHMI"){
+  if(data_type == "SR" & sr_method == "SHMI" & SHMI_rounding == TRUE){
     mod_plot_agg$denominator <- round(mod_plot_agg$denominator,2)
   }
 
