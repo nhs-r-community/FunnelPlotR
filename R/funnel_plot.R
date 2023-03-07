@@ -244,8 +244,6 @@ funnel_plot <- function(numerator, denominator, group
                  data, or is it a typo?"
            ))
       
-      } else {
-        print("not missing")
     }
   }
 
