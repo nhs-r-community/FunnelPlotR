@@ -57,14 +57,14 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
 
     if (draw_unadjusted == TRUE & draw_adjusted == TRUE) {
     funnel_p <- funnel_p +
-      geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul95, col = "95% Upper", linetype = "95% Upper"), size = 1,  data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower", linetype = "99.8% Lower"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper", linetype = "99.8% Upper"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed", linetype = "95% Lower Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed", linetype = "95% Upper Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed", linetype = "99.8% Lower Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed", linetype = "99.8% Upper Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul95, col = "95% Upper", linetype = "95% Upper"), linewidth = 1,  data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower", linetype = "99.8% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper", linetype = "99.8% Upper"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed", linetype = "95% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed", linetype = "95% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed", linetype = "99.8% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed", linetype = "99.8% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
       scale_color_manual(values = plot_cols, name = "Control limits")+
       scale_linetype_manual(values = c("95% Lower"=2
                                        , "95% Upper" = 2
@@ -85,10 +85,10 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
   } else {
     if (draw_unadjusted == TRUE & draw_adjusted == FALSE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul95, col = "95% Upper", linetype = "95% Upper"), size = 1,  data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower", linetype = "99.8% Lower"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper", linetype = "99.8% Upper"), size = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul95, col = "95% Upper", linetype = "95% Upper"), linewidth = 1,  data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower", linetype = "99.8% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper", linetype = "99.8% Upper"), linewidth = 1, data = limits, na.rm = TRUE) +
         scale_color_manual(values = plot_cols[1:4], name = "Control limits")+
         scale_linetype_manual(values = c("95% Lower"=2
                                          , "95% Upper" = 2
@@ -105,10 +105,10 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
 
     if (draw_unadjusted == FALSE &  draw_adjusted == TRUE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed", linetype = "95% Lower Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed", linetype = "95% Upper Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed", linetype = "99.8% Lower Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed", linetype = "99.8% Upper Overdispersed"), size = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed", linetype = "95% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed", linetype = "95% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed", linetype = "99.8% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed", linetype = "99.8% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
         scale_color_manual(values = plot_cols[5:8], name = "Control limits")+
         scale_linetype_manual(values = c("95% Lower Overdispersed"=2
                                          , "95% Upper Overdispersed"= 2
