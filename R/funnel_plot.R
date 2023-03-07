@@ -227,23 +227,25 @@ funnel_plot <- function(numerator, denominator, group
 
 
   # Error handling for highlight argument
-  if (!(is.na(highlight))){
-    if(!is.character(highlight)) {
+  if(!is.na(highlight[1])){
+    
+    if(!is.character(highlight[1])) {
       stop("Please supply `highlight` in character format, or a character vector")
     }
-  }
-
-
-
-  if(!is.na(highlight)){
-    if (is.factor(group)){
-      if((!(highlight %in% levels(group)))){
-         stop("Value(s) specified to `highlight` not found in `group` variable")
-      }
-    } else {
-      if (!(highlight %in% group)) {
-        stop("Value(s) specified to `highlight` not found in `group` variable")
-      }
+    
+    # check for missing highlight levels
+    labs_present <- apply(sapply(X = highlight, FUN = grepl, x=group), 2, any)
+    labs_missing <- names(labs_present[labs_present == FALSE])
+    
+    if (length(labs_missing)>0){
+      
+      stop(paste0("Value(s):'"
+                 , paste(labs_missing,collapse=", ")
+                 , "' specified to `highlight` not found in `group` variable. 
+                 Are you trying to highlight a group that is missing from your 
+                 data, or is it a typo?"
+           ))
+      
     }
   }
 
