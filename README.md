@@ -159,6 +159,7 @@ conforming to Poisson distribution assumption (conditional mean =
 variance). If it is greater than 1, we have overdispersion:
 
 ``` r
+
 sum(mod$weights * mod$residuals^2)/mod$df.residual
 #> [1] 6.240519
 ```
