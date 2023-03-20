@@ -92,7 +92,7 @@
 
       
 
-      </header><script src="changing_funnel_plot_options_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Changing funnel plot options</h1>
@@ -110,7 +110,9 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nhs-r-community.github.io/FunnelPlotR/">FunnelPlotR</a></span><span class="op">)</span></span></code></pre></div>
-<p>This brief vignette shows how to go about changing some of the parameters available in the <code>funnelplotr</code> package. Firstly, lets set up some data, the same as the README and other vignette:</p>
+<p>This brief vignette shows how to go about changing some of the
+parameters available in the <code>funnelplotr</code> package. Firstly,
+lets set up some data, the same as the README and other vignette:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">COUNT</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: msme</span></span>
@@ -138,7 +140,9 @@
 <div class="section level2">
 <h2 id="highlighting-a-data-point">Highlighting a data point<a class="anchor" aria-label="anchor" href="#highlighting-a-data-point"></a>
 </h2>
-<p>You can pick out data point(s) using the <code>highlight</code> option. Here we we use the example above to highlight the hospital labels ‘030002’ in the data set.</p>
+<p>You can pick out data point(s) using the <code>highlight</code>
+option. Here we we use the example above to highlight the hospital
+labels ‘030002’ in the data set.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Draw plot, returning just the plot object</span></span>
 <span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span></span>
@@ -151,7 +155,11 @@
 <div class="section level2">
 <h2 id="themes">Themes<a class="anchor" aria-label="anchor" href="#themes"></a>
 </h2>
-<p>You can alter themes in the <code>funnelplotr</code> packages by using the theme argument. There are a couple of options included with the package <code>funnel_clean</code> (the default) and <code>funnel_grey</code>, but you can write your own theme using any valid <code>ggplot2</code> theme and pass it to the plot.</p>
+<p>You can alter themes in the <code>funnelplotr</code> packages by
+using the theme argument. There are a couple of options included with
+the package <code>funnel_clean</code> (the default) and
+<code>funnel_grey</code>, but you can write your own theme using any
+valid <code>ggplot2</code> theme and pass it to the plot.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span></span>
@@ -160,7 +168,10 @@
 <p><img src="changing_funnel_plot_options_files/figure-html/plottheme1-1.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; A funnel plot object with 54 points of which 9 are outliers. </span></span>
 <span><span class="co">#&gt; Plot is adjusted for overdispersion.</span></span></code></pre>
-<p>If you are not familiar with themes, you can create a theme with the <code>theme</code> function from <code>ggplot2</code>. I will create a new theme, including the <code>funnel_grey</code> theme, but with some different (exaggerated) elements.</p>
+<p>If you are not familiar with themes, you can create a theme with the
+<code>theme</code> function from <code>ggplot2</code>. I will create a
+new theme, including the <code>funnel_grey</code> theme, but with some
+different (exaggerated) elements.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -182,8 +193,19 @@
 <div class="section level2">
 <h2 id="plot-colours">Plot colours<a class="anchor" aria-label="anchor" href="#plot-colours"></a>
 </h2>
-<p>You can change the colours of the limits. I am aiming to allow better colour theme support in future versions, but at present they are supplied as a vector of eight hex colours to the <code>plot_cols</code> argument, in the order 95% Poisson (lower/upper), 99.8% Poisson (lower/upper), 95% OD (lower/upper) and 99.8% OD (lower/upper). At present all eight values are required, whether you are plotting all eight limits or not. I have deliberately avoided using red and green colours as defaults because it encourages value judgements about ‘good’ v.s. ‘bad’ which may be unreasonable for a given data set. Default colours are paired for both low and high: <code>c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")</code></p>
-<p>Here I will change the upper 95% Poisson limit to black (“#000000”):</p>
+<p>You can change the colours of the limits. I am aiming to allow better
+colour theme support in future versions, but at present they are
+supplied as a vector of eight hex colours to the <code>plot_cols</code>
+argument, in the order 95% Poisson (lower/upper), 99.8% Poisson
+(lower/upper), 95% OD (lower/upper) and 99.8% OD (lower/upper). At
+present all eight values are required, whether you are plotting all
+eight limits or not. I have deliberately avoided using red and green
+colours as defaults because it encourages value judgements about ‘good’
+v.s. ‘bad’ which may be unreasonable for a given data set. Default
+colours are paired for both low and high:
+<code>c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")</code></p>
+<p>Here I will change the upper 95% Poisson limit to black
+(“#000000”):</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span></span>
 <span>            , group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, limit<span class="op">=</span><span class="fl">99</span> ,label <span class="op">=</span> <span class="st">"outlier"</span></span>
@@ -196,7 +218,12 @@
 <div class="section level2">
 <h2 id="changing-scales">Changing scales<a class="anchor" aria-label="anchor" href="#changing-scales"></a>
 </h2>
-<p><code>funnelplotr</code> automatically sets it’s scales from the data you present to it but, on occasions, the scale rules might fall down for a particular dataset, or you may want to fix the plot to a particular scale. You can do this using the <code>xrange</code> and <code>yrange</code> arguments. Each takes a vector of two values, the minimum and the maximum:</p>
+<p><code>funnelplotr</code> automatically sets it’s scales from the data
+you present to it but, on occasions, the scale rules might fall down for
+a particular dataset, or you may want to fix the plot to a particular
+scale. You can do this using the <code>xrange</code> and
+<code>yrange</code> arguments. Each takes a vector of two values, the
+minimum and the maximum:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Changing labels</span></span>
 <span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span></span>
@@ -210,12 +237,15 @@
 <p><img src="changing_funnel_plot_options_files/figure-html/funnelscales-1.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; A funnel plot object with 54 points of which 9 are outliers. </span></span>
 <span><span class="co">#&gt; Plot is adjusted for overdispersion.</span></span></code></pre>
-<p><code>ggplot2</code> will warn you, as above, if you are excluding any points from your plot.</p>
+<p><code>ggplot2</code> will warn you, as above, if you are excluding
+any points from your plot.</p>
 </div>
 <div class="section level2">
 <h2 id="changing-labels">Changing labels<a class="anchor" aria-label="anchor" href="#changing-labels"></a>
 </h2>
-<p>You can change the plot labels and axis labels easily using the options: <code>title</code>, <code>x_label</code> and <code>y_label</code>.</p>
+<p>You can change the plot labels and axis labels easily using the
+options: <code>title</code>, <code>x_label</code> and
+<code>y_label</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span></span>
 <span>            , group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, limit<span class="op">=</span><span class="fl">99</span> ,label <span class="op">=</span> <span class="st">"outlier"</span></span>
@@ -224,7 +254,10 @@
 <p><img src="changing_funnel_plot_options_files/figure-html/funnellabels1-1.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; A funnel plot object with 54 points of which 9 are outliers. </span></span>
 <span><span class="co">#&gt; Plot is adjusted for overdispersion.</span></span></code></pre>
-<p>There are different labelling options for the data points too, using the <code>label</code> option. The default is to label outliers, but you can turn labels off, label the highlighted points, or both the highlighted points and the outliers (‘both’)</p>
+<p>There are different labelling options for the data points too, using
+the <code>label</code> option. The default is to label outliers, but you
+can turn labels off, label the highlighted points, or both the
+highlighted points and the outliers (‘both’)</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span>denominator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span>,numerator<span class="op">=</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span></span>
 <span>            , group <span class="op">=</span> <span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span>, limit<span class="op">=</span><span class="fl">99</span></span>
@@ -238,7 +271,11 @@
 <div class="section level2">
 <h2 id="cutting-out-the-ggplot-object">Cutting out the ggplot object<a class="anchor" aria-label="anchor" href="#cutting-out-the-ggplot-object"></a>
 </h2>
-<p>Since <code>funnelplotr</code> uses <code>ggplot2</code>, you could always extract the plot and alter it manually like any other <code>ggplot2</code> object. The easiest way is to extract it with <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>. Below we’ll add a (completely useless) vertical line to demonstrate adding more elements:</p>
+<p>Since <code>funnelplotr</code> uses <code>ggplot2</code>, you could
+always extract the plot and alter it manually like any other
+<code>ggplot2</code> object. The easiest way is to extract it with
+<code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>. Below we’ll add a (completely useless) vertical
+line to demonstrate adding more elements:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Original funnel plot object</span></span>
 <span><span class="va">fp</span> <span class="op">&lt;-</span></span>
