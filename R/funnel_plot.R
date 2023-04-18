@@ -331,7 +331,7 @@ funnel_plot <- function(numerator, denominator, group
 
   if (draw_adjusted == TRUE & phi <=1) {
     draw_adjusted <- FALSE
-    message("No overdispersion detected, or draw_adjusted to FALSE, plotting using unadjusted limits")
+    message("No overdispersion detected, or draw_adjusted set to FALSE, plotting using unadjusted limits")
     draw_unadjusted <- TRUE
   }
 

@@ -1,5 +1,11 @@
 ## Release summary
-This is a bug-fix release for the FunnelPlotR package, as a labelling function was not passing a 'multiplier' argument correctly, and was wrong when anything except the default value was used. This is a key function, as one common metric that uses these plots is generally multiplied by 100.
+This is a bug-fix release for the FunnelPlotR package:
+* an error handling function was not performance correctly and preventing multiple selections.
+* A logic step for dealing OD adjustment if there is no OD.
+* Updated plotting as ggplot arguments were deprecated and giving warning notices.
+* Updated package author's email address, as I lost access to the old one.
+* Updated bits of meta data, codecov, roxygen2 version and github actions.
+* Added additional unit tests.
 
 ## Test environments
 * local windows 10, R 4.1.1
