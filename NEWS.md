@@ -1,11 +1,11 @@
 # FunnelPlotR 0.4.2
 - Changes:
-* Handling of expected values in SHMI calculation was adjusted to allow rounding to two decimal places to match HED and NHSD.  Now controlled with additional argument: `SHMI_rounding` = TRUE/FALSE
+* Handling of expected values in SHMI calculation was adjusted to allow rounding to two decimal places to match NHSD publication, and as requested by HED Team.  Now controlled with additional argument: `SHMI_rounding` = TRUE/FALSE
 * A change to the OD logic when OD adjustment is selected, but no OD detected.  Changed to focus on phi (dispersion ratio) instead of tau (variance component).
 
 
 - Bug-fix: 
-* an error handling function was not performance correctly and preventing multiple selections.
+* an error handling function was not performing correctly and preventing multiple selections.
 * Updated plotting as ggplot arguments were deprecated and giving warning notices.
 * Updated package author's email address, as I lost access to the old one.
 * Updated bits of meta data, codecov, roxygen2 version and github actions.

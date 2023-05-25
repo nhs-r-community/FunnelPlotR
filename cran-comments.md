@@ -1,14 +1,19 @@
 ## Release summary
 This is a bug-fix release for the FunnelPlotR package:
-* an error handling function was not performance correctly and preventing multiple selections.
+* an error handling function was not performing correctly and preventing multiple selections.
 * A logic step for dealing OD adjustment if there is no OD.
 * Updated plotting as ggplot arguments were deprecated and giving warning notices.
 * Updated package author's email address, as I lost access to the old one.
 * Updated bits of meta data, codecov, roxygen2 version and github actions.
 * Added additional unit tests.
+* Update package author email address
+
+*Please note: I have lost access to my previous email address, used as author and was not
+able to change it.  This submission has a new email address, but I can't confirm from the old
+one.  Please correspond with c.mainey1@nhs.net*
 
 ## Test environments
-* local windows 10, R 4.1.1
+* local windows 10, R 4.2.2
 
 * R-devel, on Win-builder
 
