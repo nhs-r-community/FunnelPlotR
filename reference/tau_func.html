@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate the between group standard error (tau2) using a dispersion factor</h1>
-    <small class="dont-index">Source: <a href="https://github.com/chrismainey/FunnelPlotR/blob/HEAD/R/od_adjustment.R" class="external-link"><code>R/od_adjustment.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/nhs-r-community/FunnelPlotR/blob/HEAD/R/od_adjustment.R" class="external-link"><code>R/od_adjustment.R</code></a></small>
     <div class="hidden name"><code>tau_func.Rd</code></div>
     </div>
 
@@ -72,21 +72,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tau_func</span><span class="op">(</span><span class="va">n</span>, <span class="va">phi</span>, <span class="va">S</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tau_func</span><span class="op">(</span><span class="va">n</span>, <span class="va">phi</span>, <span class="va">S</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>n</dt>
 <dd><p>The number of groups for data items, e.g. hospitals trusts that z-scores are calculated at.</p></dd>
+
+
 <dt>phi</dt>
 <dd><p>The dispersion ratio, where &gt; 1 means overdispersion</p></dd>
+
+
 <dt>S</dt>
 <dd><p>Standard error (within cluster, calculated in z-score process)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numeric Tau2 value</p>
+    
+
+<p>A numeric Tau2 value</p>
     </div>
 
   </div>
@@ -101,7 +108,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

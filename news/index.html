@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,9 +63,21 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/chrismainey/FunnelPlotR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/nhs-r-community/FunnelPlotR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.2" id="funnelplotr-042">FunnelPlotR 0.4.2<a class="anchor" aria-label="anchor" href="#funnelplotr-042"></a></h2>
+<ul><li><p>Changes:</p></li>
+<li><p>Handling of expected values in SHMI calculation was adjusted to allow rounding to two decimal places to match NHSD publication, and as requested by HED Team. Now controlled with additional argument: <code>SHMI_rounding</code> = TRUE/FALSE</p></li>
+<li><p>A change to the OD logic when OD adjustment is selected, but no OD detected. Changed to focus on phi (dispersion ratio) instead of tau (variance component).</p></li>
+<li><p>Bug-fix:</p></li>
+<li><p>an error handling function was not performing correctly and preventing multiple selections.</p></li>
+<li><p>Updated plotting as ggplot arguments were deprecated and giving warning notices.</p></li>
+<li><p>Updated package author’s email address, as I lost access to the old one.</p></li>
+<li><p>Updated bits of meta data, codecov, roxygen2 version and github actions.</p></li>
+<li><p>Added additional unit tests.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.1" id="funnelplotr-041">FunnelPlotR 0.4.1<small>2021-09-30</small><a class="anchor" aria-label="anchor" href="#funnelplotr-041"></a></h2>
 <ul><li>Bug-fix release: the outlier function was not passing the ‘multiplier’ argument and was wrong with anything except the default values. This has been corrected to pass the multiplier properly.</li>
@@ -133,7 +145,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

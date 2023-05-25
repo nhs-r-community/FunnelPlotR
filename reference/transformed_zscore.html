@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transformation function for z-scoring</h1>
-    <small class="dont-index">Source: <a href="https://github.com/chrismainey/FunnelPlotR/blob/HEAD/R/od_adjustment.R" class="external-link"><code>R/od_adjustment.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/nhs-r-community/FunnelPlotR/blob/HEAD/R/od_adjustment.R" class="external-link"><code>R/od_adjustment.R</code></a></small>
     <div class="hidden name"><code>transformed_zscore.Rd</code></div>
     </div>
 
@@ -72,25 +72,32 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">transformed_zscore</span><span class="op">(</span>
-  mod_plot_agg <span class="op">=</span> <span class="va">mod_plot_agg</span>,
-  data_type <span class="op">=</span> <span class="st">"SR"</span>,
-  sr_method <span class="op">=</span> <span class="st">"SHMI"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transformed_zscore</span><span class="op">(</span></span>
+<span>  mod_plot_agg <span class="op">=</span> <span class="va">mod_plot_agg</span>,</span>
+<span>  data_type <span class="op">=</span> <span class="st">"SR"</span>,</span>
+<span>  sr_method <span class="op">=</span> <span class="st">"SHMI"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mod_plot_agg</dt>
 <dd><p>Aggregated model input data</p></dd>
+
+
 <dt>data_type</dt>
 <dd><p>Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").</p></dd>
+
+
 <dt>sr_method</dt>
 <dd><p>Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)</p>
+    
+
+<p>A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)</p>
     </div>
 
   </div>
@@ -105,7 +112,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

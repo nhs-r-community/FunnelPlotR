@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Function to build funnel limits</h1>
-    <small class="dont-index">Source: <a href="https://github.com/chrismainey/FunnelPlotR/blob/HEAD/R/build_limits_lookup.R" class="external-link"><code>R/build_limits_lookup.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/nhs-r-community/FunnelPlotR/blob/HEAD/R/build_limits_lookup.R" class="external-link"><code>R/build_limits_lookup.R</code></a></small>
     <div class="hidden name"><code>build_limits_lookup.Rd</code></div>
     </div>
 
@@ -72,49 +72,72 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">build_limits_lookup</span><span class="op">(</span>
-  <span class="va">min_x</span>,
-  <span class="va">max_x</span>,
-  <span class="va">min_y</span>,
-  <span class="va">max_y</span>,
-  <span class="va">draw_adjusted</span>,
-  <span class="va">tau2</span>,
-  <span class="va">data_type</span>,
-  <span class="va">sr_method</span>,
-  <span class="va">target</span>,
-  <span class="va">multiplier</span>,
-  <span class="va">denominators</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">build_limits_lookup</span><span class="op">(</span></span>
+<span>  <span class="va">min_x</span>,</span>
+<span>  <span class="va">max_x</span>,</span>
+<span>  <span class="va">min_y</span>,</span>
+<span>  <span class="va">max_y</span>,</span>
+<span>  <span class="va">draw_adjusted</span>,</span>
+<span>  <span class="va">tau2</span>,</span>
+<span>  <span class="va">data_type</span>,</span>
+<span>  <span class="va">sr_method</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  <span class="va">multiplier</span>,</span>
+<span>  <span class="va">denominators</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>draw_adjusted</dt>
 <dd><p>TRUE/FALSE Use overdispersion adjustment</p></dd>
+
+
 <dt>tau2</dt>
 <dd><p>If using draw_adjusted, what is the tau2 ("between" standard error) to use?</p></dd>
+
+
 <dt>data_type</dt>
 <dd><p>SR, PR or RC. Used to set target reference</p></dd>
+
+
 <dt>sr_method</dt>
 <dd><p>Which adjustment method is being used, SHMI or CQC?</p></dd>
+
+
 <dt>target</dt>
 <dd><p>target to be used to set centre line</p></dd>
+
+
 <dt>multiplier</dt>
 <dd><p>Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.</p></dd>
+
+
 <dt>min_preds</dt>
 <dd><p>Minimum predicted value for range of x-axis</p></dd>
+
+
 <dt>max_preds</dt>
 <dd><p>Maximum predicted value for range of x-axis</p></dd>
+
+
 <dt>min_ratio</dt>
 <dd><p>Minimum ratio value for range of y-axis</p></dd>
+
+
 <dt>max_ratio</dt>
 <dd><p>Maximum ratio value for range of y-axis</p></dd>
+
+
 <dt>draw_unadjusted</dt>
 <dd><p>TRUE/FALSE Draw Poisson distribution limits?</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame with an index column and various control limits based on the index as an x-axis value.</p>
+    
+
+<p>A data.frame with an index column and various control limits based on the index as an x-axis value.</p>
     </div>
 
   </div>
@@ -129,7 +152,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
