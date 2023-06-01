@@ -165,7 +165,7 @@ tau2(fp)
 \references{
 DerSimonian & Laird (1986)  Meta-analysis in clinical trials. \url{https://doi.org/10.1016/0197-2456(86)90046-2/}
 
-Spiegelhalter (2005) Funnel plots for comparing institutional performance  \url{(https://doi.org/10.1002/sim.1970}
+Spiegelhalter (2005) Funnel plots for comparing institutional performance  \url{https://doi.org/10.1002/sim.1970}
 
 Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: \url{https://doi.org/10.1111/j.1467-985X.2011.01010.x}
 
