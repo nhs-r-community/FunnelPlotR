@@ -27,9 +27,8 @@ knitr::opts_chunk$set(
 
 Funnel plots are a common tool for comparing organisations or units using proportions or standardised rates.  A common use of them is for monitoring mortality at hospitals.  This is an introductory post on the subject, that gives a little information about them and how they are constructed.  It is deliberately light on theory, focusing on use, some of the theory is referenced for interested readers.
 
-This post also uses a funnel plot function, for indirectly standardised ratios, that I built as part of my PhD work.  The function is based on `ggplot2` [@wickhamGgplot2ElegantGraphics2009], and is available at https://github.com/chrismainey/FunnelPlotR/, although it's a work in progress.  
 
-There are different kinds of funnel plot, but this post focuses on the type used to compare standardised mortality and other similarly constructed indicators .
+There are different kinds of funnel plot, for this vignette, we will focuses on the type used to compare standardised mortality and other similarly constructed indicators.
 
 ## Why do we use them?
 
@@ -104,7 +103,7 @@ Here we will apply this to some data by picking up the `medpar` dataset discusse
 ### Installation
 
 ```{r install, eval=FALSE}
-devtools::install_github("https://github.com/chrismainey/FunnelPlotR")
+devtools::install_github("https://github.com/nhs-r-community/FunnelPlotR")
 ```
 
 

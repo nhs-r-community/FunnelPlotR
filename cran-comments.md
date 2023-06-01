@@ -2,6 +2,7 @@
 
 ### Resubmission - 01/06/2023
 I have updated some of the URLS to the most current DOI for for references, made links all https, included trailing slashes where they resolve.  All other links tested and current.
+Updated Github reference in vignette, and deprecated arguments for ggplot2 in other vignette.
 
 
 

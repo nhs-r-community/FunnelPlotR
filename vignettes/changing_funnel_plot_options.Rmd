@@ -114,7 +114,7 @@ funnel_plot(denominator=medpar$prds,numerator=medpar$los
 ## Changing labels
 funnel_plot(denominator=medpar$prds,numerator=medpar$los
             , group = medpar$provnum, limit=99 ,label = "outlier"
-            , draw_unadjusted = TRUE, xrange=c(0, 400), yrange=c(0,2))
+            , draw_unadjusted = TRUE, x_range=c(0, 400), y_range=c(0,2))
 
 ```
 
@@ -157,6 +157,6 @@ my_plot <- plot(fp)
 
 # Add an additional geom to plot
 my_plot +
-  geom_vline(aes(xintercept=400), linetype = "dashed", colour="red", size=2)
+  geom_vline(aes(xintercept=400), linetype = "dashed", colour="red", linewidth=2)
 
 ```
