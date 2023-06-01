@@ -101,7 +101,6 @@
 <div class="section level2">
 <h2 id="funnel-plots">Funnel Plots<a class="anchor" aria-label="anchor" href="#funnel-plots"></a>
 </h2>
-<p><strong>This package is the newer version of the older <code>CMFunnels</code> package. Development work will focus on this package from now on.</strong></p>
 <p>This is an implementation of the funnel plot processes, and overdispersion methods described in:<br><a href="https://doi.org/10.1111/j.1467-985X.2011.01010.x" class="external-link">Statistical methods for healthcare regulation: rating, screening and surveillance. Spiegelhalter et al (2012)</a><br><a href="https://doi.org/10.1002/sim.1970" class="external-link">Funnel plots for comparing institutional performance. Spiegelhalter (2005)</a><br><a href="https://dx.doi.org/10.1136/qshc.2005.013755" class="external-link">Handling over-dispersion of performance indicators. Spiegelhalter (2005)</a><br></p>
 <p>It draws funnel plots using <code>ggplot2</code> and allows users to specify whether they want to adjust the funnel plot limits for ‘overdispersion.’ This adjustment makes the assumption that we are dealing with clusters of values (means) at institutions that are themselves arranged around a global mean. We then have ‘within’ institution variation and ‘between institution’ variation. The process assessed the expected variance in our data, and where it is greater than that expected by the Poisson distribution, uses the difference as a scaling factor. It is then used in an additive fashion, after an adjustment for outliers by either Winsorised or truncated (with a default 10% at each end of the distribution.)</p>
 <p>Methods are based on those presented in Spiegelhalter’s papers and the Care Quality Commission’s Intelligent Monitoring methodology documents, with methods for proportions, ratios of counts and indirectly standardised ratios. There is a also a variant method for standardised ratios, used in the NHS’ Summary Hospital Mortality Indicator’<br><a href="https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi/" class="external-link">Summary Hospital-level Mortality Indicator, NHS Digital, SHMI specification</a> <br></p>
@@ -139,10 +138,6 @@
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; glm(formula = los ~ hmo + died + age80 + factor(type), family = "poisson", </span></span>
 <span><span class="co">#&gt;     data = medpar)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Deviance Residuals: </span></span>
-<span><span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span></span>
-<span><span class="co">#&gt; -5.7309  -1.9554  -0.5529   0.9717  14.5487  </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
