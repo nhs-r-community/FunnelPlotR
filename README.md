@@ -5,13 +5,13 @@
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active/)
 [![CRAN
 version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
-![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR) [![Codecov
-test
-coverage](https://codecov.io/gh/nhs-r-community/FunnelPlotR/branch/main/graph/badge.svg)](https://codecov.io/gh/nhs-r-community/FunnelPlotR?branch=main)
-[![R-CMD-check](https://github.com/nhs-r-community/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/nhs-r-community/FunnelPlotR/actions)
+![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR/)
+[![Codecov test
+coverage](https://codecov.io/gh/nhs-r-community/FunnelPlotR/branch/main/graph/badge.svg)](https://codecov.io/gh/nhs-r-community/FunnelPlotR?branch=main/)
+[![R-CMD-check](https://github.com/nhs-r-community/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/nhs-r-community/FunnelPlotR/actions/)
 <!-- badges: end -->
 
 ## Funnel Plots
@@ -22,12 +22,11 @@ Development work will focus on this package from now on.**
 This is an implementation of the funnel plot processes, and
 overdispersion methods described in:<br> [Statistical methods for
 healthcare regulation: rating, screening and surveillance. Spiegelhalter
-et al
-(2012)](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-985X.2011.01010.x)<br>
+et al (2012)](https://doi.org/10.1111/j.1467-985X.2011.01010.x)<br>
 [Funnel plots for comparing institutional performance. Spiegelhalter
-(2005)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1970)<br>
-[Handling over-dispersion of performance indicators. Spiegelhalter
-(2005)](https://qualitysafety.bmj.com/content/14/5/347)<br>
+(2005)](https://doi.org/10.1002/sim.1970)<br> [Handling over-dispersion
+of performance indicators. Spiegelhalter
+(2005)](https://dx.doi.org/10.1136/qshc.2005.013755)<br>
 
 It draws funnel plots using `ggplot2` and allows users to specify
 whether they want to adjust the funnel plot limits for ‘overdispersion.’
@@ -47,7 +46,7 @@ with methods for proportions, ratios of counts and indirectly
 standardised ratios. There is a also a variant method for standardised
 ratios, used in the NHS’ Summary Hospital Mortality Indicator’<br>
 [Summary Hospital-level Mortality Indicator, NHS Digital, SHMI
-specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi)
+specification](https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi/)
 <br>
 
 This variant uses a log-transformation and truncation of the
@@ -188,5 +187,4 @@ e.g. standardised mortality ratios, readmissions etc.
 Please read the package documentation for more info, at:
 <https://nhs-r-community.github.io/FunnelPlotR/>
 
-Funnel Plot HEX sticker/logo by Paul Chipperfield, check him out at:
-<https://themightychip.com/>
+Funnel Plot HEX sticker/logo by Paul Chipperfield

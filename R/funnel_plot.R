@@ -1,5 +1,5 @@
 #' @title Funnel plots for comparing institutional performance
-#' @description An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970>.
+#' @description An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970/>.
 #' There are several parameters for the input, with the assumption that you will want smooth,
 #' overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau})
 #' and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
@@ -68,10 +68,10 @@
 #'    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 #'    Future versions of `funnelplotr` may allow users to change this.
 #'
-#' @references DerSimonian & Laird (1986) <doi:10.1016/0197-2456(86)90046-2> Meta-analysis in clinical trials.
-#' @references Spiegelhalter (2005) <doi:10.1002/sim.1970> Funnel plots for comparing institutional performance
-#' @references Spiegelhalter et al. (2012) <doi:10.1111/j.1467-985X.2011.01010.x> Statistical methods for healthcare regulation: rating, screening and surveillance: <doi:10.1111/j.1467-985X.2011.01010.x>
-#' @references NHS Digital (2020) SHMI Methodology v .134\url{https://digital.nhs.uk/data-and-information/publications/clinical-indicators/shmi/current}
+#' @references DerSimonian & Laird (1986)  Meta-analysis in clinical trials. \url{https://doi.org/10.1016/0197-2456(86)90046-2/}
+#' @references Spiegelhalter (2005) Funnel plots for comparing institutional performance  \url{(https://doi.org/10.1002/sim.1970}
+#' @references Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: \url{https://doi.org/10.1111/j.1467-985X.2011.01010.x}
+#' @references NHS Digital (2020) SHMI Methodology v .134 \url{https://digital.nhs.uk/data-and-information/publications/clinical-indicators/shmi/current/}
 #'
 #' @examples
 #' # We will use the 'medpar' dataset from the 'COUNT' package.

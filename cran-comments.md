@@ -1,4 +1,10 @@
 ## Release summary
+
+### Resubmission - 01/06/2023
+I have updated some of the URLS to the most current DOI for for references, made links all https, included trailing slashes where they resolve.  All other links tested and current.
+
+
+
 This is a bug-fix release for the FunnelPlotR package:
 * an error handling function was not performing correctly and preventing multiple selections.
 * A logic step for dealing OD adjustment if there is no OD.
