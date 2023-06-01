@@ -68,9 +68,9 @@
 #'    The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
 #'    Future versions of `funnelplotr` may allow users to change this.
 #'
-#' @references DerSimonian & Laird (1986)  Meta-analysis in clinical trials. \url{https://doi.org/10.1016/0197-2456(86)90046-2}
-#' @references Spiegelhalter (2005) Funnel plots for comparing institutional performance  \url{https://doi.org/10.1002/sim.1970}
-#' @references Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: \url{https://doi.org/10.1111/j.1467-985X.2011.01010.x}
+#' @references DerSimonian & Laird (1986)  Meta-analysis in clinical trials. <doi:10.1016/0197-2456(86)90046-2>
+#' @references Spiegelhalter (2005) Funnel plots for comparing institutional performance  <doi:10.1002/sim.1970>
+#' @references Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: <doi:10.1111/j.1467-985X.2011.01010.x>
 #' @references NHS Digital (2020) SHMI Methodology v .134 \url{https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi}
 #'
 #' @examples
