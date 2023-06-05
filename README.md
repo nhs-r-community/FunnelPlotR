@@ -8,7 +8,7 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active/)
 [![CRAN
 version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
-![](http://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR/)
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
 [![Codecov test
 coverage](https://codecov.io/gh/nhs-r-community/FunnelPlotR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nhs-r-community/FunnelPlotR?branch=main/)
 [![R-CMD-check](https://github.com/nhs-r-community/FunnelPlotR/workflows/R-CMD-check/badge.svg)](https://github.com/nhs-r-community/FunnelPlotR/actions/)
@@ -99,6 +99,10 @@ summary(mod)
 #> Call:
 #> glm(formula = los ~ hmo + died + age80 + factor(type), family = "poisson", 
 #>     data = medpar)
+#> 
+#> Deviance Residuals: 
+#>     Min       1Q   Median       3Q      Max  
+#> -5.7309  -1.9554  -0.5529   0.9717  14.5487  
 #> 
 #> Coefficients:
 #>               Estimate Std. Error z value Pr(>|z|)    
