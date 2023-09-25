@@ -18,6 +18,7 @@
 #' @param data_type the data type SR, PR or RC.
 #' @param sr_method CQC or SHMI methods for standardised ratios
 #' @param theme a ggplot theme function.
+#' @param plot_cols vector of colours for limits
 #'
 #' @return A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
 #' @keywords internal
@@ -57,69 +58,61 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
 
     if (draw_unadjusted == TRUE & draw_adjusted == TRUE) {
     funnel_p <- funnel_p +
-      geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul95, col = "95% Upper", linetype = "95% Upper"), linewidth = 1,  data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower", linetype = "99.8% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper", linetype = "99.8% Upper"), linewidth = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed", linetype = "95% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed", linetype = "95% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed", linetype = "99.8% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed", linetype = "99.8% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll95, col = "95%", linetype =  "95%"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul95, col = "95%", linetype = "95%"), linewidth = 1,  data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ll998, col = "99.8%", linetype = "99.8%"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = ul998, col = "99.8%", linetype = "99.8%"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed", linetype = "95% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed", linetype = "95% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed", linetype = "99.8% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+      geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed", linetype = "99.8% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
       scale_color_manual(values = plot_cols, name = "Control limits")+
-      scale_linetype_manual(values = c("95% Lower"=2
-                                       , "95% Upper" = 2
-                                       ,  "99.8% Lower" = 1
-                                       , "99.8% Upper" = 1
-                                       , "95% Lower Overdispersed"=2
-                                       , "95% Upper Overdispersed"= 2
-                                       ,  "99.8% Lower Overdispersed" = 1
-                                       , "99.8% Upper Overdispersed" = 1), guide = "none")+
+      scale_linetype_manual(values = c("95%"=2
+                                       , "99.8%" = 1
+                                       , "95% Overdispersed"= 2
+                                       , "99.8% Overdispersed" = 1), guide = "none")+
       guides(colour = guide_legend(title.theme = element_text(
         size = 10,
         face = "bold",
         colour = "black",
         angle = 0
-      ), override.aes = list(linetype = c(2,2,2,2,1,1,1,1)) ))
+      ), override.aes = list(linetype = c(2,2,1,1)) ))
 
 
   } else {
     if (draw_unadjusted == TRUE & draw_adjusted == FALSE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = ll95, col = "95% Lower", linetype =  "95% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul95, col = "95% Upper", linetype = "95% Upper"), linewidth = 1,  data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ll998, col = "99.8% Lower", linetype = "99.8% Lower"), linewidth = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = ul998, col = "99.8% Upper", linetype = "99.8% Upper"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll95, col = "95%", linetype =  "95%"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul95, col = "95%", linetype = "95%"), linewidth = 1,  data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ll998, col = "99.8%", linetype = "99.8%"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = ul998, col = "99.8%", linetype = "99.8%"), linewidth = 1, data = limits, na.rm = TRUE) +
         scale_color_manual(values = plot_cols[1:4], name = "Control limits")+
-        scale_linetype_manual(values = c("95% Lower"=2
-                                         , "95% Upper" = 2
-                                         ,  "99.8% Lower" = 1
-                                         , "99.8% Upper" = 1), guide = "none")+
+        scale_linetype_manual(values = c("95%"=2
+                                         , "99.8%" = 1), guide = "none")+
         guides(colour = guide_legend(title.theme = element_text(
           size = 10,
           face = "bold",
           colour = "black",
           angle = 0
-        ), override.aes = list(linetype = c(2,2,1,1)) ))
+        ), override.aes = list(linetype = c(2,1)) ))
 
     }
 
     if (draw_unadjusted == FALSE &  draw_adjusted == TRUE) {
       funnel_p <- funnel_p +
-        geom_line(aes(x = number.seq, y = odll95, col = "95% Lower Overdispersed", linetype = "95% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul95, col = "95% Upper Overdispersed", linetype = "95% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Lower Overdispersed", linetype = "99.8% Lower Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Upper Overdispersed", linetype = "99.8% Upper Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll95, col = "95% Overdispersed", linetype = "95% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed", linetype = "95% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed", linetype = "99.8% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
+        geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed", linetype = "99.8% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
         scale_color_manual(values = plot_cols[5:8], name = "Control limits")+
-        scale_linetype_manual(values = c("95% Lower Overdispersed"=2
-                                         , "95% Upper Overdispersed"= 2
-                                         ,  "99.8% Lower Overdispersed" = 1
-                                         , "99.8% Upper Overdispersed" = 1), guide = "none")+
+        scale_linetype_manual(values = c("95% Overdispersed"=2
+                                         , "99.8% Overdispersed" = 1), guide = "none")+
         guides(colour = guide_legend(title.theme = element_text(
           size = 10,
           face = "bold",
           colour = "black",
           angle = 0
-        ), override.aes = list(linetype = c(2,2,1,1)) ))
+        ), override.aes = list(linetype = c(2,1)) ))
     }
   }
 
