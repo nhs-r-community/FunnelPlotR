@@ -6,6 +6,7 @@
 \title{Funnel plots for comparing institutional performance}
 \usage{
 funnel_plot(
+  .data,
   numerator,
   denominator,
   group,
@@ -31,10 +32,13 @@ funnel_plot(
   OD_adjust,
   xrange,
   yrange,
-  SHMI_rounding = TRUE
+  SHMI_rounding = TRUE,
+  ...
 )
 }
 \arguments{
+\item{.data}{A data frame containing a numerator, denominator and grouping field.}
+
 \item{numerator}{A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis}
 
 \item{denominator}{A vector of denominator (predicted/population etc.)  Used as denominator of the Y-axis and the scale of the x-axis}

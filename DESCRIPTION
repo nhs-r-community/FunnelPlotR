@@ -18,10 +18,12 @@ License: MIT + file LICENSE
 URL: https://nhs-r-community.github.io/FunnelPlotR/, https://github.com/nhs-r-community/FunnelPlotR
 BugReports: https://github.com/nhs-r-community/FunnelPlotR/issues
 Encoding: UTF-8
-Imports: dplyr,
-         ggrepel,
-         ggplot2,
-         scales
+Imports: 
+    dplyr,
+    ggrepel,
+    ggplot2,
+    scales,
+    rlang
 RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0),

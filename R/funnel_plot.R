@@ -4,6 +4,7 @@
 #' overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau})
 #' and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
 #' @encoding UTF-8
+#' @param .data A data frame containing a numerator, denominator and grouping field.
 #' @param numerator  A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis
 #' @param denominator A vector of denominator (predicted/population etc.)  Used as denominator of the Y-axis and the scale of the x-axis
 #' @param group A vector of group names as character or factor.  Used to aggregate and group points on plots
@@ -106,12 +107,13 @@
 #'
 #'
 #' @importFrom scales comma
+#' @importFrom rlang .data
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom dplyr select filter arrange mutate summarise group_by %>% n
 #' @importFrom stats na.omit
 #' @import ggplot2
 
-funnel_plot <- function(numerator, denominator, group
+funnel_plot <- function(.data, numerator, denominator, group
                         , data_type = "SR", limit = 99, label = "outlier"
                         , highlight = NA, draw_unadjusted = FALSE
                         , draw_adjusted = TRUE, sr_method = "SHMI"
@@ -124,7 +126,8 @@ funnel_plot <- function(numerator, denominator, group
                         , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
                         , xrange, yrange
-                        , SHMI_rounding = TRUE){
+                        , SHMI_rounding = TRUE
+                        , ...){
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
@@ -262,11 +265,16 @@ funnel_plot <- function(numerator, denominator, group
     "99.8% Lower Overdispersed" = plot_cols[7],
     "99.8% Upper Overdispersed" = plot_cols[8]
   )
+  
+  # map columns for tidyeval compliance
+  
+  numerator <- quo_name(enquo(numerator))
+  denominator <- quo_name(enquo(denominator))
+  group <- quo_name(enquo(group))
 
-
-  mod_plot <- data.frame(numerator=as.numeric(numerator)
-                         ,denominator=as.numeric(denominator)
-                         , group=as.factor(group))
+  mod_plot <- data.frame(numerator=as.numeric(.data[[numerator]])
+                         ,denominator=as.numeric(.data[[denominator]])
+                         , group=as.factor(.data[[group]]))
 
 
   mod_plot_agg<-aggregate_func(mod_plot)
