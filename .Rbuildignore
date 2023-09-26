@@ -16,3 +16,4 @@ NHSEI_AHSN_limits.R
 ^dev$
 ^codecov\.yml$
 ^\.github$
+test_func.R

@@ -29,8 +29,18 @@ tst_func <- function(.data, numerator, denominator, group){
 }
 
 
-# medpar
-# 
+library(COUNT)
+data(medpar)
+
+medpar$provnum<-factor(medpar$provnum)
+medpar$los<-as.numeric(medpar$los)
+
+mod<- glm(los ~ hmo + died + age80 + factor(type), family="poisson", data=medpar)
+summary(mod)
+
+# Get predicted value for ratio
+medpar$prds<- predict(mod, type="response")
+
 tst_func(medpar, los, prds, provnum)
 
 funnel_plot(medpar, los, prds, provnum)

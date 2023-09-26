@@ -179,30 +179,23 @@ funnel_plot <- function(.data, numerator, denominator, group
 
 
   # build initial dataframe of obs/predicted, with error message caught here in 'try'
-
+  # Main error check here, some moved after tidyeval mapping as they conflict.
   if (missing(denominator)) {
-    stop("Need to specify model denominator")
+    stop("Need to specify denominator column")
   }
   if (missing(numerator)) {
-    stop("Need to supply numerator")
+    stop("Need to supply numerator column")
   }
   if (missing(title)) {
       title <- ("Untitled Funnel Plot")
   }
-  if (missing(numerator)) {
-    stop("Need to supply the column name for numerator")
-  }
+  
 
-  if (class(denominator)[1] == "array") {
-    denominator <- as.numeric(denominator)
-  }
 
-  if(identical(numerator,denominator)){
-    stop("Numerator and denominator are the same. Please check your inputs")
-  }
-
-  if(length(plot_cols) < 4){
-    stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson, 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
+  if(length(plot_cols) < 8){
+    stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Lower Poisson, 95% Upper Poisson
+         , 99.8% Lower Poisson, 99.8% Upper Poisson, 95% Upper OD-adjusted, 95% Lower OD-adjusted, 
+         99.8% Lower OD-adjusted, 99.8% Upper OD-adjusted, even if you are only using one set of limits.")
   }
 
   if(!(label %in% c("outlier", "outlier_lower", "outlier_upper", "highlight"
@@ -271,7 +264,13 @@ funnel_plot <- function(.data, numerator, denominator, group
   numerator <- quo_name(enquo(numerator))
   denominator <- quo_name(enquo(denominator))
   group <- quo_name(enquo(group))
-
+  
+  # error check
+  if(identical(.data[[numerator]],.data[[denominator]])){
+    stop("Numerator and denominator are the same. Please check your inputs")
+  }
+  
+  # now make working table
   mod_plot <- data.frame(numerator=as.numeric(.data[[numerator]])
                          ,denominator=as.numeric(.data[[denominator]])
                          , group=as.factor(.data[[group]]))
