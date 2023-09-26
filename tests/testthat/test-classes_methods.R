@@ -1,6 +1,9 @@
 test_that("`test the classes return stuff", {
-  a<-funnel_plot(c(100, 150,180,80,120, 225), c(108, 112, 165,95,100, 220),
-                 factor(c("a","b","c", "d","e","f"))
+  a<-funnel_plot(
+      data.frame(num=c(100, 150,180,80,120, 225)
+                 , denom=c(108, 112, 165,95,100, 220)
+                 , group = factor(c("a","b","c", "d","e","f"))
+      ), num, denom, group
   )
   
   expect_s3_class(a, "funnelplot") 

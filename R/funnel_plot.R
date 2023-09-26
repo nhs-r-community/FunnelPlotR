@@ -47,6 +47,7 @@
 #' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
 #' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
 #' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
+#' @param ... <[`data-masking`][rlang::args_data_masking]> Additional parameters
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
 #' \item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
@@ -90,8 +91,8 @@
 #' medpar$prds<- predict(mod, type="response")
 #'
 #' # Draw plot, returning just the plot object
-#' fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
-#' group = medpar$provnum, limit=95, title="An example funnel plot")
+#' fp<-funnel_plot(medpar, denominator=prds, numerator=los,
+#' group = provnum, limit=95, title="An example funnel plot")
 #'
 #' # Methods for viewing/extracting
 #' print(fp)
@@ -222,30 +223,7 @@ funnel_plot <- function(.data, numerator, denominator, group
   }
 
 
-  # Error handling for highlight argument
-  if(!is.na(highlight[1])){
-    
-    if(!is.character(highlight[1])) {
-      stop("Please supply `highlight` in character format, or a character vector")
-    }
-    
-    # check for missing highlight levels
-    labs_present <- apply(sapply(X = highlight, FUN = grepl, x=group), 2, any)
-    labs_missing <- names(labs_present[labs_present == FALSE])
-    
-    if (length(labs_missing)>0){
-      
-      stop(paste0("Value(s):'"
-                 , paste(labs_missing,collapse=", ")
-                 , "' specified to `highlight` not found in `group` variable. 
-                 Are you trying to highlight a group that is missing from your 
-                 data, or is it a typo?"
-           ))
-      
-    }
-  }
-
-
+ 
   # Define vector for scale colours
   plot_cols<-c(
 
@@ -268,6 +246,29 @@ funnel_plot <- function(.data, numerator, denominator, group
   # error check
   if(identical(.data[[numerator]],.data[[denominator]])){
     stop("Numerator and denominator are the same. Please check your inputs")
+  }
+  
+  # Error handling for highlight argument
+  if(!is.na(highlight[1])){
+    
+    if(!is.character(highlight[1])) {
+      stop("Please supply `highlight` in character format, or a character vector")
+    }
+    
+    # check for missing highlight levels
+    labs_present <- apply(sapply(X = highlight, FUN = grepl, x=.data[[group]]), 2, any)
+    labs_missing <- names(labs_present[labs_present == FALSE])
+    
+    if (length(labs_missing)>0){
+      
+      stop(paste0("Value(s):'"
+                  , paste(labs_missing,collapse=", ")
+                  , "' specified to `highlight` not found in `group` variable. 
+                 Are you trying to highlight a group that is missing from your 
+                 data, or is it a typo?"
+      ))
+      
+    }
   }
   
   # now make working table

@@ -100,10 +100,6 @@ summary(mod)
 #> glm(formula = los ~ hmo + died + age80 + factor(type), family = "poisson", 
 #>     data = medpar)
 #> 
-#> Deviance Residuals: 
-#>     Min       1Q   Median       3Q      Max  
-#> -5.7309  -1.9554  -0.5529   0.9717  14.5487  
-#> 
 #> Coefficients:
 #>               Estimate Std. Error z value Pr(>|z|)    
 #> (Intercept)    2.26875    0.01246 182.011  < 2e-16 ***
@@ -135,7 +131,7 @@ medpar$prds<- predict(mod, type="response")
 and outliers labelled.
 
 ``` r
-a<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, 
+a<-funnel_plot(medpar, numerator=los, denominator=prds, group = provnum, 
             title = 'Length of Stay Funnel plot for `medpar` data', data_type="SR", limit=99,
             draw_unadjusted = TRUE, draw_adjusted = FALSE, label="outlier")
 print(a)
@@ -166,7 +162,7 @@ overdispersed limits using either SHMI or Spiegelhalter methods adjust
 for this by inflating the limits:
 
 ``` r
-b<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum, data_type = "SR",
+b<-funnel_plot(medpar, numerator=los, denominator=prds, group = provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = FALSE,
             draw_adjusted = TRUE, sr_method = "SHMI", label="outlier", limit=99)
 

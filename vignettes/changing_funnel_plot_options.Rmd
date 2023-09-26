@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 library(FunnelPlotR)
 ```
 
-This brief vignette shows how to go about changing some of the parameters available in the `funnelplotr` package.
+This brief vignette shows how to go about changing some of the parameters available in the `FunnelPlotR` package.
 Firstly, lets set up some data, the same as the README and other vignette:
 
 ```{r dtsetup}
@@ -42,8 +42,8 @@ mod<- glm(los ~ hmo + died + age80 + factor(type), family="poisson", data=medpar
 medpar$prds<- predict(mod, newdata = medpar, type="response")
 
 # Draw plot, returning just the plot object
-funnel_plot(denominator=medpar$prds, numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds, numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE)
 
 ```
@@ -55,20 +55,23 @@ You can pick out data point(s) using the `highlight` option.  Here we we use the
 
 ```{r highlight}
 # Draw plot, returning just the plot object
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds, numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE, highlight="030002")
+
+
+
 ```
 
 
 ## Themes
 
-You can alter themes in the `funnelplotr` packages by using the theme argument.  There are a couple of options included with the package `funnel_clean` (the default) and `funnel_grey`, but you can write your own theme using any valid `ggplot2` theme and pass it to the plot.
+You can alter themes in the `FunnelPlotR` packages by using the theme argument.  There are a couple of options included with the package `funnel_clean` (the default) and `funnel_grey`, but you can write your own theme using any valid `ggplot2` theme and pass it to the plot.
 
 ```{r plottheme1}
 
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE, theme = funnel_grey() )
 
 ```
@@ -86,8 +89,8 @@ new_funnel_theme <-
     )
 
 
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE, theme = new_funnel_theme)
 
 ```
@@ -100,20 +103,20 @@ I have deliberately avoided using red and green colours as defaults because it e
 Here I will change the upper 95% Poisson limit to black ("#000000"):
 
 ```{r colours}
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE, theme = funnel_grey(),
             plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
 ```
 
 ## Changing scales
 
-`funnelplotr` automatically sets it's scales from the data you present to it but, on occasions, the scale rules might fall down for a particular dataset, or you may want to fix the plot to a particular scale.  You can do this using the `xrange` and `yrange` arguments.  Each takes a vector of two values, the minimum and the maximum:
+`FunnelPlotR` automatically sets it's scales from the data you present to it but, on occasions, the scale rules might fall down for a particular dataset, or you may want to fix the plot to a particular scale.  You can do this using the `xrange` and `yrange` arguments.  Each takes a vector of two values, the minimum and the maximum:
 
 ```{r funnelscales}
 ## Changing labels
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE, x_range=c(0, 400), y_range=c(0,2))
 
 ```
@@ -125,8 +128,8 @@ funnel_plot(denominator=medpar$prds,numerator=medpar$los
 You can change the plot labels and axis labels easily using the options: `title`, `x_label` and `y_label`.
 
 ```{r funnellabels1}
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99 ,label = "outlier"
             , draw_unadjusted = TRUE, title = "Vignette funnel plot"
             , x_label = "x-axis", y_label = "y-axis")
 ```
@@ -134,8 +137,8 @@ funnel_plot(denominator=medpar$prds,numerator=medpar$los
 There are different labelling options for the data points too, using the `label` option.  The default is to label outliers, but you can turn labels off, label the highlighted points, or both the highlighted points and the outliers ('both')
 
 ```{r funnellabels2}
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99
             , draw_unadjusted = TRUE, title = "Vignette funnel plot"
             , x_label = "x-axis", y_label = "y-axis"
             , highlight= "030002", label = "highlight")
@@ -143,13 +146,13 @@ funnel_plot(denominator=medpar$prds,numerator=medpar$los
 
 ## Cutting out the ggplot object
 
-Since `funnelplotr` uses `ggplot2`, you could always extract the plot and alter it manually like any other `ggplot2` object.  The easiest way is to extract it with `plot()`.  Below we'll add a (completely useless) vertical line to demonstrate adding more elements:
+Since `FunnelPlotR` uses `ggplot2`, you could always extract the plot and alter it manually like any other `ggplot2` object.  The easiest way is to extract it with `plot()`.  Below we'll add a (completely useless) vertical line to demonstrate adding more elements:
 
 ```{r cutoutplot}
 # Original funnel plot object
 fp <-
-funnel_plot(denominator=medpar$prds,numerator=medpar$los
-            , group = medpar$provnum, limit=99, label = "outlier"
+funnel_plot(medpar, denominator=prds,numerator=los
+            , group = provnum, limit=99, label = "outlier"
             , draw_unadjusted = TRUE)
 
 # Extract just the plot

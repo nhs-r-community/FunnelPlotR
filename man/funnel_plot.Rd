@@ -106,6 +106,8 @@ Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9
 \item{yrange}{Deprecated.  Please use the `y_range` argument instead.}
 
 \item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)}
+
+\item{...}{<[`data-masking`][rlang::args_data_masking]> Additional parameters}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
@@ -149,8 +151,8 @@ mod<- glm(los ~ hmo + died + age80 + factor(type)
 medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
-fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
-group = medpar$provnum, limit=95, title="An example funnel plot")
+fp<-funnel_plot(medpar, denominator=prds, numerator=los,
+group = provnum, limit=95, title="An example funnel plot")
 
 # Methods for viewing/extracting
 print(fp)
