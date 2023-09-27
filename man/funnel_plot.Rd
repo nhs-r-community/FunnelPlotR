@@ -32,7 +32,8 @@ funnel_plot(
   OD_adjust,
   xrange,
   yrange,
-  SHMI_rounding = TRUE
+  SHMI_rounding = TRUE,
+  max.overlaps = 10
 )
 }
 \arguments{
@@ -105,6 +106,8 @@ Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9
 \item{yrange}{Deprecated.  Please use the `y_range` argument instead.}
 
 \item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)}
+
+\item{max.overlaps}{Exclude text labels that overlap too many things. Defaults to 10. (inheritted from geom_label_repel)}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr

@@ -22,7 +22,8 @@ draw_plot(
   data_type,
   sr_method,
   theme,
-  plot_cols
+  plot_cols,
+  max.overlaps
 )
 }
 \arguments{

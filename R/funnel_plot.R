@@ -48,6 +48,7 @@
 #' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
 #' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
 #' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
+#' @param max.overlaps 	Exclude text labels that overlap too many things. Defaults to 10. (inheritted from geom_label_repel)
 #'
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
@@ -127,7 +128,8 @@ funnel_plot <- function(.data, numerator, denominator, group
                         , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
                         , xrange, yrange
-                        , SHMI_rounding = TRUE){
+                        , SHMI_rounding = TRUE
+                        , max.overlaps = 10){
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
@@ -380,7 +382,7 @@ funnel_plot <- function(.data, numerator, denominator, group
                       multiplier=multiplier,
                       draw_unadjusted=draw_unadjusted, draw_adjusted=draw_adjusted,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
-                      sr_method = sr_method, theme = theme, plot_cols=plot_cols)
+                      sr_method = sr_method, theme = theme, plot_cols=plot_cols, max.overlaps = max.overlaps)
 
 
   # Subset outliers for reporting
