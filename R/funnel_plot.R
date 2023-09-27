@@ -47,7 +47,8 @@
 #' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
 #' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
 #' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
-#' @param ... <[`data-masking`][rlang::args_data_masking]> Additional parameters
+#' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
+#'
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
 #' \item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
@@ -59,7 +60,6 @@
 #' \item{phi}{The dispersion ratio, \eqn{\phi}.}
 #' \item{draw_adjusted}{Whether overdispersion-adjusted limits were used.}
 #' \item{draw_unadjusted}{Whether unadjusted Poisson limits were used.}
-#' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
 #'
 #' @export
 #' @details
@@ -127,8 +127,7 @@ funnel_plot <- function(.data, numerator, denominator, group
                         , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
                         , xrange, yrange
-                        , SHMI_rounding = TRUE
-                        , ...){
+                        , SHMI_rounding = TRUE){
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
@@ -310,7 +309,7 @@ funnel_plot <- function(.data, numerator, denominator, group
   if(draw_adjusted == FALSE){
     phi<-as.numeric(0)
     tau2<-as.numeric(0)
-    draw_unadjusted <- TRUE
+    #draw_unadjusted <- TRUE
   }
 
   # Set limits
@@ -333,15 +332,17 @@ funnel_plot <- function(.data, numerator, denominator, group
   }
 
   ### Calculate funnel limits ####
-  if (draw_adjusted == FALSE) {
-    message("draw_adjusted set to FALSE, plotting using unadjusted limits")
+  if (draw_adjusted == FALSE & draw_unadjusted == TRUE) {
+    message("Plotting using unadjusted limits")
   }
 
-  if (draw_adjusted == TRUE & phi <=1) {
+  if (draw_adjusted == TRUE & draw_unadjusted == FALSE & phi <=1) {
     draw_adjusted <- FALSE
     message("No overdispersion detected, or draw_adjusted set to FALSE, plotting using unadjusted limits")
     draw_unadjusted <- TRUE
   }
+  
+  
 
   # Calculate both adjusted and unadjusted control limits. This calculates limits for
   #   for both a range of denominators for plotting as well as the denominators present
@@ -372,7 +373,7 @@ funnel_plot <- function(.data, numerator, denominator, group
   mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
 
   # Add outliers flag
-  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, limit, multiplier = multiplier)
+  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, draw_unadjusted, limit, multiplier = multiplier)
 
   # Assemble plot
   fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,

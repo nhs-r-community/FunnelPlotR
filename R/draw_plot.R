@@ -121,6 +121,9 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
           angle = 0
         ), override.aes = list(linetype = c(2,2,1,1)) ))
     }
+    if (draw_unadjusted == FALSE &  draw_adjusted == FALSE){
+    funnel_p 
+   }
   }
 
   # Apply plot scaling
@@ -136,10 +139,25 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
 
 
 
-
+ 
 
  # Label points
   if(!is.na(label)){
+    
+    if(label=="highlight"){
+      funnel_p <- funnel_p +
+        geom_label_repel(aes(label = ifelse(highlight == 1,
+                                            as.character(group), NA))
+                         , size=2.5, point.padding=0, direction = "both", force = 2
+                         , min.segment.length=0, na.rm=TRUE)
+    }
+    
+    if(draw_adjusted == FALSE & draw_unadjusted == FALSE){
+      funnel_p
+    }
+    
+    
+    
     if(label=="outlier"){
 
       funnel_p <- funnel_p +
@@ -167,14 +185,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
                          , min.segment.length=0, na.rm=TRUE)
     }
 
-    if(label=="highlight"){
-      funnel_p <- funnel_p +
-        geom_label_repel(aes(label = ifelse(highlight == 1,
-                                            as.character(group), NA))
-                         , size=2.5, point.padding=0, direction = "both", force = 2
-                         , min.segment.length=0, na.rm=TRUE)
-    }
-
+    
     if(label=="both"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
