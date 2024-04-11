@@ -20,8 +20,7 @@
 #' \item{\code{"both"}}{ - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
 #' \item{\code{"both_lower"}}{ - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
 #' \item{\code{"both_upper"}}{ - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
-#' \item{\code{NA}}{ - No labels applied}
-#' }
+#' \item{\code{NA}}{ - No labels applied}}
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
 #' @param label_outliers Deprecated.  Please use the `label` argument instead.
 #' @param Poisson_limits Deprecated.  Please use the `draw_unadjusted` argument instead.
@@ -191,12 +190,12 @@ funnel_plot <- function(.data, numerator, denominator, group
   if (missing(title)) {
       title <- ("Untitled Funnel Plot")
   }
-  
+
 
 
   if(length(plot_cols) < 8){
     stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Lower Poisson, 95% Upper Poisson
-         , 99.8% Lower Poisson, 99.8% Upper Poisson, 95% Upper OD-adjusted, 95% Lower OD-adjusted, 
+         , 99.8% Lower Poisson, 99.8% Upper Poisson, 95% Upper OD-adjusted, 95% Lower OD-adjusted,
          99.8% Lower OD-adjusted, 99.8% Upper OD-adjusted, even if you are only using one set of limits.")
   }
 
@@ -224,7 +223,7 @@ funnel_plot <- function(.data, numerator, denominator, group
   }
 
 
- 
+
   # Define vector for scale colours
   plot_cols<-c(
 
@@ -237,41 +236,41 @@ funnel_plot <- function(.data, numerator, denominator, group
     "99.8% Lower Overdispersed" = plot_cols[7],
     "99.8% Upper Overdispersed" = plot_cols[8]
   )
-  
+
   # map columns for tidyeval compliance
-  
+
   numerator <- quo_name(enquo(numerator))
   denominator <- quo_name(enquo(denominator))
   group <- quo_name(enquo(group))
-  
+
   # error check
   if(identical(.data[[numerator]],.data[[denominator]])){
     stop("Numerator and denominator are the same. Please check your inputs")
   }
-  
+
   # Error handling for highlight argument
   if(!is.na(highlight[1])){
-    
+
     if(!is.character(highlight[1])) {
       stop("Please supply `highlight` in character format, or a character vector")
     }
-    
+
     # check for missing highlight levels
     labs_present <- apply(sapply(X = highlight, FUN = grepl, x=.data[[group]]), 2, any)
     labs_missing <- names(labs_present[labs_present == FALSE])
-    
+
     if (length(labs_missing)>0){
-      
+
       stop(paste0("Value(s):'"
                   , paste(labs_missing,collapse=", ")
-                  , "' specified to `highlight` not found in `group` variable. 
-                 Are you trying to highlight a group that is missing from your 
+                  , "' specified to `highlight` not found in `group` variable.
+                 Are you trying to highlight a group that is missing from your
                  data, or is it a typo?"
       ))
-      
+
     }
   }
-  
+
   # now make working table
   mod_plot <- data.frame(numerator=as.numeric(.data[[numerator]])
                          ,denominator=as.numeric(.data[[denominator]])
@@ -343,8 +342,8 @@ funnel_plot <- function(.data, numerator, denominator, group
     message("No overdispersion detected, or draw_adjusted set to FALSE, plotting using unadjusted limits")
     draw_unadjusted <- TRUE
   }
-  
-  
+
+
 
   # Calculate both adjusted and unadjusted control limits. This calculates limits for
   #   for both a range of denominators for plotting as well as the denominators present
