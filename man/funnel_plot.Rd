@@ -58,8 +58,7 @@ funnel_plot(
 \item{\code{"both"}}{ - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
 \item{\code{"both_lower"}}{ - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
 \item{\code{"both_upper"}}{ - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
-\item{\code{NA}}{ - No labels applied}
-}}
+\item{\code{NA}}{ - No labels applied}}}
 
 \item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
 
