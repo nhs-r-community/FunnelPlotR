@@ -1,7 +1,7 @@
 Package: FunnelPlotR
 Type: Package
 Title: Funnel Plots for Comparing Institutional Performance
-Version: 0.4.9999
+Version: 0.5.0
 Authors@R: c(
         person("Chris", "Mainey", ,"c.mainey1@nhs.net", role= c("aut", "cre"), 
           comment = c(ORCID ="0000-0002-3018-6171")

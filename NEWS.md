@@ -1,3 +1,15 @@
+# FunnelPlotR 0.5.0
+
+- Breaking change
+* Tidyeval approach added, with function now taking the data argument first, allowing piping, and allows unquoted column names to fit with tidyverse / dplyr style approach.
+
+- Changes
+* Added a `max.overlaps` argument to allow the user to vary this in cases where labels overlap is unhelpful.
+* Changed control limit options to allow both adjusted and unadjusted to be turned off, without turning the other on.
+* Updated README, help files and vignette to use tidyeval approach.
+
+
+
 # FunnelPlotR 0.4.2
 - Changes:
 * Handling of expected values in SHMI calculation was adjusted to allow rounding to two decimal places to match NHSD publication, and as requested by HED Team.  Now controlled with additional argument: `SHMI_rounding` = TRUE/FALSE
