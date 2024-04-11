@@ -11,7 +11,7 @@ Resolved 2 CRAN checks NOTES: lost braces in a file due to line breaks, and rena
 ## Test environments
 * local windows 10, R 4.3.2
 
-* R-devel, on Win-builder
+* R-devel and release, on Win-builder
 
 * GitHub actions:
   * Mac OS x 12.7.4 21H123, R 4.3.3
@@ -20,8 +20,10 @@ Resolved 2 CRAN checks NOTES: lost braces in a file due to line breaks, and rena
   * Ubuntu 20.04.6 LTS, R-devel 2023-05-31
   * Ubuntu 20.04.6 LTS, R 4.3.3
 
-* r-hub:
-  * Ubuntu Linux 20.04.1 LTS, R-release, GCC
+* r-hub v2 via GitHub actions:
+  * Ubuntu Linux 22.04.4 LTS, R-release, GCC
+  * Ubuntu-clang Linux 20.04.4 LTS, R-devel - failed due to errors with Cairo device on platform
+  * Mac OS-arm x 14.4.1 23E224, R 4.3.3 - failed due to cache issues on platform, and Cairo device.
   * Fedora Linux, R-devel, clang, gfortran
   * Windows Server 2022, R-devel, 64 bit
 

@@ -13,14 +13,15 @@
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
 #' \itemize{
-#' \item{\code{"outlier"}}{ - Labels upper and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"outlier_lower"}}{ - Labels just and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"outlier_upper"}}{ - Labels just upper, determined in relation to the `limit` argument.}
-#' \item{\code{"highlight"}}{ - Labels the value(s) given in the `highlight`argument.}
-#' \item{\code{"both"}}{ - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"both_lower"}}{ - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"both_upper"}}{ - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
-#' \item{\code{NA}}{ - No labels applied}}
+#' \item{\code{"outlier"} - Labels upper and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"outlier_lower"} - Labels just and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"outlier_upper"} - Labels just upper, determined in relation to the `limit` argument.}
+#' \item{\code{"highlight"} - Labels the value(s) given in the `highlight`argument.}
+#' \item{\code{"both"} - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"both_lower"} - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"both_upper"} - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
+#' \item{\code{NA} - No labels applied}
+#' }
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
 #' @param label_outliers Deprecated.  Please use the `label` argument instead.
 #' @param Poisson_limits Deprecated.  Please use the `draw_unadjusted` argument instead.

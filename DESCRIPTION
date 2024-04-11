@@ -31,7 +31,6 @@ Suggests:
     rmarkdown,
     COUNT,
     tidyr,
-    covr,
-    Cairo
+    covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3

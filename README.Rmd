@@ -11,7 +11,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%",
-  dev.args = list(png = list(type = "cairo")),
   fig.retina=3
 )
 
