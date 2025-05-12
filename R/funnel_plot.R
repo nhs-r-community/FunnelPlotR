@@ -4,6 +4,7 @@
 #' overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau})
 #' and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
 #' @encoding UTF-8
+#' @param .data A data frame containing a numerator, denominator and grouping field.
 #' @param numerator  A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis
 #' @param denominator A vector of denominator (predicted/population etc.)  Used as denominator of the Y-axis and the scale of the x-axis
 #' @param group A vector of group names as character or factor.  Used to aggregate and group points on plots
@@ -12,14 +13,14 @@
 #' @param limit Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.
 #' @param label Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
 #' \itemize{
-#' \item{\code{"outlier"}}{ - Labels upper and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"outlier_lower"}}{ - Labels just and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"outlier_upper"}}{ - Labels just upper, determined in relation to the `limit` argument.}
-#' \item{\code{"highlight"}}{ - Labels the value(s) given in the `highlight`argument.}
-#' \item{\code{"both"}}{ - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"both_lower"}}{ - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
-#' \item{\code{"both_upper"}}{ - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
-#' \item{\code{NA}}{ - No labels applied}
+#' \item{\code{"outlier"} - Labels upper and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"outlier_lower"} - Labels just and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"outlier_upper"} - Labels just upper, determined in relation to the `limit` argument.}
+#' \item{\code{"highlight"} - Labels the value(s) given in the `highlight`argument.}
+#' \item{\code{"both"} - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"both_lower"} - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
+#' \item{\code{"both_upper"} - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
+#' \item{\code{NA} - No labels applied}
 #' }
 #' @param highlight Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.
 #' @param label_outliers Deprecated.  Please use the `label` argument instead.
@@ -45,7 +46,14 @@
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
 #' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
 #' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
+<<<<<<< HEAD
 #' Default is hex colours: c("#FF7F0EFF","#1F77B4FF", "#9467BDFF", "#2CA02CFF")
+=======
+#' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
+#' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
+#' @param max.overlaps 	Exclude text labels that overlap too many things. Defaults to 10. (inheritted from geom_label_repel)
+#'
+>>>>>>> main
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
 #' \item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
@@ -57,7 +65,6 @@
 #' \item{phi}{The dispersion ratio, \eqn{\phi}.}
 #' \item{draw_adjusted}{Whether overdispersion-adjusted limits were used.}
 #' \item{draw_unadjusted}{Whether unadjusted Poisson limits were used.}
-#' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
 #'
 #' @export
 #' @details
@@ -89,8 +96,8 @@
 #' medpar$prds<- predict(mod, type="response")
 #'
 #' # Draw plot, returning just the plot object
-#' fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
-#' group = medpar$provnum, limit=95, title="An example funnel plot")
+#' fp<-funnel_plot(medpar, denominator=prds, numerator=los,
+#' group = provnum, limit=95, title="An example funnel plot")
 #'
 #' # Methods for viewing/extracting
 #' print(fp)
@@ -106,12 +113,13 @@
 #'
 #'
 #' @importFrom scales comma
+#' @importFrom rlang .data
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom dplyr select filter arrange mutate summarise group_by %>% n
 #' @importFrom stats na.omit
 #' @import ggplot2
 
-funnel_plot <- function(numerator, denominator, group
+funnel_plot <- function(.data, numerator, denominator, group
                         , data_type = "SR", limit = 99, label = "outlier"
                         , highlight = NA, draw_unadjusted = FALSE
                         , draw_adjusted = TRUE, sr_method = "SHMI"
@@ -124,7 +132,8 @@ funnel_plot <- function(numerator, denominator, group
                         , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
                         , xrange, yrange
-                        , SHMI_rounding = TRUE){
+                        , SHMI_rounding = TRUE
+                        , max.overlaps = 10){
 
   # Version 0.4 deprecation warnings
   if (!missing(label_outliers)) {
@@ -176,30 +185,23 @@ funnel_plot <- function(numerator, denominator, group
 
 
   # build initial dataframe of obs/predicted, with error message caught here in 'try'
-
+  # Main error check here, some moved after tidyeval mapping as they conflict.
   if (missing(denominator)) {
-    stop("Need to specify model denominator")
+    stop("Need to specify denominator column")
   }
   if (missing(numerator)) {
-    stop("Need to supply numerator")
+    stop("Need to supply numerator column")
   }
   if (missing(title)) {
       title <- ("Untitled Funnel Plot")
   }
-  if (missing(numerator)) {
-    stop("Need to supply the column name for numerator")
-  }
 
-  if (class(denominator)[1] == "array") {
-    denominator <- as.numeric(denominator)
-  }
 
-  if(identical(numerator,denominator)){
-    stop("Numerator and denominator are the same. Please check your inputs")
-  }
 
-  if(length(plot_cols) < 4){
-    stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson, 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
+  if(length(plot_cols) < 8){
+    stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Lower Poisson, 95% Upper Poisson
+         , 99.8% Lower Poisson, 99.8% Upper Poisson, 95% Upper OD-adjusted, 95% Lower OD-adjusted,
+         99.8% Lower OD-adjusted, 99.8% Upper OD-adjusted, even if you are only using one set of limits.")
   }
 
   if(!(label %in% c("outlier", "outlier_lower", "outlier_upper", "highlight"
@@ -226,29 +228,6 @@ funnel_plot <- function(numerator, denominator, group
   }
 
 
-  # Error handling for highlight argument
-  if(!is.na(highlight[1])){
-    
-    if(!is.character(highlight[1])) {
-      stop("Please supply `highlight` in character format, or a character vector")
-    }
-    
-    # check for missing highlight levels
-    labs_present <- apply(sapply(X = highlight, FUN = grepl, x=group), 2, any)
-    labs_missing <- names(labs_present[labs_present == FALSE])
-    
-    if (length(labs_missing)>0){
-      
-      stop(paste0("Value(s):'"
-                 , paste(labs_missing,collapse=", ")
-                 , "' specified to `highlight` not found in `group` variable. 
-                 Are you trying to highlight a group that is missing from your 
-                 data, or is it a typo?"
-           ))
-      
-    }
-  }
-
 
   # Define vector for scale colours
   plot_cols<-c(
@@ -259,10 +238,44 @@ funnel_plot <- function(numerator, denominator, group
     "99.8% Overdispersed" = plot_cols[4]
   )
 
+  # map columns for tidyeval compliance
 
-  mod_plot <- data.frame(numerator=as.numeric(numerator)
-                         ,denominator=as.numeric(denominator)
-                         , group=as.factor(group))
+  numerator <- quo_name(enquo(numerator))
+  denominator <- quo_name(enquo(denominator))
+  group <- quo_name(enquo(group))
+
+  # error check
+  if(identical(.data[[numerator]],.data[[denominator]])){
+    stop("Numerator and denominator are the same. Please check your inputs")
+  }
+
+  # Error handling for highlight argument
+  if(!is.na(highlight[1])){
+
+    if(!is.character(highlight[1])) {
+      stop("Please supply `highlight` in character format, or a character vector")
+    }
+
+    # check for missing highlight levels
+    labs_present <- apply(sapply(X = highlight, FUN = grepl, x=.data[[group]]), 2, any)
+    labs_missing <- names(labs_present[labs_present == FALSE])
+
+    if (length(labs_missing)>0){
+
+      stop(paste0("Value(s):'"
+                  , paste(labs_missing,collapse=", ")
+                  , "' specified to `highlight` not found in `group` variable.
+                 Are you trying to highlight a group that is missing from your
+                 data, or is it a typo?"
+      ))
+
+    }
+  }
+
+  # now make working table
+  mod_plot <- data.frame(numerator=as.numeric(.data[[numerator]])
+                         ,denominator=as.numeric(.data[[denominator]])
+                         , group=as.factor(.data[[group]]))
 
 
   mod_plot_agg<-aggregate_func(mod_plot)
@@ -298,7 +311,7 @@ funnel_plot <- function(numerator, denominator, group
   if(draw_adjusted == FALSE){
     phi<-as.numeric(0)
     tau2<-as.numeric(0)
-    draw_unadjusted <- TRUE
+    #draw_unadjusted <- TRUE
   }
 
   # Set limits
@@ -321,15 +334,17 @@ funnel_plot <- function(numerator, denominator, group
   }
 
   ### Calculate funnel limits ####
-  if (draw_adjusted == FALSE) {
-    message("draw_adjusted set to FALSE, plotting using unadjusted limits")
+  if (draw_adjusted == FALSE & draw_unadjusted == TRUE) {
+    message("Plotting using unadjusted limits")
   }
 
-  if (draw_adjusted == TRUE & phi <=1) {
+  if (draw_adjusted == TRUE & draw_unadjusted == FALSE & phi <=1) {
     draw_adjusted <- FALSE
     message("No overdispersion detected, or draw_adjusted set to FALSE, plotting using unadjusted limits")
     draw_unadjusted <- TRUE
   }
+
+
 
   # Calculate both adjusted and unadjusted control limits. This calculates limits for
   #   for both a range of denominators for plotting as well as the denominators present
@@ -360,14 +375,14 @@ funnel_plot <- function(numerator, denominator, group
   mod_plot_agg$highlight <- as.character(as.numeric(mod_plot_agg$group %in% highlight))
 
   # Add outliers flag
-  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, limit, multiplier = multiplier)
+  mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, draw_unadjusted, limit, multiplier = multiplier)
 
   # Assemble plot
   fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,
                       multiplier=multiplier,
                       draw_unadjusted=draw_unadjusted, draw_adjusted=draw_adjusted,
                       target=target, min_y, max_y, min_x, max_x, data_type=data_type,
-                      sr_method = sr_method, theme = theme, plot_cols=plot_cols)
+                      sr_method = sr_method, theme = theme, plot_cols=plot_cols, max.overlaps = max.overlaps)
 
 
   # Subset outliers for reporting

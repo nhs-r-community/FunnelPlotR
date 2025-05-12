@@ -1,7 +1,7 @@
 Package: FunnelPlotR
 Type: Package
 Title: Funnel Plots for Comparing Institutional Performance
-Version: 0.4.9999
+Version: 0.5.0
 Authors@R: c(
         person("Chris", "Mainey", ,"c.mainey1@nhs.net", role= c("aut", "cre"), 
           comment = c(ORCID ="0000-0002-3018-6171")
@@ -18,18 +18,19 @@ License: MIT + file LICENSE
 URL: https://nhs-r-community.github.io/FunnelPlotR/, https://github.com/nhs-r-community/FunnelPlotR
 BugReports: https://github.com/nhs-r-community/FunnelPlotR/issues
 Encoding: UTF-8
-Imports: dplyr,
-         ggrepel,
-         ggplot2,
-         scales
-RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    ggrepel,
+    ggplot2,
+    scales,
+    rlang
+RoxygenNote: 7.3.1
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     COUNT,
     tidyr,
-    covr,
-    Cairo
+    covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3

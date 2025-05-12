@@ -40,7 +40,7 @@ fp2<-funnel_plot(denominator=medpar$prds,numerator=medpar$los, multiplier = 100,
                  
                  , sr_method = "SHMI",
                  draw_unadjusted = FALSE, draw_adjusted=TRUE, highlight = c("0300121", "030073"), theme=funnel_grey(),
-                 plot_cols = c("#FF7F0EFF", "#000000", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF"))
+                 plot_cols = c("#000000", "#1F77B4FF", "#9467BDFF", "#2CA02CFF"))
 
 #rm(fp2)
 fp2
@@ -66,6 +66,11 @@ mod_plot_agg %>%
 fp<-funnel_plot(numerator=medpar$los, denominator=medpar$prds, group = medpar$provnum,
             title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = TRUE,
             draw_adjusted = TRUE, limit=99, label = "outlier", sr_method="SHMI")
+
+
+fp<-funnel_plot(medpar, los, prds, provnum,
+                title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = TRUE,
+                draw_adjusted = TRUE, limit=99, label = "outlier", sr_method="SHMI")
 
 fp[[1]]
 
@@ -107,6 +112,17 @@ a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpa
             title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = FALSE,
             draw_adjusted = TRUE, label_outliers = TRUE, sr_method="SHMI")
 
+
+a<-funnel_plot(numerator=medpar$los, denominator=(medpar$prds*10), group = medpar$provnum,
+               data_type = "RC",#return_elements=c("plot"),
+               title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = FALSE,
+               draw_adjusted = TRUE, label_outliers = TRUE, sr_method="SHMI")
+
+
+
+.data <- medpar
+numerator=los 
+denominator=(medpar$prds*10), group = medpar$provnum,
 a[1]
 
 a[[2]] %>%

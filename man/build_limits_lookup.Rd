@@ -19,6 +19,14 @@ build_limits_lookup(
 )
 }
 \arguments{
+\item{min_x}{Minimum predicted value for range of x-axis}
+
+\item{max_x}{Maximum predicted value for range of x-axis}
+
+\item{min_y}{Minimum ratio value for range of y-axis}
+
+\item{max_y}{Maximum ratio value for range of y-axis}
+
 \item{draw_adjusted}{TRUE/FALSE Use overdispersion adjustment}
 
 \item{tau2}{If using draw_adjusted, what is the tau2 ("between" standard error) to use?}
@@ -30,16 +38,6 @@ build_limits_lookup(
 \item{target}{target to be used to set centre line}
 
 \item{multiplier}{Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.}
-
-\item{min_preds}{Minimum predicted value for range of x-axis}
-
-\item{max_preds}{Maximum predicted value for range of x-axis}
-
-\item{min_ratio}{Minimum ratio value for range of y-axis}
-
-\item{max_ratio}{Maximum ratio value for range of y-axis}
-
-\item{draw_unadjusted}{TRUE/FALSE Draw Poisson distribution limits?}
 }
 \value{
 A data.frame with an index column and various control limits based on the index as an x-axis value.

@@ -6,6 +6,7 @@
 \title{Funnel plots for comparing institutional performance}
 \usage{
 funnel_plot(
+  .data,
   numerator,
   denominator,
   group,
@@ -30,10 +31,13 @@ funnel_plot(
   OD_adjust,
   xrange,
   yrange,
-  SHMI_rounding = TRUE
+  SHMI_rounding = TRUE,
+  max.overlaps = 10
 )
 }
 \arguments{
+\item{.data}{A data frame containing a numerator, denominator and grouping field.}
+
 \item{numerator}{A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis}
 
 \item{denominator}{A vector of denominator (predicted/population etc.)  Used as denominator of the Y-axis and the scale of the x-axis}
@@ -46,14 +50,14 @@ funnel_plot(
 
 \item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
 \itemize{
-\item{\code{"outlier"}}{ - Labels upper and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"outlier_lower"}}{ - Labels just and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"outlier_upper"}}{ - Labels just upper, determined in relation to the `limit` argument.}
-\item{\code{"highlight"}}{ - Labels the value(s) given in the `highlight`argument.}
-\item{\code{"both"}}{ - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"both_lower"}}{ - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"both_upper"}}{ - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
-\item{\code{NA}}{ - No labels applied}
+\item{\code{"outlier"} - Labels upper and lower outliers, determined in relation to the `limit` argument.}
+\item{\code{"outlier_lower"} - Labels just and lower outliers, determined in relation to the `limit` argument.}
+\item{\code{"outlier_upper"} - Labels just upper, determined in relation to the `limit` argument.}
+\item{\code{"highlight"} - Labels the value(s) given in the `highlight`argument.}
+\item{\code{"both"} - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
+\item{\code{"both_lower"} - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
+\item{\code{"both_upper"} - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
+\item{\code{NA} - No labels applied}
 }}
 
 \item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
@@ -101,6 +105,8 @@ Default is hex colours: c("#FF7F0EFF","#1F77B4FF", "#9467BDFF", "#2CA02CFF")}
 \item{yrange}{Deprecated.  Please use the `y_range` argument instead.}
 
 \item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)}
+
+\item{max.overlaps}{Exclude text labels that overlap too many things. Defaults to 10. (inheritted from geom_label_repel)}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
@@ -144,8 +150,8 @@ mod<- glm(los ~ hmo + died + age80 + factor(type)
 medpar$prds<- predict(mod, type="response")
 
 # Draw plot, returning just the plot object
-fp<-funnel_plot(denominator=medpar$prds, numerator=medpar$los,
-group = medpar$provnum, limit=95, title="An example funnel plot")
+fp<-funnel_plot(medpar, denominator=prds, numerator=los,
+group = provnum, limit=95, title="An example funnel plot")
 
 # Methods for viewing/extracting
 print(fp)

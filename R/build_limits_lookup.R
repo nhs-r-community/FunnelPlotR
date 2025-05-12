@@ -1,10 +1,9 @@
 #' Function to build funnel limits
 #' @description Internal function for funnel plot to build the control limits prior to plotting.
-#' @param min_preds Minimum predicted value for range of x-axis
-#' @param max_preds Maximum predicted value for range of x-axis
-#' @param min_ratio Minimum ratio value for range of y-axis
-#' @param max_ratio Maximum ratio value for range of y-axis
-#' @param draw_unadjusted TRUE/FALSE Draw Poisson distribution limits?
+#' @param min_x Minimum predicted value for range of x-axis
+#' @param max_x Maximum predicted value for range of x-axis
+#' @param min_y Minimum ratio value for range of y-axis
+#' @param max_y Maximum ratio value for range of y-axis
 #' @param draw_adjusted TRUE/FALSE Use overdispersion adjustment
 #' @param tau2 If using draw_adjusted, what is the tau2 ("between" standard error) to use?
 #' @param data_type SR, PR or RC. Used to set target reference
@@ -18,12 +17,12 @@
 build_limits_lookup<-function(min_x, max_x, min_y, max_y
                               , draw_adjusted, tau2, data_type, sr_method
                               , target, multiplier, denominators){
-  
-  
+
+
   # general limits + tau2 limits table
   set.seed(1)
 
-  
+
   if(data_type=="SR"){
     number.seq <- seq(1.1, as.numeric(max_x), length.out = 1000)
   } else {
