@@ -13,10 +13,12 @@ mod_plot <-
   LOS_model %>%
   group_by(Organisation) %>%
   summarise(observed = sum(Death),
-            predicted = sum(preds)) 
+            predicted = sum(preds))
 
 # install.packages("C:/Users/Christopher/Documents/R/FunnelPlotR_0.2.3.tar.gz", repos=NULL)
 
+library(COUNT)
+data(medpar)
 for (i in seq_len(ncol(medpar))) {
   if (any(class(medpar[,i]) == "labelled")) {
     #browser()
@@ -24,3 +26,5 @@ for (i in seq_len(ncol(medpar))) {
     attr(medpar[,i],"class")[ind] <- "labelled_ch"
   }
 }
+
+funnel_plot(.data = mod_plot, observed, predicted, Organisation, draw_unadjusted = TRUE, x_range = c(0,20), y_range = c(0,2))

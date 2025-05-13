@@ -88,9 +88,9 @@ fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsoris
 
 \item{y_range}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
-\item{plot_cols}{A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
+\item{plot_cols}{A vector of 4 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
 Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
-Default is hex colours: c("#FF7F0EFF","#1F77B4FF", "#9467BDFF", "#2CA02CFF")}
+Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF")}
 
 \item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
 
@@ -106,7 +106,7 @@ Default is hex colours: c("#FF7F0EFF","#1F77B4FF", "#9467BDFF", "#2CA02CFF")}
 
 \item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)}
 
-\item{max.overlaps}{Exclude text labels that overlap too many things. Defaults to 10. (inheritted from geom_label_repel)}
+\item{max.overlaps}{Exclude text labels that overlap too many things. Defaults to 10. (inherited from geom_label_repel)}
 }
 \value{
 A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr

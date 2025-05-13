@@ -100,7 +100,7 @@ funnel_plot(medpar, denominator=prds,numerator=los
 You can change the colours of the limits.  I am aiming to allow better colour theme support in future versions, but at present they are supplied as a vector of four hex colours to the `plot_cols` argument, in the order 95% Poisson, 99.8% Poisson, 95% OD and 99.8% OD.  At present all four values are required, whether you are plotting all four limits or not.
 I have deliberately avoided using red and green colours as defaults because it encourages value judgements about 'good' v.s. 'bad' which may be unreasonable for a given data set.  Default colours are paired for both low and high: `c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF")`
 
-Here I will change the upper 95% limit to black ("#000000"):
+Here I will change the 95% limit to black ("#000000"):
 
 ```{r colours}
 funnel_plot(medpar, denominator=prds,numerator=los

@@ -86,7 +86,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_line(aes(x = number.seq, y = ul95, col = "95%", linetype = "95%"), linewidth = 1,  data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = ll998, col = "99.8%", linetype = "99.8%"), linewidth = 1, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = ul998, col = "99.8%", linetype = "99.8%"), linewidth = 1, data = limits, na.rm = TRUE) +
-        scale_color_manual(values = plot_cols[1:4], name = "Control limits")+
+        scale_color_manual(values = plot_cols, name = "Control limits")+
         scale_linetype_manual(values = c("95%"=2
                                          , "99.8%" = 1), guide = "none")+
         guides(colour = guide_legend(title.theme = element_text(
@@ -104,7 +104,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         geom_line(aes(x = number.seq, y = odul95, col = "95% Overdispersed", linetype = "95% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = odll998, col = "99.8% Overdispersed", linetype = "99.8% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
         geom_line(aes(x = number.seq, y = odul998, col = "99.8% Overdispersed", linetype = "99.8% Overdispersed"), linewidth = 1, data = limits, na.rm = TRUE) +
-        scale_color_manual(values = plot_cols[5:8], name = "Control limits")+
+        scale_color_manual(values = plot_cols, name = "Control limits")+
         scale_linetype_manual(values = c("95% Overdispersed"=2
                                          , "99.8% Overdispersed" = 1), guide = "none")+
         guides(colour = guide_legend(title.theme = element_text(
@@ -115,7 +115,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
         ), override.aes = list(linetype = c(2,1)) ))
     }
     if (draw_unadjusted == FALSE &  draw_adjusted == FALSE){
-    funnel_p 
+    funnel_p
    }
   }
 
@@ -132,11 +132,11 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
 
 
 
- 
+
 
  # Label points
   if(!is.na(label)){
-    
+
     if(label=="highlight"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse(highlight == 1,
@@ -144,13 +144,13 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
                          , size=2.5, point.padding=0, direction = "both", force = 2
                          , min.segment.length=0, na.rm=TRUE, max.overlaps = max.overlaps)
     }
-    
+
     if(draw_adjusted == FALSE & draw_unadjusted == FALSE){
       funnel_p
     }
-    
-    
-    
+
+
+
     if(label=="outlier"){
 
       funnel_p <- funnel_p +
@@ -178,7 +178,7 @@ draw_plot<-function(mod_plot_agg, limits, x_label, y_label, title, label, multip
                          , min.segment.length=1, na.rm=TRUE, max.overlaps = max.overlaps)
     }
 
-    
+
     if(label=="both"){
       funnel_p <- funnel_p +
         geom_label_repel(aes(label = ifelse((highlight == 1 | outlier == 1) ,
