@@ -19,7 +19,7 @@ new_funnel_plot <- function(x = list()) {
 
 validate_funnel_plot <- function(funnelplot){
 
-  if (!is.list(funnelplot[[1]])){
+  if (!is_ggplot(funnelplot[[1]])){
     stop(
       "Invalid ggplot object"
     )
