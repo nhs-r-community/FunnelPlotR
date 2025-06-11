@@ -21,7 +21,7 @@ Encoding: UTF-8
 Imports: 
     dplyr,
     ggrepel,
-    ggplot2,
+    ggplot2 (>= 3.5.2),
     scales,
     rlang
 RoxygenNote: 7.3.1
