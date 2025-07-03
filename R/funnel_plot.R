@@ -44,12 +44,11 @@
 #' @param yrange Deprecated.  Please use the `y_range` argument instead.
 #' @param y_range Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.
 #' @param theme a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.
-#' @param plot_cols A vector of 8 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
+#' @param plot_cols A vector of 4 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
 #' Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
-#' Default is hex colours: c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF", "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
+#' Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF")
 #' @param SHMI_rounding TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)
-#' @param max.overlaps 	Exclude text labels that overlap too many things. Defaults to 10. (inheritted from geom_label_repel)
-#'
+#' @param max.overlaps 	Exclude text labels that overlap too many things. Defaults to 10. (inherited from geom_label_repel)
 #'
 #' @return A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
 #' \item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
@@ -123,8 +122,7 @@ funnel_plot <- function(.data, numerator, denominator, group
                         , multiplier = 1, x_label = "Expected"
                         , y_label , x_range = "auto", y_range = "auto"
                         , plot_cols =
-                          c("#FF7F0EFF", "#FF7F0EFF", "#1F77B4FF","#1F77B4FF"
-                            , "#9467BDFF", "#9467BDFF", "#2CA02CFF", "#2CA02CFF")
+                          c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF")
                         , theme = funnel_clean()
                         , label_outliers, Poisson_limits, OD_adjust
                         , xrange, yrange
@@ -194,10 +192,9 @@ funnel_plot <- function(.data, numerator, denominator, group
 
 
 
-  if(length(plot_cols) < 8){
-    stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Lower Poisson, 95% Upper Poisson
-         , 99.8% Lower Poisson, 99.8% Upper Poisson, 95% Upper OD-adjusted, 95% Lower OD-adjusted,
-         99.8% Lower OD-adjusted, 99.8% Upper OD-adjusted, even if you are only using one set of limits.")
+  if(length(plot_cols) != 4){
+    stop("Please supply a vector of 4 colours for funnel limits, in order: 95% Poisson, 99.8% Poisson
+    , 95% OD-adjusted, 99.8% OD-adjusted, even if you are only using one set of limits.")
   }
 
   if(!(label %in% c("outlier", "outlier_lower", "outlier_upper", "highlight"
@@ -228,15 +225,13 @@ funnel_plot <- function(.data, numerator, denominator, group
   # Define vector for scale colours
   plot_cols<-c(
 
-    "95% Lower" = plot_cols[1],
-    "95% Upper" = plot_cols[2],
-    "99.8% Lower" = plot_cols[3],
-    "99.8% Upper" = plot_cols[4],
-    "95% Lower Overdispersed" = plot_cols[5],
-    "95% Upper Overdispersed" = plot_cols[6],
-    "99.8% Lower Overdispersed" = plot_cols[7],
-    "99.8% Upper Overdispersed" = plot_cols[8]
+    "95%" = plot_cols[1],
+    "99.8%" = plot_cols[2],
+    "95% Overdispersed" = plot_cols[3],
+    "99.8% Overdispersed" = plot_cols[4]
   )
+
+  plot_cols
 
   # map columns for tidyeval compliance
 

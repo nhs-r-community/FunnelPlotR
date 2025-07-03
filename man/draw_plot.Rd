@@ -60,6 +60,8 @@ draw_plot(
 \item{sr_method}{CQC or SHMI methods for standardised ratios}
 
 \item{theme}{a ggplot theme function.}
+
+\item{plot_cols}{vector of colours for limits}
 }
 \value{
 A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.

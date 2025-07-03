@@ -9,9 +9,9 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![CRAN
 version](http://www.r-pkg.org/badges/version/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/FunnelPlotR)](https://cran.r-project.org/package=FunnelPlotR)
-[![Codecov test
-coverage](https://codecov.io/gh/nhs-r-community/FunnelPlotR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nhs-r-community/FunnelPlotR?branch=main/)
 [![R-CMD-check](https://github.com/nhs-r-community/FunnelPlotR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nhs-r-community/FunnelPlotR/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/nhs-r-community/FunnelPlotR/graph/badge.svg)](https://app.codecov.io/gh/nhs-r-community/FunnelPlotR)
 <!-- badges: end -->
 
 ## Funnel Plots
