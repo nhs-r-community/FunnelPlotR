@@ -120,7 +120,7 @@ This suggest the variance is 6.24 times the condition mean, and definitely overd
 This is a huge topic, but applying overdispersed limits using either SHMI or Spiegelhalter methods adjust for this by inflating the limits:
 
 ```{r, funnel2, message=FALSE, fig.align='center', fig.retina=5, collapse=TRUE, warning=FALSE, eval=TRUE}
-b<-funnel_plot(medpar, numerator=los, denominator=prds, group = provnum, data_type = "SR",
+b < -funnel_plot(medpar, numerator=los, denominator=prds, group = provnum, data_type = "SR",
             title = 'Length of Stay Funnel plot for `medpar` data', draw_unadjusted = FALSE,
             draw_adjusted = TRUE, sr_method = "SHMI", label="outlier", limit=99)
 
