@@ -6,7 +6,7 @@ test_that("`funnel_plot()` works with input and returns expected list", {
   
   a<-funnel_plot(dt, num, denom, group)
   expect_type(a, "list")
-  expect_type(a[[1]], "list")
+  expect_true(is_ggplot(a[[1]]))
   expect_s3_class(a[[2]], "data.frame")
   expect_s3_class(a[[3]], "data.frame")
   expect_length(a[[3]]$group,6)
@@ -16,7 +16,7 @@ test_that("`funnel_plot()` works with input and returns expected list", {
                  title="My test Funnel Plot", multiplier = 100, x_label = "Expected Values",
                  y_label = "Standardised Ratio Test", label = "outlier", limit=95)
   expect_type(b, "list")
-  expect_type(b[[1]], "list")
+  expect_true(is_ggplot(b[[1]]))
   expect_s3_class(b[[2]], "data.frame")
   expect_s3_class(b[[3]], "data.frame")
   expect_length(b[[3]]$group,6)
@@ -27,7 +27,7 @@ test_that("`funnel_plot()` works with input and returns expected list", {
                  title="My test Funnel Plot", multiplier = 100, x_label = "Expected Values",
                  y_label = "Standardised Ratio Test", label = "highlight", limit=95, highlight="a")
   expect_type(c, "list")
-  expect_type(c[[1]], "list")
+  expect_true(is_ggplot(c[[1]]))
   expect_s3_class(c[[2]], "data.frame")
   expect_s3_class(c[[3]], "data.frame")
   expect_length(c[[3]]$group,6)
@@ -40,7 +40,7 @@ test_that("`funnel_plot()` works with input and returns expected list", {
                  y_label = "Standardised Ratio Test", label = "both", limit=95, x_range=c(5,250)
                  , y_range=c(0, 200), highlight="a")
   expect_type(d, "list")
-  expect_type(d[[1]], "list")
+  expect_true(is_ggplot(d[[1]]))
   expect_s3_class(d[[2]], "data.frame")
   expect_s3_class(d[[3]], "data.frame")
   expect_length(d[[3]]$group,6)

@@ -9,7 +9,7 @@ test_that("`test the classes return stuff", {
   expect_s3_class(a, "funnelplot") 
   expect_equal(round(phi.funnelplot(a),6), 2.948033)
   expect_type(a, "list")
-  expect_type(a[[1]], "list")
+  expect_true(is_ggplot(a[[1]]))
   expect_s3_class(a[[2]], "data.frame")
   expect_s3_class(a[[3]], "data.frame")
   expect_length(a[[3]]$group,6)
