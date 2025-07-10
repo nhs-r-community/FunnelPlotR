@@ -7,12 +7,15 @@
 aggregate_func(mod_plot)
 }
 \arguments{
-\item{mod_plot}{A data frame of values to be aggregated.  Expected columns, 'group', 'numerator' and 'denominator'}
+\item{mod_plot}{A data frame of values to be aggregated.  Expected columns,
+'group', 'numerator' and 'denominator'}
 }
 \value{
-Returns an aggregated data.frame of the same columns, but summed by 'group', with a relative risk 'rr' column added.
+Returns an aggregated data.frame of the same columns, but summed by
+'group', with a relative risk 'rr' column added.
 }
 \description{
-Internal function to aggregate record-level data for plotting as a funnel.
+Internal function to aggregate record-level data for plotting
+as a funnel.
 }
 \keyword{internal}

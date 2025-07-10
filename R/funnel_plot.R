@@ -73,7 +73,7 @@
 #' @references DerSimonian & Laird (1986)  Meta-analysis in clinical trials. <doi:10.1016/0197-2456(86)90046-2>
 #' @references Spiegelhalter (2005) Funnel plots for comparing institutional performance  <doi:10.1002/sim.1970>
 #' @references Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: <doi:10.1111/j.1467-985X.2011.01010.x>
-#' @references NHS Digital (2020) SHMI Methodology v .134 \url{https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi}
+#' @references NHS Digital (2020) SHMI Methodology v .134 \url{https://www.digital.nhs.uk/SHMI}
 #'
 #' @examples
 #' # We will use the 'medpar' dataset from the 'COUNT' package.
@@ -98,9 +98,9 @@
 #' print(fp)
 #' plot(fp)
 #' summary(fp)
-#' limits(fp)
+#' head(limits(fp))
 #' outliers(fp)
-#' source_data(fp)
+#' head(source_data(fp))
 #' phi(fp)
 #' tau2(fp)
 #'
@@ -268,12 +268,12 @@ funnel_plot <- function(.data, numerator, denominator, group
   }
 
   # now make working table
-  mod_plot <- data.frame(numerator=as.numeric(.data[[numerator]])
-                         ,denominator=as.numeric(.data[[denominator]])
-                         , group=as.factor(.data[[group]]))
+  mod_plot <- data.frame(numerator = as.numeric(.data[[numerator]])
+                         ,denominator = as.numeric(.data[[denominator]])
+                         , group = as.factor(.data[[group]]))
 
 
-  mod_plot_agg<-aggregate_func(mod_plot)
+  mod_plot_agg <- aggregate_func(mod_plot)
 
   # Round to two decimal places for expected SHMI expected
   if(data_type == "SR" & sr_method == "SHMI" & SHMI_rounding == TRUE){
@@ -287,7 +287,7 @@ funnel_plot <- function(.data, numerator, denominator, group
   mod_plot_agg <- transformed_zscore(mod_plot_agg=mod_plot_agg, data_type = data_type, sr_method = sr_method)
 
   # Winsorise or truncate depending on method
-  if(data_type=="SR" & sr_method=="SHMI"){
+  if(data_type == "SR" & sr_method == "SHMI"){
     mod_plot_agg <- truncation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
   } else {
     mod_plot_agg <- winsorisation(mod_plot_agg = mod_plot_agg, trim_by=trim_by)
@@ -320,7 +320,7 @@ funnel_plot <- function(.data, numerator, denominator, group
   }
 
   if(y_range[1] == "auto"){
-    max_y <- max((1.3 * target *multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
+    max_y <- max((1.3 * target * multiplier), multiplier *  (1.1 * as.numeric(max((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
     min_y <- min((0.7 * target * multiplier), multiplier * (0.9 * as.numeric(min((mod_plot_agg$numerator / mod_plot_agg$denominator)))), na.rm = FALSE)
 
     } else {
@@ -344,24 +344,24 @@ funnel_plot <- function(.data, numerator, denominator, group
   # Calculate both adjusted and unadjusted control limits. This calculates limits for
   #   for both a range of denominators for plotting as well as the denominators present
   #   in the data
-  plot_limits<-build_limits_lookup(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y,
+  plot_limits <- build_limits_lookup(min_x = min_x, max_x = max_x, min_y = min_y, max_y = max_y,
                                     denominators = mod_plot_agg$denominator,
-                                    draw_adjusted=draw_adjusted, tau2=tau2,
-                                    data_type=data_type, sr_method=sr_method, target=target,
-                                    multiplier=multiplier)
+                                    draw_adjusted = draw_adjusted, tau2 = tau2,
+                                    data_type = data_type, sr_method = sr_method, target = target,
+                                    multiplier = multiplier)
 
   # Extract the control limits corresponding to the denominators present in the
   #   data. This drops the standard error 's' already present in mod_plot_agg
   mod_plot_agg <- merge(mod_plot_agg[,-grep("\\bs\\b",colnames(mod_plot_agg))],
-                        plot_limits, by.x="denominator", by.y="number.seq")
+                        plot_limits, by.x = "denominator", by.y = "number.seq")
 
   # Arrange rows by group
   mod_plot_agg <- mod_plot_agg[order(mod_plot_agg$group),]
 
   # Create named vector mapping the needed changes in variable names
-  new_names = c("odll95"="OD95LCL", "odul95"="OD95UCL", "odll998"="OD99LCL",
-                "odul998"="OD99UCL", "ll95"="LCL95", "ul95"="UCL95",
-                "ll998"="LCL99", "ul998"="UCL99")
+  new_names = c("odll95" = "OD95LCL", "odul95" = "OD95UCL", "odll998" = "OD99LCL",
+                "odul998" = "OD99UCL", "ll95" = "LCL95", "ul95" = "UCL95",
+                "ll998" = "LCL99", "ul998" = "UCL99")
 
   # Rename aggregate data control limits
   names(mod_plot_agg) <- ifelse(is.na(new_names[names(mod_plot_agg)]), names(mod_plot_agg), new_names[names(mod_plot_agg)])
@@ -373,20 +373,20 @@ funnel_plot <- function(.data, numerator, denominator, group
   mod_plot_agg <- outliers_func(mod_plot_agg, draw_adjusted, draw_unadjusted, limit, multiplier = multiplier)
 
   # Assemble plot
-  fun_plot<-draw_plot(mod_plot_agg, limits=plot_limits, x_label, y_label, title, label,
-                      multiplier=multiplier,
-                      draw_unadjusted=draw_unadjusted, draw_adjusted=draw_adjusted,
-                      target=target, min_y, max_y, min_x, max_x, data_type=data_type,
-                      sr_method = sr_method, theme = theme, plot_cols=plot_cols, max.overlaps = max.overlaps)
+  fun_plot <- draw_plot(mod_plot_agg, limits = plot_limits, x_label, y_label, title, label,
+                        multiplier = multiplier,
+                        draw_unadjusted = draw_unadjusted, draw_adjusted = draw_adjusted,
+                        target = target, min_y, max_y, min_x, max_x, data_type = data_type,
+                        sr_method = sr_method, theme = theme, plot_cols = plot_cols, max.overlaps = max.overlaps)
 
 
   # Subset outliers for reporting
-  outliers_df<- subset(mod_plot_agg, mod_plot_agg$outlier==1)
+  outliers_df <- subset(mod_plot_agg, mod_plot_agg$outlier == 1)
 
   #Build return
-  rtn<- new_funnel_plot(list(plot=fun_plot, limits_lookup=plot_limits, aggregated_data=mod_plot_agg
-                             , phi=phi, tau2=tau2, draw_adjusted=draw_adjusted, draw_unadjusted=draw_unadjusted
-                             , outliers_data=outliers_df))
+  rtn <- new_funnel_plot(list(plot = fun_plot, limits_lookup = plot_limits, aggregated_data = mod_plot_agg
+                             , phi = phi, tau2 = tau2, draw_adjusted = draw_adjusted, draw_unadjusted = draw_unadjusted
+                             , outliers_data = outliers_df))
 
   validate_funnel_plot(rtn)
 
