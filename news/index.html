@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -67,30 +67,55 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.5.0" id="funnelplotr-050">FunnelPlotR 0.5.0<small>2024-04-12</small><a class="anchor" aria-label="anchor" href="#funnelplotr-050"></a></h2>
-<ul><li><p>Breaking change</p></li>
-<li><p>Tidyeval approach added, with function now taking the data argument first, allowing piping, and allows unquoted column names to fit with tidyverse / dplyr style approach.</p></li>
-<li><p>Changes</p></li>
-<li><p>Added a <code>max.overlaps</code> argument to allow the user to vary this in cases where labels overlap is unhelpful.</p></li>
-<li><p>Changed control limit options to allow both adjusted and unadjusted to be turned off, without turning the other on.</p></li>
-<li><p>Updated README, help files and vignette to use tidyeval approach.</p></li>
+<h2 class="page-header" data-toc-text="0.6.0" id="funnelplotr-060">FunnelPlotR 0.6.0<a class="anchor" aria-label="anchor" href="#funnelplotr-060"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-6-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-6-0"></a></h3>
+<ul><li>Altered control limits to function in pairs only</li>
+<li>Paired limits allow tidier legend</li>
+<li>Colour scheme reduced accordingly to 4 colours for pairs of limits, rather than 8.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="changes-0-6-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-6-0"></a></h3>
+<ul><li>Updated compatibility for ggplot 4.0 - thanks <a href="https://github.com/teunbrand" class="external-link">@teunbrand</a></li>
+<li>Updated actions workflows to new standards</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="funnelplotr-050">FunnelPlotR 0.5.0<small>2024-04-12</small><a class="anchor" aria-label="anchor" href="#funnelplotr-050"></a></h2>
+<div class="section level3">
+<h3 id="breaking-change-0-5-0">Breaking change<a class="anchor" aria-label="anchor" href="#breaking-change-0-5-0"></a></h3>
+<ul><li>Tidyeval approach added, with function now taking the data argument first, allowing piping, and allows unquoted column names to fit with tidyverse / dplyr style approach.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-0-5-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-5-0"></a></h3>
+<ul><li>Added a <code>max.overlaps</code> argument to allow the user to vary this in cases where labels overlap is unhelpful.</li>
+<li>Changed control limit options to allow both adjusted and unadjusted to be turned off, without turning the other on.</li>
+<li>Updated README, help files and vignette to use tidyeval approach.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.2" id="funnelplotr-042">FunnelPlotR 0.4.2<small>2023-06-01</small><a class="anchor" aria-label="anchor" href="#funnelplotr-042"></a></h2>
-<ul><li><p>Changes:</p></li>
-<li><p>Handling of expected values in SHMI calculation was adjusted to allow rounding to two decimal places to match NHSD publication, and as requested by HED Team. Now controlled with additional argument: <code>SHMI_rounding</code> = TRUE/FALSE</p></li>
-<li><p>A change to the OD logic when OD adjustment is selected, but no OD detected. Changed to focus on phi (dispersion ratio) instead of tau (variance component).</p></li>
-<li><p>Bug-fix:</p></li>
-<li><p>an error handling function was not performing correctly and preventing multiple selections.</p></li>
-<li><p>Updated plotting as ggplot arguments were deprecated and giving warning notices.</p></li>
-<li><p>Updated package author’s email address, as I lost access to the old one.</p></li>
-<li><p>Updated bits of meta data, codecov, roxygen2 version and github actions.</p></li>
-<li><p>Added additional unit tests.</p></li>
+<div class="section level3">
+<h3 id="changes-0-4-2">Changes:<a class="anchor" aria-label="anchor" href="#changes-0-4-2"></a></h3>
+<ul><li>Handling of expected values in SHMI calculation was adjusted to allow rounding to two decimal places to match NHSD publication, and as requested by HED Team. Now controlled with additional argument: <code>SHMI_rounding</code> = TRUE/FALSE</li>
+<li>A change to the OD logic when OD adjustment is selected, but no OD detected. Changed to focus on phi (dispersion ratio) instead of tau (variance component).</li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fix-0-4-2">Bug-fix:<a class="anchor" aria-label="anchor" href="#bug-fix-0-4-2"></a></h3>
+<ul><li>an error handling function was not performing correctly and preventing multiple selections.</li>
+<li>Updated plotting as ggplot arguments were deprecated and giving warning notices.</li>
+<li>Updated package author’s email address, as I lost access to the old one.</li>
+<li>Updated bits of meta data, codecov, roxygen2 version and github actions.</li>
+<li>Added additional unit tests.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.1" id="funnelplotr-041">FunnelPlotR 0.4.1<small>2021-09-30</small><a class="anchor" aria-label="anchor" href="#funnelplotr-041"></a></h2>
-<ul><li>Bug-fix release: the outlier function was not passing the ‘multiplier’ argument and was wrong with anything except the default values. This has been corrected to pass the multiplier properly.</li>
-</ul></div>
+<div class="section level3">
+<h3 id="bug-fix-release-0-4-1">Bug-fix release:<a class="anchor" aria-label="anchor" href="#bug-fix-release-0-4-1"></a></h3>
+<p>The outlier function was not passing the ‘multiplier’ argument and was wrong with anything except the default values. This has been corrected to pass the multiplier properly.</p>
+</div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="funnelplotr-040">FunnelPlotR 0.4.0<small>2021-09-15</small><a class="anchor" aria-label="anchor" href="#funnelplotr-040"></a></h2>
 <ul><li>Major tidy up of the UI, inputs, and control options. This is was to remove inconsistency and help with future development.</li>
