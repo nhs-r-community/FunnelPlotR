@@ -13,7 +13,7 @@
 #' z-score (unadjusted for overdispersion)
 #' @keywords internal
 #'
-transformed_zscore < -function(mod_plot_agg = mod_plot_agg, data_type = "SR"
+transformed_zscore <- function(mod_plot_agg = mod_plot_agg, data_type = "SR"
                                , sr_method = "SHMI") {
 
   if (data_type == "SR") {
