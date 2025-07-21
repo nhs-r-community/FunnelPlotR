@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FunnelPlotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -173,37 +173,45 @@ organisations get larger.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Make up some data, as if it was from a regression model with observed and predicted (expected) events.</span></span>
-<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="fl">15</span>,<span class="fl">40</span>,<span class="fl">72</span>,<span class="fl">28</span>,<span class="fl">50</span>, <span class="fl">66</span>, <span class="fl">75</span><span class="op">)</span>,</span>
-<span>                 expected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="fl">13</span>,<span class="fl">32</span>,<span class="fl">75</span>,<span class="fl">33</span>,<span class="fl">54</span>, <span class="fl">60</span>, <span class="fl">72</span><span class="op">)</span>,</span>
-<span>                 unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"c"</span>,<span class="st">"D"</span>,<span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="co"># Make up some data, as if it was from a regression model</span></span>
+<span><span class="co"># with observed and predicted (expected) events.</span></span>
+<span><span class="va">dt</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">40</span>, <span class="fl">72</span>, <span class="fl">28</span>, <span class="fl">50</span>, <span class="fl">66</span>, <span class="fl">75</span><span class="op">)</span>,</span>
+<span>    expected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">13</span>, <span class="fl">32</span>, <span class="fl">75</span>, <span class="fl">33</span>, <span class="fl">54</span>, <span class="fl">60</span>, <span class="fl">72</span><span class="op">)</span>,</span>
+<span>    unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"c"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Add a ratio (SR) of observed to expected, our indicator </span></span>
+<span><span class="co"># Add a ratio (SR) of observed to expected, our indicator</span></span>
 <span><span class="va">dt</span><span class="op">$</span><span class="va">SR</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">$</span><span class="va">observed</span> <span class="op">/</span> <span class="va">dt</span><span class="op">$</span><span class="va">expected</span></span>
 <span></span>
 <span><span class="co"># Scatter plot in ggplot</span></span>
-<span><span class="va">a</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">expected</span>, y<span class="op">=</span> <span class="va">SR</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">expected</span>, y <span class="op">=</span> <span class="va">SR</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-1.png" width="672"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Now add a central line, in a ration like this, 1 is the average/expected value.</span></span>
-<span><span class="va">a</span><span class="op">&lt;-</span> <span class="va">a</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>yintercept<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Now add a central line, as 1 is the average/expected value in this case.</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">a</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-2.png" width="672"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Add a 95% Poisson limit, by using the density function to get the quantile value for each 'expected'.</span></span>
-<span><span class="va">lkup</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">expected</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">lkup</span><span class="op">$</span><span class="va">Upper</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">qpois</a></span><span class="op">(</span><span class="fl">0.975</span>,lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.025</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span></span>
-<span><span class="va">lkup</span><span class="op">$</span><span class="va">lower</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">qpois</a></span><span class="op">(</span><span class="fl">0.025</span>,lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.975</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span></span>
+<span><span class="co"># Add a 95% Poisson limit, by using the density function to get the</span></span>
+<span><span class="co"># quantile value for each 'expected'.</span></span>
+<span><span class="va">lkup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">expected</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lkup</span><span class="op">$</span><span class="va">Upper</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">qpois</a></span><span class="op">(</span><span class="fl">0.975</span>, lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.025</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span></span>
+<span><span class="va">lkup</span><span class="op">$</span><span class="va">lower</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">qpois</a></span><span class="op">(</span><span class="fl">0.025</span>, lambda <span class="op">=</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.975</span><span class="op">)</span> <span class="op">/</span> <span class="va">lkup</span><span class="op">$</span><span class="va">id</span></span>
 <span></span>
-<span><span class="va">lkup</span><span class="op">&lt;-</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span><span class="va">lkup</span>, <span class="va">key</span>, <span class="va">value</span>,<span class="op">-</span><span class="va">id</span><span class="op">)</span></span>
+<span><span class="va">lkup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span><span class="va">lkup</span>, <span class="va">key</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">id</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">a</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">id</span>, y<span class="op">=</span><span class="va">value</span>, col<span class="op">=</span><span class="va">key</span><span class="op">)</span>, data<span class="op">=</span><span class="va">lkup</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">a</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">id</span>, y <span class="op">=</span> <span class="va">value</span>, col <span class="op">=</span> <span class="va">key</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lkup</span><span class="op">)</span></span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/basicfunnel-3.png" width="672"></p>
 <p>You’ll probably notice the ‘jagged’ lines in the plot above. This is
 because the Poisson distribution is only defined on integers, and most
@@ -272,10 +280,12 @@ negative binomial or multilevel model (discussed in a later post).</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">)</span></span>
-<span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">)</span></span>
-<span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span><span class="op">)</span></span>
+<span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">provnum</span><span class="op">)</span></span>
+<span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">medpar</span><span class="op">$</span><span class="va">los</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">mod</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">los</span> <span class="op">~</span> <span class="va">hmo</span> <span class="op">+</span> <span class="va">died</span> <span class="op">+</span> <span class="va">age80</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">medpar</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">los</span> <span class="op">~</span> <span class="va">hmo</span> <span class="op">+</span> <span class="va">died</span> <span class="op">+</span> <span class="va">age80</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span>
+<span>           , family <span class="op">=</span> <span class="st">"poisson"</span></span>
+<span>           , data <span class="op">=</span> <span class="va">medpar</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
@@ -303,8 +313,7 @@ negative binomial or multilevel model (discussed in a later post).</p>
 <p>Now we have a regression that we can use to get a predicted
 <code>los</code> that we will compare to observed <code>los</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">medpar</span><span class="op">$</span><span class="va">prds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level3">
@@ -316,10 +325,12 @@ methods including <code><a href="https://rdrr.io/r/base/print.html" class="exter
 <code><a href="../reference/limits.html">limits()</a></code>, <code><a href="../reference/source_data.html">source_data()</a></code> etc. See the help
 file: <code><a href="../reference/funnel_plot.html">?funnel_plot</a></code> for more details.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span><span class="va">medpar</span>, numerator<span class="op">=</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">provnum</span>, </span>
-<span>            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, draw_unadjusted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>            draw_adjusted <span class="op">=</span> <span class="cn">FALSE</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">medpar</span>, numerator <span class="op">=</span> <span class="va">los</span>, denominator <span class="op">=</span> <span class="va">prds</span>, group <span class="op">=</span> <span class="va">provnum</span></span>
+<span>  , title <span class="op">=</span> <span class="st">"Length of Stay Funnel plot for `medpar` data"</span></span>
+<span>  , draw_unadjusted <span class="op">=</span> <span class="cn">TRUE</span>, draw_adjusted <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  , label <span class="op">=</span> <span class="st">"outlier"</span>, limit <span class="op">=</span> <span class="fl">99</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: ggrepel: 5 unlabeled data points (too many overlaps). Consider</span></span>
 <span><span class="co">#&gt; increasing max.overlaps</span></span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel1-1.png" width="672" style="display: block; margin: auto;"></p>
@@ -337,18 +348,19 @@ data than we would expect, and this is referred to as:
 our data are conforming to Poisson distribution assumption (conditional
 mean = variance). If it is greater than 1, we have overdispersion:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">weights</span> <span class="op">*</span> <span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span></span>
 <span><span class="co">#&gt; [1] 6.240519</span></span></code></pre></div>
 <p>This suggests the variance is 6.24 times the condition mean, and
 definitely overdispersed. This is a huge topic, but applying
 overdispersed limits using either SHMI or Spiegelhalter methods adjust
 for this by inflating the limits:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span><span class="va">medpar</span>, numerator<span class="op">=</span><span class="va">los</span>, denominator<span class="op">=</span><span class="va">prds</span>, group <span class="op">=</span> <span class="va">provnum</span>, </span>
-<span>            title <span class="op">=</span> <span class="st">'Length of Stay Funnel plot for `medpar` data'</span>, draw_unadjusted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>            draw_adjusted <span class="op">=</span> <span class="cn">TRUE</span>, data_type<span class="op">=</span><span class="st">"SR"</span>, sr_method <span class="op">=</span> <span class="st">"SHMI"</span>,label <span class="op">=</span> <span class="st">"outlier"</span>, limit<span class="op">=</span><span class="fl">99</span></span>
-<span>            <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/funnel_plot.html">funnel_plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">medpar</span>, numerator <span class="op">=</span> <span class="va">los</span>, denominator <span class="op">=</span> <span class="va">prds</span>, group <span class="op">=</span> <span class="va">provnum</span></span>
+<span>  , title <span class="op">=</span> <span class="st">"Length of Stay Funnel plot for `medpar` data"</span></span>
+<span>  , draw_unadjusted <span class="op">=</span> <span class="cn">FALSE</span>, draw_adjusted <span class="op">=</span> <span class="cn">TRUE</span>, data_type <span class="op">=</span> <span class="st">"SR"</span></span>
+<span>  , sr_method <span class="op">=</span> <span class="st">"SHMI"</span>, label <span class="op">=</span> <span class="st">"outlier"</span>, limit <span class="op">=</span> <span class="fl">99</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="funnel_plots_files/figure-html/funnel2-1.png" width="672" style="display: block; margin: auto;"></p>
 <pre><code><span><span class="co">#&gt; A funnel plot object with 54 points of which 9 are outliers. </span></span>
 <span><span class="co">#&gt; Plot is adjusted for overdispersion.</span></span></code></pre>
