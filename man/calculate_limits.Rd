@@ -5,7 +5,7 @@
 \title{Overdispersion-adjusted funnel limit calculation}
 \usage{
 calculate_limits(
-  dfCI = dfCI,
+  df_ci = df_ci,
   data_type = "SR",
   sr_method = "SHMI",
   multiplier = 1,
@@ -15,15 +15,20 @@ calculate_limits(
 )
 }
 \arguments{
-\item{dfCI}{Aggregated model input data}
+\item{df_ci}{Aggregated model input data}
 
-\item{data_type}{Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").}
+\item{data_type}{Type of data for adjustment and plotting: Indirectly
+Standardised ratio ("SR"), proportion ("PR")
+, or ratio of counts ("RC").}
 
-\item{sr_method}{Adjustment method for standardised ratios, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.}
+\item{sr_method}{Adjustment method for standardised ratios, can take the
+value "SHMI" or "CQC". "SHMI" is default.}
 
-\item{multiplier}{Multiplier to adjust limits if reporting by a multiplier, e.g. per 1000.}
+\item{multiplier}{Multiplier to adjust limits if reporting by a multiplier
+, e.g. per 1000.}
 
-\item{tau2}{A 'between' standard deviation to add to the within standard deviation, S, to inflate limits.}
+\item{tau2}{A 'between' standard deviation to add to the within standard
+deviation, S, to inflate limits.}
 
 \item{target}{The centre line of the plot. Mean for non-SRs or 1 for SR}
 }
@@ -31,6 +36,7 @@ calculate_limits(
 A data.frame of with appended OD limits
 }
 \description{
-Add 95% and 99.8 % funnel limits from OD-adjusted Poisson distribution
+Add 95% and 99.8 % funnel limits from OD-adjusted Poisson
+distribution
 }
 \keyword{internal}

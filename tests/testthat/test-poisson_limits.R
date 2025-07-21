@@ -1,7 +1,7 @@
 test_that("`Poisson limits are right", {
   lims <-
     calculate_limits(
-      data.frame(number.seq = c(15, 20, 30))
+      data.frame(number_seq = c(15, 20, 30))
       , target = 1
       , draw_adjusted = FALSE
     )

@@ -27,23 +27,31 @@ draw_plot(
 )
 }
 \arguments{
-\item{mod_plot_agg}{data.frame of containing numerator, denominator, ratio/proportion, SEs and limits}
+\item{mod_plot_agg}{data.frame of containing numerator, denominator,
+ratio/proportion, SEs and limits}
 
 \item{limits}{data.frame of limits from set_plot_range().}
 
-\item{x_label}{Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.}
+\item{x_label}{Title for the funnel plot x-axis.  Usually expected deaths
+, readmissions, incidents etc.}
 
-\item{y_label}{Title for the funnel plot y-axis.  Usually a standardised ratio.}
+\item{y_label}{Title for the funnel plot y-axis.
+Usually a standardised ratio.}
 
 \item{title}{Plot title}
 
-\item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are: "outlier", "highlight", "both" or "NA".}
+\item{label}{Whether to label outliers, highlighted groups, both or none.
+Default is "outlier", by accepted values are: "outlier", "highlight", "both"
+ or "NA".}
 
-\item{multiplier}{Scale relative risk and funnel by this factor. Default to 1, but 100 is used for HSMR}
+\item{multiplier}{Scale relative risk and funnel by this factor. Default to 1
+, but 100 is used for HSMR}
 
-\item{draw_unadjusted}{Draw exact limits based only on data points with no iterpolation. (default=FALSE)}
+\item{draw_unadjusted}{Draw exact limits based only on data points with no
+iterpolation. (default=FALSE)}
 
-\item{draw_adjusted}{Draw overdispersed limits using Spiegelhalter's (2012) tau2 (default=TRUE)}
+\item{draw_adjusted}{Draw overdispersed limits using Spiegelhalter's (2012)
+tau2 (default=TRUE)}
 
 \item{target}{the calculated target value for the data type}
 
@@ -64,9 +72,11 @@ draw_plot(
 \item{plot_cols}{vector of colours for limits}
 }
 \value{
-A list containing [1] the funnel plot as a ggplot2 object., [2]the limits table.
+A list containing [1] the funnel plot as a ggplot2 object.
+, [2]the limits table.
 }
 \description{
-Internal function for drawing plot.  Do not use this directly, call `funnel_plot()` instead.
+Internal function for drawing plot.  Do not use this directly,
+ call `funnel_plot()` instead.
 }
 \keyword{internal}

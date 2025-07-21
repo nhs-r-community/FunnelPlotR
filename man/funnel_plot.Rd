@@ -36,84 +36,132 @@ funnel_plot(
 )
 }
 \arguments{
-\item{.data}{A data frame containing a numerator, denominator and grouping field.}
+\item{.data}{A data frame containing a numerator, denominator and
+grouping field.}
 
-\item{numerator}{A vector of the numerator (observed events/counts) values.  Used as numerator of the Y-axis}
+\item{numerator}{A vector of the numerator (observed events/counts) values.
+Used as numerator of the Y-axis}
 
-\item{denominator}{A vector of denominator (predicted/population etc.)  Used as denominator of the Y-axis and the scale of the x-axis}
+\item{denominator}{A vector of denominator (predicted/population etc.)
+Used as denominator of the Y-axis and the scale of the x-axis}
 
-\item{group}{A vector of group names as character or factor.  Used to aggregate and group points on plots}
+\item{group}{A vector of group names as character or factor.
+Used to aggregate and group points on plots}
 
-\item{data_type}{A string identifying the type of data used for in the plot, the adjustment used and the reference point. One of: "SR" for indirectly standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios of counts. Default is "SR".}
+\item{data_type}{A string identifying the type of data used for in the plot,
+the adjustment used and the reference point. One of: "SR" for indirectly
+standardised ratios, such SHMI, "PR" for proportions, or "RC" for ratios
+of counts. Default is "SR".}
 
-\item{limit}{Plot limits, accepted values are: 95 or 99, corresponding to 95\% or 99.8\% quantiles of the distribution. Default=99,and applies to OD limits if both OD and Poisson are used.}
+\item{limit}{Plot limits, accepted values are: 95 or 99,
+corresponding to 95\% or 99.8\% quantiles of the distribution.
+Default=99,and applies to OD limits if both OD and Poisson are used.}
 
-\item{label}{Whether to label outliers, highlighted groups, both or none. Default is "outlier", by accepted values are:\cr
+\item{label}{Whether to label outliers, highlighted groups, both or none.
+Default is "outlier", by accepted values are:\cr
 \itemize{
-\item{\code{"outlier"} - Labels upper and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"outlier_lower"} - Labels just and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"outlier_upper"} - Labels just upper, determined in relation to the `limit` argument.}
-\item{\code{"highlight"} - Labels the value(s) given in the `highlight`argument.}
-\item{\code{"both"} - Labels both the highlighted values(s), upper and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"both_lower"} - Labels both the highlighted values(s) and lower outliers, determined in relation to the `limit` argument.}
-\item{\code{"both_upper"} - Labels both the highlighted values(s) and upper outliers, determined in relation to the `limit` argument.}
+\item{\code{"outlier"} - Labels upper and lower outliers, determined in
+relation to the `limit` argument.}
+\item{\code{"outlier_lower"} - Labels just and lower outliers, determined in
+relation to the `limit` argument.}
+\item{\code{"outlier_upper"} - Labels just upper, determined in relation
+to the `limit` argument.}
+\item{\code{"highlight"} - Labels the value(s) given in the `highlight`
+argument.}
+\item{\code{"both"} - Labels both the highlighted values(s), upper and lower
+outliers, determined in relation to the `limit` argument.}
+\item{\code{"both_lower"} - Labels both the highlighted values(s) and lower
+outliers, determined in relation to the `limit` argument.}
+\item{\code{"both_upper"} - Labels both the highlighted values(s) and upper
+outliers, determined in relation to the `limit` argument.}
 \item{\code{NA} - No labels applied}
 }}
 
-\item{highlight}{Single or vector of points to highlight, with a different colour and point style. Should correspond to values specified to `group`. Default is NA, for no highlighting.}
+\item{highlight}{Single or vector of points to highlight, with a different
+colour and point style. Should correspond to values specified to `group`.
+Default is NA, for no highlighting.}
 
-\item{draw_unadjusted}{Draw control limits without overdispersion adjustment. (default=FALSE)}
+\item{draw_unadjusted}{Draw control limits without overdispersion adjustment.
+(default=FALSE)}
 
-\item{draw_adjusted}{Draw overdispersed limits using hierarchical model, assuming at group level, as described in Spiegelhalter (2012).
-It calculates a second variance component ' for the 'between' standard deviation (\eqn{\tau}), that is added to the 'within' standard deviation (sigma) (default=TRUE)}
+\item{draw_adjusted}{Draw overdispersed limits using hierarchical model,
+assuming at group level, as described in Spiegelhalter (2012).
+It calculates a second variance component ' for the 'between' standard
+deviation (\eqn{\tau}), that is added to the 'within' standard deviation
+(sigma) (default=TRUE)}
 
-\item{sr_method}{Method for adjustment when using indirectly standardised ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods for standardisation.  "CQC"/Spiegelhalter
-uses a square-root transformation and Winsorises (rescales the outer most values to a particular percentile).
-SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates the distribution before assessing overdisperison .
-Both methods then calculate a dispersion ratio (\eqn{\phi}) on this altered dataset.  This ratio is then used to scale the full dataset,
+\item{sr_method}{Method for adjustment when using indirectly standardised
+ratios (type="SR") Either "CQC" or "SHMI" (default). There are a few methods
+ for standardisation.  "CQC"/Spiegelhalter uses a square-root transformation
+ and Winsorises (rescales the outer most values to a particular percentile).
+SHMI, instead, uses log-transformation and doesn't Winsorise, but truncates
+the distribution before assessing overdisperison .
+Both methods then calculate a dispersion ratio (\eqn{\phi}) on this altered
+dataset.  This ratio is then used to scale the full dataset,
 and the plot is drawn for the full dataset.}
 
-\item{trim_by}{Proportion of the distribution for winsorisation/truncation. Default is 10 \% (0.1).  Note, this is applied in a two-sided
-fashion, e.g. 10\% refers to 10\% at each end of the distribution (20\% winsorised/truncated)}
+\item{trim_by}{Proportion of the distribution for winsorisation/truncation.
+Default is 10 \% (0.1).  Note, this is applied in a two-sided
+fashion, e.g. 10\% refers to 10\% at each end of the distribution
+(20\% winsorised/truncated)}
 
 \item{title}{Plot title}
 
-\item{multiplier}{Scale relative risk and funnel by this factor. Default to 1, but 100 sometime used, e.g. in some hospital mortality ratios.}
+\item{multiplier}{Scale relative risk and funnel by this factor. Default to
+1, but 100 sometime used, e.g. in some hospital mortality ratios.}
 
-\item{x_label}{Title for the funnel plot x-axis.  Usually expected deaths, readmissions, incidents etc.}
+\item{x_label}{Title for the funnel plot x-axis.  Usually expected deaths,
+readmissions, incidents etc.}
 
-\item{y_label}{Title for the funnel plot y-axis.  Usually a standardised ratio.}
+\item{y_label}{Title for the funnel plot y-axis.  Usually a
+standardised ratio.}
 
-\item{x_range}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0, 200). Default, "auto", allows function to estimate range.}
+\item{x_range}{Manually specify the y-axis min and max, in form c(min, max)
+, e.g. c(0, 200). Default, "auto", allows function to estimate range.}
 
-\item{y_range}{Manually specify the y-axis min and max, in form c(min, max), e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
+\item{y_range}{Manually specify the y-axis min and max, in form c(min, max)
+, e.g. c(0.7, 1.3). Default, "auto", allows function to estimate range.}
 
-\item{plot_cols}{A vector of 4 colours for funnel limits, in order: 95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper), 95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
-Default has been chosen to avoid red and green which can lead to subconscious value judgements of good or bad.
+\item{plot_cols}{A vector of 4 colours for funnel limits, in order:
+95\% Poisson (lower/upper), 99.8\% Poisson (lower/upper),
+95\% OD-adjusted (lower/upper), 99.8\% OD-adjusted (lower/upper).
+Default has been chosen to avoid red and green which can lead to
+subconscious value judgements of good or bad.
 Default is hex colours: c("#FF7F0EFF", "#1F77B4FF", "#9467BDFF", "#2CA02CFF")}
 
-\item{theme}{a ggplot theme function.  This can be a canned theme such as theme_bw(), a theme() with arguments, or your own custom theme function. Default is new funnel_clean(), but funnel_classic() is original format.}
+\item{theme}{a ggplot theme function.  This can be a canned theme such as
+theme_bw(), a theme() with arguments, or your own custom theme function.
+Default is new funnel_clean(), but funnel_classic() is original format.}
 
 \item{label_outliers}{Deprecated.  Please use the `label` argument instead.}
 
-\item{Poisson_limits}{Deprecated.  Please use the `draw_unadjusted` argument instead.}
+\item{Poisson_limits}{Deprecated.  Please use the `draw_unadjusted` argument
+instead.}
 
-\item{OD_adjust}{Deprecated.  Please use the `draw_adjusted` argument instead.}
+\item{OD_adjust}{Deprecated.  Please use the `draw_adjusted` argument
+instead.}
 
 \item{xrange}{Deprecated.  Please use the `x_range` argument instead.}
 
 \item{yrange}{Deprecated.  Please use the `y_range` argument instead.}
 
-\item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio, with SHMI truncation etc.), should you round the expected values to 2 decimal places (TRUE) or not (FALSE)}
+\item{SHMI_rounding}{TRUE/FALSE, for SHMI calculation (standardised ratio
+, with SHMI truncation etc.), should you round the expected values to
+2 decimal places (TRUE) or not (FALSE)}
 
-\item{max.overlaps}{Exclude text labels that overlap too many things. Defaults to 10. (inherited from geom_label_repel)}
+\item{max.overlaps}{Exclude text labels that overlap too many things.
+Defaults to 10. (inherited from geom_label_repel)}
 }
 \value{
-A fitted `funnelplot` object.  A `funnelplot` object is a list containing the following components:\cr
-\item{print}{Prints the number of points, outliers and whether the plot has been adjusted, and prints the plot}
+A fitted `funnelplot` object.  A `funnelplot` object is a list
+containing the following components:\cr
+\item{print}{Prints the number of points, outliers and whether the plot has
+been adjusted, and prints the plot}
 \item{plot}{A ggplot object with the funnel plot and the appropriate limits}
-\item{limits_lookup}{A lookup table with selected limits for drawing a plot in software that requires limits.}
-\item{aggregated_data}{A data.frame of the the aggregated dataset used for the plot.}
+\item{limits_lookup}{A lookup table with selected limits for drawing a plot
+ in software that requires limits.}
+\item{aggregated_data}{A data.frame of the the aggregated dataset used for
+ the plot.}
 \item{outlier}{A data frame of outliers from the data.}
 \item{tau2}{The between-groups standard deviation, \eqn{\tau^2}.}
 \item{phi}{The dispersion ratio, \eqn{\phi}.}
@@ -121,17 +169,28 @@ A fitted `funnelplot` object.  A `funnelplot` object is a list containing the fo
 \item{draw_unadjusted}{Whether unadjusted Poisson limits were used.}
 }
 \description{
-An implementation of funnel plots for indirectly standardised ratios, as described by Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970/>.
-There are several parameters for the input, with the assumption that you will want smooth,
-overdispersed, funnel control limits.  Limits may be inflated for overdispersion based on the methods of DerSimonian & Laird (1986), buy calculating a between unit standard deviation (\eqn{\tau})
-and constructing an additive random effects models, originally used for meta-analyses of clinical trials data.
+An implementation of funnel plots for indirectly standardised
+ratios, as described by
+Spiegelhalter (2005) <https://doi.org/10.1002/sim.1970/>.
+There are several parameters for the input, with the assumption that you
+will want smooth, overdispersed, funnel control limits.
+Limits may be inflated for overdispersion based on the methods of
+DerSimonian & Laird (1986), buy calculating a between unit
+standard deviation (\eqn{\tau}) and assuming an additive random effects
+model, where the within and between variances are summed to expand the
+limits, as originally used in the meta-analyses of clinical trials data.
 }
 \details{
-Outliers are marked based on the grouping, and the limits chosen, corresponding to either 95\% or 99.8\% quantiles of the normal distribution.\cr
+Outliers are marked based on the grouping, and the limits chosen,
+   corresponding to either 95\% or 99.8\% quantiles of the normal
+   distribution.\cr
    Labels can attached using the `label` argument.\cr
-   Overdispersion can be factored in based on the methods in Spiegelhalter et al. (2012), set `draw_adjusted` to FALSE to suppress this. \cr
+   Overdispersion can be factored in based on the methods in
+   Spiegelhalter et al. (2012), set `draw_adjusted` to FALSE to
+   suppress this. \cr
    To use Poisson limits set `draw_unadjusted=TRUE`. \cr
-   The plot colours deliberately avoid red-amber-green colouring, but you could extract this from the ggplot object and change manually if you like.
+   The plot colours deliberately avoid red-amber-green colouring, but you
+   could extract this from the ggplot object and change manually if you like.
    Future versions of `funnelplotr` may allow users to change this.
 }
 \examples{
@@ -168,11 +227,16 @@ tau2(fp)
 
 }
 \references{
-DerSimonian & Laird (1986)  Meta-analysis in clinical trials. <doi:10.1016/0197-2456(86)90046-2>
+DerSimonian & Laird (1986)  Meta-analysis in clinical trials.
+ <doi:10.1016/0197-2456(86)90046-2>
 
-Spiegelhalter (2005) Funnel plots for comparing institutional performance  <doi:10.1002/sim.1970>
+Spiegelhalter (2005) Funnel plots for comparing institutional
+performance  <doi:10.1002/sim.1970>
 
-Spiegelhalter et al. (2012) Statistical methods for healthcare regulation: rating, screening and surveillance: <doi:10.1111/j.1467-985X.2011.01010.x>
+Spiegelhalter et al. (2012) Statistical methods for healthcare
+regulation: rating, screening and surveillance:
+<doi:10.1111/j.1467-985X.2011.01010.x>
 
-NHS Digital (2020) SHMI Methodology v .134 \url{https://digital.nhs.uk/data-and-information/publications/ci-hub/summary-hospital-level-mortality-indicator-shmi}
+NHS Digital (2020) SHMI Methodology v .134
+\url{https://www.digital.nhs.uk/SHMI}
 }

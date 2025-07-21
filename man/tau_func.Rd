@@ -7,7 +7,8 @@
 tau_func(n, phi, S)
 }
 \arguments{
-\item{n}{The number of groups for data items, e.g. hospitals trusts that z-scores are calculated at.}
+\item{n}{The number of groups for data items, e.g. hospitals trusts that
+z-scores are calculated at.}
 
 \item{phi}{The dispersion ratio, where > 1 means overdispersion}
 
@@ -17,6 +18,7 @@ tau_func(n, phi, S)
 A numeric Tau2 value
 }
 \description{
-Internal function to calculate the additional, between group, standard error (tau2) to add to S2.
+Internal function to calculate the additional, between group
+, standard error (tau2) to add to S2.
 }
 \keyword{internal}

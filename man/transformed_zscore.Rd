@@ -13,12 +13,16 @@ transformed_zscore(
 \arguments{
 \item{mod_plot_agg}{Aggregated model input data}
 
-\item{data_type}{Type of data for adjustment and plotting: Indirectly Standardised ratio (\"SR\"), proportion (\"PR\"), or ratio of counts (\"RC\").}
+\item{data_type}{Type of data for adjustment and plotting:
+Indirectly Standardised ratio (\"SR\"), proportion (\"PR\")
+, or ratio of counts (\"RC\").}
 
-\item{sr_method}{Adjustment method, can take the value \"SHMI\" or \"CQC\". \"SHMI\" is default.}
+\item{sr_method}{Adjustment method, can take the value \"SHMI\"
+or \"CQC\". \"SHMI\" is default.}
 }
 \value{
-A data.frame of original, aggregated data plus transformed z-score (unadjusted for overdispersion)
+A data.frame of original, aggregated data plus transformed
+z-score (unadjusted for overdispersion)
 }
 \description{
 Internal function to perform the transformations for data types.

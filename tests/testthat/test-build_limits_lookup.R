@@ -9,7 +9,7 @@ test_that("`build limits funcion` works with input and
 
             expect_s3_class(z, "data.frame")
             expect_length(z, 10)
-            expect_length(z$number.seq, 1000)
+            expect_length(z$number_seq, 1000)
 
 
             y <- build_limits_lookup(10, 250, 0.2, 1.0, draw_adjusted = FALSE
@@ -20,7 +20,7 @@ test_that("`build limits funcion` works with input and
 
             expect_s3_class(y, "data.frame")
             expect_length(y, 10)
-            expect_length(y$number.seq, 1000)
+            expect_length(y$number_seq, 1000)
             expect_lt(y$ul95[1], 1)
             expect_gt(y$ll95[1], 0)
 
@@ -33,7 +33,7 @@ test_that("`build limits funcion` works with input and
 
             expect_s3_class(x, "data.frame")
             expect_length(x, 10)
-            expect_length(x$number.seq, 1000)
+            expect_length(x$number_seq, 1000)
             expect_lt(x$ll95[1], 100)
             expect_gt(x$ul95[1], 100)
 

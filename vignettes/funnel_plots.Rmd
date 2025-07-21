@@ -79,7 +79,7 @@ a
 
 # Add a 95% Poisson limit, by using the density function to get the
 # quantile value for each 'expected'.
-lkup < -data.frame(id = seq(1, max(dt$expected), 1))
+lkup <- data.frame(id = seq(1, max(dt$expected), 1))
 lkup$Upper <- (qpois(0.975, lambda = lkup$id) - 0.025) / lkup$id
 lkup$lower <- (qpois(0.025, lambda = lkup$id) - 0.975) / lkup$id
 

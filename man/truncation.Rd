@@ -9,7 +9,8 @@ truncation(mod_plot_agg = mod_plot_agg, trim_by = 0.1)
 \arguments{
 \item{mod_plot_agg}{Aggregated model input data}
 
-\item{trim_by}{The amount to truncate the distribution by, prior to transformation. 0.1 means 10\% (at each end).}
+\item{trim_by}{The amount to truncate the distribution by,
+prior to transformation. 0.1 means 10\% (at each end).}
 }
 \value{
 A data.frame with truncated z-scores added

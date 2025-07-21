@@ -464,9 +464,9 @@ funnel_plot <- function(.data
 
   # Extract the control limits corresponding to the denominators present in the
   #   data. This drops the standard error 's' already present in mod_plot_agg
-  mod_plot_agg <- merge(mod_plot_agg[, -grep("\\bs\\b"
-                                             , colnames(mod_plot_agg))],
-                        plot_limits, by.x = "denominator", by.y = "number.seq")
+  mod_plot_agg <-
+    merge(mod_plot_agg[, -grep("\\bs\\b", colnames(mod_plot_agg))],
+            plot_limits, by.x = "denominator", by.y = "number_seq")
 
   # Arrange rows by group
   mod_plot_agg <- mod_plot_agg[order(mod_plot_agg$group), ]

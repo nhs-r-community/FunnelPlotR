@@ -29,7 +29,8 @@ build_limits_lookup(
 
 \item{draw_adjusted}{TRUE/FALSE Use overdispersion adjustment}
 
-\item{tau2}{If using draw_adjusted, what is the tau2 ("between" standard error) to use?}
+\item{tau2}{If using draw_adjusted, what is the tau2 ("between" standard
+error) to use?}
 
 \item{data_type}{SR, PR or RC. Used to set target reference}
 
@@ -37,12 +38,15 @@ build_limits_lookup(
 
 \item{target}{target to be used to set centre line}
 
-\item{multiplier}{Multiply ratio value by an amount.  Default is 1, but some mortality ratios use 100, for example.}
+\item{multiplier}{Multiply ratio value by an amount.  Default is 1,
+but some mortality ratios use 100, for example.}
 }
 \value{
-A data.frame with an index column and various control limits based on the index as an x-axis value.
+A data.frame with an index column and various control limits based
+on the index as an x-axis value.
 }
 \description{
-Internal function for funnel plot to build the control limits prior to plotting.
+Internal function for funnel plot to build the control limits
+prior to plotting.
 }
 \keyword{internal}
