@@ -10,17 +10,18 @@
 
 aggregate_func <- function(mod_plot) {
 
-   mod_plot_agg <-
-      data.frame(
-         aggregate(
-            list(numerator = mod_plot$numerator
-                 , denominator = mod_plot$denominator)
-            ,  by = list(group = mod_plot$group)
-            , FUN = sum)
+  mod_plot_agg <-
+    data.frame(
+      aggregate(
+        list(numerator = mod_plot$numerator
+             , denominator = mod_plot$denominator)
+        ,  by = list(group = mod_plot$group)
+        , FUN = sum
       )
+    )
 
-   mod_plot_agg$rr <- mod_plot_agg$numerator / mod_plot_agg$denominator
+  mod_plot_agg$rr <- mod_plot_agg$numerator / mod_plot_agg$denominator
 
-   mod_plot_agg
+  mod_plot_agg
 
 }

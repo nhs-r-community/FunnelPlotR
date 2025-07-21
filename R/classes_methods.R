@@ -17,44 +17,44 @@ new_funnel_plot <- function(x = list()) {
 #' @param funnelplot object of class funnelplot
 #' @noRd
 
-validate_funnel_plot <- function(funnelplot){
+validate_funnel_plot <- function(funnelplot) {
 
-  if (!is_ggplot(funnelplot[[1]])){
+  if (!ggplot2::is_ggplot(funnelplot[[1]])) {
     stop(
       "Invalid ggplot object"
     )
   }
-  if (!is.data.frame(funnelplot[[2]])){
+  if (!is.data.frame(funnelplot[[2]])) {
     stop(
       "Invalid limits data.frame"
     )
   }
-  if (!is.data.frame(funnelplot[[3]])){
+  if (!is.data.frame(funnelplot[[3]])) {
     stop(
       "Invalid aggregate date.frame"
     )
   }
-  if (!is.numeric(funnelplot[[4]])){
+  if (!is.numeric(funnelplot[[4]])) {
     stop(
       "Invalid phi value, requires double()"
     )
   }
-  if (!is.numeric(funnelplot[[5]])){
+  if (!is.numeric(funnelplot[[5]])) {
     stop(
       "Invalid tau2 value, requires double()"
     )
   }
-  if (!is.logical(funnelplot[[6]])){
+  if (!is.logical(funnelplot[[6]])) {
     stop(
       "Invalid draw_adjusted value.  Expects logical."
     )
   }
-  if (!is.logical(funnelplot[[7]])){
+  if (!is.logical(funnelplot[[7]])) {
     stop(
       "Invalid draw_unadjusted value.  Expects logical."
     )
   }
-  if (!is.data.frame(funnelplot[[8]])){
+  if (!is.data.frame(funnelplot[[8]])) {
     stop(
       "Invalid outliers date.frame"
     )
@@ -67,21 +67,26 @@ validate_funnel_plot <- function(funnelplot){
 
 #'@export
 
-print.funnelplot <- function(x, ...){
+print.funnelplot <- function(x, ...) {
 
   print(x[[1]])
 
-  cat("A funnel plot object with", nrow(x[[3]]), "points of which", nrow(x[[8]]), "are outliers. \n")
+  cat("A funnel plot object with", nrow(x[[3]]), "points of which"
+      , nrow(x[[8]]), "are outliers. \n")
 
-  if(x[[6]]==TRUE){cat("Plot is adjusted for overdispersion. \n")}
-  else {cat("Plot is not adjusted for overdispersion. \n")}
+  if (x[[6]] == TRUE) {
+    "/"
+    cat("Plot is adjusted for overdispersion. \n")
+  } else {
+    cat("Plot is not adjusted for overdispersion. \n")
+  }
 
 }
 
 
 #'@export
 
-plot.funnelplot <- function(x, ...){
+plot.funnelplot <- function(x, ...) {
 
   x[[1]]
 
@@ -91,14 +96,18 @@ plot.funnelplot <- function(x, ...){
 #'@encoding UTF-8
 #'@export
 
-summary.funnelplot <- function(object, ...){
+summary.funnelplot <- function(object, ...) {
 
-  cat("A funnel plot object with", nrow(object[[3]]), "points of which", nrow(object[[8]]), "are outliers. \n")
+  cat("A funnel plot object with", nrow(object[[3]]), "points of which"
+      , nrow(object[[8]]), "are outliers. \n")
 
-  cat("Dispersion ratio: \u03d5 =", object[[4]],". \n")
-  if(object[[6]]==TRUE){cat("Plot is adjusted for overdispersion. Between unit variance:
-  \U1D70F\u00B2, =", object[[5]], ". \n")}
-  else {cat("Plot is not adjusted for overdispersion. \n")}
+  cat("Dispersion ratio: \u03d5 =", object[[4]], ". \n")
+  if (object[[6]] == TRUE) {
+    cat("Plot is adjusted for overdispersion.
+  Between unit variance: \U1D70F\u00B2, =", object[[5]], ". \n")
+  } else {
+    cat("Plot is not adjusted for overdispersion. \n")
+  }
 
   cat("Outliers: \n")
   print(object[[8]])
@@ -118,7 +127,7 @@ phi <- function(x) {
 
 #'@export
 
-phi.funnelplot <- function(x){
+phi.funnelplot <- function(x) {
 
   x[[4]]
 
@@ -136,7 +145,7 @@ tau2 <- function(x) {
 
 #'@export
 
-tau2.funnelplot <- function(x){
+tau2.funnelplot <- function(x) {
 
   x[[5]]
 
@@ -155,7 +164,7 @@ limits <- function(x) {
 
 #'@export
 
-limits.funnelplot <- function(x){
+limits.funnelplot <- function(x) {
 
   x[[2]]
 
@@ -175,7 +184,7 @@ outliers <- function(x) {
 
 #'@export
 
-outliers.funnelplot <- function(x){
+outliers.funnelplot <- function(x) {
 
   x[[8]]
 
@@ -193,8 +202,7 @@ source_data <- function(x) {
 
 
 #'@export
-source_data.funnelplot <- function(x){
+source_data.funnelplot <- function(x) {
 
   x[[3]]
 }
-

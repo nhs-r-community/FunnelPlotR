@@ -1,0 +1,3 @@
+linters: linters_with_defaults() # see vignette("lintr")
+encoding: "UTF-8"
+exclude: "Poisson_limits|OD_adjust|SHMI_rounding|S|Tau2"

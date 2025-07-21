@@ -15,7 +15,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.height = 5, 
+  fig.height = 5,
   fig.width = 7
 )
 ```
@@ -32,18 +32,20 @@ Firstly, lets set up some data, the same as the README and other vignette:
 ```{r dtsetup}
 library(COUNT)
 data(medpar)
-medpar$provnum<-factor(medpar$provnum)
-medpar$los<-as.numeric(medpar$los)
+medpar$provnum <- factor(medpar$provnum)
+medpar$los <- as.numeric(medpar$los)
 
 # Logistic model to predict LOS, LOS is quite overdispersed
-mod<- glm(los ~ hmo + died + age80 + factor(type), family="poisson", data=medpar)
+mod <- glm(los ~ hmo + died + age80 + factor(type)
+           , family = "poisson"
+           , data = medpar)
 
 #Get predicted value for ratio
-medpar$prds<- predict(mod, newdata = medpar, type="response")
+medpar$prds <- predict(mod, newdata = medpar, type = "response")
 
 # Draw plot, returning just the plot object
-funnel_plot(medpar, denominator=prds, numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
             , draw_unadjusted = TRUE)
 
 ```
@@ -55,9 +57,9 @@ You can pick out data point(s) using the `highlight` option.  Here we we use the
 
 ```{r highlight}
 # Draw plot, returning just the plot object
-funnel_plot(medpar, denominator=prds, numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
-            , draw_unadjusted = TRUE, highlight="030002")
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
+            , draw_unadjusted = TRUE, highlight = "030002")
 
 
 
@@ -69,10 +71,9 @@ funnel_plot(medpar, denominator=prds, numerator=los
 You can alter themes in the `FunnelPlotR` packages by using the theme argument.  There are a couple of options included with the package `funnel_clean` (the default) and `funnel_grey`, but you can write your own theme using any valid `ggplot2` theme and pass it to the plot.
 
 ```{r plottheme1}
-
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
-            , draw_unadjusted = TRUE, theme = funnel_grey() )
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
+            , draw_unadjusted = TRUE, theme = funnel_grey())
 
 ```
 
@@ -82,15 +83,17 @@ If you are not familiar with themes, you can create a theme with the `theme` fun
 library(ggplot2)
 
 new_funnel_theme <-
-  funnel_grey()+
-    theme(plot.title = element_text(face="bold", colour="red", size=6), # Change plot title
-          legend.background = element_rect(fill="brown"), # Alter legend background colour
-          axis.title.y = element_text(angle=0)  #Rotate y axis label
-    )
+  funnel_grey() +
+  # Change plot title
+  theme(plot.title =  element_text(face = "bold", colour = "red", size = 6),
+        # Alter legend background colour
+        legend.background = element_rect(fill = "brown"),
+        #Rotate y axis label
+        axis.title.y = element_text(angle = 0))
 
 
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
             , draw_unadjusted = TRUE, theme = new_funnel_theme)
 
 ```
@@ -103,8 +106,8 @@ I have deliberately avoided using red and green colours as defaults because it e
 Here I will change the 95% limit to black ("#000000"):
 
 ```{r colours}
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
             , draw_unadjusted = TRUE, theme = funnel_grey(),
             plot_cols = c("#000000", "#1F77B4FF", "#9467BDFF", "#2CA02CFF"))
 ```
@@ -115,9 +118,9 @@ funnel_plot(medpar, denominator=prds,numerator=los
 
 ```{r funnelscales}
 ## Changing labels
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
-            , draw_unadjusted = TRUE, x_range=c(0, 400), y_range=c(0,2))
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
+            , draw_unadjusted = TRUE, x_range = c(0, 400), y_range = c(0, 2))
 
 ```
 
@@ -128,8 +131,8 @@ funnel_plot(medpar, denominator=prds,numerator=los
 You can change the plot labels and axis labels easily using the options: `title`, `x_label` and `y_label`.
 
 ```{r funnellabels1}
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99 ,label = "outlier"
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99, label = "outlier"
             , draw_unadjusted = TRUE, title = "Vignette funnel plot"
             , x_label = "x-axis", y_label = "y-axis")
 ```
@@ -137,11 +140,11 @@ funnel_plot(medpar, denominator=prds,numerator=los
 There are different labelling options for the data points too, using the `label` option.  The default is to label outliers, but you can turn labels off, label the highlighted points, or both the highlighted points and the outliers ('both')
 
 ```{r funnellabels2}
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99
+funnel_plot(medpar, denominator = prds, numerator = los
+            , group = provnum, limit = 99
             , draw_unadjusted = TRUE, title = "Vignette funnel plot"
             , x_label = "x-axis", y_label = "y-axis"
-            , highlight= "030002", label = "highlight")
+            , highlight = "030002", label = "highlight")
 ```
 
 ## Cutting out the ggplot object
@@ -151,15 +154,15 @@ Since `FunnelPlotR` uses `ggplot2`, you could always extract the plot and alter 
 ```{r cutoutplot}
 # Original funnel plot object
 fp <-
-funnel_plot(medpar, denominator=prds,numerator=los
-            , group = provnum, limit=99, label = "outlier"
-            , draw_unadjusted = TRUE)
+  funnel_plot(medpar, denominator = prds, numerator = los
+              , group = provnum, limit = 99, label = "outlier"
+              , draw_unadjusted = TRUE)
 
 # Extract just the plot
 my_plot <- plot(fp)
 
 # Add an additional geom to plot
 my_plot +
-  geom_vline(aes(xintercept=400), linetype = "dashed", colour="red", linewidth=2)
-
+  geom_vline(aes(xintercept = 400), linetype = "dashed"
+             , colour = "red", linewidth = 2)
 ```
