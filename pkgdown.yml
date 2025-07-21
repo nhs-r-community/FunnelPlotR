@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   changing_funnel_plot_options: changing_funnel_plot_options.html
   funnel_plots: funnel_plots.html
-last_built: 2025-07-21T11:33Z
+last_built: 2025-07-21T11:36Z
 urls:
   reference: https://nhs-r-community.github.io/FunnelPlotR/reference
   article: https://nhs-r-community.github.io/FunnelPlotR/articles
