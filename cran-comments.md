@@ -9,10 +9,7 @@ This is a main release with a change to composition of the plots and changes for
 * R-devel and release, on Win-builder
 
 * GitHub CIs actions:
-  * Mac OS x 12.7.4 21H123, R 4.3.3
-  * Windows Server x64 2022, 10.0.20348, R 4.3.3
-  * Ubuntu 20.04.6 LTS, R-devel 2024-04-12
-  * Ubuntu 20.04.6 LTS, R 4.3.3
+  * Ubuntu 24.04.2 LTS, R 4.5.1
 
 * r-hub v2 via GitHub actions: https://github.com/nhs-r-community/FunnelPlotR/actions/runs/16416067313
   * Ubuntu Linux 24.04.2 LTS, R-release
@@ -26,7 +23,7 @@ This is a main release with a change to composition of the plots and changes for
 ## R CMD check results
 There were no ERRORs, WARNINGs.  2 NOTES on winbuilder:
 * NOTE: Found the following hidden files and directories:
-  .lintr  -  now added to .RBuildignore.
+  .lintr  -  now added to .RBuildignore and no further notes.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package to my knowledge.
