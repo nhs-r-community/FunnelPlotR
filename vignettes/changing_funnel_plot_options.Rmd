@@ -63,8 +63,6 @@ funnel_plot(medpar, denominator = prds, numerator = los
             , group = provnum, limit = 99, label = "outlier"
             , draw_unadjusted = TRUE, highlight = "030002")
 
-
-
 ```
 
 
